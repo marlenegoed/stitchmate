@@ -50,7 +50,11 @@ export const useStore = create((set) => ({
       return {...state, reminders: newReminders};
 
     });
-  }
+  },
+
+  toggleSound: function () {
+    return set(state => ({...state, clickSoundEnabled: !state.clickSoundEnabled}));
+  },
 
 }))
 

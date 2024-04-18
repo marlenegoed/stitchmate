@@ -1,6 +1,6 @@
 'use client';
 
-import useSound from 'react';
+import useSound from 'use-sound';
 
 import {useStore} from './store';
 import Counter from '@/components/ui/counter';
@@ -13,7 +13,7 @@ import ResetAlert from '@/components/ui/reset-alert-dialog';
 import {config} from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRotateLeft, faMinus, faVolumeHigh} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRotateLeft, faMinus, faVolumeHigh, faVolumeXmark} from '@fortawesome/free-solid-svg-icons';
 config.autoAddCss = false;
 
 // Todo: Edit title 
@@ -21,20 +21,30 @@ config.autoAddCss = false;
 
 export default function Page () {
 
-  const {count, countUp, countDown, setTitle} = useStore();
+  const {count, countUp, countDown, setTitle, clickSoundEnabled, toggleSound} = useStore();
 
-  function playSound () {}
+  
+  const [play] = useSound('/click-2.mp3');
+  function handleCountDown () {
+    countDown();
+    if (clickSoundEnabled) {
+      play();
+    }
+  }
+
+  const toggleSoundIcon = clickSoundEnabled ? faVolumeHigh : faVolumeXmark;
+
 
   return (
     <>
       <EditableTitle />
       <Counter />
       <section className='flex justify-around'>
-        <Button size="icon" onClick={countDown}>
+        <Button size="icon" onClick={handleCountDown}>
           <FontAwesomeIcon icon={faMinus} />
         </Button>
-        <Button size="icon">
-          <FontAwesomeIcon icon={faVolumeHigh} />
+        <Button size="icon" onClick={toggleSound}>
+          <FontAwesomeIcon icon={toggleSoundIcon} />
         </Button>
         <ResetAlert />
       </section>
