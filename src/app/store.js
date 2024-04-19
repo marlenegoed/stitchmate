@@ -3,29 +3,51 @@ import {create} from 'zustand';
 // TODO: Sort reminders 
 
 let id = 1;
+let reminderId = 1;
 export const useStore = create((set) => ({
 
-  count: 0,
+  count: 1,
   title: `my counter no.${id}`,
-  numOfRows: null,
+  numOfRows: 0,
   reminders: [],
   nextReminders: [],
   clickSoundEnabled: true,
 
   // methods 
   countUp: function () {
-    return set(state => ({...state, count: state.count + 1 % 1000}));
+    return set(state => {
+      let newCount = state.count + 1 % 1000;
+      if (newCount === 0) newCount = 1;
+      return {
+        ...state,
+        count: newCount,
+        nextReminders: selectNextReminders(state.reminders, newCount)
+      };
+    }
+    );
   },
 
   countDown: function () {
     return set(state => {
-      if (state.count <= 0) return {...state, count: 0};
-      return {...state, count: state.count - 1};
+      let newCount = state.count - 1;
+      if (state.count <= 1) newCount = 1;
+      return {
+        ...state,
+        count: newCount,
+        nextReminders: selectNextReminders(state.reminders, newCount)
+      };
     });
   },
 
   resetCount: function () {
-    return set(state => ({...state, count: 0}));
+    return set(state => {
+      const newCount = 1;
+      return {
+        ...state,
+        count: newCount,
+        nextReminders: selectNextReminders(state.reminders, newCount)
+      };
+    });
   },
 
   setTitle: function (title) {
@@ -40,23 +62,64 @@ export const useStore = create((set) => ({
 
   setCount: function (count) {
     return set(state => {
-      return {...state, count};
+      return {
+        ...state,
+        count,
+        nextReminders: selectNextReminders(state.reminders, count)
+      };
     });
   },
 
   setNumOfRows: function (numOfRows) {
     return set(state => {
-      if (state.numOfRows <= 1) return {...state, numOfRows: 1};
+      if (numOfRows <= 1) return {...state, numOfRows: 1};
+      if (numOfRows > 999) return {...state, numOfRows: 999};
       return {...state, numOfRows};
     });
   },
 
   setReminder: function (reminder) {
     return set(state => {
+      reminder.id = reminderId;
+      reminderId++;
       const newReminders = [...state.reminders, reminder];
       // newReminders.sort((a, b) => a - b)
-      return {...state, reminders: newReminders};
+      return {
+        ...state,
+        reminders: newReminders,
+        nextReminders: selectNextReminders(newReminders, state.count)
+      };
+    });
+  },
 
+  updateReminder: function (updatedReminder) {
+
+    return set(state => {
+
+      const updatedReminders = state.reminders.map(reminder => {
+        if (reminder.id === updatedReminder.id) {
+          return updatedReminder;
+        } else {
+          return reminder;
+        }
+      });
+
+      return {
+        ...state,
+        reminders: updatedReminders,
+        nextReminders: selectNextReminders(updatedReminders, state.count)
+      };
+    });
+  },
+
+  deleteReminder: function (deletedReminder) {
+    return set(state => {
+      const updatedReminders = state.reminders.filter(reminder => reminder.id !== deletedReminder.id);
+      return {
+        ...state,
+        reminders: updatedReminders,
+        nextReminders: selectNextReminders(updatedReminders, state.count)
+      };
     });
   },
 
@@ -64,5 +127,19 @@ export const useStore = create((set) => ({
     return set(state => ({...state, clickSoundEnabled: !state.clickSoundEnabled}));
   },
 
-}))
+}));
+
+
+// helper 
+
+function selectNextReminders (reminders, count) {
+
+  return reminders.filter(reminder => {
+    if (reminder.type === 'every') {
+      return count % reminder.repeat.interval === 0
+        && count / reminder.repeat.interval < reminder.repeat.times;
+    }
+    return count >= reminder.repeat.from && count <= reminder.repeat.until;
+  });
+}
 

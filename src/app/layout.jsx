@@ -4,11 +4,7 @@ import Link from 'next/link';
 import Logo from '@/components/ui/logo';
 import CounterSettings from '@/components/ui/counter-settings';
 
-import {config} from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faListUl} from '@fortawesome/free-solid-svg-icons';
-config.autoAddCss = false;
+import {FaListUl} from "react-icons/fa6";
 
 export default function RootLayout ({children}) {
   return (
@@ -17,8 +13,8 @@ export default function RootLayout ({children}) {
       flex flex-col 
       `}>
         <nav className='flex justify-between px-6 py-3'>
-        <Link href=''>
-            <FontAwesomeIcon icon={faListUl} />
+          <Link href=''>
+            <FaListUl />
           </Link>
           <Logo />
           <CounterSettings />

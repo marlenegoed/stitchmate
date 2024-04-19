@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -40,6 +41,10 @@ export default function ReminderConfigDialog () {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
+    // const submitButton = <DialogClose asChild>
+    //   <Button type="submit">Save changes</Button>
+    // </DialogClose>;
+
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
@@ -52,7 +57,7 @@ export default function ReminderConfigDialog () {
               Configure your reminder here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <ReminderForm />
+          <ReminderForm setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -81,45 +86,83 @@ export default function ReminderConfigDialog () {
   );
 }
 
-function ReminderForm ({className}) {
+function ReminderForm ({className, setOpen}) {
 
   const [reminderType, setReminderType] = useState('every');
-  const [reminderTitle, setReminderTitle] = useState('');
+
+  const defaultNote = "you can add a note to your reminder, e. g.: k1, k2tog, knit to 3 sts before end, ssk, k1...";
+
+  const [reminderTitle, setReminderTitle] = useState('my reminder');
   const [reminderNote, setReminderNote] = useState('');
-  const [repeatValue1, setRepeatValue1] = useState(0);
-  const [repeatValue2, setRepeatValue2] = useState(2);
+  const [repeatValue1, setRepeatValue1] = useState('');
+  const [repeatValue2, setRepeatValue2] = useState('');
 
   const {setReminder} = useStore();
 
-  const inputType = reminderType === "every" ? <RepeatEveryInputs onIntervalChange={repeatValue1} /> : <ForRowsInputs />;
-
-  function handleChange (value) {
+  function handleTypeChange (value) {
     setReminderType(value);
   }
-
 
   function handleSubmit (e) {
     e.preventDefault();
 
+    const isValid = validateForm(repeatValue1, repeatValue2, reminderTitle);
+
+    if (isValid.length > 0) {
+      setOpen(true);
+      return false;
+    }
+
     const newReminder = {
-      title,
-      type,
-      note,
-      repeat: {}
+      title: reminderTitle,
+      type: reminderType,
+      note: reminderNote,
     };
 
-    if (newReminder.type === "every") {
-      newReminder.repeat;
+    if (reminderType === "every") {
+      newReminder.repeat = {
+        interval: repeatValue1,
+        times: repeatValue2
+      };
+    } else {
+      newReminder.repeat = {
+        from: repeatValue1,
+        until: repeatValue2
+      };
     }
+    setReminder(newReminder);
+    setOpen(false);
+
+    setReminderTitle('my reminder');
+    setReminderType('every');
+    setRepeatValue1(0);
+    setRepeatValue2(0);
+    setReminderNote('');
+    console.log(newReminder);
+
   }
+
+  // toggle form input 
+  let inputType;
+
+  if (reminderType === 'every') {
+    inputType = <RepeatEveryInputs
+      repeatValue1={repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
+  } else {
+    inputType =
+      <ForRowsInputs repeatValue1={repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
+  }
+
+  const errorMessages = validateForm(repeatValue1, repeatValue2, reminderTitle);
+
 
   return (
     <form className={cn("grid items-start gap-4", className)} onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <Label htmlFor="reminderTitle">Title</Label>
-        <Input type="text" id="reminderTitle" defaultValue="my reminder" onChange={(e) => setReminderTitle(e.target.value)} />
+        <Input type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
       </div>
-      <Select onValueChange={handleChange} defaultValue="every">
+      <Select onValueChange={handleTypeChange} defaultValue="every">
         <SelectTrigger className="w-[100%]">
           <SelectValue />
         </SelectTrigger>
@@ -129,23 +172,25 @@ function ReminderForm ({className}) {
         </SelectContent>
       </Select>
       {inputType}
-      <Textarea placeholder="you can add a note to your reminder, e. g.: k1, k2tog, knit to 3 sts before end, ssk, k1..." />
+      <Textarea placeholder={defaultNote} value={reminderNote} onChange={e => setReminderNote(e.target.value)} />
+      {errorMessages.map((msg, index) => <p key={index}>{msg}</p>)}
+
       <Button type="submit">Save changes</Button>
     </form>
   );
 }
 
 
-function RepeatEveryInputs ({onIntervalChange}) {
+function RepeatEveryInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
 
   return (
     <div className="flex gap-x-4">
       <div className="flex gap-x-2 items-center">
-        <Input onChange={e => onIntervalChange(e.target.value)} type="number" id="rows" defaultValue="--" />
-        <Label htmlFor="rows">th. row</Label>
+        <Input min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
+        <Label htmlFor="rows">{makeOrdinal(repeatValue1)} row</Label>
       </div>
       <div className="flex gap-x-2 items-center">
-        <Input type="number" id="times" defaultValue="--" />
+        <Input min="0" type="number" id="times" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
         <Label htmlFor="times">times</Label>
       </div>
     </div>
@@ -153,20 +198,66 @@ function RepeatEveryInputs ({onIntervalChange}) {
 }
 
 
-function ForRowsInputs () {
+function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
 
   return (
     <div className="flex gap-x-4">
       <div className="flex gap-x-2 items-center">
         <Label htmlFor="from">from</Label>
-        <Input type="number" id="from" defaultValue="--" />
+        <Input min="0" type="number" id="from" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
       </div>
       <div className="flex gap-x-2 items-center">
         <Label htmlFor="until">until</Label>
-        <Input type="number" id="until" defaultValue="--" />
-
+        <Input min="0" type="number" id="until" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
       </div>
     </div>
   );
 }
+
+function validateForm (repeatValue1, repeatValue2, title) {
+
+  const messages = [];
+
+  if (repeatValue1 === 0
+    || Number.isNaN(repeatValue1)
+    || repeatValue2 === 0
+    || Number.isNaN(repeatValue2)
+    || title.length === 0
+  ) {
+    messages.push('please fill in the missing fields.');
+  }
+
+  if (repeatValue1 < 0 || repeatValue2 < 0) {
+    messages.push('input cannot be a negative number.');
+  }
+
+  return messages;
+
+}
+
+function makeOrdinal (num) {
+
+  if (num % 100 > 10 && num % 100 < 20) return 'th';
+
+  const digit = num % 10;
+
+  switch (digit) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+
+}
+
+function numtoString (num) {
+
+  if (Number.isNaN(num)) return '';
+  return num.toString();
+
+}
+
+
+
+
 
