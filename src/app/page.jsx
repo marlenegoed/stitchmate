@@ -5,27 +5,22 @@ import useSound from 'use-sound';
 import {useStore} from './store';
 import Counter from '@/components/ui/counter';
 import {Button} from '@/components/ui/button';
-import Logo from '@/components/ui/logo';
 import {EditableTitle} from '@/components/ui/counter-title';
 import ResetAlert from '@/components/ui/reset-alert-dialog';
 import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
-import ReminderAlert from '@/components/ui/reminder-alert';
 import Rows from '@/components/ui/rows';
+import ReminderCarousel from '@/components/ui/reminder-carousel';
+
+import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
 
+// Todo: Edit title -> Rename Component
+// Form Validation 
 
-import {config} from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRotateLeft, faMinus, faVolumeHigh, faVolumeXmark} from '@fortawesome/free-solid-svg-icons';
-config.autoAddCss = false;
-
-// Todo: Edit title 
-// prompt for button reset 
 
 export default function Page () {
 
-  const {count, countUp, countDown, setTitle, clickSoundEnabled, toggleSound} = useStore();
+  const {countDown, clickSoundEnabled, toggleSound} = useStore();
 
 
   const [play] = useSound('/click-2.mp3');
@@ -36,21 +31,20 @@ export default function Page () {
     }
   }
 
-  const toggleSoundIcon = clickSoundEnabled ? faVolumeHigh : faVolumeXmark;
-
+  const toggleSoundIcon = clickSoundEnabled ? <FaVolumeHigh /> : <FaVolumeXmark />;
 
   return (
     <>
       <EditableTitle />
-      <ReminderAlert />
+      <ReminderCarousel />
       <Counter />
       <Rows />
       <section className='flex justify-around'>
         <Button size="icon" onClick={handleCountDown}>
-          <FontAwesomeIcon icon={faMinus} />
+          <FaMinus />
         </Button>
         <Button size="icon" onClick={toggleSound}>
-          <FontAwesomeIcon icon={toggleSoundIcon} />
+          {toggleSoundIcon}
         </Button>
         <ResetAlert />
       </section>
@@ -59,4 +53,4 @@ export default function Page () {
     </>
   );
 
-}
+};;

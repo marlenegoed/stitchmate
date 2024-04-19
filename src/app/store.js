@@ -46,6 +46,7 @@ export const useStore = create((set) => ({
 
   setNumOfRows: function (numOfRows) {
     return set(state => {
+      if (state.numOfRows <= 1) return {...state, numOfRows: 1};
       return {...state, numOfRows};
     });
   },
