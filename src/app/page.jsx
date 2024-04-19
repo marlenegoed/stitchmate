@@ -8,6 +8,10 @@ import {Button} from '@/components/ui/button';
 import Logo from '@/components/ui/logo';
 import {EditableTitle} from '@/components/ui/counter-title';
 import ResetAlert from '@/components/ui/reset-alert-dialog';
+import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
+import ReminderAlert from '@/components/ui/reminder-alert';
+import Rows from '@/components/ui/rows';
+
 
 
 import {config} from '@fortawesome/fontawesome-svg-core';
@@ -23,7 +27,7 @@ export default function Page () {
 
   const {count, countUp, countDown, setTitle, clickSoundEnabled, toggleSound} = useStore();
 
-  
+
   const [play] = useSound('/click-2.mp3');
   function handleCountDown () {
     countDown();
@@ -38,7 +42,9 @@ export default function Page () {
   return (
     <>
       <EditableTitle />
+      <ReminderAlert />
       <Counter />
+      <Rows />
       <section className='flex justify-around'>
         <Button size="icon" onClick={handleCountDown}>
           <FontAwesomeIcon icon={faMinus} />
@@ -48,6 +54,8 @@ export default function Page () {
         </Button>
         <ResetAlert />
       </section>
+      <ReminderConfigDialog />
+
     </>
   );
 

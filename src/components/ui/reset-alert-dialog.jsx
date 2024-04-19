@@ -11,11 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
 
-import {config} from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRotateLeft, faMinus, faVolumeHigh} from '@fortawesome/free-solid-svg-icons';
-config.autoAddCss = false;
+import {FaArrowRotateLeft} from "react-icons/fa6";
 
 import {useStore} from '@/app/store';
 
@@ -26,7 +22,7 @@ export default function ResetAlertDialog () {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="icon"><FontAwesomeIcon icon={faArrowRotateLeft} /></Button>
+        <Button variant="outline" size="icon"><FaArrowRotateLeft /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

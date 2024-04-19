@@ -9,6 +9,7 @@ export const useStore = create((set) => ({
   title: `my counter no.${id}`,
   numOfRows: null,
   reminders: [],
+  nextReminders: [],
   clickSoundEnabled: true,
 
   // methods 
@@ -34,6 +35,12 @@ export const useStore = create((set) => ({
         return {...state, title: state.title};
       }
       return {...state, title};
+    });
+  },
+
+  setCount: function (count) {
+    return set(state => {
+      return {...state, count};
     });
   },
 
