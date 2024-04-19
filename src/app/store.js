@@ -136,8 +136,10 @@ function selectNextReminders (reminders, count) {
 
   return reminders.filter(reminder => {
     if (reminder.type === 'every') {
-      return count % reminder.repeat.interval === 0
-        && count / reminder.repeat.interval < reminder.repeat.times;
+      if (reminder.repeat.start > count) return false;
+
+      return (count - reminder.repeat.start) % reminder.repeat.interval === 0
+        && (count - reminder.repeat.start) / reminder.repeat.interval <= reminder.repeat.times;
     }
     return count >= reminder.repeat.from && count <= reminder.repeat.until;
   });

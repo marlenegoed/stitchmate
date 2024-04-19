@@ -10,6 +10,7 @@ import ResetAlert from '@/components/ui/reset-alert-dialog';
 import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
 import Rows from '@/components/ui/rows';
 import ReminderCarousel from '@/components/ui/reminder-carousel';
+import ReminderList from '@/components/ui/reminder-list';
 
 import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
@@ -49,7 +50,7 @@ export default function Page () {
         <ResetAlert />
       </section>
       <ReminderConfigDialog />
-
+      <ReminderList />
     </>
   );
 

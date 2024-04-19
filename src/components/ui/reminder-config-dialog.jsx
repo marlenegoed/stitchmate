@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import {cn} from "@/lib/utils";
 import {useMediaQuery} from "@/hooks/use-media-query";
@@ -88,16 +88,21 @@ export default function ReminderConfigDialog () {
 
 function ReminderForm ({className, setOpen}) {
 
-  const [reminderType, setReminderType] = useState('every');
-
   const defaultNote = "you can add a note to your reminder, e. g.: k1, k2tog, knit to 3 sts before end, ssk, k1...";
 
+  const {setReminder, count} = useStore();
+
+  const [reminderType, setReminderType] = useState('every');
   const [reminderTitle, setReminderTitle] = useState('my reminder');
   const [reminderNote, setReminderNote] = useState('');
   const [repeatValue1, setRepeatValue1] = useState('');
   const [repeatValue2, setRepeatValue2] = useState('');
+  const [repeatValue3, setRepeatValue3] = useState(count);
 
-  const {setReminder} = useStore();
+  useEffect(() => {
+    setRepeatValue3(count);
+  }, [count]);
+
 
   function handleTypeChange (value) {
     setReminderType(value);
@@ -106,7 +111,7 @@ function ReminderForm ({className, setOpen}) {
   function handleSubmit (e) {
     e.preventDefault();
 
-    const isValid = validateForm(repeatValue1, repeatValue2, reminderTitle);
+    const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
     if (isValid.length > 0) {
       setOpen(true);
@@ -122,7 +127,8 @@ function ReminderForm ({className, setOpen}) {
     if (reminderType === "every") {
       newReminder.repeat = {
         interval: repeatValue1,
-        times: repeatValue2
+        times: repeatValue2,
+        start: repeatValue3
       };
     } else {
       newReminder.repeat = {
@@ -137,6 +143,7 @@ function ReminderForm ({className, setOpen}) {
     setReminderType('every');
     setRepeatValue1(0);
     setRepeatValue2(0);
+    setRepeatValue3(count);
     setReminderNote('');
     console.log(newReminder);
 
@@ -147,13 +154,13 @@ function ReminderForm ({className, setOpen}) {
 
   if (reminderType === 'every') {
     inputType = <RepeatEveryInputs
-      repeatValue1={repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
+      repeatValue1={repeatValue1} repeatValue2={repeatValue2} repeatValue3={repeatValue3} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} setRepeatValue3={setRepeatValue3} />;
   } else {
     inputType =
       <ForRowsInputs repeatValue1={repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
   }
 
-  const errorMessages = validateForm(repeatValue1, repeatValue2, reminderTitle);
+  const errorMessages = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
 
   return (
@@ -181,10 +188,14 @@ function ReminderForm ({className, setOpen}) {
 }
 
 
-function RepeatEveryInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
+function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
 
   return (
     <div className="flex gap-x-4">
+      <div className="flex gap-x-2 items-center">
+        <Input min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
+        <Label htmlFor="start">start on row</Label>
+      </div>
       <div className="flex gap-x-2 items-center">
         <Input min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
         <Label htmlFor="rows">{makeOrdinal(repeatValue1)} row</Label>
@@ -214,7 +225,7 @@ function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatV
   );
 }
 
-function validateForm (repeatValue1, repeatValue2, title) {
+function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
 
   const messages = [];
 
@@ -222,6 +233,8 @@ function validateForm (repeatValue1, repeatValue2, title) {
     || Number.isNaN(repeatValue1)
     || repeatValue2 === 0
     || Number.isNaN(repeatValue2)
+    || repeatValue3 === 0
+    || Number.isNaN(repeatValue3)
     || title.length === 0
   ) {
     messages.push('please fill in the missing fields.');
