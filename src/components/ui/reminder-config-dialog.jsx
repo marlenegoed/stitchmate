@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import {Textarea} from "@/components/ui/textarea";
 
+import FormField from './form-field';
 import {useStore} from '@/app/store';
 
 
@@ -44,11 +45,10 @@ export default function ReminderConfigDialog () {
     // const submitButton = <DialogClose asChild>
     //   <Button type="submit">Save changes</Button>
     // </DialogClose>;
-
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="bg-red-200" variant="outline" >add reminder</Button>
+          <Button variant="outline">add reminder</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -66,16 +66,16 @@ export default function ReminderConfigDialog () {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="my-8">add reminder</Button>
+        <Button variant="outline" className="my-8 w-full">add reminder</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Add Reminder</DrawerTitle>
-          <DrawerDescription>
+          {/* <DrawerDescription>
             Configure your reminder here. Click save when you're done.
-          </DrawerDescription>
+          </DrawerDescription> */}
         </DrawerHeader>
-        <ReminderForm className="px-4" />
+        <ReminderForm setOpen={setOpen} className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -165,10 +165,10 @@ function ReminderForm ({className, setOpen}) {
 
   return (
     <form className={cn("grid items-start gap-4", className)} onSubmit={handleSubmit}>
-      <div className="grid gap-2">
-        <Label htmlFor="reminderTitle">Title</Label>
-        <Input type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
-      </div>
+      <FormField className='flex items-center bg-neutral-100 rounded-xl px-3 min-h-12'>
+        <Label variant='inline' htmlFor="reminderTitle">Title</Label>
+        <Input variant='inline' type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
+      </FormField>
       <Select onValueChange={handleTypeChange} defaultValue="every">
         <SelectTrigger className="w-[100%]">
           <SelectValue />
@@ -192,18 +192,18 @@ function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeat
 
   return (
     <div className="flex gap-x-4">
-      <div className="flex gap-x-2 items-center">
-        <Input min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
-        <Label htmlFor="start">start on row</Label>
-      </div>
-      <div className="flex gap-x-2 items-center">
-        <Input min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
-        <Label htmlFor="rows">{makeOrdinal(repeatValue1)} row</Label>
-      </div>
-      <div className="flex gap-x-2 items-center">
-        <Input min="0" type="number" id="times" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
-        <Label htmlFor="times">times</Label>
-      </div>
+      <FormField>
+        <Input variant="inline" min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
+        <Label variant="inline" htmlFor="start">start row</Label>
+      </FormField>
+      <FormField>
+        <Input variant="inline" min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
+        <Label variant="inline" htmlFor="rows">every<br />{makeOrdinal(repeatValue1)} </Label>
+      </FormField>
+      <FormField>
+        <Input variant="inline" min="0" type="number" id="times" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
+        <Label variant="inline" htmlFor="times">times</Label>
+      </FormField>
     </div>
   );
 }

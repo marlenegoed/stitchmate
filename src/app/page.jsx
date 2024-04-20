@@ -9,7 +9,7 @@ import {EditableTitle} from '@/components/ui/counter-title';
 import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
 import Rows from '@/components/ui/rows';
 import ReminderCarousel from '@/components/ui/reminder-carousel';
-import CounterProgress from '@/components/ui/counter-progress';
+
 
 import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
@@ -36,19 +36,16 @@ export default function Page () {
     <>
       <EditableTitle />
       <ReminderCarousel />
-      <div className='border border-neutral-200 rounded-2xl shadow-sm flex items-center justify-center min-w-48 px-6' >
-        <Counter />
-      </div>
-      <div className='flex flex-row'>
-        {/* <Rows /> */}
-        <CounterProgress />
-      </div>
-      <section className='flex justify-around'>
-        <Button size="icon" onClick={handleCountDown} className="mt-6">
+      <Counter />
+      <div className='flex items-center justify-between'>
+        <Rows />
+        <Button size="icon" onClick={handleCountDown}>
           <FaMinus />
         </Button>
-      </section>
-      <ReminderConfigDialog />
+      </div>
+      <div className='flex justify-center mt-auto mb-10'>
+        <ReminderConfigDialog />
+      </div>
     </>
   );
 

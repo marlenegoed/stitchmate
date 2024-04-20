@@ -5,7 +5,7 @@ export default function Rows () {
   const {numOfRows} = useStore();
 
   return (
-    <p className="text-4xl text-neutral-400 text-right">{numOfRows ? numOfRows : '--'}</p>
+    <p className="text-3xl text-neutral-400 whitespace-nowrap">{numOfRows ? numOfRows : '--'}</p>
   );
 
 }

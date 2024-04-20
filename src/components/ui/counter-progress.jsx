@@ -23,9 +23,9 @@ export default function CounterProgress () {
   // }, [count]);
 
   return (
-    <div className='flex w-full'>
-      <Progress value={progress} className="w-full" />
-      <Rows />
+    <div className='w-full'>
+      <Progress value={progress} className="" />
+      {/* <Rows className="" /> */}
     </div>
   );
 }
