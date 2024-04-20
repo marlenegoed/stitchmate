@@ -48,7 +48,7 @@ export default function ReminderConfigDialog () {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" className="my-8">add reminder</Button>
+          <Button className="bg-red-200" variant="outline" >add reminder</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -17,7 +17,9 @@ import {
 import {useStore} from '@/app/store';
 import {useState, useEffect} from 'react';
 
-import {FaGears} from "react-icons/fa6";
+// import {FaGears} from "react-icons/fa6";
+import {MdSettings} from "react-icons/md";
+import {FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
 import ResetAlertDialog from './reset-alert-dialog';
 
@@ -38,6 +40,8 @@ export default function CounterSettings () {
     setFormCount(count);
   }, [count]);
 
+  const {clickSoundEnabled, toggleSound} = useStore();
+
   function handleSubmit (e) {
     e.preventDefault();
     setTitle(formTitle);
@@ -57,12 +61,14 @@ export default function CounterSettings () {
     setFormRows(parseInt(e.target.value));
   }
 
+  const toggleSoundIcon = clickSoundEnabled ? <FaVolumeHigh /> : <FaVolumeXmark />;
+
   return (
     <div className="flex items-center justify-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <FaGears size={28} />
+            <MdSettings size={28} className='fill-emerald-400' />
           </Button>
         </SheetTrigger>
         <SheetContent side={side}>
@@ -102,6 +108,9 @@ export default function CounterSettings () {
               </SheetClose>
             </SheetFooter>
           </form>
+          <Button size="icon" onClick={toggleSound}>
+            {toggleSoundIcon}
+          </Button>
           <ResetAlertDialog />
         </SheetContent>
       </Sheet>

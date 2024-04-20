@@ -24,6 +24,8 @@ import {
   FaVolumeXmark,
 } from "react-icons/fa6";
 
+// import {MdBubbleChart} from "react-icons/md";
+import {MdBatchPrediction} from "react-icons/md";
 
 import ResetAlertDialog from './reset-alert-dialog';
 
@@ -37,13 +39,12 @@ export default function ReminderList () {
 
   function handleSubmit () { }
 
-
   return (
     <div className="flex items-center justify-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <FaListUl />
+            <MdBatchPrediction size={28} className='fill-emerald-400' />
           </Button>
         </SheetTrigger>
         <SheetContent side={side}>

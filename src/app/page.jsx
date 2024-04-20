@@ -6,11 +6,10 @@ import {useStore} from './store';
 import Counter from '@/components/ui/counter';
 import {Button} from '@/components/ui/button';
 import {EditableTitle} from '@/components/ui/counter-title';
-import ResetAlert from '@/components/ui/reset-alert-dialog';
 import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
 import Rows from '@/components/ui/rows';
 import ReminderCarousel from '@/components/ui/reminder-carousel';
-import ReminderList from '@/components/ui/reminder-list';
+import CounterProgress from '@/components/ui/counter-progress';
 
 import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
@@ -22,7 +21,6 @@ import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 export default function Page () {
 
   const {countDown, clickSoundEnabled, toggleSound} = useStore();
-
 
   const [play] = useSound('/click-2.mp3');
   function handleCountDown () {
@@ -38,19 +36,19 @@ export default function Page () {
     <>
       <EditableTitle />
       <ReminderCarousel />
-      <Counter />
-      <Rows />
+      <div className='border border-neutral-200 rounded-2xl shadow-sm flex items-center justify-center min-w-48 px-6' >
+        <Counter />
+      </div>
+      <div className='flex flex-row'>
+        {/* <Rows /> */}
+        <CounterProgress />
+      </div>
       <section className='flex justify-around'>
-        <Button size="icon" onClick={handleCountDown}>
+        <Button size="icon" onClick={handleCountDown} className="mt-6">
           <FaMinus />
         </Button>
-        <Button size="icon" onClick={toggleSound}>
-          {toggleSoundIcon}
-        </Button>
-        <ResetAlert />
       </section>
       <ReminderConfigDialog />
-      <ReminderList />
     </>
   );
 
