@@ -3,15 +3,18 @@
 import useSound from 'use-sound';
 
 import {useStore} from './store';
-import Counter from '@/components/ui/counter';
+import Counter from '@/components/counter/counter';
 import {Button} from '@/components/ui/button';
-import {EditableTitle} from '@/components/ui/counter-title';
-import ReminderConfigDialog from '@/components/ui/reminder-config-dialog';
+import {EditableTitle} from '@/components/counter/counter-title';
+import ReminderConfigDialog from '@/components/reminder/reminder-config-dialog';
 import Rows from '@/components/ui/rows';
-import ReminderCarousel from '@/components/ui/reminder-carousel';
+import Reminder from '@/components/reminder/reminder';
+import CountDownButton from '@/components/counter/count-down-button';
+import ReminderCarousel from '@/components/reminder/reminder-carousel';
 
-
-import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
+import {FaMinus} from "react-icons/fa6";
+import ReminderAlertDialog from '@/components/reminder/reminder-alert-dialog';
+import ReminderList from '@/components/reminder/reminder-list';
 
 
 // Todo: Edit title -> Rename Component
@@ -20,32 +23,36 @@ import {FaMinus, FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
 
 export default function Page () {
 
-  const {countDown, clickSoundEnabled, toggleSound} = useStore();
+  // const {countDown, clickSoundEnabled} = useStore();
 
-  const [play] = useSound('/click-2.mp3');
-  function handleCountDown () {
-    countDown();
-    if (clickSoundEnabled) {
-      play();
-    }
-  }
-
-  const toggleSoundIcon = clickSoundEnabled ? <FaVolumeHigh /> : <FaVolumeXmark />;
+  // const [play] = useSound('/click-2.mp3');
+  // function handleCountDown () {
+  //   countDown();
+  //   if (clickSoundEnabled) {
+  //     play();
+  //   }
+  // }
 
   return (
     <>
       <EditableTitle />
-      <ReminderCarousel />
       <Counter />
-      <div className='flex items-center justify-between'>
+      <div className=' relativ z-10 flex items-center justify-between mx-10 -my-2'>
         <Rows />
-        <Button size="icon" onClick={handleCountDown}>
+        {/* <Button size="icon" onClick={handleCountDown}>
           <FaMinus />
-        </Button>
+        </Button> */}
+        <CountDownButton />
       </div>
-      <div className='flex justify-center mt-auto mb-10'>
-        <ReminderConfigDialog />
-      </div>
+
+      <section className='flex justify-center mt-auto mb-4'>
+        <ReminderList ></ReminderList>
+        {/* <ReminderAlertDialog title='new reminder' note='test text text'></ReminderAlertDialog>
+        <ReminderConfigDialog /> */}
+      </section>
+
+
+
     </>
   );
 

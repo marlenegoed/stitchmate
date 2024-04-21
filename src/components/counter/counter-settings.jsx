@@ -19,8 +19,9 @@ import {useState, useEffect} from 'react';
 
 // import {FaGears} from "react-icons/fa6";
 import {MdSettings} from "react-icons/md";
-import {FaVolumeHigh, FaVolumeXmark} from "react-icons/fa6";
+import {FaGears} from "react-icons/fa6";
 
+import FormField from '../ui/form-field';
 import ResetAlertDialog from './reset-alert-dialog';
 
 
@@ -61,57 +62,57 @@ export default function CounterSettings () {
     setFormRows(parseInt(e.target.value));
   }
 
-  const toggleSoundIcon = clickSoundEnabled ? <FaVolumeHigh /> : <FaVolumeXmark />;
 
   return (
     <div className="flex items-center justify-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <MdSettings size={28} className='fill-emerald-400' />
+            <FaGears size={24} className='' />
           </Button>
         </SheetTrigger>
         <SheetContent side={side}>
           <form onSubmit={handleSubmit}>
             <SheetHeader>
-              <SheetTitle>Edit counter</SheetTitle>
+              <SheetTitle className='text-left'>Edit counter</SheetTitle>
               <SheetDescription>
-                Make changes to your counter here. Click save when you're done.
               </SheetDescription>
             </SheetHeader>
 
-            <div className="grid gap-4 py-4" >
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="title" className="text-right">
+            <div className='grid gap-y-4 py-4'>
+              <FormField>
+                <Label variant='inline' htmlFor="title">
                   Title
                 </Label>
-                <Input id="title" value={formTitle} className="col-span-3" onChange={handleChange} />
-              </div>
+                <Input variant='inline' id="title" value={formTitle} onChange={handleChange} />
+              </FormField>
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="count" className="text-right">
+              <FormField>
+                <Label variant='inline' htmlFor="count">
                   Count
                 </Label>
-                <Input id="count" type="number" value={formCount} className="col-span-3" onChange={handleCountChange} />
-              </div>
+                <Input id="count" typeç="number" value={formCount} variant='inline' onChange={handleCountChange} />
+              </FormField>
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="rows" className="text-right">
+              <FormField>
+                <Label variant='inline' htmlFor="rows">
                   Number of Rows
                 </Label>
-                <Input id="rows" type="number" value={formRows} className="col-span-3" onChange={handleRowChange} />
-              </div>
+                <Input id="rows" type="number" value={formRows} variant='inline' onChange={handleRowChange} />
+              </FormField>
             </div>
+
             <SheetFooter>
               <SheetClose asChild>
-                <Button type="submit">Save changes</Button>
+                <div className='flex w-full'>
+                  <Button type="submit" className='w-fit px-12'>Save changes</Button>
+                </div>
               </SheetClose>
             </SheetFooter>
+            <div className='flex w-full justify-center py-20'>
+              <ResetAlertDialog />
+            </div>
           </form>
-          <Button size="icon" onClick={toggleSound}>
-            {toggleSoundIcon}
-          </Button>
-          <ResetAlertDialog />
         </SheetContent>
       </Sheet>
     </div >

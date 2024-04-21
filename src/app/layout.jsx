@@ -1,11 +1,11 @@
 import './globals.css';
 import {lato} from '@/components/ui/fonts';
 import Logo from '@/components/ui/logo';
-import CounterSettings from '@/components/ui/counter-settings';
-import ReminderList from '@/components/ui/reminder-list';
-import CounterProgress from '@/components/ui/counter-progress';
+import CounterSettings from '@/components/counter/counter-settings';
+import ReminderList from '@/components/reminder/reminder-list';
+import CounterProgress from '@/components/counter/counter-progress';
+import Menu from '@/components/ui/menu';
 // import CounterMenu from '@/components/ui/counter-menu';
-
 
 export default function RootLayout ({children}) {
   return (
@@ -15,12 +15,12 @@ export default function RootLayout ({children}) {
       `}>
         <nav className='flex justify-between p-4'>
           {/* <CounterMenu /> */}
-          <ReminderList />
+          <Menu />
           <Logo />
           <CounterSettings />
         </nav>
         <CounterProgress />
-        <main className='flex-1 max-w-screen-sm flex flex-col mx-auto px-6 py-3'> {children}</main>
+        <main className='flex-1 max-w-screen-sm flex flex-col mx-auto px-4 py-3 w-full'>{children}</main>
       </body>
     </html>
   );

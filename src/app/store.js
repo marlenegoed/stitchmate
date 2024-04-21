@@ -1,7 +1,58 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 
-// TODO: Sort reminders 
+// Mock data 
+const reminders = [
+  {
+    id: -1,
+    notification: true,
+    title: 'Short Row 1',
+    type: 'for-rows',
+    note: 'RS: Purl to 1 st before marker, sl 1 wiyb, sm, purl to the last 3 sts, w&t',
+    repeat: {
+      from: 1,
+      until: 1
+    }
+  },
+
+  {
+    id: -2,
+    notification: true,
+    title: 'Short Row 2',
+    type: 'for-rows',
+    note: 'WS: Knit to marker, sm, p1, knit to the last 3 sts, w&t.',
+    repeat: {
+      from: 2,
+      until: 2
+    }
+  },
+
+  {
+    id: -3,
+    notification: true,
+    title: 'Short Rows 3 & 4',
+    type: 'for-rows',
+    note: 'RS: Purl to 1 sts before marker, sl 1 wiyb, sm, purl to 4 sts before previously wrapped st, w&t. WS: Knit to marker, sm, p1, knit to 4 sts before previously wrapped st, w&t.',
+    repeat: {
+      from: 2,
+      until: 2
+    }
+  },
+
+  {
+    id: -4,
+    notification: false,
+    title: 'decrease',
+    type: 'every',
+    note: 'K1, k2tog, knit to the last 3 sts, ssk, k1 (2 sts dec).',
+    repeat: {
+      interval: 9,
+      times: 10,
+      start: 1
+    }
+  },
+
+];
 
 let id = 1;
 let reminderId = 1;
@@ -11,7 +62,7 @@ export const useStore = create(
     count: 1,
     title: `my counter no.${id}`,
     numOfRows: 0,
-    reminders: [],
+    reminders: reminders,
     nextReminders: [],
     clickSoundEnabled: true,
 

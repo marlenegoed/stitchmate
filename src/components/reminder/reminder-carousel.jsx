@@ -19,6 +19,8 @@ export default function ReminderCarousel () {
 
   const placeholder = <CarouselItem className='invisible'><ReminderAlertDialog title="" note="" /></CarouselItem>;
 
+  const hiddenClass = nextReminders.length < 2 ? 'invisible' : '';
+
   return (
     <Carousel className="w-full max-w-xs">
       <CarouselContent>
@@ -29,8 +31,8 @@ export default function ReminderCarousel () {
         ))}
         {nextReminders.length === 0 && placeholder}
       </CarouselContent>
-      {nextReminders.length > 1 && <CarouselPrevious />}
-      {nextReminders.length > 1 && <CarouselNext />}
+      <CarouselPrevious className={hiddenClass} />
+      <CarouselNext className={hiddenClass} />
     </Carousel>
   );
 }

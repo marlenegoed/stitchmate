@@ -1,3 +1,5 @@
+'use client';
+
 import {useState, useEffect} from "react";
 
 import {cn} from "@/lib/utils";
@@ -31,10 +33,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import {Alert, AlertTitle} from '../ui/alert';
 import {Textarea} from "@/components/ui/textarea";
 
-import FormField from './form-field';
+import FormField from '../ui/form-field';
+import AddReminder from './add-reminder';
 import {useStore} from '@/app/store';
+import {FaPlus} from "react-icons/fa6";
 
 
 export default function ReminderConfigDialog () {
@@ -48,27 +54,32 @@ export default function ReminderConfigDialog () {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">add reminder</Button>
+          <Alert className='m-0 p-0 border-none'>
+            <AddReminder></AddReminder>
+          </Alert>
+          {/* <Button variant="outline">add reminder</Button> */}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add Reminder</DialogTitle>
             <DialogDescription>
-              Configure your reminder here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
           <ReminderForm setOpen={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </DialogContent >
+      </Dialog >
     );
   }
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="my-8 w-full">add reminder</Button>
+        <Alert className='m-0 p-0 border-none'>
+          <AddReminder></AddReminder>
+        </Alert>
+        {/* <Button variant="outline" className="my-8 w-full">add reminder</Button> */}
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className='p4'>
         <DrawerHeader className="text-left">
           <DrawerTitle>Add Reminder</DrawerTitle>
           {/* <DrawerDescription>
@@ -82,7 +93,7 @@ export default function ReminderConfigDialog () {
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </Drawer >
   );
 }
 
@@ -162,10 +173,9 @@ function ReminderForm ({className, setOpen}) {
 
   const errorMessages = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
-
   return (
     <form className={cn("grid items-start gap-4", className)} onSubmit={handleSubmit}>
-      <FormField className='flex items-center bg-neutral-100 rounded-xl px-3 min-h-12'>
+      <FormField className=''>
         <Label variant='inline' htmlFor="reminderTitle">Title</Label>
         <Input variant='inline' type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
       </FormField>
@@ -179,7 +189,7 @@ function ReminderForm ({className, setOpen}) {
         </SelectContent>
       </Select>
       {inputType}
-      <Textarea placeholder={defaultNote} value={reminderNote} onChange={e => setReminderNote(e.target.value)} />
+      <Textarea className='boder-none bg-neutral-100 rounded-lg p-3 text-neutral-500' placeholder={defaultNote} value={reminderNote} onChange={e => setReminderNote(e.target.value)} />
       {errorMessages.map((msg, index) => <p key={index}>{msg}</p>)}
 
       <Button type="submit">Save changes</Button>

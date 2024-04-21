@@ -1,3 +1,6 @@
+import {
+  Alert,
+} from "@/components/ui/alert";
 
 import {
   Dialog,
@@ -10,20 +13,20 @@ import {
 } from "@/components/ui/dialog";
 
 import {Button} from "@/components/ui/button";
+import {DialogClose} from '@radix-ui/react-dialog';
+import shortenText from '@/lib/shorten-text';
+import Reminder from './reminder';
 
 import {FaAnglesRight} from "react-icons/fa6";
 
-import {DialogClose} from '@radix-ui/react-dialog';
-
-import {useStore} from '@/app/store';
-import ReminderCard from './__reminder-card';
-
-export default function ReminderDialog ({note, title}) {
+export default function ReminderAlertDialog ({title, note}) {
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <ReminderCard title={title} note={note} />
+        <Alert className='border-none p-0 m-0'>
+          <Reminder title={title} note={note} />
+        </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

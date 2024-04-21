@@ -22,7 +22,7 @@ export default function ResetAlertDialog () {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="icon"><FaArrowRotateLeft /></Button>
+        <Button variant="outline" className='border-neutral-300' size="icon"><FaArrowRotateLeft className='fill-neutral-300' /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
