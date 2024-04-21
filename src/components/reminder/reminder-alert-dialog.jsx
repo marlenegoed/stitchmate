@@ -15,13 +15,11 @@ import {
 import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
 import Reminder from './reminder';
-import ReminderConfigDialog from './reminder-config-dialog';
-
-import {FaAnglesRight} from "react-icons/fa6";
+import Link from 'next/link';
 
 export default function ReminderAlertDialog ({reminder}) {
 
-  const {title, note} = reminder;
+  const {id, title, note} = reminder;
 
   return (
     <Dialog>
@@ -42,10 +40,14 @@ export default function ReminderAlertDialog ({reminder}) {
           <DialogClose asChild>
             <Button>continue</Button>
           </DialogClose>
-          <ReminderConfigDialog>Edit reminder</ReminderConfigDialog>
+          <Link href={`/reminders/${id}/edit`}>
+            <Button variant="ghost">
+              Edit reminder
+            </Button>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
-
+;

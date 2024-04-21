@@ -2,7 +2,6 @@
 
 import {useStore} from '@/app/store';
 
-import ReminderConfigDialog from './reminder-config-dialog';
 import ReminderAlertDialog from './reminder-alert-dialog';
 
 export default function ReminderList () {
@@ -11,11 +10,7 @@ export default function ReminderList () {
   return (
     <section className='overflow-x-auto'>
       <div className='flex gap-4'>
-        {reminders.map(reminder => {
-          return <ReminderAlertDialog key={reminder.id} reminder={reminder} />;
-        })
-        }
-        <ReminderConfigDialog />
+        {reminders.map(reminder => <ReminderAlertDialog key={reminder.id} reminder={reminder} />)}
       </div>
     </section>
   );
