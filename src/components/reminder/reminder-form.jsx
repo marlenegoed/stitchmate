@@ -3,27 +3,8 @@
 import {useState, useEffect} from "react";
 
 import {cn} from "@/lib/utils";
-import {useMediaQuery} from "@/hooks/use-media-query";
 import {Button} from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose
-} from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {
@@ -34,86 +15,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {Alert, AlertTitle} from '../ui/alert';
 import {Textarea} from "@/components/ui/textarea";
-
-import FormField from '../ui/form-field';
-import AddReminder from './add-reminder';
+import FormField from '@/components/ui/form-field';
 import {useStore} from '@/app/store';
-import {FaPlus} from "react-icons/fa6";
 
+export default function ReminderForm ({className, handleFormSubmit, reminder}) {
+  const {count} = useStore();
 
-export default function ReminderConfigDialog () {
-  const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  if (isDesktop) {
-    // const submitButton = <DialogClose asChild>
-    //   <Button type="submit">Save changes</Button>
-    // </DialogClose>;
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Alert className='m-0 p-0 border-none'>
-            <AddReminder></AddReminder>
-          </Alert>
-          {/* <Button variant="outline">add reminder</Button> */}
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add Reminder</DialogTitle>
-            <DialogDescription>
-            </DialogDescription>
-          </DialogHeader>
-          <ReminderForm setOpen={setOpen} />
-        </DialogContent >
-      </Dialog >
-    );
-  }
-
-  return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Alert className='m-0 p-0 border-none'>
-          <AddReminder></AddReminder>
-        </Alert>
-        {/* <Button variant="outline" className="my-8 w-full">add reminder</Button> */}
-      </DrawerTrigger>
-      <DrawerContent className='p4'>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Add Reminder</DrawerTitle>
-          {/* <DrawerDescription>
-            Configure your reminder here. Click save when you're done.
-          </DrawerDescription> */}
-        </DrawerHeader>
-        <ReminderForm setOpen={setOpen} className="px-4" />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer >
-  );
-}
-
-function ReminderForm ({className, setOpen}) {
-
-  const defaultNote = "you can add a note to your reminder, e. g.: k1, k2tog, knit to 3 sts before end, ssk, k1...";
-
-  const {setReminder, count} = useStore();
-
-  const [reminderType, setReminderType] = useState('every');
-  const [reminderTitle, setReminderTitle] = useState('my reminder');
-  const [reminderNote, setReminderNote] = useState('');
-  const [repeatValue1, setRepeatValue1] = useState('');
-  const [repeatValue2, setRepeatValue2] = useState('');
-  const [repeatValue3, setRepeatValue3] = useState(count);
-
-  useEffect(() => {
-    setRepeatValue3(count);
-  }, [count]);
-
+  const [reminderType, setReminderType] = useState(reminder.type);
+  const [reminderTitle, setReminderTitle] = useState(reminder.title);
+  const [reminderNote, setReminderNote] = useState(reminder.note);
+  const [repeatValue1, setRepeatValue1] = useState(reminder.repeat.interval || reminder.repeat.from || '');
+  const [repeatValue2, setRepeatValue2] = useState(reminder.repeat.times || reminder.repeat.until || '');
+  const [repeatValue3, setRepeatValue3] = useState(reminder.repeat.start || count);
 
   function handleTypeChange (value) {
     setReminderType(value);
@@ -125,7 +39,6 @@ function ReminderForm ({className, setOpen}) {
     const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
     if (isValid.length > 0) {
-      setOpen(true);
       return false;
     }
 
@@ -147,16 +60,8 @@ function ReminderForm ({className, setOpen}) {
         until: repeatValue2
       };
     }
-    setReminder(newReminder);
-    setOpen(false);
 
-    setReminderTitle('my reminder');
-    setReminderType('every');
-    setRepeatValue1(0);
-    setRepeatValue2(0);
-    setRepeatValue3(count);
-    setReminderNote('');
-
+    handleFormSubmit(newReminder);
   }
 
   // toggle form input 
@@ -188,7 +93,12 @@ function ReminderForm ({className, setOpen}) {
         </SelectContent>
       </Select>
       {inputType}
-      <Textarea className='boder-none bg-neutral-100 rounded-lg p-3 text-neutral-500' placeholder={defaultNote} value={reminderNote} onChange={e => setReminderNote(e.target.value)} />
+      <Textarea
+        className='boder-none bg-neutral-100 rounded-lg p-3 text-neutral-500'
+        placeholder="you can add a note to your reminder e.g. k1, k2tog, knit to 3 sts before end, ssk, k1."
+        value={reminderNote}
+        onChange={e => setReminderNote(e.target.value)}
+      />
       {errorMessages.map((msg, index) => <p key={index}>{msg}</p>)}
 
       <Button type="submit">Save changes</Button>
@@ -198,7 +108,6 @@ function ReminderForm ({className, setOpen}) {
 
 
 function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
-
   return (
     <div className="flex gap-x-4">
       <FormField>
@@ -219,7 +128,6 @@ function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeat
 
 
 function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
-
   return (
     <div className="flex gap-x-4">
       <div className="flex gap-x-2 items-center">
@@ -235,7 +143,6 @@ function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatV
 }
 
 function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
-
   const messages = [];
 
   if (repeatValue1 === 0
@@ -254,11 +161,9 @@ function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
   }
 
   return messages;
-
 }
 
 function makeOrdinal (num) {
-
   if (num % 100 > 10 && num % 100 < 20) return 'th';
 
   const digit = num % 10;
@@ -269,17 +174,10 @@ function makeOrdinal (num) {
     case 3: return 'rd';
     default: return 'th';
   }
-
 }
 
 function numtoString (num) {
-
   if (Number.isNaN(num)) return '';
   return num.toString();
-
 }
-
-
-
-
 

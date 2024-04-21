@@ -2,20 +2,17 @@
 
 import {useStore} from '@/app/store';
 
-import Reminder from './reminder';
-import AddReminder from './add-reminder';
 import ReminderConfigDialog from './reminder-config-dialog';
+import ReminderAlertDialog from './reminder-alert-dialog';
 
 export default function ReminderList () {
-
   const {reminders} = useStore();
-  console.log(reminders);
-  return (
 
+  return (
     <section className='overflow-x-auto'>
       <div className='flex gap-4'>
         {reminders.map(reminder => {
-          return <Reminder key={reminder.id} reminder={reminder} />;
+          return <ReminderAlertDialog key={reminder.id} reminder={reminder} />;
         })
         }
         <ReminderConfigDialog />

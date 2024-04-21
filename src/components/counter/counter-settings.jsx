@@ -1,5 +1,6 @@
 "use client";
 
+import {cn} from '@/lib/utils';
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -30,7 +31,7 @@ import ResetAlertDialog from './reset-alert-dialog';
 const side = "right";
 
 
-export default function CounterSettings () {
+export default function CounterSettings ({className}) {
 
   const {title, setTitle, count, setCount, numOfRows, setNumOfRows} = useStore();
   const [formTitle, setFormTitle] = useState(title);
@@ -64,7 +65,7 @@ export default function CounterSettings () {
 
 
   return (
-    <div className="flex items-center justify-center">
+    <div className={cn("flex items-center justify-center", className)} >
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">

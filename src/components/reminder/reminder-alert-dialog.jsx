@@ -14,18 +14,20 @@ import {
 
 import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
-import shortenText from '@/lib/shorten-text';
 import Reminder from './reminder';
+import ReminderConfigDialog from './reminder-config-dialog';
 
 import {FaAnglesRight} from "react-icons/fa6";
 
-export default function ReminderAlertDialog ({title, note}) {
+export default function ReminderAlertDialog ({reminder}) {
+
+  const {title, note} = reminder;
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0'>
-          <Reminder title={title} note={note} />
+          <Reminder reminder={reminder} />
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -40,6 +42,7 @@ export default function ReminderAlertDialog ({title, note}) {
           <DialogClose asChild>
             <Button>continue</Button>
           </DialogClose>
+          <ReminderConfigDialog>Edit reminder</ReminderConfigDialog>
         </DialogFooter>
       </DialogContent>
     </Dialog>
