@@ -3,29 +3,21 @@
 import {useState, useEffect} from "react";
 
 import {Progress} from '@/components/ui/progress';
-import Rows from '@/components/ui/rows';
-
 import {useStore} from '@/app/store';
 
 export default function CounterProgress () {
-
-  const [progress, setProgress] = useState(13);
-
   const {count, numOfRows} = useStore();
+  const [progress, setProgress] = useState(numOfRows);
 
   useEffect(() => {
-    const timer = setTimeout(() => setProgress(66), 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // useEffect(() => {
-  //   setRepeatValue3(count);
-  // }, [count]);
+    if (numOfRows > 0) {
+      setProgress(count / numOfRows * 100);
+    }
+  }, [count, numOfRows]);
 
   return (
     <div className='w-full'>
-      <Progress value={progress} className="" />
-      {/* <Rows className="" /> */}
+      {numOfRows > 0 && <Progress value={progress} className="" />}
     </div>
   );
 }
