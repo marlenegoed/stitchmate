@@ -11,20 +11,27 @@ import {cn} from '@/lib/utils';
 
 import Link from 'next/link';
 
+import {useStore} from '@/app/store';
+
 
 export default function Nav () {
+
+  const {numOfRows} = useStore();
+  const isRowNums = numOfRows > 0;
+
   const pathname = usePathname();
   const isRoot = pathname === '/';
 
   return (
     <>
-      <nav className='flex justify-between p-4'>
+      <nav className='flex justify-between px-4 py-3'>
         {/* <CounterMenu /> */}
-        {isRoot ? <Menu /> : <BackButton />}
+        {isRoot ? <Menu className='fill-slate-800' /> : <BackButton className='fill-slate-800' />}
         <Logo />
         <CounterSettings className={cn(!isRoot && 'invisible')} />
       </nav>
-      {isRoot ? <CounterProgress /> : <hr className='border-gray-300' />}
+      {isRoot && isRowNums ? <CounterProgress /> : <hr className='border-gray-300' />}
+
     </>
   );
 }

@@ -5,8 +5,6 @@ import {useStore, findReminder} from '@/app/store';
 import ReminderForm from '@/components/reminder/reminder-form';
 import {useRouter, useParams} from 'next/navigation';
 
-
-
 export default function Page () {
   const {updateReminder} = useStore();
   const router = useRouter();
@@ -26,8 +24,8 @@ export default function Page () {
 
   return (
     <div className='mx-4 my-3'>
-      <h1 className='font-semibold text-lg mb-4'>Create a new Reminder</h1>
-      <section className=''>
+      <h1 className='font-semibold text-lg mb-4 text-slate-800 pl-1'> Edit Reminder</h1>
+      <section>
         <ReminderForm reminder={reminder} handleFormSubmit={handleSubmit} />
       </section>
     </div>

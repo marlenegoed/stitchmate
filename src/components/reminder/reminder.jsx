@@ -1,6 +1,6 @@
+
 import shortenText from '@/lib/shorten-text';
-import BackgroundBlob from '../ui/background-blobs';
-import {useMemo} from 'react';
+import makeOrdinal from '@/lib/make-ordinal';
 
 import {FaEye} from "react-icons/fa6";
 import {FaEyeSlash} from "react-icons/fa6";
@@ -9,28 +9,21 @@ import {TbZzz} from "react-icons/tb";
 
 export default function Reminder ({reminder}) {
 
-  // const blob = useMemo(() => <BackgroundBlob colorClass='rose-200' stroke={false} className='absolute bottom-3 right-3 fill-white w-24 h-24 opacity-50' />, []);
-
   const {title, note, repeat, type} = reminder;
 
-  const singleClass = 'relative flex w-40 h-40 min-w-40 bg-emerald-300 rounded-xl p-3';
+  const typeEvery = <p className='text-sm font-semibold text-sienna-400'>from row {repeat.start}, every {repeat.interval}{makeOrdinal(repeat.interval)}, {repeat.times} times</p>;
 
-  const typeEvery = `from row ${repeat.start}, repeat every ${repeat.interval} row, ${repeat.times}times.`;
-  const typeForRows = `from row ${repeat.from}, repeat until ${repeat.until}.`;
+  const typeForRows = <p className='text-sm font-semibold text-sienna-400'>rows {repeat.from} {`\u2013`} {repeat.until}</p>;
 
   return (
-
-    <div className={singleClass}>
-      {/* {blob} */}
-      <div className='relative z-10'>
-        {/* {notification === false && <span><TbZzz /></span>} */}
-        <h4 className='font-semibold'>{title}</h4>
-        <p className='font-semibold text-neutral-100'>{shortenText(note, 30)}</p>
-        <p className='font-semibold text-neutral-100'>{type === 'every' ? typeEvery : typeForRows}</p>
+    <div className='flex flex-col justify-between bg-eggshell rounded-xl py-3 px-4 w-40 h-40'>
+      <div>
+        <h4 className='font-semibold text-slate-800 mb-2'>{title}</h4>
+        {type === 'every' ? typeEvery : typeForRows}
       </div>
-
+      <div>
+        <p className='text-sm text-neutral-600'>{shortenText(note, 30)}</p>
+      </div>
     </div>
   );
-
-
-}
+};

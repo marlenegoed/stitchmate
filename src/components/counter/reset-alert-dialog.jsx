@@ -22,13 +22,13 @@ export default function ResetAlertDialog () {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className='border-neutral-300' size="icon"><FaArrowRotateLeft className='fill-neutral-300' /></Button>
+        <Button variant="outline" className='border-neutral-300 hover:bg-neutral-100' size="icon"><FaArrowRotateLeft className='fill-neutral-300' /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>All set for a big reset?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to reset your count and embark on a fresh knitting adventure? Remember: This action cannot be undone.
+            Are you ready to knit your way into uncharted territory? Resetting wipes the slate clean, including all reminders!
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 import {cn} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
@@ -18,6 +18,7 @@ import {
 import {Textarea} from "@/components/ui/textarea";
 import FormField from '@/components/ui/form-field';
 import {useStore} from '@/app/store';
+import makeOrdinal from '@/lib/make-ordinal';
 
 export default function ReminderForm ({className, handleFormSubmit, reminder}) {
   const {count} = useStore();
@@ -78,7 +79,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
   const errorMessages = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
   return (
-    <form className={cn("grid items-start gap-4", className)} onSubmit={handleSubmit}>
+    <form className={cn("grid items-start gap-5", className)} onSubmit={handleSubmit}>
       <FormField className=''>
         <Label variant='inline' htmlFor="reminderTitle">Title</Label>
         <Input variant='inline' type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
@@ -109,7 +110,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
 
 function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
   return (
-    <div className="flex gap-x-4">
+    <div className="flex gap-x-5">
       <FormField>
         <Input variant="inline" min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
         <Label variant="inline" htmlFor="start">start row</Label>
@@ -129,15 +130,15 @@ function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeat
 
 function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
   return (
-    <div className="flex gap-x-4">
-      <div className="flex gap-x-2 items-center">
-        <Label htmlFor="from">from</Label>
-        <Input min="0" type="number" id="from" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
-      </div>
-      <div className="flex gap-x-2 items-center">
-        <Label htmlFor="until">until</Label>
-        <Input min="0" type="number" id="until" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
-      </div>
+    <div className="flex gap-x-5">
+      <FormField>
+        <Label variant='inline' htmlFor="from">from</Label>
+        <Input variant='inline' min="0" type="number" id="from" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
+      </FormField>
+      <FormField>
+        <Label variant='inline' htmlFor="until">until</Label>
+        <Input variant='inline' min="0" type="number" id="until" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
+      </FormField>
     </div>
   );
 }
@@ -163,18 +164,6 @@ function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
   return messages;
 }
 
-function makeOrdinal (num) {
-  if (num % 100 > 10 && num % 100 < 20) return 'th';
-
-  const digit = num % 10;
-
-  switch (digit) {
-    case 1: return 'st';
-    case 2: return 'nd';
-    case 3: return 'rd';
-    default: return 'th';
-  }
-}
 
 function numtoString (num) {
   if (Number.isNaN(num)) return '';

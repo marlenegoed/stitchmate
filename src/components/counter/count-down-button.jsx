@@ -5,7 +5,6 @@ import {FaMinus} from "react-icons/fa6";
 import {Button} from '../ui/button';
 
 export default function CountDownButton () {
-
   const {countDown, clickSoundEnabled} = useStore();
 
   const [play] = useSound('/click-2.mp3');
@@ -18,9 +17,8 @@ export default function CountDownButton () {
   }
 
   return (
-    <Button size='icon' className='bg-black hover:bg-black' onClick={handleCountDown}>
-      <FaMinus className='fill-white' />
+    <Button size='icon' variant='outline' className='hover:bg-neutral-100 border-slate-800' onClick={handleCountDown}>
+      <FaMinus className='fill-slate-800' />
     </Button>
   );
-
 }

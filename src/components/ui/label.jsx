@@ -13,7 +13,7 @@ const labelVariants = cva(
       variant: {
         default: "",
         inline:
-          "font-semibold",
+          "font-semibold text-slate-800",
       },
     },
     defaultVariants: {

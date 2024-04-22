@@ -17,6 +17,7 @@ import {
 
 import {useStore} from '@/app/store';
 import {useState, useEffect} from 'react';
+import {Title} from '../ui/title';
 
 // import {FaGears} from "react-icons/fa6";
 import {MdSettings} from "react-icons/md";
@@ -36,19 +37,21 @@ export default function CounterSettings ({className}) {
   const {title, setTitle, count, setCount, numOfRows, setNumOfRows} = useStore();
   const [formTitle, setFormTitle] = useState(title);
   const [formCount, setFormCount] = useState(count);
-  const [formRows, setFormRows] = useState(numOfRows);
+  const [formRows, setFormRows] = useState(numOfRows || '');
+
+  useEffect(() => {
+    setFormRows(numOfRows || '');
+  }, [numOfRows]);
 
   useEffect(() => {
     setFormCount(count);
   }, [count]);
 
-  const {clickSoundEnabled, toggleSound} = useStore();
-
   function handleSubmit (e) {
     e.preventDefault();
     setTitle(formTitle);
-    setCount(formCount);
-    setNumOfRows(formRows);
+    setCount(formCount || 1);
+    setNumOfRows(formRows || 0);
   }
 
   function handleChange (e) {
@@ -56,17 +59,18 @@ export default function CounterSettings ({className}) {
   }
 
   function handleCountChange (e) {
-    setFormCount(parseInt(e.target.value));
+    const value = e.target.value;
+    setFormCount(value ? parseInt(value) : '');
   }
 
   function handleRowChange (e) {
-    setFormRows(parseInt(e.target.value));
+    const value = e.target.value;
+    setFormRows(value ? parseInt(value) : '');
   }
-
 
   return (
     <div className={cn("flex items-center justify-center", className)} >
-      <Sheet>
+      <Sheet className='bg-neutral-300'>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
             <FaGears size={24} className='' />
@@ -75,12 +79,10 @@ export default function CounterSettings ({className}) {
         <SheetContent side={side}>
           <form onSubmit={handleSubmit}>
             <SheetHeader>
-              <SheetTitle className='text-left'>Edit counter</SheetTitle>
-              <SheetDescription>
-              </SheetDescription>
+              <Title>Edit Counter</Title>
             </SheetHeader>
 
-            <div className='grid gap-y-4 py-4'>
+            <div className='grid gap-y-5 py-4'>
               <FormField>
                 <Label variant='inline' htmlFor="title">
                   Title
@@ -92,21 +94,21 @@ export default function CounterSettings ({className}) {
                 <Label variant='inline' htmlFor="count">
                   Count
                 </Label>
-                <Input id="count" typeç="number" value={formCount} variant='inline' onChange={handleCountChange} />
+                <Input id="count" typeç="number" value={formCount} variant='inline' min="1" onChange={handleCountChange} />
               </FormField>
 
               <FormField>
                 <Label variant='inline' htmlFor="rows">
                   Number of Rows
                 </Label>
-                <Input id="rows" type="number" value={formRows} variant='inline' onChange={handleRowChange} />
+                <Input id="rows" type="number" value={formRows} variant='inline' min="1" onChange={handleRowChange} />
               </FormField>
             </div>
 
             <SheetFooter>
               <SheetClose asChild>
-                <div className='flex w-full'>
-                  <Button type="submit" className='w-fit px-12'>Save changes</Button>
+                <div className='flex w-full mt-2'>
+                  <Button type="submit" className='px-12 w-full'>Save changes</Button>
                 </div>
               </SheetClose>
             </SheetFooter>

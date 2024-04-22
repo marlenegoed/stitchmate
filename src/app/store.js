@@ -125,7 +125,7 @@ export const useStore = create(
 
       setNumOfRows: function (numOfRows) {
         return set(state => {
-          if (numOfRows <= 1) return {...state, numOfRows: 1};
+          if (numOfRows <= 0) return {...state, numOfRows: 0};
           if (numOfRows > 999) return {...state, numOfRows: 999};
           return {...state, numOfRows};
         });
@@ -136,7 +136,6 @@ export const useStore = create(
           reminder.id = state.id;
           state.id++;
           const newReminders = [...state.reminders, reminder];
-          // newReminders.sort((a, b) => a - b)
           return {
             ...state,
             reminders: newReminders,
@@ -146,9 +145,7 @@ export const useStore = create(
       },
 
       updateReminder: function (updatedReminder) {
-
         return set(state => {
-
           const updatedReminders = state.reminders.map(reminder => {
             if (reminder.id === updatedReminder.id) {
               return updatedReminder;
@@ -192,6 +189,10 @@ export function findReminder (id) {
   return function (state) {
     return state.reminders.find(reminder => reminder.id === id);
   };
+}
+
+export function selectNotifiableNextReminders (state) {
+  return state.nextReminders.filter(reminder => reminder.notification);
 }
 
 // helper 

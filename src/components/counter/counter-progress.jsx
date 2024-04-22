@@ -1,7 +1,6 @@
 "use client";
 
 import {useState, useEffect} from "react";
-
 import {Progress} from '@/components/ui/progress';
 import {useStore} from '@/app/store';
 
@@ -11,13 +10,15 @@ export default function CounterProgress () {
 
   useEffect(() => {
     if (numOfRows > 0) {
-      setProgress(count / numOfRows * 100);
+      setProgress(Math.min(count / numOfRows * 100, 100));
+    } else {
+      setProgress(0);
     }
-  }, [count, numOfRows]);
+  }, [numOfRows, count]);
 
   return (
     <div className='w-full'>
-      {numOfRows > 0 && <Progress value={progress} className="" />}
+      <Progress value={progress} className="" />
     </div>
   );
 }
