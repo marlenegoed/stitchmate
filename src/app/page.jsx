@@ -21,9 +21,9 @@ export default function Page () {
         <ReminderNotification />
       </section>
 
-      <section className='max-w-64 w-full flex-1 flex-col flex item-center' >
+      <section className='w-full flex-1 flex-col flex item-center' >
         <Counter />
-        <div className='relativ z-10 flex flex-row w-full justify-between px-4'>
+        <div className='flex flex-col w-fit justify-center px-4'>
           <Rows />
           <CountDownButton />
         </div>
