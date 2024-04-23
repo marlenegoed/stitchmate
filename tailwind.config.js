@@ -23,6 +23,7 @@ module.exports = {
     extend: {
       colors: {
         eggshell: '#F4F1DE',
+        sand: '#f0efee',
         sienna: {
           50: '#FCF1EE',
           100: '#F9E1DC',

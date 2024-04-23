@@ -20,8 +20,8 @@ export default function Counter () {
   }
 
   return (
-    <div className='relative p-8 flex items-center justify-center'>
-      <button className='min-w-48 px-6 text-8xl text-center py-8 z-10 relative text-zinc-800 sm:p-4 sm:p-t-0' onClick={handleClick}>
+    <div className='relative flex items-center justify-center'>
+      <button className='text-8xl text-center z-10 relative text-zinc-800 p-16' onClick={handleClick}>
         <span>{count}</span>
       </button>
       {blob}

@@ -58,7 +58,6 @@ export const useStore = create(
   persist((set, get) => {
     return {
       id: 1,
-
       count: 1,
       title: `my counter no.1`,
       numOfRows: 0,
@@ -162,9 +161,9 @@ export const useStore = create(
         });
       },
 
-      deleteReminder: function (deletedReminder) {
+      deleteReminder: function (id) {
         return set(state => {
-          const updatedReminders = state.reminders.filter(reminder => reminder.id !== deletedReminder.id);
+          const updatedReminders = state.reminders.filter(reminder => reminder.id !== id);
           return {
             ...state,
             reminders: updatedReminders,

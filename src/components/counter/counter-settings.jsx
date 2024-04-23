@@ -73,7 +73,7 @@ export default function CounterSettings ({className}) {
       <Sheet className='bg-neutral-300'>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <FaGears size={24} className='' />
+            <FaGears size={20} className='fill-slate-700' />
           </Button>
         </SheetTrigger>
         <SheetContent side={side}>
@@ -112,7 +112,8 @@ export default function CounterSettings ({className}) {
                 </div>
               </SheetClose>
             </SheetFooter>
-            <div className='flex w-full justify-center py-20'>
+            <div className='flex w-full flex-col items-center py-20 gap-y-4'>
+              <p className='text-center font-semibold text-neutral-500'>Ready to cast-on?<br /><span className='text-center font-normal text-neutral-500'>you can reset your count</span></p>
               <ResetAlertDialog />
             </div>
           </form>

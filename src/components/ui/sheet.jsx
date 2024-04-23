@@ -51,7 +51,7 @@ const SheetContent = React.forwardRef(({side = "right", className, children, ...
       {children}
       <SheetPrimitive.Close
         className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800">
-        <IoClose size={24} className='mt-2.5 mr-2' />
+        <IoClose size={20} className='mt-2.5 mr-2' />
 
 
         <span className="sr-only">Close</span>

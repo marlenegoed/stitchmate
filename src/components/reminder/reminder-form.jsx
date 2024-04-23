@@ -19,6 +19,8 @@ import {Textarea} from "@/components/ui/textarea";
 import FormField from '@/components/ui/form-field';
 import {useStore} from '@/app/store';
 import makeOrdinal from '@/lib/make-ordinal';
+import {Checkbox} from '../ui/checkbox';
+
 
 export default function ReminderForm ({className, handleFormSubmit, reminder}) {
   const {count} = useStore();
@@ -47,6 +49,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
       title: reminderTitle,
       type: reminderType,
       note: reminderNote,
+      notification: true,
     };
 
     if (reminderType === "every") {
@@ -80,10 +83,11 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
 
   return (
     <form className={cn("grid items-start gap-5", className)} onSubmit={handleSubmit}>
-      <FormField className=''>
+      <FormField>
         <Label variant='inline' htmlFor="reminderTitle">Title</Label>
         <Input variant='inline' type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
       </FormField>
+      <h3 className='font-semibold text-slate-800 pl-1 pt-2 -mb-2'>Repetition:</h3>
       <Select onValueChange={handleTypeChange} defaultValue="every">
         <SelectTrigger className="w-[100%]">
           <SelectValue />
@@ -94,12 +98,18 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
         </SelectContent>
       </Select>
       {inputType}
+      <h3 className='text-base font-semibold text-slate-800 pl-1 pt-2 -mb-2'>Add a note (optional):</h3>
       <Textarea
-        className='boder-none bg-neutral-100 rounded-lg p-3 text-neutral-500'
+        className="boder-none rounded-lg p-3"
         placeholder="you can add a note to your reminder e.g. k1, k2tog, knit to 3 sts before end, ssk, k1."
         value={reminderNote}
         onChange={e => setReminderNote(e.target.value)}
+        rows="5"
       />
+      <div className='flex flex-start gap-3 py-4'>
+        <Checkbox id='notification' className='' checked={true} />
+        <label htmlFor='notification' className='font-semibold text-base text-slate-800 -mt-1'>Show notification: <span className='font-normal'>Disabling notifications will pause your reminder, preventing it from appearing.</span></label>
+      </div>
       {errorMessages.map((msg, index) => <p key={index}>{msg}</p>)}
 
       <Button type="submit">Save changes</Button>
@@ -110,16 +120,16 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
 
 function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
   return (
-    <div className="flex gap-x-5">
-      <FormField>
+    <div className="flex gap-x-5 w-full">
+      <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
         <Label variant="inline" htmlFor="start">start row</Label>
       </FormField>
-      <FormField>
+      <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
         <Label variant="inline" htmlFor="rows">every<br />{makeOrdinal(repeatValue1)} </Label>
       </FormField>
-      <FormField>
+      <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="times" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
         <Label variant="inline" htmlFor="times">times</Label>
       </FormField>
@@ -130,12 +140,12 @@ function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeat
 
 function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
   return (
-    <div className="flex gap-x-5">
-      <FormField>
+    <div className="flex gap-x-5 w-full">
+      <FormField className='flex-1'>
         <Label variant='inline' htmlFor="from">from</Label>
         <Input variant='inline' min="0" type="number" id="from" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
       </FormField>
-      <FormField>
+      <FormField className='flex-1'>
         <Label variant='inline' htmlFor="until">until</Label>
         <Input variant='inline' min="0" type="number" id="until" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
       </FormField>

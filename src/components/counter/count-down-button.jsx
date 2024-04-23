@@ -17,8 +17,8 @@ export default function CountDownButton () {
   }
 
   return (
-    <Button size='icon' variant='outline' className='hover:bg-neutral-100 border-slate-800' onClick={handleCountDown}>
-      <FaMinus className='fill-slate-800' />
+    <Button size='icon' variant='secondary' className='' onClick={handleCountDown}>
+      <FaMinus className='fill-neutral-50' />
     </Button>
   );
 }

@@ -39,7 +39,7 @@ export default function Nav () {
 function BackButton () {
   return (
     <Link href='/'>
-      <Button size='icon' variant='ghost'><IoIosArrowBack size={24} /></Button>
+      <Button size='icon' variant='ghost'><IoIosArrowBack className='fill-slate-800' size={24} /></Button>
     </Link>
   );
 }

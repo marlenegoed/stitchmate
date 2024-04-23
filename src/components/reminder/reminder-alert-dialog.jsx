@@ -18,7 +18,7 @@ import Reminder from './reminder';
 import ReminderTag from './reminder-tag';
 import Link from 'next/link';
 
-export default function ReminderAlertDialog ({reminder, tag = false}) {
+export default function ReminderAlertDialog ({reminder, isTag}) {
 
   const {id, title, note} = reminder;
 
@@ -26,9 +26,10 @@ export default function ReminderAlertDialog ({reminder, tag = false}) {
     <Dialog>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
-          {!tag ?
-            <Reminder reminder={reminder} /> :
-            <ReminderTag title={title} />
+          {
+            isTag ?
+              <ReminderTag title={title} /> :
+              <Reminder reminder={reminder} />
           }
         </Alert>
       </DialogTrigger>
