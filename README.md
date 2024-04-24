@@ -5,11 +5,10 @@ Stitchmate is a row counting app for knitters.
 
 ## Getting Started
 
-Run the development server:
-
 ```bash
+# install dependencies
 npm i 
-# then
+# run the development server
 npm run dev
 
 ```
