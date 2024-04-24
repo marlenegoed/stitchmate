@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 
-// Mock data 
+// Example data 
 const reminders = [
   {
     id: -1,
