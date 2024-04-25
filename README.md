@@ -20,6 +20,9 @@ Counting rows in knitting is like keeping track of the steps in a recipe. Just a
 > [!NOTE]  
 > Responsive Design is still under construction. Currently works best for iPhone SE. 
 
+![image](./images/preview_stitchmate.jpg)
+
+
 ## Running the application
 
 ```bash
