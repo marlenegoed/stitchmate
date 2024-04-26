@@ -2,21 +2,21 @@ import {useState, useEffect} from 'react';
 
 export default function BackgroundBlob ({className, stroke = true}) {
   const blobs = [
-    <Blob1 className={className} stroke={stroke}></Blob1>,
-    <Blob2 className={className} stroke={stroke}></Blob2>,
-    <Blob3 className={className} stroke={stroke}></Blob3>,
-    <Blob4 className={className} stroke={stroke}></Blob4>,
-    <Blob5 className={className} stroke={stroke}></Blob5>,
-    <Blob6 className={className} stroke={stroke}></Blob6>,
-    <Blob7 className={className} stroke={stroke}></Blob7>,
-    <Blob8 className={className} stroke={stroke}></Blob8>
+    <Blob1 key="blob1" className={className} stroke={stroke}></Blob1>,
+    <Blob2 key="blob2" className={className} stroke={stroke}></Blob2>,
+    <Blob3 key="blob3" className={className} stroke={stroke}></Blob3>,
+    <Blob4 key="blob4" className={className} stroke={stroke}></Blob4>,
+    <Blob5 key="blob5" className={className} stroke={stroke}></Blob5>,
+    <Blob6 key="blob6" className={className} stroke={stroke}></Blob6>,
+    <Blob7 key="blob7" className={className} stroke={stroke}></Blob7>,
+    <Blob8 key="blob8" className={className} stroke={stroke}></Blob8>
   ];
 
   const [randomIndex, setRandomIndex] = useState(0);
 
   useEffect(() => {
     setRandomIndex(Math.floor(Math.random() * blobs.length));
-  }, []);
+  }, [blobs.length]);
 
   return (
     <>
