@@ -7,6 +7,9 @@ import {Button} from "@/components/ui/button";
 
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
+
+import { ReminderType } from "./reminder_def";
+
 import {
   Select,
   SelectContent,
@@ -22,7 +25,13 @@ import makeOrdinal from '@/lib/make-ordinal';
 import {Checkbox} from '../ui/checkbox';
 
 
-export default function ReminderForm ({className, handleFormSubmit, reminder}) {
+interface ReminderFormProps {
+    className: string,
+    handleFormSubmit: ()=>void;
+    reminder: ReminderType,
+}
+
+export default function ReminderForm ({className, handleFormSubmit, reminder}:ReminderFormProps) {
   const {count} = useStore();
 
   const [reminderType, setReminderType] = useState(reminder.type);
@@ -36,7 +45,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
     setReminderType(value);
   }
 
-  function handleSubmit (e) {
+  function handleSubmit (e:Event) {
     e.preventDefault();
 
     const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
@@ -153,7 +162,7 @@ function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatV
   );
 }
 
-function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
+function validateForm (repeatValue1, repeatValue2, repeatValue3, title:string) {
   const messages = [];
 
   if (repeatValue1 === 0
@@ -175,7 +184,7 @@ function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
 }
 
 
-function numtoString (num) {
+function numtoString (num:number) {
   if (Number.isNaN(num)) return '';
   return num.toString();
 }

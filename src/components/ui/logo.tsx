@@ -1,6 +1,6 @@
 import {justAnotherHand} from './fonts';
 
-function Logo():JSX.Element {
+function Logo ():JSX.Element {
   return (
   <>
     <p className={`

@@ -11,6 +11,6 @@ function ReminderTag ({ title }:ReminderTagProps) {
       <p className='text-neutral-100 font-semibold text-sm leading-loose'>{shortenText(title, 30)}</p>
     </div>
   );
-});
+};
 
 export default ReminderTag;
