@@ -15,7 +15,7 @@ interface NavProps {
 
 }
 
-const Nav = () => {
+function Nav () {
 
   const {numOfRows} = useStore();
   const isRowNums = numOfRows > 0;
@@ -51,4 +51,4 @@ const BackButton = () => {
   );
 }
 
-export { Nav }
+export default Nav 

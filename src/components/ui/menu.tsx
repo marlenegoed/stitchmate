@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import {Title} from './title';
 
-interface MenuProps {};
+interface MenuProps {}; // no props
 
 import {
   FaListUl,
@@ -26,7 +26,7 @@ import ToggleSound from './toggle-sound';
 
 const side:string = "left";
 
-const Menu = () => {
+export default function Menu() {
 
   //function handleSubmit () { } // FIX: DO WE NEED THIS? NOT REALLY
 
@@ -56,5 +56,3 @@ const Menu = () => {
     </>
   );
 }
-
-export { Menu }

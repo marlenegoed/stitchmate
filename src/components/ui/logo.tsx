@@ -1,6 +1,6 @@
 import {justAnotherHand} from './fonts';
 
-const Logo = () => {
+function Logo():JSX.Element {
   return (
   <>
     <p className={`
@@ -13,4 +13,4 @@ const Logo = () => {
   )
 }
 
-export { Logo }
+export default Logo
