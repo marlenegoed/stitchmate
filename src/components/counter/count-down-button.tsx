@@ -1,5 +1,4 @@
 import {useStore} from '@/app/store';
-
 import useSound from 'use-sound';
 import {FaMinus} from "react-icons/fa6";
 import {Button} from '../ui/button';

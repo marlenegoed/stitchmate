@@ -121,7 +121,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/ui/menu.jsx"  ],
   "exclude": [
     "node_modules"
   ]

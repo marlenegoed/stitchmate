@@ -4,9 +4,11 @@ import {useState, useEffect} from "react";
 import {Progress} from '@/components/ui/progress';
 import {useStore} from '@/app/store';
 
-export default function CounterProgress () {
+interface CounterProgressProps {}
+
+export default function CounterProgress (props: CounterProgressProps) {
   const {count, numOfRows} = useStore();
-  const [progress, setProgress] = useState(numOfRows);
+  const [progress, setProgress] = useState<number>(numOfRows);
 
   useEffect(() => {
     if (numOfRows > 0) {
