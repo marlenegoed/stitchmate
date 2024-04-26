@@ -1,6 +1,12 @@
 import {useState, useEffect} from 'react';
 
-export default function BackgroundBlob ({className, stroke = true}) {
+export interface BlobProps {
+  className: 'string';
+  stroke?: boolean;
+};
+
+// React.FC: FC - Functional Component
+const BackgroundBlob: React.FC<BlobProps> = ({className, stroke = true}) => {
   const blobs = [
     <Blob1 key="blob1" className={className} stroke={stroke}></Blob1>,
     <Blob2 key="blob2" className={className} stroke={stroke}></Blob2>,
@@ -27,7 +33,7 @@ export default function BackgroundBlob ({className, stroke = true}) {
 
 
 
-function Blob1 ({className, stroke = true}) {
+const Blob1:React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2861 2559" version="1.1">
@@ -41,7 +47,7 @@ function Blob1 ({className, stroke = true}) {
 }
 
 
-function Blob2 ({className, stroke = true}) {
+const Blob2: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2520 2433" version="1.1">
@@ -56,7 +62,7 @@ function Blob2 ({className, stroke = true}) {
 }
 
 
-function Blob3 ({className, stroke = true}) {
+const Blob3: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
 
@@ -73,7 +79,7 @@ function Blob3 ({className, stroke = true}) {
 }
 
 
-function Blob4 ({className, stroke = true}) {
+const Blob4: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
 
@@ -89,7 +95,7 @@ function Blob4 ({className, stroke = true}) {
   );
 }
 
-function Blob5 ({className, stroke = true}) {
+const Blob5: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
 
@@ -104,7 +110,7 @@ function Blob5 ({className, stroke = true}) {
   );
 }
 
-function Blob6 ({className, stroke = true}) {
+const Blob6: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
 
@@ -120,7 +126,7 @@ function Blob6 ({className, stroke = true}) {
   );
 }
 
-function Blob7 ({className, stroke = true}) {
+const Blob7: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2549 2458" version="1.1">
@@ -133,7 +139,7 @@ function Blob7 ({className, stroke = true}) {
   );
 }
 
-function Blob8 ({className, stroke = true}) {
+const Blob8: React.FC<BlobProps> = ({className, stroke = true}) => {
 
   return (
 
@@ -151,7 +157,7 @@ function Blob8 ({className, stroke = true}) {
 
 }
 
-
+export default BackgroundBlob;
 
 
 
