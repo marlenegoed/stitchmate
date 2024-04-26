@@ -12,7 +12,7 @@ interface ReminderProps {
 }
 
 
-const Reminder = React.forwardRef<HTMLDivElement, ReminderProps>(({ reminder }, ref) => {
+const Reminder = React.forwardRef<HTMLDivElement, ReminderProps>(({ reminder }) => {
   const { title, note, repeat, type } = reminder;
   const typeEvery = <p className='text-sm font-semibold text-sienna-500'>from row {repeat.start}, every {repeat.interval}{makeOrdinal(repeat.interval)}, {repeat.times} times</p>;
   const typeForRows = <p className='text-sm font-semibold text-sienna-500'>rows {repeat.from} {`\u2013`} {repeat.until}</p>;
@@ -28,6 +28,8 @@ const Reminder = React.forwardRef<HTMLDivElement, ReminderProps>(({ reminder }, 
       </div>
     </div>
   );
-};
+});
+
+Reminder.displayName = 'Reminder';
 
 export default Reminder;
