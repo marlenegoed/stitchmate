@@ -31,6 +31,10 @@ interface ReminderFormProps {
     reminder: ReminderType,
 }
 
+interface handleTypeChangeProps {
+  value:string
+}
+
 export default function ReminderForm ({className, handleFormSubmit, reminder}:ReminderFormProps) {
   const {count} = useStore();
 
@@ -41,11 +45,11 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
   const [repeatValue2, setRepeatValue2] = useState(reminder.repeat.times || reminder.repeat.until || '');
   const [repeatValue3, setRepeatValue3] = useState(reminder.repeat.start || count);
 
-  function handleTypeChange (value) {
+  function handleTypeChange (value:handleTypeChangeProps) {
     setReminderType(value);
   }
 
-  function handleSubmit (e:Event) {
+  function handleSubmit (e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
@@ -93,18 +97,24 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
   return (
     <form className={cn("grid items-start gap-5", className)} onSubmit={handleSubmit}>
       <FormField>
+      
         <Label variant='inline' htmlFor="reminderTitle">Title</Label>
         <Input variant='inline' type="text" id="reminderTitle" value={reminderTitle} onChange={(e) => setReminderTitle(e.target.value)} />
+      
       </FormField>
+      
       <h3 className='font-semibold text-slate-800 pl-1 pt-2 -mb-2'>Repetition:</h3>
+      
       <Select onValueChange={handleTypeChange} defaultValue="every">
         <SelectTrigger className="w-[100%]">
           <SelectValue />
         </SelectTrigger>
+      
         <SelectContent>
           <SelectItem value="every">Repeat every</SelectItem>
           <SelectItem value="for-rows">Repeat for rows</SelectItem>
         </SelectContent>
+      
       </Select>
       {inputType}
       <h3 className='text-base font-semibold text-slate-800 pl-1 pt-2 -mb-2'>Add a note (optional):</h3>
@@ -115,10 +125,12 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
         onChange={e => setReminderNote(e.target.value)}
         rows="5"
       />
+      
       {/* <div className='flex flex-start gap-3 py-4'>
         <Checkbox id='notification' className='' checked={true} />
         <label htmlFor='notification' className='font-semibold text-base text-slate-800 -mt-1'>Show notification: <span className='font-normal'>Disabling notifications will pause your reminder, preventing it from appearing.</span></label>
       </div> */}
+      
       {errorMessages.map((msg, index) => <p key={index}>{msg}</p>)}
 
       <Button type="submit">Save changes</Button>
@@ -126,43 +138,66 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
   );
 }
 
+interface RepeatEveryInputsProps {
+  repeatValue1: number, 
+  repeatValue2: number, 
+  repeatValue3: number, 
+  setRepeatValue1: () => void,
+  setRepeatValue2: () => void, 
+  setRepeatValue3: () => void
+}
 
-function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
+function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}:RepeatEveryInputsProps) {
   return (
     <div className="flex gap-x-5 w-full">
+      
       <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="start" value={numtoString(repeatValue3)} onChange={e => {setRepeatValue3(parseInt(e.target.value));}} />
         <Label variant="inline" htmlFor="start">start row</Label>
       </FormField>
+      
       <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="rows" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
         <Label variant="inline" htmlFor="rows">every<br />{makeOrdinal(repeatValue1)} </Label>
       </FormField>
+
       <FormField className='flex-1'>
         <Input variant="inline" min="0" type="number" id="times" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
         <Label variant="inline" htmlFor="times">times</Label>
       </FormField>
+   
     </div>
   );
 }
 
+interface ForRowsInputsProps {
+  repeatValue1: number, 
+  repeatValue2: number, 
+  setRepeatValue1: () => void,
+  setRepeatValue2: () => void, 
+}
 
-function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
+function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}:ForRowsInputsProps) {
   return (
     <div className="flex gap-x-5 w-full">
+      
       <FormField className='flex-1'>
         <Label variant='inline' htmlFor="from">from</Label>
         <Input variant='inline' min="0" type="number" id="from" value={numtoString(repeatValue1)} onChange={e => {setRepeatValue1(parseInt(e.target.value));}} />
       </FormField>
+
       <FormField className='flex-1'>
         <Label variant='inline' htmlFor="until">until</Label>
         <Input variant='inline' min="0" type="number" id="until" value={numtoString(repeatValue2)} onChange={e => setRepeatValue2(parseInt(e.target.value))} />
       </FormField>
+    
     </div>
   );
 }
 
-function validateForm (repeatValue1, repeatValue2, repeatValue3, title:string) {
+
+
+function validateForm (repeatValue1:number, repeatValue2:number, repeatValue3:number, title:string) {
   const messages = [];
 
   if (repeatValue1 === 0
