@@ -1,4 +1,4 @@
-export default function makeOrdinal (num) {
+export default function makeOrdinal (num: number): string {
   if (num % 100 > 10 && num % 100 < 20) return 'th';
 
   const digit = num % 10;

@@ -1,10 +1,10 @@
 import * as React from "react";
 
-export function useMediaQuery (query) {
-  const [value, setValue] = React.useState(false);
+export function useMediaQuery (query: string): boolean {
+  const [value, setValue] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    function onChange (event) {
+    function onChange (event: MediaQueryListEvent) {
       setValue(event.matches);
     }
 
