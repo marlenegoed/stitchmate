@@ -2,7 +2,6 @@ import { ReminderType } from '@/components/reminder/reminder_def';
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import { CounterType } from './counter_def';
-import { Counter } from '@fortawesome/fontawesome-svg-core';
 
 // Example data 
 const reminders:ReminderType[] = [
