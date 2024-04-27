@@ -6,6 +6,7 @@ import ReminderForm from '@/components/reminder/reminder-form';
 import ReminderLayout from "../layout";
 import {useRouter} from 'next/navigation';
 import { ReminderType } from "@/components/reminder/reminder_def";
+import { CounterType } from "@/app/counter_def";
 
 
 const Page: FC = () => {
@@ -25,7 +26,7 @@ const Page: FC = () => {
     }
   };
 
-  function handleSubmit(newReminder:ReminderType):void {
+  function handleSubmit(newReminder:CounterType):void {
     setReminder(newReminder);
     router.push("/");
   }

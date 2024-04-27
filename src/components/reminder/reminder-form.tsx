@@ -22,16 +22,18 @@ import makeOrdinal from '@/lib/make-ordinal';
 import {Checkbox} from '../ui/checkbox';
 import Label from "../ui/label";
 import Input from "../ui/input";
+import { CounterType } from "@/app/counter_def";
 
 
 interface ReminderFormProps {
     className: string,
-    handleFormSubmit: ()=>void;
+    handleFormSubmit: (newReminder:CounterType)=>void,
     reminder: ReminderType,
+    setReminderType: (type:string)=>void,
 }
 
 interface handleTypeChangeProps {
-  value:string
+  value: "every" | "for-rows" | undefined,
 }
 
 export default function ReminderForm ({className, handleFormSubmit, reminder}:ReminderFormProps) {
@@ -44,7 +46,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
   const [repeatValue2, setRepeatValue2] = useState(reminder.repeat.times || reminder.repeat.until || '');
   const [repeatValue3, setRepeatValue3] = useState(reminder.repeat.start || count);
 
-  function handleTypeChange (value:handleTypeChangeProps) {
+  function handleTypeChange (value: "every" | "for-rows" | undefined) {
     setReminderType(value);
   }
 
@@ -85,10 +87,10 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}:Re
 
   if (reminderType === 'every') {
     inputType = <RepeatEveryInputs
-      repeatValue1={repeatValue1} repeatValue2={repeatValue2} repeatValue3={repeatValue3} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} setRepeatValue3={setRepeatValue3} />;
+      repeatValue1 = {repeatValue1} repeatValue2={repeatValue2} repeatValue3={repeatValue3} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} setRepeatValue3={setRepeatValue3} />;
   } else {
     inputType =
-      <ForRowsInputs repeatValue1={repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
+      <ForRowsInputs repeatValue1 = {repeatValue1} repeatValue2={repeatValue2} setRepeatValue1={setRepeatValue1} setRepeatValue2={setRepeatValue2} />;
   }
 
   const errorMessages = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
@@ -141,9 +143,9 @@ interface RepeatEveryInputsProps {
   repeatValue1: number, 
   repeatValue2: number, 
   repeatValue3: number, 
-  setRepeatValue1: () => void,
-  setRepeatValue2: () => void, 
-  setRepeatValue3: () => void
+  setRepeatValue1: (value:number) => void,
+  setRepeatValue2: (value:number) => void, 
+  setRepeatValue3: (value:number) => void
 }
 
 function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}:RepeatEveryInputsProps) {
