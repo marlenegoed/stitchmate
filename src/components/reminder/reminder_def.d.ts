@@ -5,7 +5,10 @@ export type ReminderType = {
     type?: 'for-rows' | 'every',
     note: string,
     repeat: {
-      from: number,
-      until: number
+      interval?: number,
+      times?: number,
+      from?: number,
+      start?: number,
+      until?: number
     }
 }
