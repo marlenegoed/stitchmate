@@ -12,7 +12,7 @@ export default function Page () {
   const router = useRouter();
   const params = useParams();
 
-  const reminder: ReminderType = useStore(findReminder(parseInt(params.id)));
+  const reminder: ReminderType = useStore(findReminder(parseInt(params.id)))!;
 
   function handleSubmit (newReminder: CounterType) {
     newReminder.id = reminder.id;
@@ -20,8 +20,8 @@ export default function Page () {
     router.push("/");
   }
 
-  function handleDelete (reminder) {
-    deleteReminder(parseInt(params.id));
+  function handleDelete () {
+    deleteReminder(parseInt(params.id as string));
     router.push("/");
   }
 
