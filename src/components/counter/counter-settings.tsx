@@ -2,8 +2,8 @@
 
 import {cn} from '@/lib/utils';
 import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
+import Input from "@/components/ui/input";
+import Label from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -11,7 +11,6 @@ import {
   SheetDescription,
   SheetFooter,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
@@ -19,25 +18,24 @@ import {useStore} from '@/app/store';
 import {useState, useEffect} from 'react';
 import {Title} from '../ui/title';
 
-// import {FaGears} from "react-icons/fa6";
-import {MdSettings} from "react-icons/md";
 import {FaGears} from "react-icons/fa6";
 
 import FormField from '../ui/form-field';
 import ResetAlertDialog from './reset-alert-dialog';
 
 
-// const SHEET_SIDES = ["top", "right", "bottom", "left"];
-
 const side = "right";
 
+export interface CounterSettingsProps {
+  className: string;
+}
 
-export default function CounterSettings ({className}) {
+const CounterSettings: React.FC<CounterSettingsProps> = ({className}) => {
 
   const {title, setTitle, count, setCount, numOfRows, setNumOfRows} = useStore();
-  const [formTitle, setFormTitle] = useState(title);
-  const [formCount, setFormCount] = useState(count);
-  const [formRows, setFormRows] = useState(numOfRows || '');
+  const [formTitle, setFormTitle] = useState<string>(title);
+  const [formCount, setFormCount] = useState<number | ''>(count);
+  const [formRows, setFormRows] = useState<number | ''>(numOfRows || '');
 
   useEffect(() => {
     setFormRows(numOfRows || '');
@@ -46,25 +44,24 @@ export default function CounterSettings ({className}) {
   useEffect(() => {
     setFormCount(count);
   }, [count]);
-
-  function handleSubmit (e) {
+ 
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setTitle(formTitle);
     setCount(formCount || 1);
     setNumOfRows(formRows || 0);
   }
 
-  function handleChange (e) {
+  function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     setFormTitle(e.target.value);
   }
-
-  function handleCountChange (e) {
-    const value = e.target.value;
+  function handleCountChange (e: React.ChangeEvent<HTMLInputElement>) {
+    const value: string = e.target.value;
     setFormCount(value ? parseInt(value) : '');
   }
 
-  function handleRowChange (e) {
-    const value = e.target.value;
+  function handleRowChange (e: React.ChangeEvent<HTMLInputElement>) {
+    const value: string = e.target.value;
     setFormRows(value ? parseInt(value) : '');
   }
 
@@ -94,7 +91,7 @@ export default function CounterSettings ({className}) {
                 <Label variant='inline' htmlFor="count">
                   Count
                 </Label>
-                <Input id="count" typeç="number" value={formCount} variant='inline' min="1" onChange={handleCountChange} />
+                <Input id="count" type="number" value={formCount} variant='inline' min="1" onChange={handleCountChange} />
               </FormField>
 
               <FormField>
@@ -122,3 +119,5 @@ export default function CounterSettings ({className}) {
     </div >
   );
 }
+
+export default CounterSettings;
