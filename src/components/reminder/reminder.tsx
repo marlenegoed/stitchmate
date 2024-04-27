@@ -1,10 +1,6 @@
 import React from 'react';
 import shortenText from '@/lib/shorten-text';
 import makeOrdinal from '@/lib/make-ordinal';
-
-import {FaEye} from "react-icons/fa6";
-import {FaEyeSlash} from "react-icons/fa6";
-import {TbZzz} from "react-icons/tb";
 import type { ReminderType } from './reminder_def';
 
 interface ReminderProps {
@@ -12,7 +8,7 @@ interface ReminderProps {
 }
 
 
-const Reminder = React.forwardRef<HTMLDivElement, ReminderProps>(({ reminder }) => {
+const Reminder = React.forwardRef<HTMLDivElement, ReminderProps>(({ reminder }, ref) => {
   const { title, note, repeat, type } = reminder;
   const typeEvery = <p className='text-sm font-semibold text-sienna-500'>from row {repeat.start}, every {repeat.interval}{makeOrdinal(repeat.interval)}, {repeat.times} times</p>;
   const typeForRows = <p className='text-sm font-semibold text-sienna-500'>rows {repeat.from} {`\u2013`} {repeat.until}</p>;
