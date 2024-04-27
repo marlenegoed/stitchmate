@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 export interface BlobProps {
-  className: 'string';
+  className: string;
   stroke?: boolean;
 };
 
