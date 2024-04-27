@@ -57,130 +57,128 @@ const reminders:ReminderType[] = [
 
 ];
 
-const mockCounter:CounterType = {
-  id: 1,
-  count: 1,
-  title: `my counter no.1`,
-  numOfRows: 0,
-  reminders: reminders,
-  nextReminders: [],
-  clickSoundEnabled: true,
-
-  // methods 
-  countUp: function () {
-    return set((state:CounterType):CounterType => {
-      let newCount = state.count + 1 % 1000;
-      if (newCount === 0) newCount = 1;
-      return {
-        ...state,
-        count: newCount,
-        nextReminders: selectNextReminders(state.reminders, newCount)
-      };
-    }
-    );
-  },
-
-  countDown: function () {
-    return set((state:CounterType):CounterType => {
-      let newCount = state.count - 1;
-      if (state.count <= 1) newCount = 1;
-      return {
-        ...state,
-        count: newCount,
-        nextReminders: selectNextReminders(state.reminders, newCount)
-      };
-    });
-  },
-
-  resetCount: function () {
-    return set((state:CounterType):CounterType => {
-      const newCount = 1;
-      return {
-        ...state,
-        count: newCount,
-        nextReminders: selectNextReminders(state.reminders, newCount)
-      };
-    });
-  },
-
-  setTitle: function (title) {
-    return set((state:CounterType):CounterType => {
-      if (!title) {
-        state.id++;
-        return {...state, title: state.title};
-      }
-      return {...state, title};
-    });
-  },
-
-  setCount: function (count) {
-    return set((state:CounterType):CounterType => {
-      return {
-        ...state,
-        count,
-        nextReminders: selectNextReminders(state.reminders, count)
-      };
-    });
-  },
-
-  setNumOfRows: function (numOfRows) {
-    return set((state:CounterType):CounterType => {
-      if (numOfRows <= 0) return {...state, numOfRows: 0};
-      if (numOfRows > 999) return {...state, numOfRows: 999};
-      return {...state, numOfRows};
-    });
-  },
-
-  setReminder: function (reminder) {
-    return set((state:CounterType):CounterType => {
-      reminder.id = state.id;
-      state.id++;
-      const newReminders = [...state.reminders, reminder];
-      return {
-        ...state,
-        reminders: newReminders,
-        nextReminders: selectNextReminders(newReminders, state.count)
-      };
-    });
-  },
-
-  updateReminder: function (updatedReminder) {
-    return set((state:CounterType):CounterType => {
-      const updatedReminders = state.reminders.map((reminder:ReminderType) => {
-        if (reminder.id === updatedReminder.id) {
-          return updatedReminder;
-        } else {
-          return reminder;
-        }
-      });
-
-      return {
-        ...state,
-        reminders: updatedReminders,
-        nextReminders: selectNextReminders(updatedReminders, state.count)
-      };
-    });
-  },
-
-  deleteReminder: function (id) {
-    return set((state:CounterType) => {
-      const updatedReminders = state.reminders.filter((reminder:ReminderType) => reminder.id !== id);
-      return {
-        ...state,
-        reminders: updatedReminders,
-        nextReminders: selectNextReminders(updatedReminders, state.count)
-      };
-    });
-  },
-
-  toggleSound: function ():boolean {
-    return set((state:CounterType):CounterType => ({...state, clickSoundEnabled: !state.clickSoundEnabled}));
-  },
-}
-
 export const useStore = create<CounterType>()(
   persist((set, get) => {
-    return mockCounter;
+    return {
+      id: 1,
+      count: 1,
+      title: `my counter no.1`,
+      numOfRows: 0,
+      reminders: reminders,
+      nextReminders: [],
+      clickSoundEnabled: true,
+    
+      // methods 
+      countUp: function () {
+        return set((state:CounterType):CounterType => {
+          let newCount = state.count + 1 % 1000;
+          if (newCount === 0) newCount = 1;
+          return {
+            ...state,
+            count: newCount,
+            nextReminders: selectNextReminders(state.reminders, newCount)
+          };
+        }
+        );
+      },
+    
+      countDown: function () {
+        return set((state:CounterType):CounterType => {
+          let newCount = state.count - 1;
+          if (state.count <= 1) newCount = 1;
+          return {
+            ...state,
+            count: newCount,
+            nextReminders: selectNextReminders(state.reminders, newCount)
+          };
+        });
+      },
+    
+      resetCount: function () {
+        return set((state:CounterType):CounterType => {
+          const newCount = 1;
+          return {
+            ...state,
+            count: newCount,
+            nextReminders: selectNextReminders(state.reminders, newCount)
+          };
+        });
+      },
+    
+      setTitle: function (title) {
+        return set((state:CounterType):CounterType => {
+          if (!title) {
+            state.id++;
+            return {...state, title: state.title};
+          }
+          return {...state, title};
+        });
+      },
+    
+      setCount: function (count) {
+        return set((state:CounterType):CounterType => {
+          return {
+            ...state,
+            count,
+            nextReminders: selectNextReminders(state.reminders, count)
+          };
+        });
+      },
+    
+      setNumOfRows: function (numOfRows) {
+        return set((state:CounterType):CounterType => {
+          if (numOfRows <= 0) return {...state, numOfRows: 0};
+          if (numOfRows > 999) return {...state, numOfRows: 999};
+          return {...state, numOfRows};
+        });
+      },
+    
+      setReminder: function (reminder) {
+        return set((state:CounterType):CounterType => {
+          reminder.id = state.id;
+          state.id++;
+          const newReminders = [...state.reminders, reminder];
+          return {
+            ...state,
+            reminders: newReminders,
+            nextReminders: selectNextReminders(newReminders, state.count)
+          };
+        });
+      },
+    
+      updateReminder: function (updatedReminder) {
+        return set((state:CounterType):CounterType => {
+          const updatedReminders = state.reminders.map((reminder:ReminderType) => {
+            if (reminder.id === updatedReminder.id) {
+              return updatedReminder;
+            } else {
+              return reminder;
+            }
+          });
+    
+          return {
+            ...state,
+            reminders: updatedReminders,
+            nextReminders: selectNextReminders(updatedReminders, state.count)
+          };
+        });
+      },
+    
+      deleteReminder: function (id) {
+        return set((state:CounterType) => {
+          const updatedReminders = state.reminders.filter((reminder:ReminderType) => reminder.id !== id);
+          return {
+            ...state,
+            reminders: updatedReminders,
+            nextReminders: selectNextReminders(updatedReminders, state.count)
+          };
+        });
+      },
+    
+      toggleSound: function ():boolean {
+        return set((state:CounterType):CounterType => ({...state, clickSoundEnabled: !state.clickSoundEnabled}));
+      },
+    };
   },
     {
       name: 'counter-storage', // name of the item in the storage (must be unique)
