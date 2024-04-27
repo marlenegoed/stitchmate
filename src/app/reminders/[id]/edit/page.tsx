@@ -4,15 +4,17 @@ import {useStore, findReminder} from '@/app/store';
 import ReminderForm from '@/components/reminder/reminder-form';
 import {useRouter, useParams} from 'next/navigation';
 import DeleteReminder from '@/components/reminder/delete-reminder';
+import { ReminderType } from '@/components/reminder/reminder_def';
+import { CounterType } from '@/app/counter_def';
 
 export default function Page () {
   const {updateReminder, deleteReminder} = useStore();
   const router = useRouter();
   const params = useParams();
 
-  const reminder = useStore(findReminder(parseInt(params.id)));
+  const reminder: ReminderType = useStore(findReminder(parseInt(params.id)));
 
-  function handleSubmit (newReminder) {
+  function handleSubmit (newReminder: CounterType) {
     newReminder.id = reminder.id;
     updateReminder(newReminder);
     router.push("/");

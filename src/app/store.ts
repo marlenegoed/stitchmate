@@ -205,7 +205,7 @@ export function selectNotifiableNextReminders (state:CounterType) {
 // WE NEED TO FIND OUT WHICH ONE IS CORRECT  
 // THIS FUNCTION SEEMS ODD
 
-function selectNextReminders (reminder:ReminderType, count:number) {
+function selectNextReminders (reminders:ReminderType[], count:number) {
 
   return reminders.filter((reminder:ReminderType) => {
     if (reminder.type === 'every') {
