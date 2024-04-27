@@ -1,8 +1,5 @@
 import {useStore} from '@/app/store';
 
-import BackgroundBlob from '../ui/background-blobs';
-import {useMemo} from 'react';
-
 export default function Rows () {
 
   const {numOfRows} = useStore();
