@@ -2,11 +2,7 @@
 import {IoAdd} from "react-icons/io5";
 import Link from 'next/link';
 
-// import BackgroundBlob from './background-blobs';
-// import {useMemo} from 'react';
-
 export default function AddReminder():JSX.Element {
-  // const blob = useMemo(() => <BackgroundBlob colorClass='rose-200' stroke={false} className='absolute bottom-3 right-3 fill-white w-24  h-24 opacity-50' />, []);
 
   return (
     <Link className='' href="/reminders/new">

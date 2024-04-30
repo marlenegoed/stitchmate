@@ -1,8 +1,8 @@
 import { describe, expect, it, test, vitest } from "vitest"
 import { render, screen } from '@testing-library/react'
-import { Button } from "./button"
-import ReminderForm from "../reminder/reminder-form"
-import Input from "./input"
+import { Button } from "../src/components/ui/button"
+import ReminderForm from "../src/components/reminder/reminder-form"
+import Input from "../src/components/ui/input"
 
 
 describe('<Button />', () => { 
