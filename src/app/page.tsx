@@ -33,7 +33,6 @@ const Page: React.FC<Props> = () => {
           <CountDownButton />
         </div>
       </section>
-
       <section className='flex justify-center w-full mt-auto mb-4'>
         <ReminderList ></ReminderList>
       </section>
