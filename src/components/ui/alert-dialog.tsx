@@ -111,6 +111,7 @@ const AlertDialogCancel = React.forwardRef<HTMLButtonElement, AlertDialogCancelP
   <AlertDialogPrimitive.Cancel
     ref={ref}
     className={cn(buttonVariants({ variant: "outline" }), "mt-2 sm:mt-0", className)}
+    data-testid="cancel-button"
     {...props} />
 ))
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
