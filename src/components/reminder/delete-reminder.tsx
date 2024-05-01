@@ -17,6 +17,7 @@ interface DeleteReminderProps {
 }
 
 export default function DeleteReminder({handleDelete}:DeleteReminderProps) {
+  
 
   return (
     <AlertDialog>
