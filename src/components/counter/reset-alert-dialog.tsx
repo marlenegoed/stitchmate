@@ -15,9 +15,14 @@ import {FaArrowRotateLeft} from "react-icons/fa6";
 
 import {useStore} from '@/app/store';
 
-export default function ResetAlertDialog () {
+export default function ResetAlertDialog({setOpen}: {setOpen: (value: boolean) => void}) {
 
   const {resetCount} = useStore();
+
+  function handleReset() {
+    resetCount()
+    setOpen(false)
+  }
 
   return (
     <AlertDialog>
@@ -33,7 +38,7 @@ export default function ResetAlertDialog () {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={resetCount}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleReset}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -1,12 +1,12 @@
 'use client';
 
 import Counter from '@/components/counter/counter';
-import {CounterTitle} from '@/components/ui/title';
+import Title from '@/components/ui/title';
 import Rows from '@/components/counter/rows';
 import CountDownButton from '@/components/counter/count-down-button';
 import ReminderList from '@/components/reminder/reminder-list';
 import {selectNotifiableNextReminders, useStore} from './store';
-import Reminder from '@/components/reminder/reminder';
+import Reminder from '@/components/reminder/reminder-item';
 import ReminderTag from '@/components/reminder/reminder-tag';
 import ReminderAlertDialog from '@/components/reminder/reminder-alert-dialog';
 
@@ -16,7 +16,7 @@ import ReminderAlertDialog from '@/components/reminder/reminder-alert-dialog';
 export default function Page () {
   return (
     <>
-      <CounterTitle className='mt-2 mb-3' />
+      <Title className='mt-2 mb-3' />
       {/* <section className='min-h-5 flex justify-center items-center w-full'>
         <ReminderNotification />
       </section > */}

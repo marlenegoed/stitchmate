@@ -14,11 +14,18 @@ import {
 
 import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
-import Reminder from './reminder';
+import ReminderItem from './reminder-item';
 import ReminderTag from './reminder-tag';
 import Link from 'next/link';
+import {type Reminder} from '@/lib/reminder';
 
-export default function ReminderAlertDialog ({reminder, isTag}) {
+
+interface ReminderAlertDialogProps {
+  reminder: Reminder,
+  isTag?: boolean
+}
+
+export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
 
   const {id, title, note} = reminder;
 
@@ -29,7 +36,7 @@ export default function ReminderAlertDialog ({reminder, isTag}) {
           {
             isTag ?
               <ReminderTag title={title} /> :
-              <Reminder reminder={reminder} />
+              <ReminderItem reminder={reminder} />
           }
         </Alert>
       </DialogTrigger>

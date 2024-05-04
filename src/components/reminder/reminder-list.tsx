@@ -4,6 +4,7 @@ import {useStore} from '@/app/store';
 
 import ReminderAlertDialog from './reminder-alert-dialog';
 import AddReminder from './add-reminder';
+import { type Reminder } from '@/lib/reminder';
 
 export default function ReminderList () {
   const {reminders} = useStore();

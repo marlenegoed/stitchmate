@@ -1,6 +1,9 @@
 'use client';
 
-import {useState} from "react";
+import {type FormEvent, useState} from "react";
+import {z} from 'zod';
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
 
 import {cn} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
@@ -16,30 +19,62 @@ import {
 } from "@/components/ui/select";
 
 import {Textarea} from "@/components/ui/textarea";
-import FormField from '@/components/ui/form-field';
+import FormField from '@/components/ui/__form-field';
 import {useStore} from '@/app/store';
 import makeOrdinal from '@/lib/make-ordinal';
 import {Checkbox} from '../ui/checkbox';
 
+import { type Reminder } from '@/lib/reminder';
 
-export default function ReminderForm ({className, handleFormSubmit, reminder}) {
+
+const formSchmema = z.object({
+  title: z.string().min(1).max(50),
+  note: z.string().max(200).optional(),
+  type: z.string(),
+  notification: z.boolean().optional(),
+  interval: z.number().optional(),
+  from: z.number().optional(),
+  until: z.number().optional(),
+  start: z.number().optional(),
+  times: z.number().optional(),
+})
+
+interface ReminderFormProps {
+  className: string,
+  handleFormSubmit: () => void, 
+  reminder: Reminder
+}
+
+export default function ReminderForm({className, handleFormSubmit, reminder}: ReminderFormProps) {
+
   const {count} = useStore();
 
-  const [reminderType, setReminderType] = useState(reminder.type);
-  const [reminderTitle, setReminderTitle] = useState(reminder.title);
-  const [reminderNote, setReminderNote] = useState(reminder.note);
-  const [repeatValue1, setRepeatValue1] = useState(reminder.repeat.interval || reminder.repeat.from || '');
-  const [repeatValue2, setRepeatValue2] = useState(reminder.repeat.times || reminder.repeat.until || '');
-  const [repeatValue3, setRepeatValue3] = useState(reminder.repeat.start || count);
+  const form = useForm<z.infer<typeof formSchmema>>({
+    resolver: zodResolver(formSchmema),
+    defaultValues: {
+      title: 'remind me',
+      note: 'you can add a note to your reminder e.g. k1, k2tog, knit to 3 sts before end, ssk, k1.', 
+    }
+  })
 
-  function handleTypeChange (value) {
+  // const [formState, setFormState] = useState({
+  //   reminderType: reminder.type,
+  //   reminderTitle: reminder.title, 
+  //   reminderNote: reminder.note, 
+  // })
+
+  // const [repeatValue1, setRepeatValue1] = useState(reminder.repeat.interval || reminder.repeat.from || '');
+  // const [repeatValue2, setRepeatValue2] = useState(reminder.repeat.times || reminder.repeat.until || '');
+  // const [repeatValue3, setRepeatValue3] = useState(reminder.repeat.start || count);
+
+  function handleTypeChange(value) {
     setReminderType(value);
   }
 
-  function handleSubmit (e) {
+  function handleSubmit(e: FormEvent<HTMLInputElement>) {
     e.preventDefault();
 
-    const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
+    // const isValid = validateForm(repeatValue1, repeatValue2, repeatValue3, reminderTitle);
 
     if (isValid.length > 0) {
       return false;
@@ -104,7 +139,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
         placeholder="you can add a note to your reminder e.g. k1, k2tog, knit to 3 sts before end, ssk, k1."
         value={reminderNote}
         onChange={e => setReminderNote(e.target.value)}
-        rows="5"
+        rows={5}
       />
       {/* <div className='flex flex-start gap-3 py-4'>
         <Checkbox id='notification' className='' checked={true} />
@@ -118,7 +153,7 @@ export default function ReminderForm ({className, handleFormSubmit, reminder}) {
 }
 
 
-function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
+function RepeatEveryInputs({repeatValue1, repeatValue2, repeatValue3, setRepeatValue1, setRepeatValue2, setRepeatValue3}) {
   return (
     <div className="flex gap-x-5 w-full">
       <FormField className='flex-1'>
@@ -138,7 +173,7 @@ function RepeatEveryInputs ({repeatValue1, repeatValue2, repeatValue3, setRepeat
 }
 
 
-function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
+function ForRowsInputs({repeatValue1, repeatValue2, setRepeatValue1, setRepeatValue2}) {
   return (
     <div className="flex gap-x-5 w-full">
       <FormField className='flex-1'>
@@ -153,7 +188,7 @@ function ForRowsInputs ({repeatValue1, repeatValue2, setRepeatValue1, setRepeatV
   );
 }
 
-function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
+function validateForm(repeatValue1, repeatValue2, repeatValue3, title) {
   const messages = [];
 
   if (repeatValue1 === 0
@@ -175,7 +210,7 @@ function validateForm (repeatValue1, repeatValue2, repeatValue3, title) {
 }
 
 
-function numtoString (num) {
+function numtoString(num) {
   if (Number.isNaN(num)) return '';
   return num.toString();
 }

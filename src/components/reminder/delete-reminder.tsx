@@ -12,8 +12,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+interface DeleteReminderProps {
+  handleDelete: () => void,
+}
 
-export default function DeleteReminder ({handleDelete}) {
+export default function DeleteReminder({handleDelete}: DeleteReminderProps) {
 
   return (
     <AlertDialog>

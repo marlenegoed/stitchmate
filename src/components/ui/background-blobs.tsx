@@ -1,22 +1,27 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 
-export default function BackgroundBlob ({className, stroke = true}) {
-  const blobs = [
-    <Blob1 className={className} stroke={stroke}></Blob1>,
-    <Blob2 className={className} stroke={stroke}></Blob2>,
-    <Blob3 className={className} stroke={stroke}></Blob3>,
-    <Blob4 className={className} stroke={stroke}></Blob4>,
-    <Blob5 className={className} stroke={stroke}></Blob5>,
-    <Blob6 className={className} stroke={stroke}></Blob6>,
-    <Blob7 className={className} stroke={stroke}></Blob7>,
-    <Blob8 className={className} stroke={stroke}></Blob8>
-  ];
+interface BlobProps {
+  className: string,
+  stroke: boolean
+}
+
+export default function BackgroundBlob({className, stroke = true}: BlobProps) {
+  const blobs = useMemo(() => [
+    <Blob1 key='0' className={className} stroke={stroke}></Blob1>,
+    <Blob2 key='1' className={className} stroke={stroke}></Blob2>,
+    <Blob3 key='2' className={className} stroke={stroke}></Blob3>,
+    <Blob4 key='3' className={className} stroke={stroke}></Blob4>,
+    <Blob5 key='4' className={className} stroke={stroke}></Blob5>,
+    <Blob6 key='5' className={className} stroke={stroke}></Blob6>,
+    <Blob7 key='6' className={className} stroke={stroke}></Blob7>,
+    <Blob8 key='7' className={className} stroke={stroke}></Blob8>
+  ], [className, stroke]);
 
   const [randomIndex, setRandomIndex] = useState(0);
 
   useEffect(() => {
     setRandomIndex(Math.floor(Math.random() * blobs.length));
-  }, []);
+  }, [blobs]);
 
   return (
     <>
@@ -26,8 +31,7 @@ export default function BackgroundBlob ({className, stroke = true}) {
 }
 
 
-
-function Blob1 ({className, stroke = true}) {
+function Blob1({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2861 2559" version="1.1">
@@ -41,7 +45,7 @@ function Blob1 ({className, stroke = true}) {
 }
 
 
-function Blob2 ({className, stroke = true}) {
+function Blob2({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2520 2433" version="1.1">
@@ -56,7 +60,7 @@ function Blob2 ({className, stroke = true}) {
 }
 
 
-function Blob3 ({className, stroke = true}) {
+function Blob3({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -73,7 +77,7 @@ function Blob3 ({className, stroke = true}) {
 }
 
 
-function Blob4 ({className, stroke = true}) {
+function Blob4({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -89,7 +93,7 @@ function Blob4 ({className, stroke = true}) {
   );
 }
 
-function Blob5 ({className, stroke = true}) {
+function Blob5({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -104,7 +108,7 @@ function Blob5 ({className, stroke = true}) {
   );
 }
 
-function Blob6 ({className, stroke = true}) {
+function Blob6({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -120,7 +124,7 @@ function Blob6 ({className, stroke = true}) {
   );
 }
 
-function Blob7 ({className, stroke = true}) {
+function Blob7({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2549 2458" version="1.1">
@@ -133,7 +137,7 @@ function Blob7 ({className, stroke = true}) {
   );
 }
 
-function Blob8 ({className, stroke = true}) {
+function Blob8({className, stroke = true}: BlobProps) {
 
   return (
 

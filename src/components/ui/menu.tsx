@@ -9,7 +9,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {Title} from './title';
+import Title from './title';
 
 
 import {
@@ -25,10 +25,10 @@ import ToggleSound from './toggle-sound';
 
 const side = "left";
 
-export default function Menu () {
+export default function Menu() {
 
 
-  function handleSubmit () { }
+  // function handleSubmit () { }
 
   return (
     <div className="flex items-center justify-center">

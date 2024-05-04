@@ -1,3 +1,7 @@
+TODO: 
+- [] Title Component, fix className (className must be provided?)
+
+
 
 # Stitchmate
 
