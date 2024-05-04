@@ -56,14 +56,12 @@ const reminders: Reminder[] = [
 
 ];
 
-interface Counter {
-  id: number,
-  count: number,
-  title: string,
-  numOfRows: number,
-  reminders: Reminder[],
-  nextReminders: Reminder[],
+interface State {
   clickSoundEnabled: boolean,
+  projects: Project[]
+}
+
+interface Action {
   countUp: () => void,
   countDown: () => void,
   resetCount: () => void,
@@ -76,29 +74,54 @@ interface Counter {
   toggleSound: () => void,
 }
 
+interface Project {
+  id: number,
+  count: number,
+  title: string,
+  numOfRows: number,
+  reminders: Reminder[],
+  nextReminders: Reminder[],
+}
 
-export const useStore = create<Counter>()(
+
+export const useStore = create<State & Action>()(
   devtools(
     persist(
       (set, get) => {
         return {
-          id: 1,
-          count: 1,
-          title: `my counter no.1`,
-          numOfRows: 0,
-          reminders: reminders,
-          nextReminders: [],
+          projects: [
+            {
+              id: -1,
+              count: 1,
+              title: 'my first project',
+              numOfRows: 0,
+              reminders: reminders,
+              nextReminders: [],
+            },
+          ],
           clickSoundEnabled: true,
 
-          // methods 
-          countUp: function () {
+          countUp: function (id: number) {
+
             return set(state => {
-              let newCount = state.count + 1 % 1000;
+              const currentProject = state.projects.find(project => project.id === id)
+              if (!currentProject) return state
+
+              let newCount = currentProject.count + 1 % 1000;
               if (newCount === 0) newCount = 1;
+
+              const updatedProject = {
+                ...currentProject,
+                count: newCount,
+                nextReminders: selectNextReminders(currentProject.reminders, newCount)
+              }
+
               return {
                 ...state,
-                count: newCount,
-                nextReminders: selectNextReminders(state.reminders, newCount)
+                projects: [
+                  ...state.projects, updatedProject
+                ],
+
               };
             }
             );
@@ -214,12 +237,12 @@ export const useStore = create<Counter>()(
 
 
 export function findReminder(id: number) {
-  return function (state: Counter) {
+  return function (state: Project) {
     return state.reminders.find(reminder => reminder.id === id);
   };
 }
 
-export function selectNotifiableNextReminders(state: Counter) {
+export function selectNotifiableNextReminders(state: Project) {
   return state.nextReminders.filter(reminder => reminder.notification);
 }
 
