@@ -5,9 +5,9 @@ import {type Reminder} from '@/lib/reminder';
 
 export default function ReminderItem({reminder}: {reminder: Reminder}) {
 
-  const {title, note, repeat, type} = reminder;
+  const {title, note, repeat} = reminder;
 
-  const descriptionType = type === 'every'
+  const descriptionType = repeat.type === 'every'
     ? <p className='text-sm font-semibold text-sienna-500'>from row {repeat.start}, every {repeat.interval}{makeOrdinal(repeat.interval)}, {repeat.times} times</p>
     : <p className='text-sm font-semibold text-sienna-500'>rows {repeat.from} {`\u2013`} {repeat.until}</p>
 

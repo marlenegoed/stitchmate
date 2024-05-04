@@ -1,30 +1,22 @@
 
-export type Reminder = EveryReminder | ForUntilReminder
-
-interface BaseReminder {
+export interface Reminder {
   id: number,
   title: string,
   note: string,
   notification: boolean,
+  repeat: EveryRepeat | ForUntilRepeat
 }
 
-export interface ForUntilReminder extends BaseReminder {
-  type: 'for-rows',
-  repeat: ForUntilRepeat
-}
-
-export interface EveryReminder extends BaseReminder {
-  type: 'every',
-  repeat: EveryRepeat
-}
 
 export interface EveryRepeat {
+  type: 'every',
   interval: number,
   times: number,
   start: number,
 }
 
 export interface ForUntilRepeat {
+  type: 'for-rows',
   from: number,
   until: number,
 }
