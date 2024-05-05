@@ -1,13 +1,10 @@
 'use client';
 
-import {useStore} from '@/app/store';
-
 import ReminderAlertDialog from './reminder-alert-dialog';
 import AddReminder from './add-reminder';
-import { type Reminder } from '@/lib/reminder';
+import {type Reminder} from '@/lib/reminder';
 
-export default function ReminderList () {
-  const {reminders} = useStore();
+export default function ReminderList({reminders}: {reminders: Reminder[]}) {
 
   return (
     <section className='overflow-x-auto'>

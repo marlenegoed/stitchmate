@@ -1,6 +1,6 @@
 
 export interface Reminder {
-  id: number,
+  id: string,
   title: string,
   note: string,
   notification: boolean,

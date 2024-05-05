@@ -1,8 +1,8 @@
 'use client';
 
 import Logo from '@/components/ui/logo';
-import CounterSettings from '@/components/counter/counter-settings';
-import CounterProgress from '@/components/counter/counter-progress';
+import ProjectSettings from '@/components/project/project-settings';
+import ProjectProgress from '@/components/project/project-progress';
 import Menu from '@/components/ui/menu';
 import {usePathname} from 'next/navigation';
 import {IoIosArrowBack} from "react-icons/io";
@@ -11,32 +11,34 @@ import {cn} from '@/lib/utils';
 
 import Link from 'next/link';
 
-import {useStore} from '@/app/store';
+import {useStore, findProject} from '@/app/store';
+import {useParams} from 'next/navigation';
 
 
-export default function Nav () {
-
-  const {numOfRows} = useStore();
-  const isRowNums = numOfRows > 0;
+export default function Nav() {
 
   const pathname = usePathname();
   const isRoot = pathname === '/';
+
+  const {id} = useParams<{id?: string}>()
+  const currentProject = useStore(findProject(id || '-1'));
+  const isRowNums = currentProject.numOfRows > 0;
 
   return (
     <>
       <nav className='flex justify-between px-4 py-3'>
         {/* <CounterMenu /> */}
-        {isRoot ? <Menu className='fill-slate-800' /> : <BackButton className='fill-slate-800' />}
+        {isRoot ? <Menu /> : <BackButton />}
         <Logo />
-        <CounterSettings className={cn(!isRoot && 'invisible')} />
+        <ProjectSettings className={cn(!isRoot && 'invisible')} project={currentProject} />
       </nav>
-      {isRoot && isRowNums ? <CounterProgress /> : <hr className='border-gray-300' />}
+      {isRoot && isRowNums ? <ProjectProgress count={currentProject.count} numOfRows={currentProject.numOfRows} /> : <hr className='border-gray-300' />}
 
     </>
   );
 }
 
-function BackButton () {
+function BackButton() {
   return (
     <Link href='/'>
       <Button size='icon' variant='ghost'><IoIosArrowBack className='fill-slate-800' size={24} /></Button>

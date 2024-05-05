@@ -1,12 +1,13 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage, devtools} from 'zustand/middleware';
 import {type Reminder} from '@/lib/reminder';
+import {type Project} from '@/lib/project';
 
 // Example data 
 const reminders: Reminder[] = [
 
   {
-    id: -1,
+    id: '-1',
     notification: true,
     title: 'Short Row 1',
     note: 'RS: Purl to 1 st before marker, sl 1 wiyb, sm, purl to the last 3 sts, w&t',
@@ -18,7 +19,7 @@ const reminders: Reminder[] = [
   },
 
   {
-    id: -2,
+    id: '-2',
     notification: true,
     title: 'Short Row 2',
     note: 'WS: Knit to marker, sm, p1, knit to the last 3 sts, w&t.',
@@ -30,7 +31,7 @@ const reminders: Reminder[] = [
   },
 
   {
-    id: -3,
+    id: '-3',
     notification: true,
     title: 'Short Rows 3 & 4',
     note: 'RS: Purl to 1 sts before marker, sl 1 wiyb, sm, purl to 4 sts before previously wrapped st, w&t. WS: Knit to marker, sm, p1, knit to 4 sts before previously wrapped st, w&t.',
@@ -42,7 +43,7 @@ const reminders: Reminder[] = [
   },
 
   {
-    id: -4,
+    id: '-4',
     notification: false,
     title: 'decrease',
     note: 'K1, k2tog, knit to the last 3 sts, ssk, k1 (2 sts dec).',
@@ -58,53 +59,46 @@ const reminders: Reminder[] = [
 
 interface State {
   clickSoundEnabled: boolean,
-  projects: Project[]
+  projects: {[id: string]: Project},
+  currentId: number
 }
 
 interface Action {
-  countUp: () => void,
-  countDown: () => void,
-  resetCount: () => void,
-  setTitle: (title: string) => void,
-  setCount: (count: number) => void,
-  setNumOfRows: (numOfRows: number) => void,
-  setReminder: (reminder: Reminder) => void,
-  updateReminder: (updatedReminder: Reminder) => void,
-  deleteReminder: (id: number) => void,
+  countUp: (id: string) => void,
+  countDown: (id: string) => void,
+  resetCount: (id: string) => void,
+  setTitle: (id: string, title: string) => void,
+  setCount: (id: string, count: number) => void,
+  setNumOfRows: (id: string, numOfRows: number) => void,
+  setReminder: (id: string, reminder: Reminder) => void,
+  updateReminder: (id: string, updatedReminder: Reminder) => void,
+  deleteReminder: (id: string, reminderId: string) => void,
   toggleSound: () => void,
 }
-
-interface Project {
-  id: number,
-  count: number,
-  title: string,
-  numOfRows: number,
-  reminders: Reminder[],
-  nextReminders: Reminder[],
-}
-
 
 export const useStore = create<State & Action>()(
   devtools(
     persist(
-      (set, get) => {
+      (set) => {
         return {
-          projects: [
-            {
-              id: -1,
+          projects: {
+            '-1': {
+              id: '-1',
               count: 1,
               title: 'my first project',
               numOfRows: 0,
               reminders: reminders,
               nextReminders: [],
             },
-          ],
+          },
           clickSoundEnabled: true,
+          currentId: 1,
 
-          countUp: function (id: number) {
+
+          countUp: function (id) {
 
             return set(state => {
-              const currentProject = state.projects.find(project => project.id === id)
+              const currentProject = state.projects[id]
               if (!currentProject) return state
 
               let newCount = currentProject.count + 1 % 1000;
@@ -118,82 +112,164 @@ export const useStore = create<State & Action>()(
 
               return {
                 ...state,
-                projects: [
-                  ...state.projects, updatedProject
-                ],
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
 
               };
             }
             );
           },
 
-          countDown: function () {
+          countDown: function (id) {
             return set(state => {
-              let newCount = state.count - 1;
-              if (state.count <= 1) newCount = 1;
-              return {
-                ...state,
-                count: newCount,
-                nextReminders: selectNextReminders(state.reminders, newCount)
-              };
-            });
-          },
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
 
-          resetCount: function () {
-            return set(state => {
-              const newCount = 1;
-              return {
-                ...state,
-                count: newCount,
-                nextReminders: selectNextReminders(state.reminders, newCount)
-              };
-            });
-          },
+              let newCount = currentProject.count - 1;
+              if (newCount <= 1) newCount = 1;
 
-          setTitle: function (title) {
-            return set(state => {
-              if (!title) {
-                state.id++;
-                return {...state, title: state.title};
+              const updatedProject = {
+                ...currentProject,
+                count: newCount,
+                nextReminders: selectNextReminders(currentProject.reminders, newCount)
               }
-              return {...state, title};
-            });
-          },
 
-          setCount: function (count) {
-            return set(state => {
               return {
                 ...state,
-                count,
-                nextReminders: selectNextReminders(state.reminders, count)
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
+              };
+            })
+          },
+
+          resetCount: function (id) {
+            return set(state => {
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              const updatedProject = {
+                ...currentProject,
+                count: 1,
+                nextReminders: selectNextReminders(currentProject.reminders, 1)
+              }
+
+              return {
+                ...state,
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
               };
             });
           },
 
-          setNumOfRows: function (numOfRows) {
+          setTitle: function (id, title) {
             return set(state => {
-              if (numOfRows <= 0) return {...state, numOfRows: 0};
-              if (numOfRows > 999) return {...state, numOfRows: 999};
-              return {...state, numOfRows};
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              const updatedProject = {
+                ...currentProject,
+                title: title,
+              }
+
+              return {
+                ...state,
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
+              };
             });
           },
 
-          setReminder: function (reminder) {
+          setCount: function (id, count) {
             return set(state => {
-              reminder.id = state.id;
-              state.id++;
-              const newReminders = [...state.reminders, reminder];
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+
+              const updatedProject = {
+                ...currentProject,
+                count: count,
+                nextReminders: selectNextReminders(currentProject.reminders, count)
+              }
+
               return {
                 ...state,
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
+              };
+            });
+          },
+
+          setNumOfRows: function (id, numOfRows) {
+            return set(state => {
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              if (numOfRows <= 0) numOfRows = 0
+              if (numOfRows > 999) numOfRows = 999
+
+              const updatedProject = {
+                ...currentProject,
+                numOfRows: numOfRows,
+              }
+
+              return {
+                ...state,
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
+              };
+
+            });
+          },
+
+          setReminder: function (id, reminder) {
+            return set(state => {
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              reminder.id = state.currentId.toString()
+              state.currentId++
+
+              const newReminders = [...currentProject.reminders, reminder]
+
+              const updatedProject = {
+                ...currentProject,
                 reminders: newReminders,
-                nextReminders: selectNextReminders(newReminders, state.count)
+                nextReminders: selectNextReminders(newReminders, currentProject.count)
+              }
+
+              return {
+                ...state,
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
               };
             });
           },
 
-          updateReminder: function (updatedReminder) {
+          updateReminder: function (id, updatedReminder) {
             return set(state => {
-              const updatedReminders = state.reminders.map(reminder => {
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              const updatedReminders = currentProject.reminders.map(reminder => {
                 if (reminder.id === updatedReminder.id) {
                   return updatedReminder;
                 } else {
@@ -201,21 +277,41 @@ export const useStore = create<State & Action>()(
                 }
               });
 
+              const updatedProject = {
+                ...currentProject,
+                reminders: updatedReminders,
+                nextReminders: selectNextReminders(updatedReminders, currentProject.count)
+              }
+
               return {
                 ...state,
-                reminders: updatedReminders,
-                nextReminders: selectNextReminders(updatedReminders, state.count)
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
               };
             });
           },
 
-          deleteReminder: function (id) {
+          deleteReminder: function (id, reminderId) {
             return set(state => {
-              const updatedReminders = state.reminders.filter(reminder => reminder.id !== id);
+
+              const currentProject = state.projects[id]
+              if (!currentProject) return state
+
+              const updatedReminders = currentProject.reminders.filter(reminder => reminder.id !== reminderId);
+
+              const updatedProject = {
+                ...currentProject,
+                reminders: updatedReminders,
+                nextReminders: selectNextReminders(updatedReminders, currentProject.count)
+              }
               return {
                 ...state,
-                reminders: updatedReminders,
-                nextReminders: selectNextReminders(updatedReminders, state.count)
+                projects: {
+                  ...state.projects,
+                  [id]: updatedProject
+                }
               };
             });
           },
@@ -234,16 +330,23 @@ export const useStore = create<State & Action>()(
 );
 
 
-
-
-export function findReminder(id: number) {
-  return function (state: Project) {
-    return state.reminders.find(reminder => reminder.id === id);
+export function findReminder(id: string, reminderId: string) {
+  return function (state: State & Action) {
+    return state.projects[id]?.reminders?.find(reminder => reminder.id === reminderId);
   };
 }
 
-export function selectNotifiableNextReminders(state: Project) {
-  return state.nextReminders.filter(reminder => reminder.notification);
+export function findProject(id: string) {
+  return function (state: State & Action) {
+    return state.projects[id]
+  }
+}
+
+export function selectNotifiableNextReminders(id: string) {
+  return function (state: State & Action) {
+    return state.projects[id].nextReminders.filter(reminder => reminder.notification);
+  }
+
 }
 
 // helper 

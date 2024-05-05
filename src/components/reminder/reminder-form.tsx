@@ -3,6 +3,7 @@
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm, useFormContext} from "react-hook-form";
+import {useParams} from 'next/navigation'
 
 import {Button} from "@/components/ui/button";
 
@@ -25,7 +26,7 @@ import {
 } from "@/components/ui/form"
 
 import {Textarea} from "@/components/ui/textarea";
-import {useStore} from '@/app/store';
+import {findProject, useStore} from '@/app/store';
 import makeOrdinal from '@/lib/make-ordinal';
 import {Checkbox} from '../ui/checkbox';
 
@@ -59,7 +60,10 @@ interface ReminderFormProps {
 
 export default function ReminderForm({handleFormSubmit, reminder}: ReminderFormProps) {
 
-  const {count} = useStore();
+  const {id} = useParams<{id: string}>()
+  const currentProject = useStore(findProject(id));
+
+  const count = currentProject.count
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -77,7 +81,7 @@ export default function ReminderForm({handleFormSubmit, reminder}: ReminderFormP
 
   function onSubmit(values: z.infer<typeof formSchema>) {
 
-    const reminderId = reminder ? reminder.id : 0
+    const reminderId = reminder ? reminder.id : '0'
 
     const newReminder: Reminder = {
       id: reminderId,
@@ -93,10 +97,10 @@ export default function ReminderForm({handleFormSubmit, reminder}: ReminderFormP
   let inputType;
 
   if (form.getValues().repeat.type === 'every') {
-    inputType = <RepeatEveryInputs />;
+    inputType = <RepeatEveryInputs count={count} />;
   } else {
     inputType =
-      <ForRowsInputs />;
+      <ForRowsInputs count={count} />;
   }
 
 
@@ -189,9 +193,9 @@ export default function ReminderForm({handleFormSubmit, reminder}: ReminderFormP
 }
 
 
-function RepeatEveryInputs() {
+function RepeatEveryInputs({count}: {count: number}) {
 
-  const {count} = useStore();
+
   const form = useFormContext()
 
   return (
@@ -246,9 +250,8 @@ function RepeatEveryInputs() {
 }
 
 
-function ForRowsInputs() {
+function ForRowsInputs({count}: {count: number}) {
 
-  const {count} = useStore();
   const form = useFormContext()
 
   return (
