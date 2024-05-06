@@ -18,7 +18,7 @@ import {useParams} from 'next/navigation';
 export default function Nav() {
 
   const pathname = usePathname();
-  const isRoot = pathname === '/';
+  const isRoot = pathname.includes('/projects/');
 
   const {id} = useParams<{id?: string}>()
   const currentProject = useStore(findProject(id || '-1'));

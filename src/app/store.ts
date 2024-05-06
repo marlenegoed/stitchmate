@@ -1,80 +1,217 @@
-import {create} from 'zustand';
+import {create, StateCreator} from 'zustand';
 import {persist, createJSONStorage, devtools} from 'zustand/middleware';
+import {randomUUID} from 'crypto'
+
+
 import {type Reminder} from '@/lib/reminder';
 import {type Project} from '@/lib/project';
+import {Section} from '@/lib/section';
 
-// Example data 
-const reminders: Reminder[] = [
+import {mockReminders} from '@/lib/mock-data';
 
-  {
-    id: '-1',
-    notification: true,
-    title: 'Short Row 1',
-    note: 'RS: Purl to 1 st before marker, sl 1 wiyb, sm, purl to the last 3 sts, w&t',
-    repeat: {
-      type: 'for-rows',
-      from: 1,
-      until: 1
-    }
-  },
 
-  {
-    id: '-2',
-    notification: true,
-    title: 'Short Row 2',
-    note: 'WS: Knit to marker, sm, p1, knit to the last 3 sts, w&t.',
-    repeat: {
-      type: 'for-rows',
-      from: 2,
-      until: 2
-    }
-  },
-
-  {
-    id: '-3',
-    notification: true,
-    title: 'Short Rows 3 & 4',
-    note: 'RS: Purl to 1 sts before marker, sl 1 wiyb, sm, purl to 4 sts before previously wrapped st, w&t. WS: Knit to marker, sm, p1, knit to 4 sts before previously wrapped st, w&t.',
-    repeat: {
-      type: 'for-rows',
-      from: 2,
-      until: 2
-    }
-  },
-
-  {
-    id: '-4',
-    notification: false,
-    title: 'decrease',
-    note: 'K1, k2tog, knit to the last 3 sts, ssk, k1 (2 sts dec).',
-    repeat: {
-      type: 'every',
-      interval: 9,
-      times: 10,
-      start: 1
-    }
-  },
-
-];
-
-interface State {
+interface StateSlice {
   clickSoundEnabled: boolean,
-  projects: {[id: string]: Project},
-  currentId: number
+  toggleSound: () => void,
 }
 
-interface Action {
+
+interface ReminderSlice {
+
+  reminders: {[id: string]: Reminder},
+
+  setReminder: (id: string, reminder: Reminder) => void,
+  editReminder: (updatedReminder: Reminder) => void,
+  deleteReminder: (id: string, reminderId: string) => void,
+
+}
+
+
+
+interface ProjectSlice {
+
+  projects: {[id: string]: Project},
+
+  addProject: (project: Project) => void,
+  deleteProject: (id: string) => void,
+
+  editProject: (id: string, project: Project) => void,
+
+  // addProjectSection: (projectId: string, sectionId: string)
+
+  // setProjectTitle: (id: string, title: string) => void, 
+  // setGauge: (id: string, gauge: string) => void, 
+  // setYarn: (id: string, yarn: string) => void,
+  // setDescription: (id: string, description: string) => void, 
+  // setNeedles: (id: string, needles: string) => void,
+
+}
+
+const createProjectSlice: StateCreator<ProjectSlice, [], [], ProjectSlice> = (set) => ({
+
+  projects: {},
+
+  addProject: (project) => set((state) => {
+
+    const newId = randomUUID()
+    return {
+      projects: {...state.projects, [newId]: {...project, id: newId}}
+    }
+
+  }),
+
+  deleteProject: (id) => set((state) => {
+
+    const updatedProjects = {...state.projects}
+    delete updatedProjects[id]
+
+    return {
+      projects: {...updatedProjects}
+    }
+
+  }),
+
+  editProject: (id, project) => set((state) => {
+
+    return {
+      projects: {...state.projects, [id]: {...project}}
+    }
+
+  }),
+
+  // addProjectSection: (projectId, sectionId) => set((state) => {
+
+  //   return {
+  //     projects: {
+  //       ...state.projects,
+  //       [projectId]: {
+  //         ...state.projects[projectId],
+  //         sectionIds: [...state.projects[projectId].sectionIds, sectionId]
+  //       }
+  //     }
+  //   }
+  // })
+
+})
+
+
+interface SectionSlice {
+  sections: {[id: string]: Section},
+
+  addSection: (projectId: string, section: Section) => void,
+  deleteSection: (id: string) => void,
+  editSection: (section: Section) => void,
+  dublicateSection: (id: string) => void,
   countUp: (id: string) => void,
   countDown: (id: string) => void,
   resetCount: (id: string) => void,
-  setTitle: (id: string, title: string) => void,
-  setCount: (id: string, count: number) => void,
-  setNumOfRows: (id: string, numOfRows: number) => void,
-  setReminder: (id: string, reminder: Reminder) => void,
-  updateReminder: (id: string, updatedReminder: Reminder) => void,
-  deleteReminder: (id: string, reminderId: string) => void,
-  toggleSound: () => void,
+  // setTitle: (id: string, title: string) => void,
+  // setCount: (id: string, count: number) => void,
+  // setNumOfRows: (id: string, numOfRows: number) => void,
 }
+
+
+const createInterfaceSlice: StateCreator<SectionSlice, [], [], SectionSlice> = (set) => ({
+
+  sections: {},
+
+  addSection: (projectId, section) => set((state) => {
+
+    const newSectionId = randomUUID()
+
+    return {
+      sections: {
+        ...state.sections,
+        [newSectionId]: {
+          ...section,
+          id: newSectionId,
+          projectId: projectId
+        }
+      }
+    }
+  }),
+
+  deleteSection: (id) => set((state) => {
+
+    const updatedSections = {...state.sections}
+    delete updatedSections[id]
+
+    return {
+      sections: {...updatedSections}
+    }
+
+  }),
+
+  countUp: (id) => set((state) => {
+
+    return {
+      sections: {
+        ...state.sections,
+        [id]: {
+          ...state.sections[id],
+          count: state.sections[id].count++
+        }
+      }
+    }
+  }),
+
+  countDown: (id) => set((state) => {
+    return {
+      sections: {
+        ...state.sections,
+        [id]: {
+          ...state.sections[id],
+          count: state.sections[id].count--
+        }
+      }
+    }
+  }),
+
+
+  resetCount: (id) => set((state) => {
+    return {
+      sections: {
+        ...state.sections,
+        [id]: {
+          ...state.sections[id],
+          count: 1,
+        }
+      }
+    }
+  }),
+
+  editSection: (section) => set((state) => {
+    return {
+      sections: {
+        ...state.sections,
+        section
+      }
+    }
+  }),
+
+  dublicateSection: (id) => set((state) => {
+
+    const newSectionId = randomUUID()
+
+    const dublicatedSection = {
+      ...state.sections[id],
+      id: newSectionId
+    }
+
+    return {
+      sections: {
+        ...state.sections,
+        [newSectionId]: {
+          ...dublicatedSection
+        }
+      }
+    }
+
+  })
+
+})
+
+
 
 export const useStore = create<State & Action>()(
   devtools(
@@ -89,6 +226,8 @@ export const useStore = create<State & Action>()(
               numOfRows: 0,
               reminders: reminders,
               nextReminders: [],
+              startDate: Date.now(),
+              lastEdit: Date.now()
             },
           },
           clickSoundEnabled: true,
@@ -363,4 +502,6 @@ function selectNextReminders(reminders: Reminder[], count: number) {
     return count >= reminder.repeat.from && count <= reminder.repeat.until;
   });
 }
+
+
 

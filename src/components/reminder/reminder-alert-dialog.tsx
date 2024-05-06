@@ -22,10 +22,11 @@ import {type Reminder} from '@/lib/reminder';
 
 interface ReminderAlertDialogProps {
   reminder: Reminder,
-  isTag?: boolean
+  isTag?: boolean, 
+  projectId: string, 
 }
 
-export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
+export default function ReminderAlertDialog({reminder, isTag, projectId}: ReminderAlertDialogProps) {
 
   const {id, title, note} = reminder;
 
@@ -50,7 +51,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
 
 
         <DialogFooter className='flex flex-row gap-x-4'>
-          <Link href={`/reminders/${id}/edit`}>
+          <Link href={`/projects/${projectId}/reminders/${id}/edit`}>
             <Button variant="outline" className='flex-1 w-full'>
               edit reminder
             </Button>
