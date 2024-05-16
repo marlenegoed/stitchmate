@@ -1,47 +1,47 @@
 'use client';
 
 import Logo from '@/components/ui/logo';
-import ProjectSettings from '@/components/project/project-settings';
-import ProjectProgress from '@/components/project/project-progress';
 import Menu from '@/components/ui/menu';
 import {usePathname} from 'next/navigation';
-import {IoIosArrowBack} from "react-icons/io";
 import {Button} from './button';
-import {cn} from '@/lib/utils';
-
 import Link from 'next/link';
+import {HiMiniSquares2X2} from "react-icons/hi2";
+import {HiOutlineSquares2X2} from "react-icons/hi2";
+import {HiMiniMoon} from "react-icons/hi2";
+import {Avatar, AvatarFallback, AvatarImage} from './avatar';
 
-import {useStore, findProject} from '@/app/store';
-import {useParams} from 'next/navigation';
 
 
 export default function Nav() {
 
   const pathname = usePathname();
-  const isRoot = pathname.includes('/projects/');
+  const isRoot = pathname.includes('/projects');
 
-  const {id} = useParams<{id?: string}>()
-  const currentProject = useStore(findProject(id || '-1'));
-  const isRowNums = currentProject.numOfRows > 0;
 
   return (
     <>
       <nav className='flex justify-between px-4 py-3'>
-        {/* <CounterMenu /> */}
-        {isRoot ? <Menu /> : <BackButton />}
-        <Logo />
-        <ProjectSettings className={cn(!isRoot && 'invisible')} project={currentProject} />
+        <Link href='/projects'>
+          <Logo />
+        </Link>
+
+        <div className='flex items-center gap-6 flex-row'>
+          <HiMiniMoon className='text-slate-800' size={24} />
+          <Link href='/projects'>
+            {/* <Button size='icon' variant='outline' className='w-10 h-10 border border-slate-800'> */}
+            <HiMiniSquares2X2 className='text-slate-800' size={24} />
+            {/* </Button> */}
+          </Link>
+
+          <Avatar >
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </div>
+        {/* <Menu /> */}
       </nav>
-      {isRoot && isRowNums ? <ProjectProgress count={currentProject.count} numOfRows={currentProject.numOfRows} /> : <hr className='border-gray-300' />}
+      {/* <hr className='border-gray-300' /> */}
 
     </>
-  );
-}
-
-function BackButton() {
-  return (
-    <Link href='/'>
-      <Button size='icon' variant='ghost'><IoIosArrowBack className='fill-slate-800' size={24} /></Button>
-    </Link>
   );
 }

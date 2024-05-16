@@ -1,19 +1,23 @@
-'use client'
-
+'use server'
 import Title from '@/components/ui/title';
-import ProjectCard from '@/components/project/project-card';
-import {useStore} from '../store';
+import ProjectCard from '@/components/projects/project-card';
+import {getAllProjects} from '@/database/queries/projects';
+import {MdViewCompact} from "react-icons/md";
+import {FiPlus} from "react-icons/fi";
+import {Button} from '@/components/ui/button';
+import Link from 'next/link';
+import ProjectList from '@/components/projects/project-list';
 
-export default function Page() {
+export default async function Page() {
 
-  const {projects} = useStore()
-  const projectsArr = Object.values(projects)
+  const projects = await getAllProjects()
 
   return (
     <>
-      <Title className='mb-4'>My Projects</Title>
-      <div className='grid grid-cols-3 grid-flow-row gap-4 w-full mt-4'>
-        {projectsArr.map(project => <ProjectCard key={project.id} title={project.title} count={project.count} numOfRows={project.numOfRows} id={project.id} />
+     
+      <ProjectList />
+      <div className='grid grid-cols-3 grid-flow-row gap-4 w-full mt-4 px-4'>
+        {projects.map(project => <ProjectCard key={project.id} title={project.title} id={project.id} />
         )}
       </div>
 

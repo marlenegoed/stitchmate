@@ -1,35 +1,43 @@
 
 import {relations, sql} from 'drizzle-orm';
-import {pgTable, serial, text, timestamp, integer, boolean, pgEnum} from "drizzle-orm/pg-core";
+import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar} from "drizzle-orm/pg-core";
 
+export const projectColorEnum = pgEnum('color', ['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel'])
+export const projectGaugeEnum = pgEnum('gauge_inch', ['1"', '2"', '4"']);
+
+
+// Todo: add blob id 
 export const projects = pgTable('projects', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
-  gauge: text('gauge'),
-  yarn: text('yarn'),
-  needles: text('needles'),
+  gaugeStitches: integer('gauge_stitches'),
+  gaugeRows: integer('gauge_rows'),
+  gaugeInch: projectGaugeEnum('gauge_inch'),
+  yarn: text('yarn').array(),
+  needles: text('needles').array(),
   description: text('description'),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
-  lastSectionId: integer('section_id')
+  favorite: boolean('favorite').notNull().default(false),
+  blobId: integer('blob_id').default(1), 
+  color: projectColorEnum('color'), 
 });
 
-export const projectRelations = relations(projects, ({many, one}) => ({
+
+export const projectRelations = relations(projects, ({many}) => ({
   sections: many(sections),
-  lastSection: one(sections, {
-    fields: [projects.lastSectionId],
-    references: [sections.id],
-  }),
 }));
 
 export const sections = pgTable('sections', {
   id: serial('id').primaryKey(),
-  projectId: integer('project_id'),
-  position: integer('position'),
+  title: text('title').notNull(),
+  projectId: integer('project_id').notNull(),
+  position: integer('position').notNull(),
   count: integer('count').notNull().default(1),
-  numOfRows: integer('num_of_rows'),
+  numOfRows: integer('num_of_rows').default(0),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
+  active: boolean('active').notNull().default(false)
 })
 
 export const sectionRelations = relations(sections, ({one, many}) => ({
@@ -37,14 +45,14 @@ export const sectionRelations = relations(sections, ({one, many}) => ({
     fields: [sections.projectId],
     references: [projects.id],
   }),
-  reminder: many(reminders)
+  reminders: many(reminders)
 }));
 
 export const reminderTypeEnum = pgEnum('reminders_type', ['repeating', 'range']);
 
 export const reminders = pgTable('reminders', {
   id: serial('id').primaryKey(),
-  sectionId: integer('section_id'),
+  sectionId: integer('section_id').notNull(),
   title: text('title').notNull(),
   note: text('note'),
   notification: boolean('notification').notNull().default(true),
@@ -57,6 +65,7 @@ export const reminders = pgTable('reminders', {
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
 })
+
 
 export const reminderRelations = relations(reminders, ({one}) => ({
   section: one(sections, {

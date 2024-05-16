@@ -19,7 +19,7 @@ import {
 
 } from "react-icons/fa6";
 
-import ToggleSound from './toggle-sound';
+// import ToggleSound from './toggle-sound';
 
 // const SHEET_SIDES = ["top", "right", "bottom", "left"];
 
@@ -43,7 +43,7 @@ export default function Menu() {
             <Title>Settings</Title>
           </SheetHeader>
           <div className='mt-20 flex items-center justify-center w-full'>
-            <ToggleSound />
+            {/* <ToggleSound /> */}
           </div>
           <SheetFooter>
             <SheetClose asChild>

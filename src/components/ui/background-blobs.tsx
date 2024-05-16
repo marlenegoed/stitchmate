@@ -1,3 +1,5 @@
+"use client"
+
 import {useState, useEffect, useMemo} from 'react';
 
 interface BlobProps {
@@ -31,7 +33,7 @@ export default function BackgroundBlob({className, stroke = true}: BlobProps) {
 }
 
 
-function Blob1({className, stroke = true}: BlobProps) {
+export function Blob1({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2861 2559" version="1.1">
@@ -45,7 +47,7 @@ function Blob1({className, stroke = true}: BlobProps) {
 }
 
 
-function Blob2({className, stroke = true}: BlobProps) {
+export function Blob2({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2520 2433" version="1.1">
@@ -60,7 +62,7 @@ function Blob2({className, stroke = true}: BlobProps) {
 }
 
 
-function Blob3({className, stroke = true}: BlobProps) {
+export function Blob3({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -77,7 +79,7 @@ function Blob3({className, stroke = true}: BlobProps) {
 }
 
 
-function Blob4({className, stroke = true}: BlobProps) {
+export function Blob4({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -93,7 +95,7 @@ function Blob4({className, stroke = true}: BlobProps) {
   );
 }
 
-function Blob5({className, stroke = true}: BlobProps) {
+export function Blob5({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -108,7 +110,7 @@ function Blob5({className, stroke = true}: BlobProps) {
   );
 }
 
-function Blob6({className, stroke = true}: BlobProps) {
+export function Blob6({className, stroke = true}: BlobProps) {
 
   return (
 
@@ -124,7 +126,7 @@ function Blob6({className, stroke = true}: BlobProps) {
   );
 }
 
-function Blob7({className, stroke = true}: BlobProps) {
+export function Blob7({className, stroke = true}: BlobProps) {
 
   return (
     <svg className={className} width="100%" height="100%" viewBox="0 0 2549 2458" version="1.1">
@@ -137,7 +139,7 @@ function Blob7({className, stroke = true}: BlobProps) {
   );
 }
 
-function Blob8({className, stroke = true}: BlobProps) {
+export function Blob8({className, stroke = true}: BlobProps) {
 
   return (
 
