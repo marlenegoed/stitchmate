@@ -96,7 +96,7 @@ export default function CounterActions({section}: {section: Section}) {
   // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
 
   return (
-    <div className='flex gap-6 mt-4 pb-4 w-full justify-center'>
+    <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
       <CountDown sectionId={section.id} />
       {/* <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiArrowUpTray size={24} /></Button> */}
       <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineSpeakerWave size={24} /></Button>

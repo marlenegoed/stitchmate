@@ -3,13 +3,16 @@
 import ProjectForm from '@/components/projects/project-form';
 import Title from '@/components/ui/title';
 import BackButton from '@/components/ui/back-button';
-import {findProject} from '@/database/queries/projects';
+import {findActiveSection, findProject} from '@/database/queries/projects';
 import HydrateCounterStore from '../../../../components/store/hydrate-counter-store';
+import PageNav from '@/components/ui/page-nav';
 
 
 export default async function Page({params}: {params: {id: number}}) {
 
   const project = await findProject(params.id)
+
+  const section = await findActiveSection(params.id)
   // TODO: if no project found: 404
 
   const defaultValues = {
@@ -20,7 +23,7 @@ export default async function Page({params}: {params: {id: number}}) {
     gaugeInch: project?.gaugeInch || undefined,
     needles: project?.needles?.map(size => ({size})) || [{size: ""}],
     yarn: project?.yarn?.map(yarn => ({yarn})) || [{yarn: ""}],
-    color: 'tangerine',
+    color: project?.color || 'tangerine',
   }
 
   if (defaultValues.needles.length === 0) {
@@ -34,7 +37,7 @@ export default async function Page({params}: {params: {id: number}}) {
   return (
     <>
       <div className='flex w-full items-center'>
-        <BackButton urlPath={'/projects'} className='ml-0 self-start flex' />
+        <PageNav pageTitle='Edit Project' urlPath={`/sections/${section?.id}`} projectId={params.id} />
         {/* <Title className='flex self-center'>New Project</Title> */}
         {/* <Button></Button> */}
       </div>

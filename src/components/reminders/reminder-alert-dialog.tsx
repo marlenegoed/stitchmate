@@ -26,6 +26,8 @@ import {HiAdjustmentsVertical} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import clsx from 'clsx';
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
+import ReminderForm from './reminder-form';
+import {useCounterStore} from '@/providers/counter-store-provider';
 
 
 
@@ -36,6 +38,8 @@ interface ReminderAlertDialogProps {
 }
 
 export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
+
+  const {storeCount} = useCounterStore((state) => state,)
 
   const {id, title, note, type, from, until, start, interval, times, notification} = reminder;
 
@@ -61,11 +65,11 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
         <DialogHeader className='-mt-2 mb-2 flex flex-row justify-between mr-12 gap-6'>
           <DialogTitle className='ml-1 mb-2 text-xl'>{title}</DialogTitle>
-          <div className='flex flex-row gap-6'>
+          <div className='flex gap-4 flex-row'>
             <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
-            <Link href={`/reminders/${id}/edit`}>
-              <HiAdjustmentsVertical className='text-slate-800 hover:text-slate-950' size={20} />
-            </ Link>
+            <span className='flex -mt-4 mr-10'>
+              <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} />
+            </span>
           </div>
         </DialogHeader>
 
@@ -80,8 +84,8 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
           <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-neutral-200'>
             < ReminderRepeat reminder={reminder} />
             <div className='flex flex-row gap-3 font-semibold text-neutral-500'>
-            <span>|</span>
-            {reminderProgress}
+              <span>|</span>
+              {reminderProgress}
             </div>
           </div>
 

@@ -28,14 +28,17 @@ import {Textarea} from '../ui/textarea';
 import {updateProject, type NewProject} from '@/database/queries/projects';
 
 import {FiPlus, FiX} from "react-icons/fi";
+import {HiOutlinePlus} from "react-icons/hi";
+import {HiOutlineX} from "react-icons/hi";
+
 import Link from 'next/link';
-import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
+import {RadioGroup, RadioGroupItem} from '../ui/radio-group-colors';
 
 const formSchema = z.object({
   title: z.string({
     required_error: "please name your project (you can change the title later).",
   }).max(50, {message: "Your title is too long. Must be 50 or fewer characters."}),
-  color: z.enum(['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel']),
+  color: z.enum(['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel'], {message: 'please choose a color.'}),
   needles: z.array(z.object({size: z.string().optional()})).optional(),
   gaugeStitches: z.number().optional(),
   gaugeRows: z.number().optional(),
@@ -93,135 +96,162 @@ export default function ProjectForm({projectId, defaultValues}: ProjectFormProps
   return (
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full px-6" method="post">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input variant='noring' placeholder={'my project'} {...field} className='pl-1 bg-inherit border-none text-xl font-semibold' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-6 grid grid-cols-4 gap-4" method="post">
 
-        <FormField
-          control={form.control}
-          name="color"
-          render={({field}) => (
-            <FormItem className="space-y-3 pl-1">
-              {/* <FormLabel>Notify me about...</FormLabel> */}
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-row gap-6"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="champagne" className='bg-champagne' />
-                    </FormControl>
-                  </FormItem>
+        <div className='grid col-span-2 bg-white rounded-xl shadow-sm pt-6 px-8 pb-10 gap-y-6'>
+          <FormField
+            control={form.control}
+            name="title"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input variant='noring' placeholder={'my project'} {...field} className='pl-1 bg-inherit border-none text-2xl font-semibold' />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="olivine" className='bg-olivine' />
-                    </FormControl>
-                  </FormItem>
+          <FormField
+            control={form.control}
+            name="color"
+            render={({field}) => (
+              <FormItem className="space-y-3 pl-1">
+                {/* <FormLabel>Notify me about...</FormLabel> */}
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={defaultValues.color}
+                    className="flex flex-row gap-6"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="champagne" className='bg-champagne' />
+                      </FormControl>
+                    </FormItem>
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="orchid" className='bg-orchid' />
-                    </FormControl>
-                  </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="olivine" className='bg-olivine' />
+                      </FormControl>
+                    </FormItem>
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="flax" className='bg-flax' />
-                    </FormControl>
-                  </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="orchid" className='bg-orchid' />
+                      </FormControl>
+                    </FormItem>
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="jordy" className='bg-jordy' />
-                    </FormControl>
-                  </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="flax" className='bg-flax' />
+                      </FormControl>
+                    </FormItem>
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="tangerine" className='bg-tangerine' />
-                    </FormControl>
-                  </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="jordy" className='bg-jordy' />
+                      </FormControl>
+                    </FormItem>
 
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="caramel" className='bg-caramel' />
-                    </FormControl>
-                  </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="tangerine" className='bg-tangerine' />
+                      </FormControl>
+                    </FormItem>
 
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="caramel" className='bg-caramel' />
+                      </FormControl>
+                    </FormItem>
 
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
+        </div>
 
         <NeedleSelectField />
 
-
-        <p>Gauge (optional)</p>
-        <div className='grid grid-cols-3 gap-4'>
-          <FormField
-            control={form.control}
-            name="gaugeStitches"
-            render={({field}) => (
-              <FormItem className=''>
-                <FormLabel>stitches</FormLabel>
-                <FormControl>
-                  <Input placeholder={''} type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="gaugeRows"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>rows</FormLabel>
-                <FormControl>
-                  <Input placeholder={''} type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="gaugeInch"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>inch</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div className='bg-white rounded-xl shadow-sm py-6 pb-8 px-8'>
+          <p className='font-semibold mt-2 mb-4'>Gauge (optional)</p>
+          <div className='grid grid-cols-3 gap-4'>
+            <FormField
+              control={form.control}
+              name="gaugeStitches"
+              render={({field}) => (
+                <FormItem >
+                  <FormLabel >stitches</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="" />
-                    </SelectTrigger>
+                    <Input placeholder={''} type="number" {...field} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value='1"'>{`1"`}</SelectItem>
-                    <SelectItem value='2"'>{`2"`}</SelectItem>
-                    <SelectItem value='4"'>{`4"`}</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="gaugeRows"
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>rows</FormLabel>
+                  <FormControl>
+                    <Input placeholder={''} type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="gaugeInch"
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>inch</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className='border'>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='1"'>{`1"`}</SelectItem>
+                      <SelectItem value='2"'>{`2"`}</SelectItem>
+                      <SelectItem value='4"'>{`4"`}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+
+        <div className='bg-white rounded-xl shadow-sm px-8 pt-8 pb-10 col-span-2'>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({field}) => (
+              <FormItem>
+                <div className='mb-6'>
+                  <FormLabel className='font-semibold text-md'>Description (optional)</FormLabel>
+                </div>
+                <FormControl>
+                  <Textarea
+                    placeholder="add description..."
+                    className="resize-none border rounded-md text-sm"
+                    rows={5}
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -230,30 +260,13 @@ export default function ProjectForm({projectId, defaultValues}: ProjectFormProps
 
         <YarnSelectField />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>Description (optional)</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="add your project description"
-                  className="resize-none"
-                  rows={5}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <div className='grid grid-cols-2 gap-4'>
+
+        <div className='col-span-4 flex justify-end gap-4'>
           <Link href='/projects'>
-            <Button type="button" variant="outline" className='w-full'>Cancel</Button>
+            <Button type="button" variant="outline" className='w-40' >Cancel</Button>
           </Link>
-          <Button type="submit" className='w-full'>Save Project</Button>
+          <Button type="submit" className='w-40' >Save Changes</Button>
         </div>
       </form>
     </Form>
@@ -265,10 +278,10 @@ function NeedleSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "needles"})
 
   return (
-    <div className="flex flex-col gap-y-4 bg-eggshell rounded-xl">
-      <div className="flex items-center justify-between">
-        <FormLabel>Needles (optional)</FormLabel>
-        <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><FiPlus /></Button>
+    <div className="flex flex-col bg-white shadow-sm rounded-xl p-8 pr-4 py-6">
+      <div className="flex items-center justify-between mb-3">
+        <FormLabel className='text-md font-semibold'>Needles (optional)</FormLabel>
+        <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
       </div>
       {fields.map((field, index) => {
         return (
@@ -281,15 +294,15 @@ function NeedleSelectField() {
                 <div className="flex items-center">
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a needle" />
+                      <SelectTrigger className='font-normal border mr-2 mb-4'>
+                        <SelectValue placeholder="select needle" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {needlesizes.map((needlesize) => <SelectItem key={needlesize} value={needlesize}>{needlesize}</SelectItem>)}
                     </SelectContent>
                   </Select>
-                  <Button type="button" variant="ghost" size="icon" disabled={fields.length < 2} onClick={() => remove(index)}><FiX /></Button>
+                  <Button type="button" variant="ghost" size="icon" className='mr-1 -mt-4 text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}><HiOutlineX /></Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -307,10 +320,10 @@ function YarnSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "yarn"})
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 col-span-2 bg-white rounded-xl shadow-sm pt-6 pb-10 pr-6 pl-8 ">
       <div className="flex items-center justify-between">
-        <FormLabel>Yarn (optional)</FormLabel>
-        <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><FiPlus /></Button>
+        <FormLabel className='font-semibold text-md'>Yarn (optional)</FormLabel>
+        <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
       </div>
       {fields.map((field, index) => {
         return (
@@ -322,10 +335,10 @@ function YarnSelectField() {
               <FormItem>
                 <div className="flex items-center">
                   <FormControl>
-                    <Input placeholder="add yarn" {...field} />
+                    <Input placeholder="add yarn" className='py-6 mr-2' {...field} />
                   </FormControl>
-                  <Button type="button" variant="ghost" size="icon" disabled={fields.length < 2} onClick={() => remove(index)}>
-                    <FiX />
+                  <Button type="button" variant="ghost" size="icon" className='text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}>
+                    <HiOutlineX className='mr-2' />
                   </Button>
                 </div>
                 <FormMessage />

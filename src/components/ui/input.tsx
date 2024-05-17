@@ -14,7 +14,7 @@ const inputVariants = cva(
         inline:
           "bg-inherit border-none focus:outline-none",
         form: "rounded-lg bg-white text-md outline-sienna-300 border-none px-5 h-14",
-        noring: "focus:outline-none"
+        noring: "focus:outline-none focus:bg-neutral-200 hover:bg-neutral-200 transition-colors"
       },
     },
     defaultVariants: {

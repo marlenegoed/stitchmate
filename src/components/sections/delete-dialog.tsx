@@ -1,3 +1,5 @@
+'use client'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,25 +12,42 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {Section, deleteSection} from '@/database/queries/projects';
+import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/projects';
+import {useRouter} from 'next/navigation';
 
 import {HiOutlineTrash} from "react-icons/hi2";
 
 interface AlertDialogProps {
-  // setOpen: (value: boolean) => void,
-  section: Section,
+  section?: Section,
+  projectId?: number,
+  reminderId?: number
 }
 
-export default function DeleteDialog({section}: AlertDialogProps) {
+export default function DeleteDialog({section, projectId, reminderId}: AlertDialogProps) {
+  const router = useRouter()
 
   async function handleSubmit() {
-    try {
-      await deleteSection(section)
-    } catch (e) {
-      console.log(e)
+    if (section) {
+      try {
+        await deleteSection(section)
+      } catch (e) {
+        console.log(e)
+      }
+    } else if (projectId) {
+      deleteProject(projectId)
+      // redirect("/projects")
+    } else if (reminderId) {
+      deleteReminder(reminderId)
+      router.refresh();
     }
 
     // setOpen(false)
+  }
+
+  function createDialogType() {
+    if (section) {return 'section'}
+    else if (projectId) {return 'project'}
+    else if (reminderId) {return 'reminder'}
   }
 
   return (
@@ -38,14 +57,14 @@ export default function DeleteDialog({section}: AlertDialogProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to delete this section? This action cannot be undone!</AlertDialogTitle>
-          {/* <AlertDialogDescription>
-            Are you ready to knit your way into uncharted territory? Resetting wipes the slate clean, including all reminders!
-          </AlertDialogDescription> */}
+          <AlertDialogTitle >Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription className='text-base'>
+            Deleting a {createDialogType()} cannot be undone. All your progress and settings will be permanently removed.
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmit}>Delete</AlertDialogAction>
+          <AlertDialogCancel className='px-10'>Cancel</AlertDialogCancel>
+          <AlertDialogAction className='px-10' onClick={handleSubmit}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

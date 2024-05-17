@@ -34,8 +34,8 @@ export default function Nav() {
           </Link>
 
           <Avatar >
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+            <AvatarFallback>SM</AvatarFallback>
           </Avatar>
         </div>
         {/* <Menu /> */}

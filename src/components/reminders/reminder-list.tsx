@@ -2,7 +2,10 @@
 
 import ReminderAlertDialog from './reminder-alert-dialog';
 import AddReminder from './add-reminder';
-import { type Reminder } from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/projects';
+import ReminderForm from './reminder-form';
+import {useCounterStore} from '@/providers/counter-store-provider';
+import {ScrollArea, ScrollBar} from '../ui/scroll-area';
 
 interface ReminderListProps {
   reminders: Reminder[],
@@ -10,12 +13,19 @@ interface ReminderListProps {
 }
 export default function ReminderList({reminders, sectionId}: ReminderListProps) {
 
+  const {storeCount} = useCounterStore(
+    (state) => state,
+  )
+
   return (
-    <section className='overflow-x-auto w-full'>
-      <div className='flex flex-row-reverse gap-4 justify-start'>
-        <AddReminder sectionId={sectionId} />
-        {reminders.map(reminder => <ReminderAlertDialog key={reminder.id} reminder={reminder}/>)}
-      </div>
+    <section className='w-full flex flex-row gap-4 w-full justify-end'>
+      <ScrollArea className="w-full">
+        <div className='flex flex-row-reverse gap-4 justify-end w-max'>
+          {reminders.map(reminder => <ReminderAlertDialog key={reminder.id} reminder={reminder} />)}
+        </div>
+        <ScrollBar orientation='horizontal' />
+      </ScrollArea>
+      <ReminderForm sectionId={sectionId} count={storeCount} />
     </section>
   );
 }

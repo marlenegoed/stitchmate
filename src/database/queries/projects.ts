@@ -30,7 +30,7 @@ export async function quickStartProject(title: string) {
 export async function updateProject(id: number, project: NewProject) {
   await db.update(projects).set({...project}).where(eq(projects.id, id))
   const section = await findActiveSection(id)
-  if (!section) { throw new Error ('no section found')}
+  if (!section) {throw new Error('no section found')}
   redirect(`/sections/${section.id}`)
 }
 
@@ -227,9 +227,8 @@ export async function createReminder(reminder: NewReminder) {
 
 }
 
-export async function deleteReminder(reminderId: number, sectionId: number) {
+export async function deleteReminder(reminderId: number) {
 
-  await db.delete(reminders).where(eq(reminders.id, reminderId))
-  redirect(`/sections/${sectionId}`)
+  return await db.delete(reminders).where(eq(reminders.id, reminderId))
 
 }
