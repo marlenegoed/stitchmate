@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Alert,
 } from "@/components/ui/alert";
@@ -30,9 +32,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import {NewProject, createNewProject, quickStartProject} from '@/database/queries/projects';
+import {createNewProject, quickStartProject} from '@/database/queries/projects';
 import Link from 'next/link';
 import {useState} from 'react';
+import generateBlobId from '@/lib/generate-blob-id';
 
 
 const formSchema = z.object({
@@ -57,7 +60,7 @@ export default function ProjectDialog() {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await quickStartProject(values.title)
+    await quickStartProject(values.title, generateBlobId())
     setOpen(false)
   }
 
@@ -69,7 +72,7 @@ export default function ProjectDialog() {
     if (title === '') {
       return setOpen(true)
     }
-    await createNewProject(title)
+    await createNewProject(title, generateBlobId())
     setOpen(false)
   }
 
@@ -117,7 +120,7 @@ export default function ProjectDialog() {
 
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
-                <p onClick={handleClick} className='hover:cursor:pointer underline underline-offset-4 text-neutral-800 opacity-50 hover:opacity-60 transition-opacity font-semibold flex justify-self-start	self-center pl-1'>More Settings
+                <p onClick={handleClick} className="cursor-pointer underline underline-offset-4 text-neutral-800 opacity-50 hover:opacity-60 transition-opacity font-semibold flex justify-self-start	self-center pl-1">More Settings
                   {/* <Button type="button" variant='ghost' className='px-12 w-full decoration-2'>Settings</Button> */}
                 </p>
                 <Button type="submit" className='px-12 w-full'>

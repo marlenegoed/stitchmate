@@ -2,12 +2,17 @@
 import SectionForm from '@/components/sections/section-form'
 import Title from '@/components/ui/title'
 import {findSectionById} from '@/database/queries/projects'
+import {auth} from "@clerk/nextjs/server";
+import {notFound} from 'next/navigation';
+
 
 export default async function Page({params}: {params: {sectionId: string}}) {
 
-  const section = await findSectionById(parseInt(params.sectionId))
+  const {userId} = auth().protect();
 
-  if (!section) return
+  const section = await findSectionById(userId, parseInt(params.sectionId))
+
+  if (!section) notFound()
 
   return (
     <>

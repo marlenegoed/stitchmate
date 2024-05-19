@@ -13,9 +13,6 @@ import {
   FormItem,
 } from "@/components/ui/form"
 import {findSectionById, updateSectionTitle} from '@/database/queries/projects';
-import {Button} from '../ui/button';
-
-
 
 const formSchmema = z.object({
   title: z.string().min(1).max(50),
@@ -26,18 +23,19 @@ const formSchmema = z.object({
 interface SectionTitleFieldProps {
   id: number,
   title: string
+  userId: string, 
 }
 
-export default function SectionTitleField({id, title}: SectionTitleFieldProps) {
+export default function SectionTitleField({id, title, userId}: SectionTitleFieldProps) {
 
   const [currentTitle, setCurrentTitle] = useState(title)
   
   useEffect( () => {
-  findSectionById(id).then(res => {
+  findSectionById(userId, id).then(res => {
     if (!res) return
     setCurrentTitle(res.title)
    } )
-  }, [id])
+  }, [userId, id])
 
 
   const form = useForm<z.infer<typeof formSchmema>>({

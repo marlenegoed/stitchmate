@@ -15,7 +15,6 @@ import {useCounterStore} from '@/providers/counter-store-provider';
 import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
 import {HiOutlineArrowUturnLeft} from "react-icons/hi2";
-import {HiMiniAdjustmentsVertical} from "react-icons/hi2";
 import {HiOutlinePlusCircle} from "react-icons/hi2";
 
 
@@ -67,20 +66,16 @@ export function CountDown({sectionId}: {sectionId: number}) {
 
 
 export function CloneSection({section}: {section: Section}) {
-
   async function handleClick() {
     await cloneSection(section)
   }
 
   return (
     <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}><HiOutlineDocumentDuplicate size={24} /></Button>
-
   )
-
 }
 
 export function AddReminderButton({sectionId}: {sectionId: number}) {
-
   return (
     <Link href={`/sections/${sectionId}/reminder/new`}>
       <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineBookmarkSquare size={24} /></Button>
@@ -104,8 +99,6 @@ export default function CounterActions({section}: {section: Section}) {
       <CloneSection section={section} />
       <AddSection projectId={section.projectId} position={section.position}></AddSection>
       <SectionDialog section={section}></SectionDialog>
-
     </div>
   )
-
 } 

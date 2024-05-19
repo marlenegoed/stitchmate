@@ -1,4 +1,10 @@
 DO $$ BEGIN
+ CREATE TYPE "color" AS ENUM('champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  CREATE TYPE "gauge_inch" AS ENUM('1"', '2"', '4"');
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -21,7 +27,9 @@ CREATE TABLE IF NOT EXISTS "projects" (
 	"description" text,
 	"created_at" timestamp (3) DEFAULT CURRENT_TIMESTAMP,
 	"updated_at" timestamp (3),
-	"section_id" integer
+	"favorite" boolean DEFAULT false NOT NULL,
+	"blob_id" integer NOT NULL,
+	"color" "color" DEFAULT 'tangerine' NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reminders" (
@@ -44,9 +52,10 @@ CREATE TABLE IF NOT EXISTS "sections" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"project_id" integer NOT NULL,
-	"position" integer,
+	"position" integer NOT NULL,
 	"count" integer DEFAULT 1 NOT NULL,
-	"num_of_rows" integer,
+	"num_of_rows" integer DEFAULT 0,
 	"updated_at" timestamp (3),
-	"created_at" timestamp (3) DEFAULT CURRENT_TIMESTAMP
+	"created_at" timestamp (3) DEFAULT CURRENT_TIMESTAMP,
+	"active" boolean DEFAULT false NOT NULL
 );

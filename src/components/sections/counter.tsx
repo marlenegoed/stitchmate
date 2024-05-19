@@ -7,12 +7,13 @@ import {setActiveSection, updateCount} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider'
 
 interface CounterProps {
-  sectionId: number
+  sectionId: number,
+  projectColor: string
 }
 
-export default function Counter({sectionId}: CounterProps) {
+export default function Counter({sectionId, projectColor}: CounterProps) {
 
-  const blob = useMemo(() => <BackgroundBlob className='absolute fill-sienna-400 top-0 left-0' stroke={true} />, []);
+  const blob = useMemo(() => <BackgroundBlob className={`fill-${projectColor} absolute top-0 left-0`} stroke={true} />, [projectColor]);
   // const [play] = useSound('/click-2.mp3');
 
   const {storeCount, countStoreUp} = useCounterStore(

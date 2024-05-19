@@ -1,6 +1,6 @@
 'use server'
 
-import {eq, and, gte, sql, asc} from 'drizzle-orm'
+import {eq, and, gte, sql, asc, gt, like, ilike, desc, or} from 'drizzle-orm'
 import {db} from '../db'
 import {projects, sections, reminders} from '../schema'
 import {redirect} from 'next/navigation';
@@ -15,15 +15,16 @@ export type NewSection = typeof sections.$inferInsert
 
 // projects 
 
-export async function createNewProject(title: string) {
-  const projectId = await db.insert(projects).values({title}).returning({id: projects.id})
-  await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 1, active: true})
+export async function createNewProject(title: string, blobId: number) {
+  const projectId = await db.insert(projects).values({title, blobId}).returning({id: projects.id})
+  await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true})
   redirect(`/projects/${projectId[0].id}/edit`)
 }
 
-export async function quickStartProject(title: string) {
-  const projectId = await db.insert(projects).values({title}).returning({id: projects.id})
-  const sectionId = await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 1, active: true}).returning({id: sections.id})
+export async function quickStartProject(title: string, blobId: number) {
+  console.log(blobId)
+  const projectId = await db.insert(projects).values({title, blobId}).returning({id: projects.id})
+  const sectionId = await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true}).returning({id: sections.id})
   redirect(`/sections/${sectionId[0].id}`)
 }
 
@@ -34,14 +35,30 @@ export async function updateProject(id: number, project: NewProject) {
   redirect(`/sections/${section.id}`)
 }
 
-
-export async function getAllProjects() {
-  return await db.query.projects.findMany()
+export async function toggleFavorite(projectId: number) {
+  await db.update(projects).set({favorite: sql`not favorite`}).where(eq(projects.id, projectId)).returning()
 }
 
-export async function findProject(id: number) {
+
+export async function getAllProjects(userId: string, title?: string, favorite?: boolean) {
+  return await db.query.projects.findMany({
+    with: {
+      sections: true
+    },
+    where: and(
+      eq(projects.userId, userId),
+      title ? ilike(projects.title, title.replaceAll('%', '\\%') + '%') : undefined,
+      favorite ? eq(projects.favorite, favorite) : undefined,
+    ),
+    orderBy: [desc(projects.favorite), desc(projects.createdAt)]
+  })
+}
+
+
+
+export async function findProject(userId: string, id: number) {
   return await db.query.projects.findFirst({
-    where: eq(projects.id, id)
+    where: and(eq(projects.id, id), eq(projects.userId, userId))
   })
 }
 
@@ -64,22 +81,24 @@ export async function createNewSection(projectId: number, position: number, titl
 
 
 // find sections
-export async function findActiveSection(projectId: number) {
+export async function findActiveSection(userId: string, projectId: number) {
   return await db.query.sections.findFirst({
     with: {
-      reminders: true
+      reminders: true,
+      project: true,
     },
-    where: and(eq(sections.projectId, projectId), eq(sections.active, true)),
+    where: and(eq(sections.projectId, projectId), eq(sections.active, true), eq(projects.userId, userId)),
   })
 }
 
-export async function findSectionById(sectionId: number) {
+export async function findSectionById(userId: string, sectionId: number) {
 
   return await db.query.sections.findFirst({
     with: {
-      reminders: true
+      reminders: true,
+      project: true
     },
-    where: (eq(sections.id, sectionId)),
+    where: and(eq(sections.id, sectionId), eq(projects.userId, userId)),
   })
 }
 
@@ -89,7 +108,7 @@ export async function findAllSections(projectId: number) {
     orderBy: asc(sections.position)
   })
   if (result.length === 0) {
-    return await db.insert(sections).values({projectId, position: 1, title: 'Section 1', active: true}).returning()
+    return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true}).returning()
   }
   return result
 }
@@ -154,16 +173,16 @@ export async function deleteSection(section: Section) {
 
   await db.delete(sections).where(eq(sections.id, section.id))
 
-  if (section.position !== hasSections.length) {
+  if (section.position !== hasSections.length - 1) {
     await db.update(sections).set({position: sql`${sections.position} -1`}).where(and(eq(sections.projectId, section.projectId), gte(sections.position, section.position)))
 
   }
 
-  if (section.position === 1) {
+  if (section.position === 0) {
     const nextSectionId = hasSections[section.position].id
     redirect(`/sections/${nextSectionId}`)
   } else {
-    const previousSectionId = hasSections[section.position - 2].id
+    const previousSectionId = hasSections[section.position - 1].id
     redirect(`/sections/${previousSectionId}`)
   }
 }
@@ -172,30 +191,34 @@ export async function deleteSection(section: Section) {
 
 
 export async function cloneSection(section: Section) {
+  const newSectionId = await db.transaction(async (tx) => {
+    await tx.update(sections).set({active: false}).where(eq(sections.projectId, section.projectId))
+    await tx.update(sections).set({position: sql`${sections.position} + 1`}).where(and(eq(sections.projectId, section.projectId), gt(sections.position, section.position)))
 
-  await db.update(sections).set({active: false}).where(eq(sections.projectId, section.projectId))
+    const sectionReminders: NewReminder[] = await tx.query.reminders.findMany({
+      where: (eq(reminders.sectionId, section.id))
+    })
 
-  const sectionReminders: NewReminder[] = await db.query.reminders.findMany({
-    where: (eq(reminders.sectionId, section.id))
+    const sectionClone = {
+      title: section.title + '2',
+      active: true,
+      position: section.position + 1,
+      count: section.count,
+      projectId: section.projectId,
+      numOfRows: section.numOfRows,
+    }
+
+    const newSectionId = await tx.insert(sections).values({...sectionClone}).returning({id: sections.id})
+
+    for (let reminder of sectionReminders) {
+      delete reminder.id
+    }
+    for (let reminder of sectionReminders) {
+      await tx.insert(reminders).values({...reminder, sectionId: newSectionId[0].id})
+    }
+
+    return newSectionId[0].id
   })
-
-  const sectionClone = {
-    title: section.title + '2',
-    active: true,
-    position: section.position + 1,
-    count: section.count,
-    projectId: section.projectId,
-    numOfRows: section.numOfRows,
-  }
-
-  const newSectionId = await db.insert(sections).values({...sectionClone}).returning({id: sections.id})
-
-  for (let reminder of sectionReminders) {
-    delete reminder.id
-  }
-  for (let reminder of sectionReminders) {
-    await db.insert(reminders).values({...reminder, sectionId: newSectionId[0].id})
-  }
   redirect(`/sections/${newSectionId}`)
 }
 

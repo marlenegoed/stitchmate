@@ -76,9 +76,10 @@ export type FormValues = z.infer<typeof formSchema>
 interface ProjectFormProps {
   defaultValues: FormValues,
   projectId: number,
+  blobId: number
 }
 
-export default function ProjectForm({projectId, defaultValues}: ProjectFormProps) {
+export default function ProjectForm({projectId, defaultValues, blobId}: ProjectFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
@@ -89,6 +90,7 @@ export default function ProjectForm({projectId, defaultValues}: ProjectFormProps
       ...values,
       needles: values?.needles?.filter(needle => needle.size)?.map(needle => needle.size!),
       yarn: values?.yarn?.filter(item => item.yarn)?.map(item => item.yarn!),
+      blobId
     }
     await updateProject(projectId, validProject)
   }

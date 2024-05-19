@@ -10,6 +10,16 @@ module.exports = {
     './app/**/*.{js,jsx,ts,tsx}',
     './src/**/*.{js,jsx,ts,tsx}',
   ],
+  safelist: [
+    'fill-eggshell',
+    'fill-champagne',
+    'fill-olivine',
+    'fill-orchid',
+    'fill-flax',
+    'fill-jordy',
+    'fill-tangerine',
+    'fill-caramel',
+  ],
   prefix: "",
   theme: {
 

@@ -6,13 +6,22 @@ import BackButton from '@/components/ui/back-button';
 import {findActiveSection, findProject} from '@/database/queries/projects';
 import HydrateCounterStore from '../../../../components/store/hydrate-counter-store';
 import PageNav from '@/components/ui/page-nav';
+import {auth} from "@clerk/nextjs/server";
+import {notFound} from 'next/navigation';
+
 
 
 export default async function Page({params}: {params: {id: number}}) {
 
-  const project = await findProject(params.id)
+  const {userId} = auth().protect();
 
-  const section = await findActiveSection(params.id)
+  const project = await findProject(userId, params.id)
+
+  const section = await findActiveSection(userId, params.id)
+
+  if (!project) {
+    notFound()
+  }
   // TODO: if no project found: 404
 
   const defaultValues = {
@@ -41,7 +50,7 @@ export default async function Page({params}: {params: {id: number}}) {
         {/* <Title className='flex self-center'>New Project</Title> */}
         {/* <Button></Button> */}
       </div>
-      <ProjectForm defaultValues={defaultValues} projectId={params.id} />
+      <ProjectForm defaultValues={defaultValues} projectId={params.id} blobId={project.blobId} />
     </>
   );
 }

@@ -4,11 +4,20 @@ import Nav from '@/components/ui/navbar';
 
 import {CounterStoreProvider} from '@/providers/counter-store-provider'
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+
 
 export default function RootLayout({children}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className={`${lato.className} antialiased 
       flex flex-col h-lvh bg-champagne
@@ -19,5 +28,6 @@ export default function RootLayout({children}: Readonly<{
         </CounterStoreProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

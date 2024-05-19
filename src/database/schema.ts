@@ -19,8 +19,9 @@ export const projects = pgTable('projects', {
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   favorite: boolean('favorite').notNull().default(false),
-  blobId: integer('blob_id').default(1), 
-  color: projectColorEnum('color'), 
+  blobId: integer('blob_id').notNull(),
+  color: projectColorEnum('color').notNull().default('tangerine'),
+  userId: text('user_id').notNull()
 });
 
 

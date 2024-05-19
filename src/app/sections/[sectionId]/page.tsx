@@ -7,25 +7,30 @@ import HydrateCounterStore from '../../../components/store/hydrate-counter-store
 import ZustandHydration from '../../../components/store/zustand-hydration';
 import BackgroundBlob from '@/components/ui/background-blobs';
 import SectionHeader from '@/components/sections/section-header';
+import {auth} from "@clerk/nextjs/server";
+import {notFound} from 'next/navigation';
+
 
 export default async function Page({params}: {params: {sectionId: number}}) {
 
-  const section = await findSectionById(params.sectionId)
+  const {userId} = auth().protect();
+  
+  const section = await findSectionById(userId, params.sectionId)
+  
+  if (!section ) notFound()
+    
+  const project = await findProject(userId, section.projectId)
+  if (!project ) notFound()
+
   await setActiveSection(params.sectionId)
-
-  if (!section) {
-    return (<p>404: no section found</p>)
-  }
-
+  
   const allSections = await findAllSections(section.projectId)
-
-  const projectTitle = await findProject(section.projectId)
 
 
   return (
     <>
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
-      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={projectTitle!.title}/>
+      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userId={userId}/>
       <section className='w-full flex-1 flex-col flex justify-center' >
         <div className='mb-auto'>
           <div className='flex justify-center w-full min-h-10 -mt-6'>
@@ -36,9 +41,9 @@ export default async function Page({params}: {params: {sectionId: number}}) {
             <button className='text-8xl text-center z-10 relative text-zinc-800 p-16'>
               <span>&nbsp;</span>
             </button>
-            <BackgroundBlob className='absolute fill-sienna-400 top-0 left-0' stroke={true} />
+            <BackgroundBlob className={`${project.color} absolute top-0 left-0`} stroke={true} />
           </div>}>
-            <Counter sectionId={section.id} />
+            <Counter sectionId={section.id} projectColor={project.color} />
           </ZustandHydration>
         </div>
         <div className='flex flex-row w-full justify-between self-end pr-2 mb-4'>

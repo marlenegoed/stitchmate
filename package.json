@@ -10,6 +10,7 @@
     "migrate": "drizzle-kit generate:pg && tsx src/database/migrate.ts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.12",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
@@ -42,6 +43,7 @@
     "react-icons": "5.0.1",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.0",
     "use-sound": "^4.0.1",
     "vaul": "^0.9.0",
     "zod": "^3.23.5",

@@ -1,5 +1,5 @@
 {
-  "id": "c2085e26-c2b4-4246-a48f-3e04b89bc0cf",
+  "id": "21ec88d3-ed71-4d6f-9105-b9d7c2862af3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -69,11 +69,25 @@
           "primaryKey": false,
           "notNull": false
         },
-        "section_id": {
-          "name": "section_id",
+        "favorite": {
+          "name": "favorite",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "blob_id": {
+          "name": "blob_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "color": {
+          "name": "color",
+          "type": "color",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'tangerine'"
         }
       },
       "indexes": {},
@@ -197,7 +211,7 @@
           "name": "position",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "count": {
           "name": "count",
@@ -210,7 +224,8 @@
           "name": "num_of_rows",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": 0
         },
         "updated_at": {
           "name": "updated_at",
@@ -224,6 +239,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -233,6 +255,18 @@
     }
   },
   "enums": {
+    "color": {
+      "name": "color",
+      "values": {
+        "champagne": "champagne",
+        "olivine": "olivine",
+        "orchid": "orchid",
+        "flax": "flax",
+        "jordy": "jordy",
+        "tangerine": "tangerine",
+        "caramel": "caramel"
+      }
+    },
     "gauge_inch": {
       "name": "gauge_inch",
       "values": {

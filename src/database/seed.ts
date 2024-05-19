@@ -1,3 +1,4 @@
+import generateBlobId from '@/lib/generate-blob-id'
 import {connection, db} from './db'
 import {projects, sections, reminders} from './schema'
 
@@ -7,9 +8,9 @@ async function seed() {
   await db.delete(sections)
   await db.delete(reminders)
 
-  const projectIds = await db.insert(projects).values({title: 'My First Project'}).returning({id: projects.id})
+  const projectIds = await db.insert(projects).values({title: 'My First Project', color: "caramel", blobId: generateBlobId(), userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'}).returning({id: projects.id})
 
-  const sectionIds = await db.insert(sections).values({title: 'my First Section', projectId: projectIds[0].id, position: 1, active: true}).returning({id: sections.id})
+  const sectionIds = await db.insert(sections).values({title: 'my First Section', projectId: projectIds[0].id, position: 0, active: true}).returning({id: sections.id})
 
   await db.insert(reminders).values([
     {

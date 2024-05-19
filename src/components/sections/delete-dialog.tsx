@@ -44,7 +44,7 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
     // setOpen(false)
   }
 
-  function createDialogType() {
+  function title() {
     if (section) {return 'section'}
     else if (projectId) {return 'project'}
     else if (reminderId) {return 'reminder'}
@@ -59,7 +59,7 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
         <AlertDialogHeader>
           <AlertDialogTitle >Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className='text-base'>
-            Deleting a {createDialogType()} cannot be undone. All your progress and settings will be permanently removed.
+            Deleting a {title()} cannot be undone. All your progress and settings will be permanently removed.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

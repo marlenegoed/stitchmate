@@ -1,6 +1,6 @@
 {
-  "id": "776cb104-5d4a-4e83-8ef0-cc7d7e89f5a5",
-  "prevId": "f4abe0b0-b056-47b8-9cf7-d0372c4f3c66",
+  "id": "9540ab1c-2426-40c5-8734-596051032c66",
+  "prevId": "a3512612-dde9-4bfd-b342-04e8ad8f3b2c",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -68,6 +68,32 @@
           "type": "timestamp (3)",
           "primaryKey": false,
           "notNull": false
+        },
+        "favorite": {
+          "name": "favorite",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "blob_id": {
+          "name": "blob_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "color": {
+          "name": "color",
+          "type": "color",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'tangerine'"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -235,6 +261,18 @@
     }
   },
   "enums": {
+    "color": {
+      "name": "color",
+      "values": {
+        "champagne": "champagne",
+        "olivine": "olivine",
+        "orchid": "orchid",
+        "flax": "flax",
+        "jordy": "jordy",
+        "tangerine": "tangerine",
+        "caramel": "caramel"
+      }
+    },
     "gauge_inch": {
       "name": "gauge_inch",
       "values": {
