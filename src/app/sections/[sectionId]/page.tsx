@@ -1,4 +1,5 @@
 'use server'
+
 import Counter from '@/components/sections/counter';
 import ReminderList from '@/components/reminders/reminder-list';
 import {findAllSections, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/projects';
@@ -33,13 +34,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           <div className='flex justify-center w-full min-h-10 -mt-6'>
             <ReminderPrompt reminders={reminders} />
           </div >
-          {/* TODO: Extract this from the counter component to make this nicer */}
-          <ZustandHydration fallback={<div className='relative flex items-center justify-center'>
-            <button className='text-8xl text-center z-10 relative text-zinc-800 p-16'>
-              <span>&nbsp;</span>
-            </button>
-            <BackgroundBlob className={`${project.color} absolute top-0 left-0`} stroke={true} />
-          </div>}>
+          <ZustandHydration fallback={<SkeletonBlob color={project.color} />}>
             <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} />
           </ZustandHydration>
         </div>
@@ -48,8 +43,19 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       </section >
 
       <section className='flex w-full mt-auto mb-4 px-6'>
-        <ReminderList sectionId={section.id} reminders={reminders}></ReminderList>
+        <ReminderList sectionId={section.id} reminders={reminders} />
       </section>
     </>
   );
+}
+
+function SkeletonBlob({color}: {color: string}) {
+  return (
+    <div className='relative flex items-center justify-center'>
+      <button className='text-8xl text-center z-10 relative text-zinc-800 p-16'>
+        <span>&nbsp;</span>
+      </button>
+      <BackgroundBlob className={`${color} absolute top-0 left-0`} stroke={true} />
+    </div>
+  )
 }

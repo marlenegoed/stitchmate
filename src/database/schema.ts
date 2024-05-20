@@ -5,7 +5,6 @@ import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar} fro
 export const projectColorEnum = pgEnum('color', ['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel'])
 export const projectGaugeEnum = pgEnum('gauge_inch', ['1"', '2"', '4"']);
 
-
 // Todo: add blob id 
 export const projects = pgTable('projects', {
   id: serial('id').primaryKey(),
@@ -77,5 +76,5 @@ export const reminderRelations = relations(reminders, ({one}) => ({
 
 export const userSettings = pgTable('user_settings', {
   userId: text('user_id').notNull(),
-  sound: boolean('sound').notNull().default(true), 
+  sound: boolean('sound').notNull().default(true),
 })
