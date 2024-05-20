@@ -38,16 +38,6 @@ export default function SectionForm({section}: {section: Section}) {
     }
   })
 
-  // sync with store 
-  // useEffect(() => {
-  //   form.setValue('rows', numOfRows);
-  // }, [numOfRows, form]);
-
-  // useEffect(() => {
-  //   form.setValue('count', count);
-  // }, [count, form]);
-
-
   async function onSubmit(values: z.infer<typeof formSchmema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
   }
@@ -102,12 +92,11 @@ export default function SectionForm({section}: {section: Section}) {
         />
 
         <div className='grid grid-cols-2 gap-4 mt-2'>
-          <Button type="submit" className='px-12 w-full'>Save changes</Button>
+          <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save changes</Button>
           <Link href={`/projects/${section.projectId}`}>
             <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
           </Link>
         </div>
-
       </form>
     </Form>
   )

@@ -43,7 +43,7 @@ export async function quickStartProject(userId: string, title: string, blobId: n
 
 export async function updateProject(id: number, project: NewProject) {
   await db.update(projects).set({...project}).where(eq(projects.id, id))
-  const section = await findActiveSection(project.userId, id)
+  const section = await findActiveSection(id)
   if (!section) {throw new Error('no section found')}
   redirect(`/sections/${section.id}`)
 }
@@ -97,13 +97,9 @@ export async function createNewSection(projectId: number, position: number, titl
 
 
 // find sections
-export async function findActiveSection(userId: string, projectId: number) {
+export async function findActiveSection(projectId: number) {
   return await db.query.sections.findFirst({
-    with: {
-      reminders: true,
-      project: true,
-    },
-    where: and(eq(sections.projectId, projectId), eq(sections.active, true), eq(projects.userId, userId)),
+    where: and(eq(sections.projectId, projectId), eq(sections.active, true)),
   })
 }
 

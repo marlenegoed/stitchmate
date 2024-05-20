@@ -60,7 +60,6 @@ interface ReminderFormProps {
 }
 
 export default function ReminderForm({reminder, isIcon}: ReminderFormProps) {
-
   const {storeCount, updateReminder, setReminder} = useDemoStore((state) => state)
   const [open, setOpen] = useState(false)
   const [isNotification, setIsNotification] = useState(true)
@@ -109,7 +108,6 @@ export default function ReminderForm({reminder, isIcon}: ReminderFormProps) {
   }
 
   return (
-
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
@@ -126,7 +124,6 @@ export default function ReminderForm({reminder, isIcon}: ReminderFormProps) {
                 name="title"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormLabel>Title</FormLabel> */}
                     <FormControl>
                       <Input variant='noring' className='pl-0 bg-inherit border-none text-xl font-semibold' placeholder='Enter Title' {...field} />
                     </FormControl>
@@ -210,21 +207,18 @@ export default function ReminderForm({reminder, isIcon}: ReminderFormProps) {
                 <DialogClose asChild>
                   <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
                 </DialogClose>
-                <Button type="submit" className='px-12 w-full'>Save changes</Button>
+                <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save changes</Button>
               </div>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-
   );
-
 }
 
 
 function RepeatEveryInputs({count}: {count: number}) {
-
   const form = useFormContext()
 
   return (
@@ -278,7 +272,6 @@ function RepeatEveryInputs({count}: {count: number}) {
 
 
 function ForRowsInputs() {
-
   const form = useFormContext()
 
   return (

@@ -62,10 +62,8 @@ interface ReminderFormProps {
 }
 
 export default function ReminderForm({reminder, count, sectionId, isIcon}: ReminderFormProps) {
-
   const [open, setOpen] = useState(false)
   const [isNotification, setIsNotification] = useState(true)
-
 
   if (reminder && reminder.note === null) {
     reminder.note = ''
@@ -100,19 +98,15 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
     }
   }
 
-
   // toggle form input 
   let inputType;
   if (form.getValues().type === 'repeating') {
     inputType = <RepeatEveryInputs count={count} />;
   } else {
-    inputType =
-      <ForRowsInputs count={count} />;
+    inputType = <ForRowsInputs />
   }
 
-
   return (
-
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
@@ -129,7 +123,6 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
                 name="title"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormLabel>Title</FormLabel> */}
                     <FormControl>
                       <Input variant='noring' className='pl-0 bg-inherit border-none text-xl font-semibold' placeholder='Enter Title' {...field} />
                     </FormControl>
@@ -213,21 +206,18 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
                 <DialogClose asChild>
                   <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
                 </DialogClose>
-                <Button type="submit" className='px-12 w-full'>Save changes</Button>
+                <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save changes</Button>
               </div>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-
   );
-
 }
 
 
 function RepeatEveryInputs({count}: {count: number}) {
-
   const form = useFormContext()
 
   return (
@@ -274,14 +264,12 @@ function RepeatEveryInputs({count}: {count: number}) {
           </FormItem>
         )}
       />
-
     </div>
   );
 }
 
 
-function ForRowsInputs({count}: {count: number}) {
-
+function ForRowsInputs() {
   const form = useFormContext()
 
   return (

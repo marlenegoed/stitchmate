@@ -101,7 +101,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-6 grid grid-cols-4 gap-4" method="post">
-
         <div className='grid col-span-2 bg-white rounded-xl shadow-sm pt-6 px-8 pb-10 gap-y-6'>
           <FormField
             control={form.control}
@@ -264,13 +263,11 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
         <YarnSelectField />
 
-
-
         <div className='col-span-4 flex justify-end gap-4'>
           <Link href='/projects'>
-            <Button type="button" variant="outline" className='w-40' >Cancel</Button>
+            <Button type="button" variant="outline" className='w-40'>Cancel</Button>
           </Link>
-          <Button type="submit" className='w-40' >Save Changes</Button>
+          <Button type="submit" className='w-40' disabled={form.formState.isSubmitting}>Save Changes</Button>
         </div>
       </form>
     </Form>
