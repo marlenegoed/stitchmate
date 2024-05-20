@@ -31,7 +31,7 @@ import {
 
 import {Textarea} from "@/components/ui/textarea";
 import makeOrdinal from '@/lib/make-ordinal';
-import {createReminder, updateReminder, type Reminder, type NewReminder} from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/projects';
 import AddReminder from './add-reminder';
 import {useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
@@ -53,15 +53,17 @@ const formSchema = z.object({
   until: z.coerce.number().positive().optional(),
 })
 
+export type FormValues = z.infer<typeof formSchema>
 
 interface ReminderFormProps {
   reminder?: Reminder
   count: number,
   sectionId: number,
-  isIcon?: boolean
+  isIcon?: boolean,
+  onSubmit: (values: FormValues) => Promise<void>
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon}: ReminderFormProps) {
+export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
   const [isNotification, setIsNotification] = useState(true)
 
@@ -70,7 +72,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
   }
 
   const defaultCount = count === 0 ? 1 : count;
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: reminder ? reminder.title : 'Reminder Title',
@@ -83,19 +85,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
       interval: reminder && reminder.interval ? reminder.interval : 1,
       times: reminder && reminder.times ? reminder.times : 1,
     },
-  }
-  )
+  })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (reminder) {
-      const updatedReminder: Reminder = {...reminder, ...values}
-      await updateReminder(updatedReminder)
-      setOpen(false)
-    } else {
-      const newReminder: NewReminder = {...values, sectionId}
-      await createReminder(newReminder)
-      setOpen(false)
-    }
+  async function handleSubmit(values: FormValues) {
+    await onSubmit(values)
+    setOpen(false)
   }
 
   // toggle form input 
@@ -116,7 +110,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <DialogHeader className='mb-2 -mt-4 flex flex-row justify-between w-full pr-6'>
               <FormField
                 control={form.control}
@@ -222,7 +216,6 @@ function RepeatEveryInputs({count}: {count: number}) {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-
       <FormField
         control={form.control}
         name="start"
@@ -274,7 +267,6 @@ function ForRowsInputs() {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-
       <FormField
         control={form.control}
         name="from"
@@ -307,4 +299,3 @@ function ForRowsInputs() {
     </div>
   );
 }
-

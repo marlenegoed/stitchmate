@@ -6,7 +6,6 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -17,20 +16,15 @@ import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
 import ReminderItem from './reminder-item';
 import ReminderTag from './reminder-tag';
-import Link from 'next/link';
 import {updateReminder, type Reminder} from '@/database/queries/projects';
 import {RangeProgress, RepeatProgress} from './reminder-progress';
 import ReminderRepeat from './reminder-repeat';
 import {TbZzz} from "react-icons/tb";
-import {HiAdjustmentsVertical} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import clsx from 'clsx';
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
-import ReminderForm from './reminder-form';
+import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
-
-
-
 
 interface ReminderAlertDialogProps {
   reminder: Reminder,
@@ -39,16 +33,22 @@ interface ReminderAlertDialogProps {
 
 export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
 
-  const {storeCount} = useCounterStore((state) => state,)
+  const storeCount = useCounterStore((state) => state.storeCount)
 
-  const {id, title, note, type, from, until, start, interval, times, notification} = reminder;
+  const {title, note, type, from, until, start, interval, times, notification} = reminder;
 
-  const reminderProgress = type === 'range' ? <RangeProgress className='font-semibold text-slate-700' from={from} until={until} /> : <RepeatProgress className='font-semibold text-slate-700' start={start} interval={interval} times={times} />
+  const reminderProgress = type === 'range'
+    ? <RangeProgress className='font-semibold text-slate-700' from={from} until={until} />
+    : <RepeatProgress className='font-semibold text-slate-700' start={start} interval={interval} times={times} />
 
   async function handleSnooze() {
     const newReminder = {...reminder, notification: !reminder.notification}
-    updateReminder(newReminder)
-    console.log('switched')
+    await updateReminder(newReminder)
+  }
+
+  async function handleSubmit(values: FormValues) {
+    const updatedReminder: Reminder = {...reminder, ...values}
+    await updateReminder(updatedReminder)
   }
 
   return (
@@ -68,7 +68,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
           <div className='flex gap-4 flex-row'>
             <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
             <span className='flex -mt-4 mr-10'>
-              <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} />
+              <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} onSubmit={handleSubmit} />
             </span>
           </div>
         </DialogHeader>
@@ -89,14 +89,10 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
             </div>
           </div>
 
-          {/* <Button variant="outline" className='w-fit text-sm'>
-              edit reminder
-            </Button> */}
           <DialogClose asChild>
             <Button size='icon' className='flex justify-self-end'><HiChevronRight size={20} /></Button>
           </DialogClose>
         </DialogFooter>
-
       </DialogContent>
     </Dialog>
   );
