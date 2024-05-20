@@ -10,6 +10,7 @@ import BackgroundBlob from '@/components/ui/background-blobs';
 import SectionHeader from '@/components/sections/section-header';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
+import {BlobCounter} from '@/components/sections/blob-counter';
 
 
 export default async function Page({params}: {params: {sectionId: number}}) {
@@ -34,8 +35,8 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           <div className='flex justify-center w-full min-h-10 -mt-6'>
             <ReminderPrompt reminders={reminders} />
           </div >
-          <ZustandHydration fallback={<SkeletonBlob color={project.color} />}>
-            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} />
+          <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} />}>
+            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={project.blobId} />
           </ZustandHydration>
         </div>
         <div className='flex flex-row w-full justify-between self-end pr-2 mb-4'>
@@ -47,15 +48,4 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       </section>
     </>
   );
-}
-
-function SkeletonBlob({color}: {color: string}) {
-  return (
-    <div className='relative flex items-center justify-center'>
-      <button className='text-8xl text-center z-10 relative text-zinc-800 p-16'>
-        <span>&nbsp;</span>
-      </button>
-      <BackgroundBlob className={`${color} absolute top-0 left-0`} stroke={true} />
-    </div>
-  )
 }

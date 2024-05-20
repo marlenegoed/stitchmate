@@ -9,7 +9,6 @@ interface BlobProps {
 }
 
 export default function BackgroundBlob({className, stroke = true, blobIndex}: BlobProps) {
-
   const blobs = useMemo(() => [
     <Blob1 key='0' className={className} stroke={stroke}></Blob1>,
     <Blob2 key='1' className={className} stroke={stroke}></Blob2>,
@@ -27,10 +26,10 @@ export default function BackgroundBlob({className, stroke = true, blobIndex}: Bl
     setRandomIndex(Math.floor(Math.random() * blobs.length));
   }, [blobs]);
 
-  if (blobIndex) {
+  if (blobIndex !== undefined) {
     return blobs[blobIndex]
   }
-  
+
   return blobs[randomIndex]
 }
 
