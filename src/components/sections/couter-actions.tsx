@@ -35,7 +35,7 @@ export default function CounterActions({section, userSettings}: CounterActionPro
     <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
       <CountDown sectionId={section.id} sound={storeSound} />
       <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
-        <ToggleSound sound={userSettings.sound} onToggle={handleSoundToggle} />
+        <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
       </ZustandHydration>
 
       <ResetDialog setOpen={() => true} sectionId={section.id} />
