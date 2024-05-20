@@ -1,19 +1,16 @@
 'use client'
 
-
 import {Button} from '@/components/ui/button'
 import {FormItem} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {DemoStoreProvider, useDemoStore} from '@/providers/demo-store-provider'
-import {FormEvent, ReactNode, Suspense, useEffect, useMemo, useRef, useState} from 'react'
+import {FormEvent, ReactNode, useEffect, useRef, useState} from 'react'
 import {
   HiChevronLeft,
   HiChevronRight,
   HiOutlineArrowUturnLeft,
   HiOutlineDocumentDuplicate,
-  HiOutlinePlusCircle,
-  HiOutlineSpeakerWave,
-  HiOutlineSpeakerXMark
+  HiOutlinePlusCircle
 } from 'react-icons/hi2';
 import useSound from 'use-sound';
 import ResetDemoDialog from '@/components/demo/demo-reset-dialog'
@@ -24,12 +21,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import DemoSectionDialog from '@/components/demo/demo-section-dialog'
-import BackgroundBlob from '@/components/ui/background-blobs'
 import clsx from 'clsx'
 import {Progress} from '@/components/ui/progress'
 import findNextReminders from '@/lib/find-next-reminders'
 import DemoReminderAlertDialog from '@/components/demo/demo-reminder-alert-dialog'
 import dynamic from 'next/dynamic'
+import {ToggleSound} from '@/components/ui/toggle-sound-button'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
@@ -48,12 +45,9 @@ export function Counter() {
 
 function ActionBar() {
 
-  const {storeCount, countStoreDown, sound, toggleSound} = useDemoStore(
-    (state) => state,
-  )
+  const {storeCount, countStoreDown, sound, toggleSound} = useDemoStore((state) => state)
 
-  const [play] = useSound('/click-2.mp3');
-  const speaker = sound ? <HiOutlineSpeakerWave size={24} /> : <HiOutlineSpeakerXMark size={24} />
+  const [play] = useSound('/click-2.mp3', {interrupt: true});
 
   function handleCountDown() {
     countStoreDown()
@@ -64,7 +58,8 @@ function ActionBar() {
     <div className='flex flex-row items-center gap-6'>
 
       <Button type='button' size='icon' variant='ghost' className='border-slate-800' disabled={storeCount <= 1} onClick={handleCountDown} ><HiOutlineArrowUturnLeft size={20} /></Button>
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={toggleSound}>{speaker}</Button>
+      <ToggleSound sound={sound} onToggle={toggleSound} />
+
       <ResetDemoDialog setOpen={() => true} />
       <UserLoginInfo>
         <Button type='button' size='icon' variant='ghost' className='border-slate-800 opacity-30'>

@@ -11,7 +11,7 @@ export default function DemoCounter() {
 
 
   const blob = useMemo(() => <BackgroundBlob className={`fill-${randomColor} absolute top-0 left-0`} stroke={true} />, [randomColor]);
-  const [play] = useSound('/click-2.mp3');
+  const [play] = useSound('/click-2.mp3', );
 
   const {storeCount, countStoreUp, sound} = useDemoStore(
     (state) => state,

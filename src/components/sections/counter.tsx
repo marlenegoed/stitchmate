@@ -15,7 +15,7 @@ interface CounterProps {
 }
 
 export default function Counter({sectionId, projectColor, userSettings, blobIndex}: CounterProps) {
-  const [play] = useSound('/click-2.mp3');
+  const [play] = useSound('/click-2.mp3', {interrupt: true});
 
   const {storeCount, countStoreUp} = useCounterStore((state) => state,)
 

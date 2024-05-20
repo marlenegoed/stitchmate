@@ -127,11 +127,14 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
 
               {reminder && <DeleteDialog reminderId={reminder.id} />}
 
-              <Button className='hover:bg-neutral-100 hover:opacity-70 transform-opacity' size='icon' variant='ghost' type='button'
+              <Button
+                className='hover:bg-neutral-100 hover:opacity-70 transform-opacity' size='icon' variant='ghost' type='button'
                 onClick={() => {
                   form.setValue('notification', !isNotification)
                   setIsNotification(!isNotification)
-                }}><TbZzz size={20} className={clsx({'text-neutral-500': !isNotification, 'text-sienna-400': isNotification})} /></Button>
+                }}>
+                <TbZzz size={20} className={clsx({'text-neutral-500': !isNotification, 'text-sienna-400': isNotification})} />
+              </Button>
             </DialogHeader>
 
             <FormField

@@ -20,7 +20,6 @@ import {
 } from '@clerk/nextjs'
 import {Button} from './button';
 
-
 export function UserMenu() {
   const {user} = useUser()
   const userEmail = user?.emailAddresses[0]?.emailAddress[0]?.toUpperCase()

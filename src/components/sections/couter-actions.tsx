@@ -1,9 +1,7 @@
 'use client'
 
 // import {HiAdjustmentsHorizontal} from "react-icons/hi2";
-import {HiMiniMinus, HiOutlinePlus} from "react-icons/hi2";
 import {HiOutlineSpeakerWave} from "react-icons/hi2";
-import {HiOutlineSpeakerXMark} from "react-icons/hi2";
 import {HiOutlineBookmarkSquare} from "react-icons/hi2";
 import {HiOutlineDocumentDuplicate} from "react-icons/hi2";
 
@@ -16,9 +14,7 @@ import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
 import {HiOutlineArrowUturnLeft} from "react-icons/hi2";
 import {HiOutlinePlusCircle} from "react-icons/hi2";
-import {useState} from 'react';
-
-
+import {ToggleSound} from '../ui/toggle-sound-button';
 
 
 interface CounterActionProps {
@@ -29,19 +25,21 @@ interface CounterActionProps {
 export default function CounterActions({section, userSettings}: CounterActionProps) {
 
   // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
+  async function handleSoundToggle() {
+    await toggleSound(userSettings.userId)
+  }
 
   return (
     <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
       <CountDown sectionId={section.id} />
-      {/* <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiArrowUpTray size={24} /></Button> */}
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineSpeakerWave size={24} /></Button>
+      <ToggleSound sound={userSettings.sound} onToggle={handleSoundToggle} />
       <ResetDialog setOpen={() => true} sectionId={section.id} />
       <CloneSection section={section} />
       <AddSection projectId={section.projectId} position={section.position}></AddSection>
       <SectionDialog section={section}></SectionDialog>
     </div>
   )
-} 
+}
 
 
 
@@ -109,20 +107,3 @@ export function AddReminderButton({sectionId}: {sectionId: number}) {
     </Link>
   )
 }
-
-
-export function ToggleSound({userSettings}: {userSettings: UserSettings}) {
-
-  const [makeSound, setMakeSound] = useState(userSettings.sound)
-  const speaker = makeSound ? <HiOutlineSpeakerWave size={24} /> : <HiOutlineSpeakerXMark size={24} />
-
-  async function handleClick() {
-    await toggleSound(userSettings.userId)
-    setMakeSound(!makeSound)
-  }
-
-  return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}>{speaker}</Button>
-  )
-}
-
