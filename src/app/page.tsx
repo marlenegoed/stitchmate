@@ -8,8 +8,12 @@ import {
   SignedOut
 } from '@clerk/nextjs'
 import Link from 'next/link';
+import {redirect} from 'next/navigation';
+import {auth} from "@clerk/nextjs/server";
+
 
 export default function Page() {
+  if (auth().userId) redirect('/projects')
 
   return (
     <>
