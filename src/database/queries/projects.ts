@@ -18,9 +18,9 @@ export type UserSettings = typeof userSettings.$inferSelect
 
 export async function createNewProject(userId: string, title: string, blobId: number) {
   const projectId = await db.transaction(async (tx) => {
-    const result = await db.insert(projects).values({title, blobId, userId}).returning({id: projects.id})
+    const result = await tx.insert(projects).values({title, blobId, userId}).returning({id: projects.id})
     const projectId = result[0].id
-    await db.insert(sections).values({title: 'Section 1', projectId, position: 0, active: true})
+    await tx.insert(sections).values({title: 'Section 1', projectId, position: 0, active: true})
     return projectId
   })
   redirect(`/projects/${projectId}/edit`)
