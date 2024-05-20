@@ -24,7 +24,7 @@ export default async function Page({searchParams}: {searchParams?: {title?: stri
           {/* <SortProjectDate direction={searchParams["order"]} /> */}
           <ProjectListSearch />
         </div>
-        <ProjectDialog />
+        <ProjectDialog userId={userId} />
       </div>
 
       <Suspense key={title + favorite}>

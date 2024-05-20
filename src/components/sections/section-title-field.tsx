@@ -23,18 +23,18 @@ const formSchmema = z.object({
 interface SectionTitleFieldProps {
   id: number,
   title: string
-  userId: string, 
+  userId: string,
 }
 
 export default function SectionTitleField({id, title, userId}: SectionTitleFieldProps) {
 
   const [currentTitle, setCurrentTitle] = useState(title)
-  
-  useEffect( () => {
-  findSectionById(userId, id).then(res => {
-    if (!res) return
-    setCurrentTitle(res.title)
-   } )
+
+  useEffect(() => {
+    findSectionById(userId, id).then(res => {
+      if (!res) return
+      setCurrentTitle(res.sections.title)
+    })
   }, [userId, id])
 
 

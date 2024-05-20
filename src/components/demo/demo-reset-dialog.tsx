@@ -10,20 +10,22 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {updateCount} from '@/database/queries/projects';
+import {useDemoStore} from '@/providers/demo-store-provider';
 
 import {HiMiniArrowPath} from "react-icons/hi2";
 
 
 interface AlertDialogProps {
   setOpen: (value: boolean) => void,
-  sectionId: number,
 }
-export default function ResetDialog({setOpen, sectionId}: AlertDialogProps) {
+export default function ResetDemoDialog({setOpen}: AlertDialogProps) {
 
+  const {resetStore} = useDemoStore(
+    (state) => state,
+  )
 
-  async function handleReset() {
-    await updateCount(sectionId, 1)
+function handleReset() {
+    resetStore()
     setOpen(false)
   }
 
@@ -36,10 +38,10 @@ export default function ResetDialog({setOpen, sectionId}: AlertDialogProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to reset?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you ready for a new cast On? Resetting wipes the slate clean. This action cannot be undone!
+            Are you ready for a new cast On? Resetting wipes the slate clean, including all reminders. This action cannot be undone!
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className='grid grid-cols-2'>
+        <AlertDialogFooter className='grid grid-cols-2 '>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleReset}>Continue</AlertDialogAction>
         </AlertDialogFooter>

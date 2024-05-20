@@ -1,10 +1,10 @@
-import {justAnotherHand} from './fonts';
+import {justAnotherHand, shortStack} from './fonts';
 
 export default function Logo () {
   return <p className={`
-  ${justAnotherHand.className} antialiased
+  ${shortStack.className} antialiased
   text-4xl text-center text-slate-800 relative -bottom-1
   `}>
-    stitchmate
+    stitchmate.xyz
   </p>;
 }

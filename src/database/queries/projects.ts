@@ -1,8 +1,8 @@
 'use server'
 
-import {eq, and, gte, sql, asc, gt, like, ilike, desc, or} from 'drizzle-orm'
+import {eq, and, gte, sql, asc, gt, like, ilike, desc, or, not} from 'drizzle-orm'
 import {db} from '../db'
-import {projects, sections, reminders} from '../schema'
+import {projects, sections, reminders, userSettings} from '../schema'
 import {redirect} from 'next/navigation';
 
 
@@ -12,25 +12,26 @@ export type Reminder = typeof reminders.$inferSelect;
 export type NewReminder = typeof reminders.$inferInsert
 export type Section = typeof sections.$inferSelect;
 export type NewSection = typeof sections.$inferInsert
+export type UserSettings = typeof userSettings.$inferSelect
 
 // projects 
 
-export async function createNewProject(title: string, blobId: number) {
-  const projectId = await db.insert(projects).values({title, blobId}).returning({id: projects.id})
+export async function createNewProject(userId: string, title: string, blobId: number) {
+  const projectId = await db.insert(projects).values({title, blobId, userId}).returning({id: projects.id})
   await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true})
   redirect(`/projects/${projectId[0].id}/edit`)
 }
 
-export async function quickStartProject(title: string, blobId: number) {
+export async function quickStartProject(userId: string, title: string, blobId: number) {
   console.log(blobId)
-  const projectId = await db.insert(projects).values({title, blobId}).returning({id: projects.id})
+  const projectId = await db.insert(projects).values({title, blobId, userId}).returning({id: projects.id})
   const sectionId = await db.insert(sections).values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true}).returning({id: sections.id})
   redirect(`/sections/${sectionId[0].id}`)
 }
 
 export async function updateProject(id: number, project: NewProject) {
   await db.update(projects).set({...project}).where(eq(projects.id, id))
-  const section = await findActiveSection(id)
+  const section = await findActiveSection(project.userId, id)
   if (!section) {throw new Error('no section found')}
   redirect(`/sections/${section.id}`)
 }
@@ -92,14 +93,12 @@ export async function findActiveSection(userId: string, projectId: number) {
 }
 
 export async function findSectionById(userId: string, sectionId: number) {
+  const result = await db.select().from(sections)
+    .innerJoin(projects, eq(projects.id, sections.projectId))
+    .where(and(eq(projects.userId, userId), eq(sections.id, sectionId)))
+    .limit(1)
 
-  return await db.query.sections.findFirst({
-    with: {
-      reminders: true,
-      project: true
-    },
-    where: and(eq(sections.id, sectionId), eq(projects.userId, userId)),
-  })
+  return result[0]
 }
 
 export async function findAllSections(projectId: number) {
@@ -113,8 +112,11 @@ export async function findAllSections(projectId: number) {
   return result
 }
 
-
-
+export async function findSectionReminders(sectionId: number) {
+  return await db.query.reminders.findMany({
+    where: eq(reminders.sectionId, sectionId)
+  })
+}
 
 // update sections 
 
@@ -234,10 +236,7 @@ export async function findReminderById(reminderId: string) {
 }
 
 export async function updateReminder(reminder: Reminder) {
-
   await db.update(reminders).set({...reminder}).where(eq(reminders.id, reminder.id))
-
-  const section = await findSectionById(reminder.sectionId)
   redirect(`/sections/${reminder.sectionId}`)
 }
 
@@ -254,4 +253,22 @@ export async function deleteReminder(reminderId: number) {
 
   return await db.delete(reminders).where(eq(reminders.id, reminderId))
 
+}
+
+
+// user_Settings
+
+export async function getUserSettings(userId: string) {
+  let settings = await db.query.userSettings.findFirst({
+    where: eq(userSettings.userId, userId)
+  })
+  if (!settings) {
+    return (await db.insert(userSettings).values({sound: true, userId}).returning())[0]
+  }
+  return settings
+}
+
+
+export async function toggleSound(userId: string) {
+  return await db.update(userSettings).set({sound: not(userSettings.sound)}).where(eq(userSettings.userId, userId))
 }

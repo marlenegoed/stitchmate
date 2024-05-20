@@ -1,12 +1,15 @@
 import generateBlobId from '@/lib/generate-blob-id'
 import {connection, db} from './db'
-import {projects, sections, reminders} from './schema'
+import {projects, sections, reminders, userSettings} from './schema'
 
 async function seed() {
 
   await db.delete(projects)
   await db.delete(sections)
   await db.delete(reminders)
+  await db.delete(userSettings)
+
+  await db.insert(userSettings).values({userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'})
 
   const projectIds = await db.insert(projects).values({title: 'My First Project', color: "caramel", blobId: generateBlobId(), userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'}).returning({id: projects.id})
 

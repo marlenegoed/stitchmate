@@ -7,7 +7,7 @@ import {HiOutlineSpeakerXMark} from "react-icons/hi2";
 import {HiOutlineBookmarkSquare} from "react-icons/hi2";
 import {HiOutlineDocumentDuplicate} from "react-icons/hi2";
 
-import {Section, cloneSection, createNewSection, setActiveSection} from '@/database/queries/projects';
+import {Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
 import {Button} from '../ui/button';
 import Link from 'next/link';
 import {updateCount} from '@/database/queries/projects';
@@ -16,6 +16,33 @@ import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
 import {HiOutlineArrowUturnLeft} from "react-icons/hi2";
 import {HiOutlinePlusCircle} from "react-icons/hi2";
+import {useState} from 'react';
+
+
+
+
+interface CounterActionProps {
+  section: Section,
+  userSettings: UserSettings
+}
+
+export default function CounterActions({section, userSettings}: CounterActionProps) {
+
+  // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
+
+  return (
+    <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
+      <CountDown sectionId={section.id} />
+      {/* <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiArrowUpTray size={24} /></Button> */}
+      <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineSpeakerWave size={24} /></Button>
+      <ResetDialog setOpen={() => true} sectionId={section.id} />
+      <CloneSection section={section} />
+      <AddSection projectId={section.projectId} position={section.position}></AddSection>
+      <SectionDialog section={section}></SectionDialog>
+    </div>
+  )
+} 
+
 
 
 
@@ -84,21 +111,18 @@ export function AddReminderButton({sectionId}: {sectionId: number}) {
 }
 
 
+export function ToggleSound({userSettings}: {userSettings: UserSettings}) {
 
+  const [makeSound, setMakeSound] = useState(userSettings.sound)
+  const speaker = makeSound ? <HiOutlineSpeakerWave size={24} /> : <HiOutlineSpeakerXMark size={24} />
 
-export default function CounterActions({section}: {section: Section}) {
-
-  // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
+  async function handleClick() {
+    await toggleSound(userSettings.userId)
+    setMakeSound(!makeSound)
+  }
 
   return (
-    <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
-      <CountDown sectionId={section.id} />
-      {/* <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiArrowUpTray size={24} /></Button> */}
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineSpeakerWave size={24} /></Button>
-      <ResetDialog setOpen={() => true} sectionId={section.id} />
-      <CloneSection section={section} />
-      <AddSection projectId={section.projectId} position={section.position}></AddSection>
-      <SectionDialog section={section}></SectionDialog>
-    </div>
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}>{speaker}</Button>
   )
-} 
+}
+

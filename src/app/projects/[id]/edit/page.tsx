@@ -50,7 +50,7 @@ export default async function Page({params}: {params: {id: number}}) {
         {/* <Title className='flex self-center'>New Project</Title> */}
         {/* <Button></Button> */}
       </div>
-      <ProjectForm defaultValues={defaultValues} projectId={params.id} blobId={project.blobId} />
+      <ProjectForm defaultValues={defaultValues} projectId={params.id} blobId={project.blobId} userId={userId}/>
     </>
   );
 }

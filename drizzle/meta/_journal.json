@@ -22,6 +22,13 @@
       "when": 1716127347418,
       "tag": "0002_large_aaron_stack",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1716189955012,
+      "tag": "0003_mighty_molly_hayes",
+      "breakpoints": true
     }
   ]
 }

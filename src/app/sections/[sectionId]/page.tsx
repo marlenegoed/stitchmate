@@ -1,7 +1,7 @@
 'use server'
 import Counter from '@/components/sections/counter';
 import ReminderList from '@/components/reminders/reminder-list';
-import {findAllSections, findProject, findSectionById, setActiveSection} from '@/database/queries/projects';
+import {findAllSections, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/projects';
 import ReminderPrompt from '@/components/reminders/reminder-prompt';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
@@ -12,29 +12,26 @@ import {notFound} from 'next/navigation';
 
 
 export default async function Page({params}: {params: {sectionId: number}}) {
-
   const {userId} = auth().protect();
-  
-  const section = await findSectionById(userId, params.sectionId)
-  
-  if (!section ) notFound()
-    
-  const project = await findProject(userId, section.projectId)
-  if (!project ) notFound()
+
+  const result = await findSectionById(userId, params.sectionId)
+  if (!result) notFound()
+
+  const userSettings = await getUserSettings(userId)
+  const {sections: section, projects: project} = result
+  const reminders = await findSectionReminders(section.id)
 
   await setActiveSection(params.sectionId)
-  
   const allSections = await findAllSections(section.projectId)
-
 
   return (
     <>
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
-      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userId={userId}/>
+      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userId={userId} userSettings={userSettings} />
       <section className='w-full flex-1 flex-col flex justify-center' >
         <div className='mb-auto'>
           <div className='flex justify-center w-full min-h-10 -mt-6'>
-            <ReminderPrompt reminders={section.reminders} />
+            <ReminderPrompt reminders={reminders} />
           </div >
           {/* TODO: Extract this from the counter component to make this nicer */}
           <ZustandHydration fallback={<div className='relative flex items-center justify-center'>
@@ -43,7 +40,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
             </button>
             <BackgroundBlob className={`${project.color} absolute top-0 left-0`} stroke={true} />
           </div>}>
-            <Counter sectionId={section.id} projectColor={project.color} />
+            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} />
           </ZustandHydration>
         </div>
         <div className='flex flex-row w-full justify-between self-end pr-2 mb-4'>
@@ -51,7 +48,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       </section >
 
       <section className='flex w-full mt-auto mb-4 px-6'>
-        <ReminderList sectionId={section.id} reminders={section.reminders}></ReminderList>
+        <ReminderList sectionId={section.id} reminders={reminders}></ReminderList>
       </section>
     </>
   );

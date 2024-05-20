@@ -31,15 +31,15 @@ import {
 
 import {Textarea} from "@/components/ui/textarea";
 import makeOrdinal from '@/lib/make-ordinal';
-import {createReminder, updateReminder, type Reminder, type NewReminder} from '@/database/queries/projects';
-import AddReminder from './add-reminder';
+import {type Reminder, type NewReminder} from '@/database/queries/projects';
 import {useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
 import {TbZzz} from "react-icons/tb";
 import clsx from 'clsx';
 import DeleteDialog from '../sections/delete-dialog';
 import {HiAdjustmentsVertical} from 'react-icons/hi2';
-
+import {useDemoStore} from '@/providers/demo-store-provider';
+import {IoAdd} from 'react-icons/io5';
 
 const formSchema = z.object({
   title: z.string().min(1).max(50),
@@ -53,16 +53,15 @@ const formSchema = z.object({
   until: z.coerce.number().positive().optional(),
 })
 
-
 interface ReminderFormProps {
   reminder?: Reminder
   count: number,
-  sectionId: number,
   isIcon?: boolean
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon}: ReminderFormProps) {
+export default function ReminderForm({reminder, isIcon}: ReminderFormProps) {
 
+  const {storeCount, updateReminder, setReminder} = useDemoStore((state) => state)
   const [open, setOpen] = useState(false)
   const [isNotification, setIsNotification] = useState(true)
 
@@ -71,7 +70,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
     reminder.note = ''
   }
 
-  const defaultCount = count === 0 ? 1 : count;
+  const defaultCount = storeCount === 0 ? 1 : storeCount;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -88,35 +87,33 @@ export default function ReminderForm({reminder, count, sectionId, isIcon}: Remin
   }
   )
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     if (reminder) {
       const updatedReminder: Reminder = {...reminder, ...values}
-      await updateReminder(updatedReminder)
+      updateReminder(updatedReminder)
       setOpen(false)
     } else {
-      const newReminder: NewReminder = {...values, sectionId}
-      await createReminder(newReminder)
+      const newReminder: NewReminder = {...values, sectionId: 0}
+      setReminder(newReminder)
       setOpen(false)
     }
   }
 
-
   // toggle form input 
   let inputType;
   if (form.getValues().type === 'repeating') {
-    inputType = <RepeatEveryInputs count={count} />;
+    inputType = <RepeatEveryInputs count={storeCount} />;
   } else {
     inputType =
-      <ForRowsInputs count={count} />;
+      <ForRowsInputs />;
   }
-
 
   return (
 
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
-          {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />}
+          {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder />}
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
@@ -280,7 +277,7 @@ function RepeatEveryInputs({count}: {count: number}) {
 }
 
 
-function ForRowsInputs({count}: {count: number}) {
+function ForRowsInputs() {
 
   const form = useFormContext()
 
@@ -316,6 +313,19 @@ function ForRowsInputs({count}: {count: number}) {
           </FormItem>
         )}
       />
+    </div>
+  );
+}
+
+
+
+function AddReminder() {
+  // const blob = useMemo(() => <BackgroundBlob colorClass='rose-200' stroke={false} className='absolute bottom-3 right-3 fill-white w-24  h-24 opacity-50' />, []);
+
+  return (
+    <div className='hover:cursor-pointer hover:bg-viridian-300 transition-colors relative z-10 w-40 h-40 flex bg-viridian-200 rounded-xl py-3 px-4 pb-6 shadow-sm'>
+      <h4 className='font-semibold text-slate-800'>add reminder</h4>
+      <IoAdd className='text-slate-800 self-end' size={24} />
     </div>
   );
 }

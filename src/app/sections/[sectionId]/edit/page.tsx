@@ -10,14 +10,14 @@ export default async function Page({params}: {params: {sectionId: string}}) {
 
   const {userId} = auth().protect();
 
-  const section = await findSectionById(userId, parseInt(params.sectionId))
+  const result = await findSectionById(userId, parseInt(params.sectionId))
 
-  if (!section) notFound()
+  if (!result) notFound()
 
   return (
     <>
       <Title>Edit section</Title>
-      <SectionForm section={section} />
+      <SectionForm section={result.sections} />
     </>
   )
 

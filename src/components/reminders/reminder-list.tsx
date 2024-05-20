@@ -18,7 +18,7 @@ export default function ReminderList({reminders, sectionId}: ReminderListProps) 
   )
 
   return (
-    <section className='w-full flex flex-row gap-4 w-full justify-end'>
+    <section className='w-full flex flex-row gap-4 justify-end'>
       <ScrollArea className="w-full">
         <div className='flex flex-row-reverse gap-4 justify-end w-max'>
           {reminders.map(reminder => <ReminderAlertDialog key={reminder.id} reminder={reminder} />)}

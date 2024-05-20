@@ -47,7 +47,7 @@ const formSchema = z.object({
   // color: z.number().int().positive({message: 'must be at least 1'}).max(999),
 })
 
-export default function ProjectDialog() {
+export default function ProjectDialog({userId}: {userId: string}) {
 
   const [open, setOpen] = useState(false)
 
@@ -60,7 +60,7 @@ export default function ProjectDialog() {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await quickStartProject(values.title, generateBlobId())
+    await quickStartProject(userId, values.title, generateBlobId())
     setOpen(false)
   }
 
@@ -72,7 +72,7 @@ export default function ProjectDialog() {
     if (title === '') {
       return setOpen(true)
     }
-    await createNewProject(title, generateBlobId())
+    await createNewProject(userId, title, generateBlobId())
     setOpen(false)
   }
 

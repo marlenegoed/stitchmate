@@ -1,20 +1,21 @@
 'use client'
 
 import {useMemo} from 'react';
-// import useSound from 'use-sound';
+import useSound from 'use-sound';
 import BackgroundBlob from '../ui/background-blobs';
-import {setActiveSection, updateCount} from '@/database/queries/projects';
+import {UserSettings, setActiveSection, updateCount} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider'
 
 interface CounterProps {
   sectionId: number,
-  projectColor: string
+  projectColor: string,
+  userSettings: UserSettings
 }
 
-export default function Counter({sectionId, projectColor}: CounterProps) {
+export default function Counter({sectionId, projectColor, userSettings}: CounterProps) {
 
   const blob = useMemo(() => <BackgroundBlob className={`fill-${projectColor} absolute top-0 left-0`} stroke={true} />, [projectColor]);
-  // const [play] = useSound('/click-2.mp3');
+  const [play] = useSound('/click-2.mp3');
 
   const {storeCount, countStoreUp} = useCounterStore(
     (state) => state,
@@ -31,6 +32,7 @@ export default function Counter({sectionId, projectColor}: CounterProps) {
     countStoreUp()
     await updateCount(sectionId, storeCount + 1)
     await setActiveSection(sectionId)
+    if (userSettings.sound) play() 
   }
 
   return (

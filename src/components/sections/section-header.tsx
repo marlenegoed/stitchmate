@@ -5,7 +5,7 @@ import SectionProgress from './section-progress'
 import {HiChevronLeft} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import {Button} from '../ui/button';
-import {Section, changeActiveSection} from '@/database/queries/projects';
+import {Section, UserSettings, changeActiveSection} from '@/database/queries/projects';
 import SectionTitleField from './section-title-field';
 import Title from '../ui/title';
 import {UserRoundIcon} from 'lucide-react';
@@ -16,9 +16,10 @@ interface SectionHeaderProps {
   numOfSections: number,
   projectTitle: string,
   userId: string, 
+  userSettings: UserSettings
 }
 
-export default function SectionHeader({section, numOfSections, projectTitle, userId}: SectionHeaderProps) {
+export default function SectionHeader({section, numOfSections, projectTitle, userId, userSettings}: SectionHeaderProps) {
   return (
     <div className='w-full flex flex-col items-center'>
       <div className='flex flex-row w-full mb-3'>
@@ -27,7 +28,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
           <SectionTitleField id={section.id} title={section.title} userId={userId} />
         </div>
         <div className='flex flex-row items-center mr-4 gap-6'>
-          <CounterActions section={section} />
+          <CounterActions section={section} userSettings={userSettings}/>
           <SectionPagination section={section} numOfSections={numOfSections} />
         </div>
       </div>
