@@ -67,9 +67,12 @@ export async function getAllProjects(userId: string, title?: string, favorite?: 
 }
 
 export async function findProject(userId: string, id: number) {
-  return await db.query.projects.findFirst({
-    where: and(eq(projects.id, id), eq(projects.userId, userId))
-  })
+  const result = await db.select().from(projects)
+    .innerJoin(sections, and(eq(sections.projectId, projects.id), eq(sections.active, true)))
+    .where(and(eq(projects.id, id), eq(projects.userId, userId)))
+    .limit(1)
+
+  return result[0]
 }
 
 export async function deleteProject(id: number) {
@@ -201,9 +204,6 @@ export async function deleteSection(section: Section) {
   }
 }
 
-
-
-
 export async function cloneSection(section: Section) {
   const newSectionId = await db.transaction(async (tx) => {
     await tx.update(sections).set({active: false}).where(eq(sections.projectId, section.projectId))
@@ -235,7 +235,6 @@ export async function cloneSection(section: Section) {
   })
   redirect(`/sections/${newSectionId}`)
 }
-
 
 // reminder 
 
