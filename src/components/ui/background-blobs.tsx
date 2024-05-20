@@ -1,14 +1,13 @@
 "use client"
 
-import {useState, useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 
 interface BlobProps {
   className: string,
-  stroke: boolean,
-  blobIndex?: number
+  stroke: boolean
 }
 
-export default function BackgroundBlob({className, stroke = true, blobIndex}: BlobProps) {
+export default function BackgroundBlob({className, stroke = true, blobIndex}: BlobProps & {blobIndex: number}) {
   const blobs = useMemo(() => [
     <Blob1 key='0' className={className} stroke={stroke}></Blob1>,
     <Blob2 key='1' className={className} stroke={stroke}></Blob2>,
@@ -20,17 +19,7 @@ export default function BackgroundBlob({className, stroke = true, blobIndex}: Bl
     <Blob8 key='7' className={className} stroke={stroke}></Blob8>
   ], [className, stroke]);
 
-  const [randomIndex, setRandomIndex] = useState(0);
-
-  useEffect(() => {
-    setRandomIndex(Math.floor(Math.random() * blobs.length));
-  }, [blobs]);
-
-  if (blobIndex !== undefined) {
-    return blobs[blobIndex]
-  }
-
-  return blobs[randomIndex]
+  return blobs[blobIndex]
 }
 
 

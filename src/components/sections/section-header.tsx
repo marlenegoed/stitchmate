@@ -8,14 +8,12 @@ import {Button} from '../ui/button';
 import {Section, UserSettings, changeActiveSection} from '@/database/queries/projects';
 import SectionTitleField from './section-title-field';
 import Title from '../ui/title';
-import {UserRoundIcon} from 'lucide-react';
-
 
 interface SectionHeaderProps {
   section: Section,
   numOfSections: number,
   projectTitle: string,
-  userId: string, 
+  userId: string,
   userSettings: UserSettings
 }
 
@@ -28,7 +26,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
           <SectionTitleField id={section.id} title={section.title} userId={userId} />
         </div>
         <div className='flex flex-row items-center mr-4 gap-6'>
-          <CounterActions section={section} userSettings={userSettings}/>
+          <CounterActions section={section} userSettings={userSettings} />
           <SectionPagination section={section} numOfSections={numOfSections} />
         </div>
       </div>
@@ -57,11 +55,13 @@ function SectionPagination({section, numOfSections}: SectionPaginationProps) {
   }
 
   return (
-
     <div className='flex flex-row text-slate-700'>
-      <Button size='icon' variant='ghost' className='disabled:opacity-30' onClick={moveToPrevSection} disabled={section.position <= 0 ? true : false}><HiChevronLeft size={24} /></Button>
-      {/* <span>{section.position} / {numOfSections}</span> */}
-      <Button size='icon' variant='ghost' className='disabled:opacity-30' onClick={moveToNextSection} disabled={section.position + 1 >= numOfSections ? true : false}><HiChevronRight size={24} /></Button>
+      <Button size='icon' variant='ghost' className='disabled:opacity-30' onClick={moveToPrevSection} disabled={section.position <= 0 ? true : false}>
+        <HiChevronLeft size={24} />
+      </Button>
+      <Button size='icon' variant='ghost' className='disabled:opacity-30' onClick={moveToNextSection} disabled={section.position + 1 >= numOfSections ? true : false}>
+        <HiChevronRight size={24} />
+      </Button>
     </div>
   )
 }

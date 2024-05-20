@@ -13,7 +13,8 @@ export type CounterState = {
 export type CounterActions = {
   countStoreUp: () => void,
   countStoreDown: () => void,
-  setStoreTitle: (title: string) => void, 
+  setStoreCount: (storeCount: number) => void,
+  setStoreTitle: (title: string) => void,
   initialize: (state: CounterState) => void,
 }
 
@@ -25,7 +26,7 @@ export const initCounterStore = (): CounterState => {
 
 export const defaultInitState: CounterState = {
   storeCount: 0,
-  storeTitle: 'title', 
+  storeTitle: 'title',
 }
 
 export const createCounterStore = (
@@ -38,6 +39,7 @@ export const createCounterStore = (
           ...initState,
           countStoreUp: () => set((state) => ({storeCount: state.storeCount + 1})),
           countStoreDown: () => set((state) => ({storeCount: state.storeCount - 1})),
+          setStoreCount: (storeCount) => set(() => ({storeCount})),
           setStoreTitle: (title) => set((state) => ({...state, storeTitle: title})),
           initialize: (state: CounterState) => set(() => ({...state}))
         }),
@@ -46,28 +48,3 @@ export const createCounterStore = (
     )
   )
 }
-
-// export interface CounterState {
-//   storeCount: number,
-//   // numOfRows: number,
-//   countStoreUp: () => void,
-//   countStoreDown: () => void,
-//   // setStoreCount: (count: number) => void,
-// }
-
-
-// export const useCounterStore = create<CounterState>()(
-//   devtools(
-//     persist(
-//       (set) => ({
-//         storeCount: 0,
-//         countStoreUp: () => set((state) => ({storeCount: state.storeCount + 1})),
-//         countStoreDown: () => set((state) => ({storeCount: state.storeCount - 1})),
-//       }),
-//       {name: "counter-store"}
-//     )
-//   )
-// );
-
-
-

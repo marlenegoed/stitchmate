@@ -6,11 +6,11 @@ import {findAllSections, findSectionById, findSectionReminders, getUserSettings,
 import ReminderPrompt from '@/components/reminders/reminder-prompt';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
-import BackgroundBlob from '@/components/ui/background-blobs';
 import SectionHeader from '@/components/sections/section-header';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
-import {BlobCounter} from '@/components/sections/blob-counter';
+import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
+import {BlobCounter} from '@/components/ui/blob-counter';
 
 
 export default async function Page({params}: {params: {sectionId: number}}) {
@@ -28,14 +28,16 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
   return (
     <>
+      <HydrateUserSettingsStore storeSound={userSettings.sound} />
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
+
       <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userId={userId} userSettings={userSettings} />
       <section className='w-full flex-1 flex-col flex justify-center' >
         <div className='mb-auto'>
           <div className='flex justify-center w-full min-h-10 -mt-6'>
             <ReminderPrompt reminders={reminders} />
           </div >
-          <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} />}>
+          <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} />}>
             <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={project.blobId} />
           </ZustandHydration>
         </div>

@@ -5,11 +5,13 @@ import {Button} from './button';
 import {HiOutlineSpeakerWave, HiOutlineSpeakerXMark} from 'react-icons/hi2';
 import {useState} from 'react';
 
-export function ToggleSound({sound, onToggle}: {sound: boolean, onToggle: () => void}) {
+export function ToggleSound({sound, onToggle}: {sound: boolean, onToggle?: () => void}) {
   const [enabled, setEnabled] = useState(sound)
   const [play] = useSound('/click-2.mp3', {interrupt: true});
 
   function toggleSound() {
+    if (!onToggle) return
+
     onToggle()
     const newValue = !enabled
     if (newValue) play()

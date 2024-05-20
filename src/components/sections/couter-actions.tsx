@@ -1,7 +1,6 @@
 'use client'
 
 // import {HiAdjustmentsHorizontal} from "react-icons/hi2";
-import {HiOutlineSpeakerWave} from "react-icons/hi2";
 import {HiOutlineBookmarkSquare} from "react-icons/hi2";
 import {HiOutlineDocumentDuplicate} from "react-icons/hi2";
 
@@ -12,9 +11,11 @@ import {updateCount} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
-import {HiOutlineArrowUturnLeft} from "react-icons/hi2";
 import {HiOutlinePlusCircle} from "react-icons/hi2";
 import {ToggleSound} from '../ui/toggle-sound-button';
+import {CountDownButton} from '../ui/count-down-button';
+import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
+import ZustandHydration from '../store/zustand-hydration';
 
 
 interface CounterActionProps {
@@ -23,16 +24,20 @@ interface CounterActionProps {
 }
 
 export default function CounterActions({section, userSettings}: CounterActionProps) {
-
+  const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
   async function handleSoundToggle() {
+    toggleStoreSound()
     await toggleSound(userSettings.userId)
   }
 
   return (
     <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
-      <CountDown sectionId={section.id} />
-      <ToggleSound sound={userSettings.sound} onToggle={handleSoundToggle} />
+      <CountDown sectionId={section.id} sound={storeSound} />
+      <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
+        <ToggleSound sound={userSettings.sound} onToggle={handleSoundToggle} />
+      </ZustandHydration>
+
       <ResetDialog setOpen={() => true} sectionId={section.id} />
       <CloneSection section={section} />
       <AddSection projectId={section.projectId} position={section.position}></AddSection>
@@ -41,17 +46,12 @@ export default function CounterActions({section, userSettings}: CounterActionPro
   )
 }
 
-
-
-
-
 interface AddSectionProps {
   projectId: number,
   position: number
 }
 
 export function AddSection({projectId, position}: AddSectionProps) {
-
   async function handleNewSection() {
     const newPosition = position + 1
     const newSectionTitle = `Section ${newPosition}`
@@ -59,36 +59,26 @@ export function AddSection({projectId, position}: AddSectionProps) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleNewSection}><HiOutlinePlusCircle size={24} /></Button>
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleNewSection}>
+      <HiOutlinePlusCircle size={24} />
+    </Button>
   )
 }
 
 
-export function CountDown({sectionId}: {sectionId: number}) {
-
-  const {storeCount, countStoreDown} = useCounterStore(
+export function CountDown({sectionId, sound}: {sectionId: number, sound: boolean}) {
+  const {storeCount, setStoreCount} = useCounterStore(
     (state) => state,
   )
 
-  async function handleCountDown() {
-    let newCount = storeCount
-
-    if (storeCount > 1) {
-      newCount = storeCount - 1
-      countStoreDown()
-    }
-
-    if (newCount <= 1) {newCount = 1}
-
+  async function handleCountDown(newCount: number) {
+    setStoreCount(newCount)
     await updateCount(sectionId, newCount)
     await setActiveSection(sectionId)
   }
 
-  return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleCountDown} ><HiOutlineArrowUturnLeft size={20} /></Button>
-  )
+  return <CountDownButton count={storeCount} handleChange={handleCountDown} sound={sound} />
 }
-
 
 export function CloneSection({section}: {section: Section}) {
   async function handleClick() {
@@ -96,14 +86,18 @@ export function CloneSection({section}: {section: Section}) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}><HiOutlineDocumentDuplicate size={24} /></Button>
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}>
+      <HiOutlineDocumentDuplicate size={24} />
+    </Button>
   )
 }
 
 export function AddReminderButton({sectionId}: {sectionId: number}) {
   return (
     <Link href={`/sections/${sectionId}/reminder/new`}>
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800'><HiOutlineBookmarkSquare size={24} /></Button>
+      <Button type='button' size='icon' variant='ghost' className='border-slate-800'>
+        <HiOutlineBookmarkSquare size={24} />
+      </Button>
     </Link>
   )
 }
