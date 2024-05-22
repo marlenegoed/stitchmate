@@ -86,7 +86,7 @@ export default function DemoSectionDialog() {
           <DialogTitle className='mb-2 font-semibold text-xl mr-auto'>Counter Settings</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <form onSubmit={ className="space-y-6">
             <FormField
               control={form.control}
               name="title"

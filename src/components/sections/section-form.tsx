@@ -18,9 +18,10 @@ import {
 
 import {updateSection, type Section} from '@/database/queries/projects';
 import Link from 'next/link';
+import {useToast} from '@/lib/use-toast';
 
 
-const formSchmema = z.object({
+const formSchema = z.object({
   title: z.string().min(1).max(50),
   count: z.coerce.number().int().positive().max(999),
   rows: z.coerce.number().nonnegative(),
@@ -28,9 +29,9 @@ const formSchmema = z.object({
 })
 
 export default function SectionForm({section}: {section: Section}) {
-
-  const form = useForm<z.infer<typeof formSchmema>>({
-    resolver: zodResolver(formSchmema),
+  const {toast} = useToast()
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: section.title,
       count: section.count,
@@ -38,8 +39,9 @@ export default function SectionForm({section}: {section: Section}) {
     }
   })
 
-  async function onSubmit(values: z.infer<typeof formSchmema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
+    toast({title: "Section updated"})
   }
 
   return (

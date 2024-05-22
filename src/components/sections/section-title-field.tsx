@@ -2,8 +2,8 @@
 
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
-import {useState, useEffect} from 'react';
+import {SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
+import {useEffect, useRef} from 'react';
 
 import {Input} from "@/components/ui/input";
 import {
@@ -12,62 +12,77 @@ import {
   FormField,
   FormItem,
 } from "@/components/ui/form"
-import {findSectionById, updateSectionTitle} from '@/database/queries/projects';
+import {updateSectionTitle} from '@/database/queries/projects';
+import {useCounterStore} from '@/providers/counter-store-provider';
+import {useToast} from '@/lib/use-toast';
 
-const formSchmema = z.object({
+const formSchema = z.object({
   title: z.string().min(1).max(50),
-  count: z.coerce.number().int().positive().max(999),
-  rows: z.coerce.number().nonnegative().optional(),
 })
 
 interface SectionTitleFieldProps {
   id: number,
   title: string
-  userId: string,
 }
 
-export default function SectionTitleField({id, title, userId}: SectionTitleFieldProps) {
+export default function SectionTitleField({id, title}: SectionTitleFieldProps) {
+  const {storeTitle, setStoreTitle} = useCounterStore(state => state)
+  const {toast} = useToast()
 
-  const [currentTitle, setCurrentTitle] = useState(title)
+  const formRef = useRef<HTMLFormElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    findSectionById(userId, id).then(res => {
-      if (!res) return
-      setCurrentTitle(res.sections.title)
-    })
-  }, [userId, id])
-
-
-  const form = useForm<z.infer<typeof formSchmema>>({
-    resolver: zodResolver(formSchmema),
-    defaultValues: {
-      title: currentTitle
-    }
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {title: storeTitle || title}
   })
 
-  async function onSubmit(values: z.infer<typeof formSchmema>) {
-    // setStoreTitle(values.title)
+  useEffect(() => {
+    form.reset({title: storeTitle})
+  }, [storeTitle])
+
+  const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values, e) => {
+    e?.preventDefault()
+    if (!form.formState.isDirty) return
+
     await updateSectionTitle(id, values.title)
-    setCurrentTitle(values.title)
+    setStoreTitle(values.title)
+
+    form.reset(values)
+    inputRef.current?.blur()
+
+    toast({title: "Title saved"})
+  }
+
+  const handleInvalid: SubmitErrorHandler<z.infer<typeof formSchema>> = async (_values, e) => {
+    e?.preventDefault()
+    form.reset()
+    inputRef.current?.blur()
   }
 
   return (
     <Form {...form}>
-      {/* <p>{title}</p> */}
-      <form className="space-y-6" onChange={() => onSubmit(form.getValues())} >
+      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit, handleInvalid)} ref={formRef}>
         <FormField
           control={form.control}
           name="title"
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input placeholder='currentTitle' variant='inline' className='placeholder:text-slate-800 font-semibold text-xl max-w-max' {...field} />
+                <Input
+                  placeholder='Add title'
+                  variant='inline'
+                  className='placeholder:text-slate-800/50 font-semibold text-xl max-w-max'
+                  {...field}
+                  onBlur={() => formRef.current?.requestSubmit()}
+                  ref={inputRef}
+                />
               </FormControl>
             </FormItem>
           )}
         />
+        <button className="hidden" type="submit" />
       </form>
     </Form>
   )
-
 }

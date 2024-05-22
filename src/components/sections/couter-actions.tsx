@@ -15,6 +15,7 @@ import {CountDownButton} from '../ui/count-down-button';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import ZustandHydration from '../store/zustand-hydration';
 import {Tooltip} from '../ui/tooltip';
+import {useToast} from '@/lib/use-toast';
 
 
 interface CounterActionProps {
@@ -56,10 +57,12 @@ interface AddSectionProps {
 }
 
 export function AddSection({projectId, position}: AddSectionProps) {
+  const {toast} = useToast()
   async function handleNewSection() {
     const newPosition = position + 1
     const newSectionTitle = `Section ${newPosition}`
     await createNewSection(projectId, newPosition, newSectionTitle)
+    toast({title: "Section created"})
   }
 
   return (
@@ -87,8 +90,12 @@ export function CountDown({sectionId, sound}: {sectionId: number, sound: boolean
 }
 
 export function CloneSection({section}: {section: Section}) {
+  const {toast} = useToast()
   async function handleClick() {
     await cloneSection(section)
+    toast({
+      title: "Section cloned"
+    })
   }
 
   return (

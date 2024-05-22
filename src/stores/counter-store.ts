@@ -27,7 +27,7 @@ export const initCounterStore = (): CounterState => {
 
 export const defaultInitState: CounterState = {
   storeCount: 1,
-  storeTitle: 'title',
+  storeTitle: '',
 }
 
 export const createCounterStore = (

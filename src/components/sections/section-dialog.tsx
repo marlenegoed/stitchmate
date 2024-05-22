@@ -55,7 +55,7 @@ const formSchema = z.object({
 })
 
 export default function SectionDialog({section}: {section: Section}) {
-  const count = useCounterStore(state => state.storeCount)
+  const {storeCount, storeTitle, setStoreTitle} = useCounterStore(state => state)
 
   const [open, setOpen] = useState(false)
 
@@ -63,14 +63,19 @@ export default function SectionDialog({section}: {section: Section}) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: section.title,
-      count: count || section.count,
+      count: section.count,
       rows: section.numOfRows || 0,
     }
   })
 
   useEffect(() => {
-    form.setValue("count", count)
-  }, [count])
+    form.resetField("count", {defaultValue: storeCount})
+  }, [storeCount])
+
+  useEffect(() => {
+    console.log(storeTitle)
+    form.resetField("title", {defaultValue: storeTitle})
+  }, [storeTitle])
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

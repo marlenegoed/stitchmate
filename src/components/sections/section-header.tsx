@@ -25,7 +25,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
       <div className='grid grid-cols-12'>
         <div className='col-span-6 flex flex-row items-center w-full ml-6'>
           <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
-          <SectionTitleField id={section.id} title={section.title} userId={userId} />
+          <SectionTitleField id={section.id} title={section.title} />
         </div>
 
         <div className='col-span-6 flex flex-row justify-end'>
