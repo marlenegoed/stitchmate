@@ -276,9 +276,7 @@ function ForRowsInputs() {
           <FormItem>
             <FormLabel className='text-neutral-500'>until</FormLabel>
             <FormControl>
-              <Input type="number" min="1" {...field} onChange={(e) => {
-                field.onChange(parseInt(e.target.value, 10));
-              }} />
+              <Input type="number" min="1" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -5,7 +5,6 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -65,8 +64,20 @@ export default function DemoSectionDialog() {
   })
 
   useEffect(() => {
+    form.setValue("rows", numOfRows)
+    form.resetField("rows", {defaultValue: numOfRows})
+  }, [numOfRows])
+
+  useEffect(() => {
     form.setValue("count", storeCount)
-  }, [storeCount, form])
+    form.resetField("count", {defaultValue: storeCount})
+  }, [storeCount])
+
+  useEffect(() => {
+    form.setValue("title", storeTitle)
+    form.resetField("title", {defaultValue: storeTitle})
+  }, [storeTitle])
+
 
   const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = (values, e) => {
     e?.preventDefault()
@@ -74,6 +85,7 @@ export default function DemoSectionDialog() {
     setStoreCount(values.count)
     setNumOfRows(values.rows)
     setOpen(false)
+    form.reset(values)
   }
 
   return (
@@ -86,7 +98,7 @@ export default function DemoSectionDialog() {
           <DialogTitle className='mb-2 font-semibold text-xl mr-auto'>Counter Settings</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={ className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="title"
@@ -94,7 +106,7 @@ export default function DemoSectionDialog() {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input variant='form' placeholder='add title' {...field} />
+                    <Input variant='form' placeholder='Add title' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,8 +138,6 @@ export default function DemoSectionDialog() {
                     <FormControl>
                       <Input variant='form' placeholder={!numOfRows ? '--' : numOfRows.toString()} type="number" {...field} />
                     </FormControl>
-                    <FormDescription>
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

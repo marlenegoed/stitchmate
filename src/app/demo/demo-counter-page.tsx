@@ -105,10 +105,15 @@ function TitleField() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const {storeTitle, setStoreTitle} = useCounterStore((state) => state)
+  const [defaultTitle, setDefaultTitle] = useState(storeTitle)
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (!storeTitle) setStoreTitle("My Counter")
+    if (storeTitle) {
+      setDefaultTitle(storeTitle)
+    } else {
+      setStoreTitle(defaultTitle)
+    }
     inputRef.current?.blur()
   }
 
@@ -137,11 +142,8 @@ interface UserLoginInfoProps {
 
 function UserLoginInfo({children}: UserLoginInfoProps) {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipContent>
-        <p>sign in for all features</p>
-      </TooltipContent>
+    <Tooltip title="Sign in for all features">
+      {children}
     </Tooltip>
   )
 }

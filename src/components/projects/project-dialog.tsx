@@ -1,8 +1,5 @@
 'use client'
 
-import {
-  Alert,
-} from "@/components/ui/alert";
 
 import {
   Dialog,
@@ -10,8 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogClose
+  DialogTrigger
 } from "@/components/ui/dialog";
 import {HiOutlineSquaresPlus} from "react-icons/hi2";
 
@@ -33,10 +29,10 @@ import {
 } from "@/components/ui/form"
 
 import {createNewProject, quickStartProject} from '@/database/queries/projects';
-import Link from 'next/link';
 import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
-import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip';
+import {Tooltip} from '../ui/tooltip';
+import {useToast} from '@/lib/use-toast';
 
 
 const formSchema = z.object({
@@ -49,7 +45,7 @@ const formSchema = z.object({
 })
 
 export default function ProjectDialog({userId}: {userId: string}) {
-
+  const {toast} = useToast()
   const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,6 +59,7 @@ export default function ProjectDialog({userId}: {userId: string}) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await quickStartProject(userId, values.title, generateBlobId())
     setOpen(false)
+    toast({title: "Created project"})
   }
 
   async function handleClick() {
@@ -75,6 +72,7 @@ export default function ProjectDialog({userId}: {userId: string}) {
     }
     await createNewProject(userId, title, generateBlobId())
     setOpen(false)
+    toast({title: "Created project"})
   }
 
   return (
@@ -110,18 +108,9 @@ export default function ProjectDialog({userId}: {userId: string}) {
               )}
             />
 
-            {/* <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 opacity-40 hover:opacity-50 transition-opacity'>
-              {/* <HiChevronRight size={20} className='text-slate-800' /> */}
-            {/* <Link className='flex px-1 flex-row border-b-2 font-semibold text-slate-800  border-slate-700 w-fit' href={`/projects/${section.projectId}/edit`}>
-                advanced settigs
-              </Link> */}
-            {/* </div> */}
-
-
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
                 <p onClick={handleClick} className="sm:col-span-1 col-span-2 cursor-pointer underline underline-offset-4 text-slate-700 hover:text-slate-950 transition-colors font-semibold flex justify-self-center sm:justify-self-start	self-center pl-1 sm:order-1 order-2 sm:pt-0 pt-2">More Settings
-                  {/* <Button type="button" variant='ghost' className='px-12 w-full decoration-2'>Settings</Button> */}
                 </p>
                 <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-fit sm:col-span-1 col-span-2 justify-self-center sm:justify-self-end sm:mt-0 mt-2 sm:order-2 order-1'>
                   <span className='flex flex-row items-center gap-2 justify-center'>

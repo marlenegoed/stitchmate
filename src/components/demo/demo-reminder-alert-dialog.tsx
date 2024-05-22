@@ -1,12 +1,8 @@
 'use client'
-import {
-  Alert,
-} from "@/components/ui/alert";
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -17,12 +13,10 @@ import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
 import ReminderItem from '../reminders/reminder-item';
 import ReminderTag from '../reminders/reminder-tag';
-import Link from 'next/link';
-import {type NewReminder, type Reminder} from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/projects';
 import {RangeProgress, RepeatProgress} from '../reminders/reminder-progress';
 import ReminderRepeat from '../reminders/reminder-repeat';
 import {TbZzz} from "react-icons/tb";
-import {HiAdjustmentsVertical} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import clsx from 'clsx';
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
@@ -52,19 +46,16 @@ export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlert
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
-          {
-            isTag ?
-              <ReminderTag title={title} /> :
-              <ReminderItem reminder={reminder} />
-          }
-        </Alert>
+      <DialogTrigger className='border-none p-0 m-0 bg-inherit cursor-pointer text-left'>
+        {
+          isTag ?
+            <ReminderTag title={title} /> :
+            <ReminderItem reminder={reminder} />
+        }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
         <DialogHeader className='gap-4'>
           <DialogTitle className='text-xl mr-auto'>{title}</DialogTitle>
-
           <span className="flex items-center">
             <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
           </span>
@@ -87,9 +78,6 @@ export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlert
             </div>
           </div>
 
-          {/* <Button variant="outline" className='w-fit text-sm'>
-              edit reminder
-            </Button> */}
           <DialogClose asChild>
             <Button size='icon' className='flex justify-self-end'><HiChevronRight size={20} /></Button>
           </DialogClose>

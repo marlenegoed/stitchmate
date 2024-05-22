@@ -32,6 +32,7 @@ import {HiOutlineX} from "react-icons/hi";
 
 import Link from 'next/link';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group-colors';
+import {useToast} from '@/lib/use-toast';
 
 const formSchema = z.object({
   title: z.string({
@@ -80,6 +81,7 @@ interface ProjectFormProps {
 }
 
 export default function ProjectForm({userId, projectId, defaultValues, blobId}: ProjectFormProps) {
+  const {toast} = useToast()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
@@ -94,6 +96,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
       userId
     }
     await updateProject(projectId, validProject)
+    toast({title: "Project updated"})
   }
 
   return (

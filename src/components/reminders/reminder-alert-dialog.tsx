@@ -1,7 +1,4 @@
 'use client'
-import {
-  Alert,
-} from "@/components/ui/alert";
 
 import {
   Dialog,
@@ -55,14 +52,12 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit flex justify-center'>
-          {
-            isTag ?
-              <ReminderTag title={title} /> :
-              <ReminderItem reminder={reminder} />
-          }
-        </Alert>
+      <DialogTrigger className='border-none p-0 m-0 bg-inherit flex justify-center cursor-pointer text-left'>
+        {
+          isTag ?
+            <ReminderTag title={title} /> :
+            <ReminderItem reminder={reminder} />
+        }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
         <DialogHeader className='gap-4 items-center'>
@@ -76,7 +71,6 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
           <p className='ml-1'>{note}</p>
           <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-[160ms] ease-out hover:bg-black' />
         </ScrollArea>
-
 
         <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
           <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-white shadow-sm'>
