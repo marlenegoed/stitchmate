@@ -16,7 +16,7 @@ export function ToggleSound({sound, onToggle}: {sound: boolean, onToggle?: () =>
   }
 
   const speaker = enabled ? <HiOutlineSpeakerWave size={24} /> : <HiOutlineSpeakerXMark size={24} />
-  return <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={toggleSound}>
+  return <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={toggleSound}>
     {speaker}
   </Button>
 }

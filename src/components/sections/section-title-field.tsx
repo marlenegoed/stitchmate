@@ -61,7 +61,7 @@ export default function SectionTitleField({id, title, userId}: SectionTitleField
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input placeholder='currentTitle' variant='inline' className='placeholder:text-slate-800 font-semibold text-xl' {...field} />
+                <Input placeholder='currentTitle' variant='inline' className='placeholder:text-slate-800 font-semibold text-xl max-w-max' {...field} />
               </FormControl>
             </FormItem>
           )}

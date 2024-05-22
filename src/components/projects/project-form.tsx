@@ -27,7 +27,6 @@ import {Textarea} from '../ui/textarea';
 
 import {updateProject, type NewProject} from '@/database/queries/projects';
 
-import {FiPlus, FiX} from "react-icons/fi";
 import {HiOutlinePlus} from "react-icons/hi";
 import {HiOutlineX} from "react-icons/hi";
 
@@ -38,7 +37,7 @@ const formSchema = z.object({
   title: z.string({
     required_error: "please name your project (you can change the title later).",
   }).max(50, {message: "Your title is too long. Must be 50 or fewer characters."}),
-  color: z.enum(['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel'], {message: 'please choose a color.'}),
+  color: z.enum(['olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'champagne', 'caramel'], {message: 'please choose a color.'}),
   needles: z.array(z.object({size: z.string().optional()})).optional(),
   gaugeStitches: z.number().optional(),
   gaugeRows: z.number().optional(),
@@ -100,8 +99,9 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
   return (
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-6 grid grid-cols-4 gap-4" method="post">
-        <div className='grid col-span-2 bg-white rounded-xl shadow-sm pt-6 px-8 pb-10 gap-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-6 grid grid-cols-12 gap-4" method="post">
+
+        <div className='grid col-span-12  md:col-span-6 lg:col-span-6 xl:col-span-6 order-1 bg-white rounded-xl shadow-sm pt-6 px-8 pb-10 gap-y-6'>
           <FormField
             control={form.control}
             name="title"
@@ -128,11 +128,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
                     defaultValue={defaultValues.color}
                     className="flex flex-row gap-6"
                   >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="champagne" className='bg-champagne' />
-                      </FormControl>
-                    </FormItem>
 
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
@@ -164,12 +159,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
                       </FormControl>
                     </FormItem>
 
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="caramel" className='bg-caramel' />
-                      </FormControl>
-                    </FormItem>
-
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
@@ -181,7 +170,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
         <NeedleSelectField />
 
-        <div className='bg-white rounded-xl shadow-sm py-6 pb-8 px-8'>
+        <div className='col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 order-4 bg-white rounded-xl shadow-sm py-6 pb-8 px-8'>
           <p className='font-semibold mt-2 mb-4'>Gauge (optional)</p>
           <div className='grid grid-cols-3 gap-4'>
             <FormField
@@ -238,7 +227,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
         </div>
 
 
-        <div className='bg-white rounded-xl shadow-sm px-8 pt-8 pb-10 col-span-2'>
+        <div className='col-span-12 sm:col-span-6 order-2 bg-white rounded-xl shadow-sm px-8 pt-8 pb-10'>
           <FormField
             control={form.control}
             name="description"
@@ -250,7 +239,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
                 <FormControl>
                   <Textarea
                     placeholder="add description..."
-                    className="resize-none border rounded-md text-sm"
+                    className="resize-none border rounded-md text-sm placeholder:text-muted-foreground"
                     rows={5}
                     {...field}
                   />
@@ -263,11 +252,15 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
         <YarnSelectField />
 
-        <div className='col-span-4 flex justify-end gap-4'>
-          <Link href='/projects'>
-            <Button type="button" variant="outline" className='w-40'>Cancel</Button>
-          </Link>
-          <Button type="submit" className='w-40' disabled={form.formState.isSubmitting}>Save Changes</Button>
+        {/* max-[600px]:grid  */}
+
+        <div className='col-span-12 mt-4 mb-6 order-last '>
+          <div className='flex justify-center sm:justify-end gap-4 max-[638px]:grid max-[638px]:grid-cols-2'>
+            <Link href='/projects'>
+              <Button type="button" variant="outline" className='sm:w-40 max-[638px]:w-full'>Cancel</Button>
+            </Link>
+            <Button type="submit" className='sm:w-40' disabled={form.formState.isSubmitting}>Save Changes</Button>
+          </div>
         </div>
       </form>
     </Form>
@@ -279,7 +272,7 @@ function NeedleSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "needles"})
 
   return (
-    <div className="flex flex-col bg-white shadow-sm rounded-xl p-8 pr-4 py-6">
+    <div className="order-3 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 flex flex-col bg-white shadow-sm rounded-xl p-8 pr-4 py-6">
       <div className="flex items-center justify-between mb-3">
         <FormLabel className='text-md font-semibold'>Needles (optional)</FormLabel>
         <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
@@ -296,14 +289,14 @@ function NeedleSelectField() {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className='font-normal border mr-2 mb-4'>
-                        <SelectValue placeholder="select needle" />
+                        <SelectValue placeholder="select needle" className='text-muted-foreground' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {needlesizes.map((needlesize) => <SelectItem key={needlesize} value={needlesize}>{needlesize}</SelectItem>)}
                     </SelectContent>
                   </Select>
-                  <Button type="button" variant="ghost" size="icon" className='mr-1 -mt-4 text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}><HiOutlineX /></Button>
+                  <Button type="button" variant="ghost" size="icon" className='mr-1 -mt-4 text-neutral-500 disabled:opacity-50 transform opacity hover:bg-white hover:text-slate-700' disabled={fields.length < 2} onClick={() => remove(index)}><HiOutlineX /></Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -321,7 +314,7 @@ function YarnSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "yarn"})
 
   return (
-    <div className="flex flex-col gap-y-4 col-span-2 bg-white rounded-xl shadow-sm pt-6 pb-10 pr-6 pl-8 ">
+    <div className="order-5 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-6 flex flex-col gap-y-4 bg-white rounded-xl shadow-sm pt-6 pb-10 pr-6 pl-8 ">
       <div className="flex items-center justify-between">
         <FormLabel className='font-semibold text-md'>Yarn (optional)</FormLabel>
         <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
@@ -338,7 +331,7 @@ function YarnSelectField() {
                   <FormControl>
                     <Input placeholder="add yarn" className='py-6 mr-2' {...field} />
                   </FormControl>
-                  <Button type="button" variant="ghost" size="icon" className='text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}>
+                  <Button type="button" variant="ghost" size="icon" className=' hover:bg-white hover:text-slate-700 text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}>
                     <HiOutlineX className='mr-2' />
                   </Button>
                 </div>

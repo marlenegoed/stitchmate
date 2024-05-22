@@ -3,7 +3,7 @@ import {Button} from './button'
 import useSound from 'use-sound';
 
 export function CountDownButton({count, handleChange, sound = false}: {sound: boolean, count: number, handleChange: (count: number) => void}) {
-  const [play] = useSound('/click-2.mp3', {interrupt: true});
+  const [play] = useSound('/sot13.mp3', {interrupt: true});
 
   function handleClick() {
     let newCount = count
@@ -19,7 +19,7 @@ export function CountDownButton({count, handleChange, sound = false}: {sound: bo
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick} >
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick} >
       <HiOutlineArrowUturnLeft size={20} />
     </Button>
   )

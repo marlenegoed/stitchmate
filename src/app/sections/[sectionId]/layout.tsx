@@ -8,8 +8,10 @@ export default function PageLayout({children}: Readonly<{
   return (
     <UserSettingsStoreProvider>
       <CounterStoreProvider>
-        <Nav />
-        <main className='flex-1 flex flex-col mx-auto items-center py-3 w-full bg-neutral-50 rounded-t-2xl shadow'>{children}</main>
+        <div className='h-dvh'>
+          <Nav />
+          <main className='h-full flex-1 flex flex-col mx-auto items-center py-3 w-full bg-neutral-100 rounded-t-2xl shadow'>{children}</main>
+        </div >
       </CounterStoreProvider>
     </UserSettingsStoreProvider>
   );

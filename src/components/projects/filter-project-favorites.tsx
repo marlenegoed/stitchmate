@@ -12,7 +12,7 @@ export default function FilterProjectFavorites() {
   const router = useRouter()
 
   const checked = searchParams.get("favorite") === '1'
-
+  const heart = checked ? <HiMiniHeart className='fill-slate-700' size={20} /> : <HiOutlineHeart size={20} className='text-slate-700' />
   function handleFilter() {
     const params = new URLSearchParams(searchParams)
     if (!checked) {
@@ -25,8 +25,8 @@ export default function FilterProjectFavorites() {
 
   return (
     <>
-      <Button type="submit" className='shadow bg-inherit hover:shadow-md hover:bg-inherit transition-shadow' size='icon' onClick={handleFilter}>
-        <HiMiniHeart className='text-slate-800' />
+      <Button type="submit" variant='ghost' className='hover:bg-neutral-200' size='icon' onClick={handleFilter}>
+        {heart}
       </Button >
     </>
   )

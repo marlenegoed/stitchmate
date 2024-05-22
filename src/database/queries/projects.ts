@@ -1,6 +1,6 @@
 'use server'
 
-import {eq, and, gte, sql, asc, gt, ilike, desc, not} from 'drizzle-orm'
+import {eq, and, gte, sql, asc, gt, ilike, desc, not, count} from 'drizzle-orm'
 import {db} from '../db'
 import {projects, sections, reminders, userSettings} from '../schema'
 import {redirect} from 'next/navigation';
@@ -52,7 +52,7 @@ export async function toggleFavorite(projectId: number) {
   await db.update(projects).set({favorite: sql`not favorite`}).where(eq(projects.id, projectId)).returning()
 }
 
-export async function getAllProjects(userId: string, title?: string, favorite?: boolean) {
+export async function getAllProjects(userId: string, title?: string, favorite?: boolean, page: number = 0,) {
   return await db.query.projects.findMany({
     with: {
       sections: true
@@ -62,8 +62,20 @@ export async function getAllProjects(userId: string, title?: string, favorite?: 
       title ? ilike(projects.title, title.replaceAll('%', '\\%') + '%') : undefined,
       favorite ? eq(projects.favorite, favorite) : undefined,
     ),
-    orderBy: [desc(projects.favorite), desc(projects.createdAt)]
+    orderBy: [desc(projects.favorite), desc(projects.createdAt)],
+    limit: 24,
+    offset: (page * 24)
   })
+}
+
+export async function countProjects(userId: string, title?: string, favorite?: boolean) {
+  const result = await db.select({count: count()}).from(projects)
+    .where(and(
+      eq(projects.userId, userId),
+      title ? ilike(projects.title, title.replaceAll('%', '\\%') + '%') : undefined,
+      favorite ? eq(projects.favorite, favorite) : undefined,
+    ))
+  return result[0].count
 }
 
 export async function findProject(userId: string, id: number) {

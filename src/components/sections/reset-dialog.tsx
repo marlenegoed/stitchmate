@@ -30,7 +30,7 @@ export default function ResetDialog({setOpen, sectionId}: AlertDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='ghost' size="icon"><HiMiniArrowPath size={24} /></Button>
+        <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'><HiMiniArrowPath size={24} /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -13,7 +13,7 @@ export default function ReminderPrompt({reminders}: {reminders: Reminder[]}) {
   const nextReminders = findNextReminders(reminders, storeCount)
 
   return (
-    <div className="flex gap-4 -mt-4">
+    <div >
       {nextReminders.map(reminder => <ReminderAlertDialog key={reminder.id} reminder={reminder} isTag={true} />)}
     </div>
   );

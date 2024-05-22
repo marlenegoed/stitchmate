@@ -12,7 +12,7 @@ export default function BackButton({urlPath, className}: BackButtonProps) {
   return (
     <div className={cn(className)} >
       <Link href={urlPath}>
-        <Button size='icon' variant='ghost'><IoIosArrowBack className='fill-slate-800' size={24} /></Button>
+        <Button size='icon' variant='ghost' className='hover:bg-neutral-200'><IoIosArrowBack className=' -ml-1 fill-slate-800' size={24} /></Button>
       </Link>
     </div>
   );

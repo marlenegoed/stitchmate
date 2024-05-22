@@ -1,7 +1,6 @@
 'use client';
 
 import ReminderAlertDialog from './reminder-alert-dialog';
-import AddReminder from './add-reminder';
 import {NewReminder, createReminder, type Reminder} from '@/database/queries/projects';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';

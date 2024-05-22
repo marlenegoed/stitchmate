@@ -53,7 +53,7 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className='border-neutral-400 hover:bg-neutral-100' size="icon"><HiOutlineTrash className='text-sienna-500' size={20} /></Button>
+        <Button variant="ghost" className='hover:bg-neutral-200 text-sienna-400  hover:text-slate-700' size="icon"><HiOutlineTrash size={20} /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -22,7 +22,7 @@ export default function ProjectListSearch() {
   }, 300)
 
   return (
-    <div className=''>
+    <div className='sm:ml-12'>
       <HiOutlineMagnifyingGlass className='text-slate-800 absolute mt-3 ml-4' />
       <Input
         placeholder='search Titles'

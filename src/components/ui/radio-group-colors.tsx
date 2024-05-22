@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import {Circle} from "lucide-react"
-import { GoCircle } from "react-icons/go";
+import {GoCircle} from "react-icons/go";
 
 
 import {cn} from "@/lib/utils"
@@ -30,13 +30,13 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-8 w-8 relativ z-10 rounded-full text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "aspect-square h-6 w-6 relativ z-10 rounded-full text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="w-fit flex items-center justify-center">
-        <div className='w-10 h-10 -mt-1 -ml-1 bg-inherit shadow-lg rounded-full relativ z-2' />
+        <div className='w-8 h-8 -mt-1 -ml-1 bg-inherit shadow-lg rounded-full relativ z-2' />
         {/* <GoCircle className=" fill-current" /> */}
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>

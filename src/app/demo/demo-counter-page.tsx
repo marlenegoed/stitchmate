@@ -8,11 +8,9 @@ import {FormEvent, ReactNode, useEffect, useRef, useState} from 'react'
 import {
   HiChevronLeft,
   HiChevronRight,
-  HiOutlineArrowUturnLeft,
   HiOutlineDocumentDuplicate,
   HiOutlinePlusCircle
 } from 'react-icons/hi2';
-import useSound from 'use-sound';
 import ResetDemoDialog from '@/components/demo/demo-reset-dialog'
 import {
   Tooltip,
@@ -27,10 +25,16 @@ import findNextReminders from '@/lib/find-next-reminders'
 import DemoReminderAlertDialog from '@/components/demo/demo-reminder-alert-dialog'
 import dynamic from 'next/dynamic'
 import {ToggleSound} from '@/components/ui/toggle-sound-button'
+import {CountDownButton} from '@/components/ui/count-down-button'
+import ReminderAlertDialog from '@/components/reminders/reminder-alert-dialog'
+import ReminderForm, {FormValues} from '@/components/reminders/reminder-form'
+import {ScrollBar} from '@/components/ui/scroll-area'
+import {Reminder, NewReminder} from '@/database/queries/projects'
+import {ScrollArea} from '@radix-ui/react-scroll-area'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
-export function Counter() {
+export function DemoCounterPage() {
   return (
     <DemoStoreProvider>
       <div className='flex justify-between w-full px-6'>
@@ -39,6 +43,10 @@ export function Counter() {
       </div>
       <SectionProgress />
       <DemoCounter />
+
+      <section className='flex w-full mt-auto mb-4 px-6'>
+        <ReminderList />
+      </section>
     </DemoStoreProvider>
   )
 }
@@ -47,17 +55,9 @@ function ActionBar() {
 
   const {storeCount, countStoreDown, sound, toggleSound} = useDemoStore((state) => state)
 
-  const [play] = useSound('/click-2.mp3', {interrupt: true});
-
-  function handleCountDown() {
-    countStoreDown()
-    if (sound) play()
-  }
-
   return (
     <div className='flex flex-row items-center gap-6'>
-
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800' disabled={storeCount <= 1} onClick={handleCountDown} ><HiOutlineArrowUturnLeft size={20} /></Button>
+      <CountDownButton count={storeCount} sound={sound} handleChange={countStoreDown} />
       <ToggleSound sound={sound} onToggle={toggleSound} />
 
       <ResetDemoDialog setOpen={() => true} />
@@ -84,9 +84,6 @@ function ActionBar() {
     </div>
   )
 }
-
-
-
 
 function TitleField() {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -136,9 +133,7 @@ function UserLoginInfo({children}: UserLoginInfoProps) {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-
   )
-
 }
 
 
@@ -182,5 +177,27 @@ function ReminderPrompt() {
     <div className="flex gap-4 -mt-4">
       {nextReminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} isTag={true} />)}
     </div>
+  );
+}
+
+
+export default function ReminderList() {
+  const {storeCount, setReminder, reminders} = useDemoStore((state) => state)
+
+  async function onSubmit(values: FormValues) {
+    const newReminder: NewReminder = {...values, sectionId: 0}
+    setReminder(newReminder)
+  }
+
+  return (
+    <section className='w-full flex flex-row gap-4 justify-end'>
+      <ScrollArea className="w-full">
+        <div className='flex flex-row-reverse gap-4 justify-end w-max'>
+          {reminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} />)}
+        </div>
+        <ScrollBar orientation='horizontal' />
+      </ScrollArea>
+      <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} />
+    </section>
   );
 }

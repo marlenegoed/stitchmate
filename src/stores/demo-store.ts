@@ -111,7 +111,7 @@ export const createDemoStore = (
 
             return {
               ...state, reminders: newReminders,
-              //Todo next Reminders
+              nextReminders: findNextReminders(newReminders, state.storeCount),
             }
           }),
 

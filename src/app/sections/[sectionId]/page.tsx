@@ -32,9 +32,9 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
 
       <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userId={userId} userSettings={userSettings} />
-      <section className='w-full flex-1 flex-col flex justify-center' >
+      <section className='w-full flex-1 flex-col flex justify-center items-center' >
         <div className='mb-auto'>
-          <div className='flex justify-center w-full min-h-10 -mt-6'>
+          <div className='w-full min-h-10 -mt-8 space-y-4'>
             <ReminderPrompt reminders={reminders} />
           </div >
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} />}>
@@ -43,7 +43,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
         </div>
         <div className='flex flex-row w-full justify-between self-end pr-2 mb-4'>
         </div>
-      </section >
+      </section>
 
       <section className='flex w-full mt-auto mb-4 px-6'>
         <ReminderList sectionId={section.id} reminders={reminders} />

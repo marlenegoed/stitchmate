@@ -1,9 +1,9 @@
 import {redirect} from 'next/navigation'
-import {Counter} from './counter'
+import {DemoCounterPage} from './demo-counter-page'
 import {auth} from "@clerk/nextjs/server";
 
 export default function Page() {
   if (auth().userId) redirect('/projects')
 
-  return <Counter />
+  return <DemoCounterPage />
 }

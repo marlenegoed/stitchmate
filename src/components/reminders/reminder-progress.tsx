@@ -18,7 +18,7 @@ export function RangeProgress({from, until, className}: RangeProgressProps) {
   const rowsRequired = until - from + 1
 
   if (rowsRequired === 1 && storeCount === from) {
-    return <p className={cn(className)}>| <HiCheck size={24} className='text-neutral-500'/></p>
+    return <p className={cn(className)}> <HiCheck size={24} className='text-neutral-500' /></p>
   }
 
   let rowsKnitted = 0
@@ -27,9 +27,9 @@ export function RangeProgress({from, until, className}: RangeProgressProps) {
     rowsKnitted = until - storeCount
   }
 
-  if (storeCount >= until) return <p className={cn(className)}><HiCheck size={24} className='text-neutral-500'/></p>
+  if (storeCount >= until) return <p className={cn(className)}><HiCheck size={24} className='text-neutral-500' /></p>
 
-  return <p className={cn(className)}>| {rowsKnitted} / {rowsRequired}</p>
+  return <p className={cn(className)}> {rowsKnitted} / {rowsRequired}</p>
 }
 
 
@@ -54,8 +54,8 @@ export function RepeatProgress({start, interval, times, className}: RepeatProgre
 
   if (rowsFromStart < 0) repeatsDone = 0
 
-  if (repeatsDone === times) <p className={cn(className)}><HiCheck /></p>
+  if (repeatsDone === times) return <p className={cn('max-[640px]:text-sm', className)}><HiCheck /></p>
 
-  return <p className={cn(className)}>{repeatsDone} / {times}</p>
+  return <p className={cn('max-[640px]:text-sm', className)}>{repeatsDone} / {times}</p>
 
 }

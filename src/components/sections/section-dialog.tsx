@@ -77,19 +77,19 @@ export default function SectionDialog({section}: {section: Section}) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
-          <Button type='button' size='icon' variant='ghost'>
-            <HiMiniAdjustmentsVertical size={20} className='text-slate-700'/>
+          <Button type='button' size='icon' variant='ghost' className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+            <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
           </Button>
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
         <DialogHeader className='mb-2 -mt-2'>
-          <div className='flex flex-row justify-between items-center mr-10'>
+          <div className='flex flex-row justify-between items-center mr-6'>
             <DialogTitle className='mb-2 font-semibold text-xl'>Section Settings</DialogTitle>
-            <div className='flex flex-row gap-4 items-center -mt-1'>
-              <DeleteDialog section={section} />
-              <HiArrowUpTray size={20} />
-            </div>
+            {/* <div className='flex flex-row items-end -mt-1'> */}
+            <DeleteDialog section={section} />
+            {/* <HiArrowUpTray size={20} /> */}
+            {/* </div> */}
           </div>
         </DialogHeader>
         <Form {...form}>
@@ -129,7 +129,7 @@ export default function SectionDialog({section}: {section: Section}) {
                 name="rows"
                 render={({field}) => (
                   <FormItem>
-                    <FormLabel>Final Row (optional) *</FormLabel>
+                    <FormLabel>Final Row *</FormLabel>
                     <FormControl>
                       <Input variant='form' placeholder={!section.numOfRows ? '--' : section.numOfRows.toString()} type="number" {...field} />
                     </FormControl>
@@ -141,17 +141,17 @@ export default function SectionDialog({section}: {section: Section}) {
               />
               <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Track your progress by adding your final row count.</p>
             </div>
-            <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 opacity-80 hover:opacity-90 transition-opacity'>
+            <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 hover:text-slate-950 transition-opacity'>
               {/* <HiChevronRight size={20} className='text-slate-800' /> */}
-              <Link className='flex px-1 flex-row font-semibold  text-sm text-viridian-700 underline underline-offset-4 w-fit' href={`/projects/${section.projectId}/edit`}>
+              <Link className='flex px-1 flex-row font-semibold  text-sm text-slate-600 underline underline-offset-4 w-fit' href={`/projects/${section.projectId}/edit`}>
                 manage project
               </Link>
             </div>
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
-                <Button type="submit" className='px-12 w-full'>Save changes</Button>
+                <Button type="submit" className='col-span-2 sm:col-span-1 px-12 w-full order-2'>Save changes</Button>
                 <DialogClose asChild>
-                  <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
+                  <Button type="button" className='col-span-2 sm:col-span-1 px-12 w-full order-1' variant='outline'>Cancel</Button>
                 </DialogClose>
               </div>
             </DialogFooter>

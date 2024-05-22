@@ -1,5 +1,5 @@
 import './globals.css';
-import {lato} from '@/components/ui/fonts';
+import {notoSans} from '@/components/ui/fonts';
 import Nav from '@/components/ui/navbar';
 
 
@@ -18,8 +18,8 @@ export default function RootLayout({children}: Readonly<{
   return (
     <ClerkProvider>
     <html lang="en">
-      <body className={`${lato.className} antialiased 
-      flex flex-col h-lvh bg-eggshell
+      <body className={`${notoSans.className} antialiased 
+      flex flex-col h-lvh bg-white
       `}>
           {children}
       </body>

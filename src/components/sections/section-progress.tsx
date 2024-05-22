@@ -31,7 +31,7 @@ export default function SectionProgress({numOfRows}: SectionProgressProps) {
   return (
     <>
       <Progress value={progress} className={clsx('w-full', {'invisible': !isNumOfRows})} />
-      <div className='flex flex-col items-end w-full px-6 pt-2'>
+      <div className='flex flex-col items-end w-full px-6 pt-4'>
         <span className={clsx('font-semibold bg-white text-slate-700 rounded-full shadow-sm px-4 py-1', {'invisible': !isNumOfRows})}>{numOfRows}</span>
       </div>
     </>

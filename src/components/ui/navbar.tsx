@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from '@/components/ui/logo';
+import {LogoSmall} from '@/components/ui/logo';
 import Link from 'next/link';
 import {HiOutlineSquares2X2} from "react-icons/hi2";
 import {Avatar, AvatarFallback} from './avatar';
@@ -32,11 +32,11 @@ export function UserMenu() {
             <AvatarFallback>{userEmail}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
-        <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-row gap-4 items-center bg-white'>
-          <div className='border-2 rounded-full h-fit w-fit px-6 py-2 border-slate-800 font-semibold'>
+        <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
+          <div className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>
             <SignOutButton redirectUrl='/' />
           </div>
-          <Link href=''><Button size='icon' variant='ghost' className='text-lg'>?</Button></Link>
+          <Link href='/about'><p className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>About</p></Link>
         </PopoverContent>
       </Popover>
     </SignedIn>
@@ -45,11 +45,11 @@ export function UserMenu() {
 
 export default function Nav() {
   return (
-    <nav className='flex justify-between px-4 py-3'>
+    <nav className='flex justify-between px-6 py-3'>
       <HomeLink />
-      <div className='flex items-center gap-6 flex-row'>
-        <Link href='/projects'>
-          <HiOutlineSquares2X2 className='text-slate-800' size={24} />
+      <div className='flex items-center gap-4 flex-row'>
+        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
+          <HiOutlineSquares2X2 className='text-slate-600' size={24} />
         </Link>
         <UserMenu />
         <SignedOut>
@@ -66,7 +66,9 @@ function HomeLink() {
   const url = isSignedIn ? '/projects' : '/'
   return (
     <Link href={url}>
-      <Logo />
+      <div className='mt-1'>
+        <LogoSmall className={'fill-neutral-200 h-8 hover:fill-sienna-200 transition-colors'} />
+      </div>
     </Link>
   )
 }

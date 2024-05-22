@@ -54,7 +54,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
+        <Alert className='border-none p-0 m-0 bg-inherit flex justify-center'>
           {
             isTag ?
               <ReminderTag title={title} /> :
@@ -63,8 +63,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
-        <DialogHeader className='-mt-2 mb-2 flex flex-row justify-between mr-12 gap-6'>
-          <DialogTitle className='ml-1 mb-2 text-xl'>{title}</DialogTitle>
+        <DialogHeader className=' mb-2 flex flex-row justify-end mr-12 gap-6'>
           <div className='flex gap-4 flex-row'>
             <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
             <span className='flex -mt-4 mr-10'>
@@ -72,19 +71,18 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
             </span>
           </div>
         </DialogHeader>
-
+        <DialogTitle className='ml-1 mb-2 text-xl'>{title}</DialogTitle>
 
         <ScrollArea className='h-32 mb-4'>
           <p className='ml-1'>{note}</p>
-          <ScrollBar orientation="vertical" className='bg-neutral-100 transition-colors duration-[160ms] ease-out hover:bg-black' />
+          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-[160ms] ease-out hover:bg-black' />
         </ScrollArea>
 
 
-        <DialogFooter className='flex flex-row justify-start w-full sm:justify-between'>
-          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-neutral-200'>
+        <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
+          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-white shadow-sm'>
             < ReminderRepeat reminder={reminder} />
-            <div className='flex flex-row gap-3 font-semibold text-neutral-500'>
-              <span>|</span>
+            <div className='max-[640px]:text-sm flex flex-row gap-3 font-semibold text-neutral-500'>
               {reminderProgress}
             </div>
           </div>
@@ -94,7 +92,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
           </DialogClose>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 }
 

@@ -32,7 +32,7 @@ export default function CounterActions({section, userSettings}: CounterActionPro
   }
 
   return (
-    <div className='flex gap-6 mt-4 pb-4 w-full justify-center text-slate-700 opactiy-80'>
+    <div className='grid grid-cols-6 gap-6 text-slate-700 opactiy-80 justify-items-center	'>
       <CountDown sectionId={section.id} sound={storeSound} />
       <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
         <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
@@ -59,7 +59,7 @@ export function AddSection({projectId, position}: AddSectionProps) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleNewSection}>
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleNewSection}>
       <HiOutlinePlusCircle size={24} />
     </Button>
   )
@@ -86,7 +86,7 @@ export function CloneSection({section}: {section: Section}) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={handleClick}>
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick}>
       <HiOutlineDocumentDuplicate size={24} />
     </Button>
   )

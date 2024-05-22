@@ -80,13 +80,13 @@ export default function ProjectDialog({userId}: {userId: string}) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Alert className='border-none p-0 m-0 bg-inherit'>
-          <Button type='button' size='icon' variant='ghost' className='text-sienna-400'>
-            <HiOutlineSquaresPlus size={24} />
+          <Button type='button' size='icon' variant='ghost' className='text-sienna-400 hover:bg-neutral-200'>
+            <HiOutlineSquaresPlus size={22} />
           </Button>
         </Alert>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-eggshell p-10">
-        <DialogHeader className='mb-2 -mt-2 bg-eggshell'>
+      <DialogContent className="sm:max-w-[425px] p-10">
+        <DialogHeader className='mb-2 -mt-2'>
           <div className='flex flex-row justify-between items-center mr-10'>
             <DialogTitle className='mb-2 font-semibold text-xl'>New Project</DialogTitle>
             <div className='flex flex-row gap-4 items-center -mt-1'>
@@ -117,16 +117,15 @@ export default function ProjectDialog({userId}: {userId: string}) {
             {/* </div> */}
 
 
-
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
-                <p onClick={handleClick} className="cursor-pointer underline underline-offset-4 text-neutral-800 opacity-50 hover:opacity-60 transition-opacity font-semibold flex justify-self-start	self-center pl-1">More Settings
+                <p onClick={handleClick} className="sm:col-span-1 col-span-2 cursor-pointer underline underline-offset-4 text-slate-700 hover:text-slate-950 transition-colors font-semibold flex justify-self-center sm:justify-self-start	self-center pl-1 sm:order-1 order-2 sm:pt-0 pt-2">More Settings
                   {/* <Button type="button" variant='ghost' className='px-12 w-full decoration-2'>Settings</Button> */}
                 </p>
-                <Button type="submit" className='px-12 w-full'>
+                <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-fit sm:col-span-1 col-span-2 justify-self-center sm:justify-self-end sm:mt-0 mt-2 sm:order-2 order-1'>
                   <span className='flex flex-row items-center gap-2 justify-center'>
                     Quickstart
-                    <HiChevronRight size={20} className='text-white' />
+                    <HiChevronRight size={20} className='text-sienna-300' />
                   </span>
                 </Button>
               </div>

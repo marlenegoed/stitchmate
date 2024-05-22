@@ -10,14 +10,17 @@ interface ReminderRepeatProps {
 
 export default function ReminderRepeat({reminder, className}: ReminderRepeatProps) {
 
-  const styles = 'text-md font-semibold text-sienna-500'
+  const styles = 'text-md font-semibold text-sienna-500 max-[640px]:text-sm '
 
   if (reminder.type === 'range') {
+
     if (reminder.until! - reminder.from! === 0) {
       return <p className={cn(styles, className)}>row {reminder.from}</p>
     }
     return <p className={cn(styles, className)}>rows {reminder.from} {`\u2013`} {reminder.until}</p>
   }
 
-  return <p className={cn(styles, className)}><span> {reminder.times} times</span><span className='px-3'>|</span><span> every {reminder.interval}{makeOrdinal(reminder.interval || 0)}</span> </p>
+  return <p className={cn(styles, className)}>
+    {/* <span className='px-3'>|</span> */}
+    <span> every {reminder.interval}{makeOrdinal(reminder.interval || 0)}</span> </p>
 }

@@ -12,7 +12,7 @@ interface BlobCounterProps {
 }
 
 export function BlobCounter({color, count, blobIndex, onClick, sound = false}: BlobCounterProps) {
-  const [play] = useSound('/click-2.mp3', {interrupt: true});
+  const [play] = useSound('/sot20.mp3', {interrupt: true});
 
   function handleClick() {
     if (sound) {

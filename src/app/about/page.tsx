@@ -19,7 +19,8 @@ export default function Page() {
           </p>
           <span className='opacity-60'>
             <p>credits to:</p>
-            <p>someone for the blobs<br />someone else for the sounds</p>
+            <p>someone for the blobs<br />click sounds:
+              <a href="https://freesound.org/people/lsprice/sounds/89926/">sot20.aif</a> by <a href="https://freesound.org/people/lsprice/">lsprice</a> | License: <a href="http://creativecommons.org/licenses/by/3.0/">Attribution 3.0</a></p>
           </span>
         </section>
       </main>
@@ -29,7 +30,7 @@ export default function Page() {
           <p className='underline underline-offset-4 font-semibold text-slate-700'>home</p>
         </Link>
       </footer>
-  
+
     </>
   )
 }
