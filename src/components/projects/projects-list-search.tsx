@@ -18,6 +18,7 @@ export default function ProjectListSearch() {
     } else {
       params.delete("title")
     }
+    params.delete("page")
     router.replace(`${pathname}?${params.toString()}`)
   }, 300)
 

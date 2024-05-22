@@ -3,7 +3,6 @@
 import {HiMiniHeart} from 'react-icons/hi2'
 import {HiOutlineHeart} from 'react-icons/hi2'
 import {Button} from '../ui/button'
-import {useState} from 'react'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 
 export default function FilterProjectFavorites() {
@@ -20,6 +19,7 @@ export default function FilterProjectFavorites() {
     } else {
       params.delete("favorite")
     }
+    params.delete("page")
     router.replace(`${pathname}?${params.toString()}`)
   }
 
