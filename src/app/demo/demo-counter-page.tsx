@@ -11,7 +11,6 @@ import {
   HiOutlineDocumentDuplicate,
   HiOutlinePlusCircle
 } from 'react-icons/hi2';
-import ResetDemoDialog from '@/components/demo/demo-reset-dialog'
 import {
   Tooltip,
   TooltipContent,

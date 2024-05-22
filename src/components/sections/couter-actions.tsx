@@ -25,6 +25,7 @@ interface CounterActionProps {
 
 export default function CounterActions({section, userSettings}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
+  const resetCounter = useCounterStore(state => state.reset)
   // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
   async function handleSoundToggle() {
     toggleStoreSound()
@@ -33,6 +34,7 @@ export default function CounterActions({section, userSettings}: CounterActionPro
 
   async function handleReset() {
     await updateCount(section.id, 1)
+    resetCounter()
   }
 
   return (
