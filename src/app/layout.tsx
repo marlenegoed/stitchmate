@@ -1,6 +1,7 @@
 import './globals.css';
 import {notoSans} from '@/components/ui/fonts';
 import Nav from '@/components/ui/navbar';
+import {TooltipProvider} from '@/components/ui/tooltip';
 
 
 import {
@@ -17,13 +18,15 @@ export default function RootLayout({children}: Readonly<{
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={`${notoSans.className} antialiased 
+      <html lang="en">
+        <body className={`${notoSans.className} antialiased 
       flex flex-col h-lvh bg-white
       `}>
-          {children}
-      </body>
-    </html>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

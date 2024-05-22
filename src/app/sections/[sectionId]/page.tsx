@@ -41,8 +41,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
             <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={project.blobId} />
           </ZustandHydration>
         </div>
-        <div className='flex flex-row w-full justify-between self-end pr-2 mb-4'>
-        </div>
+        <div className='flex flex-row w-full justify-between self-end pr-2 mb-4' />
       </section>
 
       <section className='flex w-full mt-auto mb-4 px-6'>

@@ -3,7 +3,7 @@
 import {Button} from '@/components/ui/button'
 import {FormItem} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
-import {DemoStoreProvider, useDemoStore} from '@/providers/demo-store-provider'
+import {useDemoStore} from '@/providers/demo-store-provider'
 import {FormEvent, ReactNode, useEffect, useRef, useState} from 'react'
 import {
   HiChevronLeft,
@@ -15,7 +15,6 @@ import ResetDemoDialog from '@/components/demo/demo-reset-dialog'
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import DemoSectionDialog from '@/components/demo/demo-section-dialog'
@@ -26,34 +25,38 @@ import DemoReminderAlertDialog from '@/components/demo/demo-reminder-alert-dialo
 import dynamic from 'next/dynamic'
 import {ToggleSound} from '@/components/ui/toggle-sound-button'
 import {CountDownButton} from '@/components/ui/count-down-button'
-import ReminderAlertDialog from '@/components/reminders/reminder-alert-dialog'
 import ReminderForm, {FormValues} from '@/components/reminders/reminder-form'
 import {ScrollBar} from '@/components/ui/scroll-area'
-import {Reminder, NewReminder} from '@/database/queries/projects'
+import {type NewReminder} from '@/database/queries/projects'
 import {ScrollArea} from '@radix-ui/react-scroll-area'
-import {CounterStoreProvider, useCounterStore} from '@/providers/counter-store-provider'
-import {UserSettingsStoreProvider, useUserSettingsStore} from '@/providers/user-settings-store-provider'
+import {useCounterStore} from '@/providers/counter-store-provider'
+import {useUserSettingsStore} from '@/providers/user-settings-store-provider'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
 export function DemoCounterPage() {
   return (
-    <CounterStoreProvider>
-      <UserSettingsStoreProvider>
-        <DemoStoreProvider>
-          <div className='flex justify-between w-full px-6'>
-            <TitleField />
-            <ActionBar />
-          </div>
-          <SectionProgress />
-          <DemoCounter />
+    <>
+      <div className='flex justify-between w-full px-6'>
+        <TitleField />
+        <ActionBar />
+      </div>
+      <SectionProgress />
 
-          <section className='flex w-full mt-auto mb-4 px-6'>
-            <ReminderList />
-          </section>
-        </DemoStoreProvider>
-      </UserSettingsStoreProvider>
-    </CounterStoreProvider>
+      <section className='w-full flex-1 flex-col flex justify-center items-center' >
+        <div className='mb-auto'>
+          <div className='w-full min-h-10 flex justify-center'>
+            <ReminderPrompt />
+          </div >
+          <DemoCounter />
+          <div className='flex flex-row w-full justify-between self-end pr-2 mb-4' />
+        </div>
+      </section>
+
+      <section className='flex w-full mt-auto mb-4 px-6'>
+        <ReminderList />
+      </section>
+    </>
   )
 }
 
@@ -125,17 +128,13 @@ interface UserLoginInfoProps {
 }
 
 function UserLoginInfo({children}: UserLoginInfoProps) {
-
   return (
-
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent>
-          <p>sign in for all features</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipContent>
+        <p>sign in for all features</p>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
