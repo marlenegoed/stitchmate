@@ -28,6 +28,7 @@ import clsx from 'clsx';
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
 import DemoReminderForm from './demo-reminder-form';
 import {useDemoStore} from '@/providers/demo-store-provider';
+import {useCounterStore} from '@/providers/counter-store-provider';
 
 
 
@@ -37,8 +38,8 @@ interface ReminderAlertDialogProps {
 }
 
 export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
-
-  const {storeCount, updateReminder} = useDemoStore((state) => state,)
+  const storeCount = useCounterStore(state => state.storeCount)
+  const updateReminder = useDemoStore((state) => state.updateReminder)
 
   const {title, note, type, from, until, start, interval, times, notification} = reminder;
 
@@ -61,14 +62,13 @@ export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlert
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
-        <DialogHeader className='-mt-2 mb-2 flex flex-row justify-between mr-12 gap-6'>
-          <DialogTitle className='ml-1 mb-2 text-xl'>{title}</DialogTitle>
-          <div className='flex gap-4 flex-row'>
+        <DialogHeader className='gap-4'>
+          <DialogTitle className='text-xl mr-auto'>{title}</DialogTitle>
+
+          <span className="flex items-center">
             <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
-            <span className='flex -mt-4 mr-10'>
-              <DemoReminderForm reminder={reminder} isIcon={true} count={storeCount} />
-            </span>
-          </div>
+          </span>
+          <DemoReminderForm reminder={reminder} isIcon={true} count={storeCount} />
         </DialogHeader>
 
 

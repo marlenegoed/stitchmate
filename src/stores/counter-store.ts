@@ -16,6 +16,7 @@ export type CounterActions = {
   setStoreCount: (storeCount: number) => void,
   setStoreTitle: (title: string) => void,
   initialize: (state: CounterState) => void,
+  reset: () => void,
 }
 
 export type CounterStore = CounterState & CounterActions
@@ -25,7 +26,7 @@ export const initCounterStore = (): CounterState => {
 }
 
 export const defaultInitState: CounterState = {
-  storeCount: 0,
+  storeCount: 1,
   storeTitle: 'title',
 }
 
@@ -37,10 +38,19 @@ export const createCounterStore = (
       persist(
         (set) => ({
           ...initState,
-          countStoreUp: () => set((state) => ({storeCount: state.storeCount + 1})),
-          countStoreDown: () => set((state) => ({storeCount: state.storeCount - 1})),
+          countStoreUp: () => set((state) => {
+            let newCount = state.storeCount + 1
+            if (newCount > 999) newCount = 1
+            return {storeCount: newCount}
+          }),
+          countStoreDown: () => set((state) => {
+            let newCount = state.storeCount - 1
+            if (newCount < 1) newCount = 1
+            return {storeCount: newCount}
+          }),
           setStoreCount: (storeCount) => set(() => ({storeCount})),
           setStoreTitle: (title) => set((state) => ({...state, storeTitle: title})),
+          reset: () => set((state) => ({...state, storeCount: 1})),
           initialize: (state: CounterState) => set(() => ({...state}))
         }),
         {name: "counter-store"}

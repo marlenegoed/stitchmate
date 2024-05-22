@@ -31,34 +31,40 @@ import ReminderForm, {FormValues} from '@/components/reminders/reminder-form'
 import {ScrollBar} from '@/components/ui/scroll-area'
 import {Reminder, NewReminder} from '@/database/queries/projects'
 import {ScrollArea} from '@radix-ui/react-scroll-area'
+import {CounterStoreProvider, useCounterStore} from '@/providers/counter-store-provider'
+import {UserSettingsStoreProvider, useUserSettingsStore} from '@/providers/user-settings-store-provider'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
 export function DemoCounterPage() {
   return (
-    <DemoStoreProvider>
-      <div className='flex justify-between w-full px-6'>
-        <TitleField />
-        <ActionBar />
-      </div>
-      <SectionProgress />
-      <DemoCounter />
+    <CounterStoreProvider>
+      <UserSettingsStoreProvider>
+        <DemoStoreProvider>
+          <div className='flex justify-between w-full px-6'>
+            <TitleField />
+            <ActionBar />
+          </div>
+          <SectionProgress />
+          <DemoCounter />
 
-      <section className='flex w-full mt-auto mb-4 px-6'>
-        <ReminderList />
-      </section>
-    </DemoStoreProvider>
+          <section className='flex w-full mt-auto mb-4 px-6'>
+            <ReminderList />
+          </section>
+        </DemoStoreProvider>
+      </UserSettingsStoreProvider>
+    </CounterStoreProvider>
   )
 }
 
 function ActionBar() {
-
-  const {storeCount, countStoreDown, sound, toggleSound} = useDemoStore((state) => state)
+  const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
+  const {storeCount, countStoreDown} = useCounterStore(state => state)
 
   return (
     <div className='flex flex-row items-center gap-6'>
-      <CountDownButton count={storeCount} sound={sound} handleChange={countStoreDown} />
-      <ToggleSound sound={sound} onToggle={toggleSound} />
+      <CountDownButton count={storeCount} sound={storeSound} handleChange={countStoreDown} />
+      <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
 
       <ResetDemoDialog setOpen={() => true} />
       <UserLoginInfo>
@@ -80,7 +86,6 @@ function ActionBar() {
           <Button size='icon' variant='ghost' className='opacity-30'><HiChevronRight size={24} /></Button>
         </div>
       </UserLoginInfo>
-
     </div>
   )
 }
@@ -88,9 +93,7 @@ function ActionBar() {
 function TitleField() {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const {storeTitle, setStoreTitle} = useDemoStore(
-    (state) => state,
-  )
+  const {storeTitle, setStoreTitle} = useCounterStore((state) => state)
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -140,8 +143,8 @@ function UserLoginInfo({children}: UserLoginInfoProps) {
 
 
 function SectionProgress() {
-
-  const {storeCount, numOfRows} = useDemoStore(state => state)
+  const {storeCount} = useCounterStore(state => state)
+  const numOfRows = useDemoStore(state => state.numOfRows)
 
   const [progress, setProgress] = useState(numOfRows);
 
@@ -167,10 +170,9 @@ function SectionProgress() {
 
 
 function ReminderPrompt() {
+  const storeCount = useCounterStore(state => state.storeCount)
 
-  const {storeCount, reminders} = useDemoStore(
-    (state) => state,
-  )
+  const reminders = useDemoStore((state) => state.reminders)
   const nextReminders = findNextReminders(reminders, storeCount)
 
   return (
@@ -182,7 +184,8 @@ function ReminderPrompt() {
 
 
 export default function ReminderList() {
-  const {storeCount, setReminder, reminders} = useDemoStore((state) => state)
+  const storeCount = useCounterStore(state => state.storeCount)
+  const {setReminder, reminders} = useDemoStore((state) => state)
 
   async function onSubmit(values: FormValues) {
     const newReminder: NewReminder = {...values, sectionId: 0}

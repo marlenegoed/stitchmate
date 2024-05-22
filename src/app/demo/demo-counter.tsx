@@ -2,7 +2,8 @@
 
 import {BlobCounter} from '@/components/ui/blob-counter';
 import {useRandom} from '@/lib/use-random';
-import {useDemoStore} from '@/providers/demo-store-provider';
+import {useCounterStore} from '@/providers/counter-store-provider';
+import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import {useState} from 'react';
 
 export default function DemoCounter() {
@@ -11,9 +12,8 @@ export default function DemoCounter() {
 
   const blobIndex = useRandom(8)
 
-  const {storeCount, countStoreUp, sound} = useDemoStore(
-    (state) => state,
-  )
+  const sound = useUserSettingsStore(state => state.storeSound)
+  const {storeCount, countStoreUp} = useCounterStore(state => state)
 
   function handleClick() {
     countStoreUp()

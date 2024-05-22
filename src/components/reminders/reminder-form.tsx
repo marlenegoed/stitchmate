@@ -105,7 +105,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <DialogHeader className='mb-2 -mt-4 justify-between'>
+            <DialogHeader className='mb-2 -mt-4 justify-between items-center'>
               <FormField
                 control={form.control}
                 name="title"
@@ -120,15 +120,6 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
               />
 
               {reminder && <DeleteDialog reminderId={reminder.id} />}
-
-              <Button
-                className='hover:bg-neutral-100 hover:opacity-70 transform-opacity mt-1' size='icon' variant='ghost' type='button'
-                onClick={() => {
-                  form.setValue('notification', !isNotification)
-                  setIsNotification(!isNotification)
-                }}>
-                <TbZzz size={20} className={clsx({'text-neutral-500': !isNotification, 'text-sienna-400': isNotification})} />
-              </Button>
             </DialogHeader>
 
             <FormField

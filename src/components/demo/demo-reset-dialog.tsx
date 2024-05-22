@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
+import {useCounterStore} from '@/providers/counter-store-provider';
 import {useDemoStore} from '@/providers/demo-store-provider';
 
 import {HiMiniArrowPath} from "react-icons/hi2";
@@ -20,12 +21,12 @@ interface AlertDialogProps {
 }
 export default function ResetDemoDialog({setOpen}: AlertDialogProps) {
 
-  const {resetStore} = useDemoStore(
-    (state) => state,
-  )
+  const resetCounterStore = useCounterStore(state => state.reset)
+  const resetDemoStore = useDemoStore((state) => state.resetStore)
 
-function handleReset() {
-    resetStore()
+  function handleReset() {
+    resetDemoStore()
+    resetCounterStore()
     setOpen(false)
   }
 

@@ -3,50 +3,36 @@
 import {create} from 'zustand';
 import {persist, devtools, createJSONStorage} from 'zustand/middleware'
 import {type NewReminder, type Reminder} from '@/database/queries/projects';
-import findNextReminders from '@/lib/find-next-reminders';
 
-export type CounterState = {
-  storeCount: number,
-  storeTitle: string,
-  numOfRows: number,
+export type DemoState = {
   reminders: Reminder[],
-  nextReminders: Reminder[],
-  sound: boolean,
   id: number,
+  numOfRows: number,
 }
 
-export type CounterActions = {
-  countStoreUp: () => void,
-  countStoreDown: () => void,
-  setStoreTitle: (title: string) => void,
+export type DemoActions = {
+  setNumOfRows: (numOfRows: number) => void,
   resetStore: () => void,
-  setCount: (count: number) => void,
-  setNumOfRows: (rows: number) => void,
   setReminder: (reminder: NewReminder) => void,
   updateReminder: (updatedReminder: Reminder) => void
   deleteReminder: (id: number) => void,
-  toggleSound: () => void,
-  initialize: (state: CounterState) => void,
+  initialize: (state: DemoState) => void,
 }
 
-export type DemoStore = CounterState & CounterActions
+export type DemoStore = DemoState & DemoActions
 
-export const initDemoStore = (): CounterState => {
+export const initDemoStore = (): DemoState => {
   return defaultInitState;
 }
 
-export const defaultInitState: CounterState = {
-  storeCount: 1,
-  storeTitle: 'title',
-  numOfRows: 100,
+export const defaultInitState: DemoState = {
   reminders: [],
-  nextReminders: [],
-  sound: true,
   id: 0,
+  numOfRows: 0,
 }
 
 export const createDemoStore = (
-  initState: CounterState = defaultInitState,
+  initState: DemoState = defaultInitState,
 ) => {
   return create<DemoStore>()(
     devtools(
@@ -54,40 +40,13 @@ export const createDemoStore = (
         (set) => ({
           ...initState,
 
-          countStoreUp: () => set((state) => ({
-            ...state,
-            storeCount: state.storeCount + 1,
-            nextReminders: findNextReminders(state.reminders, state.storeCount + 1)
-          })),
-
-          countStoreDown: () => set((state) => {
-            let newCount = state.storeCount - 1
-            if (newCount < 1) newCount = 1
-            return {
+          setNumOfRows: (numOfRows) => set((state) => ({
               ...state,
-              storeCount: newCount,
-              nextReminders: findNextReminders(state.reminders, newCount)
-            }
-          }),
-
-          setStoreTitle: (title) => set((state) => ({
-            ...state,
-            storeTitle: title,
+              numOfRows
           })),
 
           resetStore: () => set(() => ({
             ...defaultInitState,
-          })),
-
-          setCount: (count) => set((state) => ({
-            ...state,
-            storeCount: count,
-            nextReminders: findNextReminders(state.reminders, count)
-          })),
-
-          setNumOfRows: (rows) => set((state) => ({
-            ...state,
-            numOfRows: rows
           })),
 
           setReminder: (newReminder) => set((state) => {
@@ -106,12 +65,11 @@ export const createDemoStore = (
               updatedAt: newReminder.updatedAt || null,
               createdAt: newReminder.createdAt || null,
             }
-            state.id++;
-            const newReminders: Reminder[] = [...state.reminders, reminder];
 
             return {
-              ...state, reminders: newReminders,
-              nextReminders: findNextReminders(newReminders, state.storeCount),
+              ...state,
+              id: state.id + 1,
+              reminders: [...state.reminders, reminder],
             }
           }),
 
@@ -138,9 +96,7 @@ export const createDemoStore = (
             }
           }),
 
-          toggleSound: () => set((state) => ({...state, sound: !state.sound})),
-
-          initialize: (state: CounterState) => set(() => ({...state}))
+          initialize: (state: DemoState) => set(() => ({...state}))
         }),
         {
           name: "demo-store",

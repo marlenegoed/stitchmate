@@ -3,6 +3,7 @@
 import {type Reminder, type NewReminder} from '@/database/queries/projects';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import ReminderForm, {FormValues} from '../reminders/reminder-form';
+import {useCounterStore} from '@/providers/counter-store-provider';
 
 interface ReminderFormProps {
   reminder?: Reminder
@@ -11,7 +12,8 @@ interface ReminderFormProps {
 }
 
 export default function DemoReminderForm({reminder, isIcon}: ReminderFormProps) {
-  const {storeCount, updateReminder, setReminder} = useDemoStore((state) => state)
+  const storeCount = useCounterStore(state => state.storeCount)
+  const {updateReminder, setReminder} = useDemoStore((state) => state)
 
   async function onSubmit(values: FormValues) {
     if (reminder) {

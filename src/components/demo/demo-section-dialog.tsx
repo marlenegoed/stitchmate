@@ -30,15 +30,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import {FormEvent, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDemoStore} from '@/providers/demo-store-provider';
+import {useCounterStore} from '@/providers/counter-store-provider';
 
 
 const formSchema = z.object({
   title: z.string({
     required_error: 'your section needs a title!'
   })
-    .min(5, {message: 'your title is too short. Must be 5 or more characters long.'})
+    .min(2, {message: 'your title is too short. Must be 2 or more characters long.'})
     .max(50, {message: 'your title is too long! Must be below 50 characters'}),
   count: z.coerce.number().int().positive({message: 'must be at least 1'}).max(999),
   rows: z.coerce.number().int().nonnegative(),
@@ -47,7 +48,8 @@ const formSchema = z.object({
 
 export default function DemoSectionDialog() {
 
-  const {storeTitle, storeCount, numOfRows, setStoreTitle, setCount, setNumOfRows} = useDemoStore(
+  const {storeTitle, storeCount, setStoreTitle, setStoreCount} = useCounterStore(state => state)
+  const {numOfRows, setNumOfRows} = useDemoStore(
     (state) => state,
   )
 
@@ -69,25 +71,19 @@ export default function DemoSectionDialog() {
   const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = (values, e) => {
     e?.preventDefault()
     setStoreTitle(values.title)
-    setCount(values.count)
+    setStoreCount(values.count)
     setNumOfRows(values.rows)
     setOpen(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
-          <Button type='button' size='icon' variant='ghost'>
-            <HiMiniAdjustmentsVertical size={20} className='text-slate-700' />
-          </Button>
-        </Alert>
+      <DialogTrigger className="border-none p-0 m-0 bg-inherit">
+        <HiMiniAdjustmentsVertical size={20} className='text-slate-700' />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
-        <DialogHeader className='mb-2 -mt-2'>
-          <div className='flex flex-row justify-between items-center mr-10'>
-            <DialogTitle className='mb-2 font-semibold text-xl'>Counter Settings</DialogTitle>
-          </div>
+        <DialogHeader className='mb-2 -mt-2 items-center'>
+          <DialogTitle className='mb-2 font-semibold text-xl mr-auto'>Counter Settings</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
