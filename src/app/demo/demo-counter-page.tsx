@@ -31,6 +31,7 @@ import {type NewReminder} from '@/database/queries/projects'
 import {ScrollArea} from '@radix-ui/react-scroll-area'
 import {useCounterStore} from '@/providers/counter-store-provider'
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider'
+import ResetDialog from '@/components/sections/reset-dialog'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
@@ -64,12 +65,20 @@ function ActionBar() {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const {storeCount, countStoreDown} = useCounterStore(state => state)
 
+  const resetCounterStore = useCounterStore(state => state.reset)
+  const resetDemoStore = useDemoStore((state) => state.resetStore)
+
+  async function resetCounter() {
+    resetDemoStore()
+    resetCounterStore()
+  }
+
   return (
     <div className='flex flex-row items-center gap-6'>
       <CountDownButton count={storeCount} sound={storeSound} handleChange={countStoreDown} />
       <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
 
-      <ResetDemoDialog setOpen={() => true} />
+      <ResetDialog handleReset={resetCounter} />
       <UserLoginInfo>
         <Button type='button' size='icon' variant='ghost' className='border-slate-800 opacity-30'>
           <HiOutlineDocumentDuplicate size={24} />

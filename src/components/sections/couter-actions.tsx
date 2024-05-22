@@ -31,6 +31,10 @@ export default function CounterActions({section, userSettings}: CounterActionPro
     await toggleSound(userSettings.userId)
   }
 
+  async function handleReset() {
+    await updateCount(section.id, 1)
+  }
+
   return (
     <div className='grid grid-cols-6 gap-6 text-slate-700 opactiy-80 justify-items-center	'>
       <CountDown sectionId={section.id} sound={storeSound} />
@@ -38,7 +42,7 @@ export default function CounterActions({section, userSettings}: CounterActionPro
         <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
       </ZustandHydration>
 
-      <ResetDialog setOpen={() => true} sectionId={section.id} />
+      <ResetDialog handleReset={handleReset} />
       <CloneSection section={section} />
       <AddSection projectId={section.projectId} position={section.position} />
       <SectionDialog section={section} />

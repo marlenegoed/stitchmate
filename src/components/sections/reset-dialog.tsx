@@ -10,27 +10,26 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {updateCount} from '@/database/queries/projects';
+import {Tooltip, TooltipTrigger} from '@radix-ui/react-tooltip';
 
 import {HiMiniArrowPath} from "react-icons/hi2";
+import {TooltipContent} from '../ui/tooltip';
 
 
 interface AlertDialogProps {
-  setOpen: (value: boolean) => void,
-  sectionId: number,
+  handleReset: () => Promise<void>
 }
-export default function ResetDialog({setOpen, sectionId}: AlertDialogProps) {
-
-
-  async function handleReset() {
-    await updateCount(sectionId, 1)
-    setOpen(false)
+export default function ResetDialog({handleReset}: AlertDialogProps) {
+  async function onClick() {
+    await handleReset()
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'><HiMiniArrowPath size={24} /></Button>
+        <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+          <HiMiniArrowPath size={24} />
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -41,7 +40,7 @@ export default function ResetDialog({setOpen, sectionId}: AlertDialogProps) {
         </AlertDialogHeader>
         <AlertDialogFooter className='grid grid-cols-2'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleReset}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={onClick}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
