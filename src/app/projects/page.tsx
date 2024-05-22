@@ -20,11 +20,8 @@ export default async function Page({searchParams}: {searchParams?: {title?: stri
   return (
     <>
       <div className='grid grid-cols-12 w-full items-center px-6'>
-
         <Title className='my-4 col-span-12 sm:col-span-3'>My Projects</Title>
-
         <div className='col-span-12 sm:col-span-9 grid grid-cols-12'>
-
           <div className='mr-2 sm:mr-0 col-span-11 justify-between sm:justify-end sm:col-span-8 flex flex-row gap-4 md:justify-center'>
             <ProjectListSearch />
             <FilterProjectFavorites />

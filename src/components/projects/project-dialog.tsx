@@ -36,6 +36,7 @@ import {createNewProject, quickStartProject} from '@/database/queries/projects';
 import Link from 'next/link';
 import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
+import {Tooltip, TooltipContent, TooltipTrigger} from '../ui/tooltip';
 
 
 const formSchema = z.object({
@@ -78,13 +79,13 @@ export default function ProjectDialog({userId}: {userId: string}) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
+      <Tooltip title="Create new project">
+        <DialogTrigger asChild>
           <Button type='button' size='icon' variant='ghost' className='text-sienna-400 hover:bg-neutral-200'>
             <HiOutlineSquaresPlus size={22} />
           </Button>
-        </Alert>
-      </DialogTrigger>
+        </DialogTrigger>
+      </Tooltip>
       <DialogContent className="sm:max-w-[425px] p-10">
         <DialogHeader className='mb-2 -mt-2'>
           <div className='flex flex-row justify-between items-center mr-10'>

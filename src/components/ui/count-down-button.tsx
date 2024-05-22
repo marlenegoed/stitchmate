@@ -20,20 +20,17 @@ export function CountDownButton({count, handleChange, sound = false}: {sound: bo
   }
 
   return (
-    <Tooltip>
-      <TooltipContent>Count in reverse</TooltipContent>
-      <TooltipTrigger asChild>
-        <Button
-          type='button'
-          size='icon'
-          variant='ghost'
-          className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
-          onClick={handleClick}
-          disabled={count === 1}
-        >
-          <HiOutlineArrowUturnLeft size={20} />
-        </Button>
-      </TooltipTrigger>
+    <Tooltip title="Unravel">
+      <Button
+        type='button'
+        size='icon'
+        variant='ghost'
+        className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
+        onClick={handleClick}
+        disabled={count === 1}
+      >
+        <HiOutlineArrowUturnLeft size={20} />
+      </Button>
     </Tooltip>
   )
 }

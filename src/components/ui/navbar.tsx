@@ -18,7 +18,7 @@ import {
   SignOutButton,
   useAuth
 } from '@clerk/nextjs'
-import {Button} from './button';
+import {Tooltip} from './tooltip';
 
 export function UserMenu() {
   const {user} = useUser()
@@ -48,9 +48,11 @@ export default function Nav() {
     <nav className='flex justify-between px-6 py-3'>
       <HomeLink />
       <div className='flex items-center gap-4 flex-row'>
-        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
-          <HiOutlineSquares2X2 className='text-slate-600' size={24} />
-        </Link>
+        <Tooltip title="Go to projects">
+          <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
+            <HiOutlineSquares2X2 className='text-slate-600' size={24} />
+          </Link>
+        </Tooltip>
         <UserMenu />
         <SignedOut>
           <SignInButton />

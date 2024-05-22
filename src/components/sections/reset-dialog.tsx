@@ -10,8 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-
 import {HiMiniArrowPath} from "react-icons/hi2";
+import {Tooltip} from '../ui/tooltip';
 
 
 interface AlertDialogProps {
@@ -24,11 +24,13 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-          <HiMiniArrowPath size={24} />
-        </Button>
-      </AlertDialogTrigger>
+      <Tooltip title="Reset counter">
+        <AlertDialogTrigger asChild>
+          <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+            <HiMiniArrowPath size={24} />
+          </Button>
+        </AlertDialogTrigger>
+      </Tooltip>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to reset?</AlertDialogTitle>
@@ -42,6 +44,5 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-
   );
 }

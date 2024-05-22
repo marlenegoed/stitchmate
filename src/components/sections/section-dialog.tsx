@@ -41,6 +41,7 @@ import Link from 'next/link';
 import DeleteDialog from './delete-dialog';
 import {useEffect, useState} from 'react';
 import {useCounterStore} from '@/providers/counter-store-provider';
+import {Tooltip} from '../ui/tooltip';
 
 
 const formSchema = z.object({
@@ -80,22 +81,19 @@ export default function SectionDialog({section}: {section: Section}) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
-          <Button type='button' size='icon' variant='ghost' className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-            <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
-          </Button>
-        </Alert>
-      </DialogTrigger>
+      <Tooltip title="Section settings">
+        <DialogTrigger asChild>
+          <Alert className='border-none p-0 m-0 bg-inherit'>
+            <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+              <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
+            </Button>
+          </Alert>
+        </DialogTrigger>
+      </Tooltip>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
         <DialogHeader className='items-center'>
-          {/* <div className='flex flex-row justify-between items-center mr-6'> */}
-            <DialogTitle className='font-semibold text-xl'>Section Settings</DialogTitle>
-            {/* <div className='flex flex-row items-end -mt-1'> */}
-            <DeleteDialog className="ml-auto" section={section} />
-            {/* <HiArrowUpTray size={20} /> */}
-            {/* </div> */}
-          {/* </div> */}
+          <DialogTitle className='font-semibold text-xl'>Section Settings</DialogTitle>
+          <DeleteDialog className="ml-auto" section={section} />
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -147,9 +145,8 @@ export default function SectionDialog({section}: {section: Section}) {
               <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Track your progress by adding your final row count.</p>
             </div>
             <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 hover:text-slate-950 transition-opacity'>
-              {/* <HiChevronRight size={20} className='text-slate-800' /> */}
               <Link className='flex px-1 flex-row font-semibold  text-sm text-slate-600 underline underline-offset-4 w-fit' href={`/projects/${section.projectId}/edit`}>
-                manage project
+                Manage project
               </Link>
             </div>
             <DialogFooter>

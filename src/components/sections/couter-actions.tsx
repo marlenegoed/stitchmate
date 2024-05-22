@@ -1,9 +1,7 @@
 'use client'
 
-// import {HiAdjustmentsHorizontal} from "react-icons/hi2";
 import {HiOutlineBookmarkSquare} from "react-icons/hi2";
 import {HiOutlineDocumentDuplicate} from "react-icons/hi2";
-
 import {Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
 import {Button} from '../ui/button';
 import Link from 'next/link';
@@ -16,6 +14,7 @@ import {ToggleSound} from '../ui/toggle-sound-button';
 import {CountDownButton} from '../ui/count-down-button';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import ZustandHydration from '../store/zustand-hydration';
+import {Tooltip} from '../ui/tooltip';
 
 
 interface CounterActionProps {
@@ -26,7 +25,6 @@ interface CounterActionProps {
 export default function CounterActions({section, userSettings}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
-  // shadow-[0_3px_3px_-2px_rgba(0,0,0,0.1)]
   async function handleSoundToggle() {
     toggleStoreSound()
     await toggleSound(userSettings.userId)
@@ -65,9 +63,11 @@ export function AddSection({projectId, position}: AddSectionProps) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleNewSection}>
-      <HiOutlinePlusCircle size={24} />
-    </Button>
+    <Tooltip title="Add section">
+      <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleNewSection}>
+        <HiOutlinePlusCircle size={24} />
+      </Button>
+    </Tooltip>
   )
 }
 
@@ -92,9 +92,11 @@ export function CloneSection({section}: {section: Section}) {
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick}>
-      <HiOutlineDocumentDuplicate size={24} />
-    </Button>
+    <Tooltip title='Duplicate section'>
+      <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick}>
+        <HiOutlineDocumentDuplicate size={24} />
+      </Button>
+    </Tooltip>
   )
 }
 
