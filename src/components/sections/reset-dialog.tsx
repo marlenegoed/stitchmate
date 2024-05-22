@@ -10,10 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {Tooltip, TooltipTrigger} from '@radix-ui/react-tooltip';
 
 import {HiMiniArrowPath} from "react-icons/hi2";
-import {TooltipContent} from '../ui/tooltip';
 
 
 interface AlertDialogProps {
@@ -44,5 +42,6 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+
   );
 }

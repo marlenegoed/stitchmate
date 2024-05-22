@@ -1,6 +1,7 @@
 import {HiOutlineArrowUturnLeft} from 'react-icons/hi2'
 import {Button} from './button'
 import useSound from 'use-sound';
+import {Tooltip, TooltipContent, TooltipTrigger} from './tooltip';
 
 export function CountDownButton({count, handleChange, sound = false}: {sound: boolean, count: number, handleChange: (count: number) => void}) {
   const [play] = useSound('/sot13.mp3', {interrupt: true});
@@ -19,8 +20,20 @@ export function CountDownButton({count, handleChange, sound = false}: {sound: bo
   }
 
   return (
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick} >
-      <HiOutlineArrowUturnLeft size={20} />
-    </Button>
+    <Tooltip>
+      <TooltipContent>Count in reverse</TooltipContent>
+      <TooltipTrigger asChild>
+        <Button
+          type='button'
+          size='icon'
+          variant='ghost'
+          className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
+          onClick={handleClick}
+          disabled={count === 1}
+        >
+          <HiOutlineArrowUturnLeft size={20} />
+        </Button>
+      </TooltipTrigger>
+    </Tooltip>
   )
 }
