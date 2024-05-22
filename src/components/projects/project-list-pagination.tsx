@@ -18,7 +18,7 @@ export default function ProjectListPagination({pageCount}: {pageCount: number}) 
   const pathname = usePathname()
 
   const currentPageParams = new URLSearchParams(searchParams)
-  const currentPage = parseInt(currentPageParams.get('page') || '')
+  const currentPage = parseInt(currentPageParams.get('page') || '0')
 
   const prevPageParams = new URLSearchParams(searchParams)
   if (!currentPage || currentPage < 2) {
@@ -42,11 +42,11 @@ export default function ProjectListPagination({pageCount}: {pageCount: number}) 
           <PaginationPrevious href={`${pathname}?${prevPageParams}`} className={clsx({'invisible': Number.isNaN(currentPage) || currentPage < 1})} />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#">{pageCount}</PaginationLink>
+          <PaginationLink isActive={true} href={`${pathname}?${currentPageParams}`}>{currentPage + 1}</PaginationLink>
         </PaginationItem>
-        <PaginationItem>
+        {/* <PaginationItem>
           <PaginationEllipsis />
-        </PaginationItem>
+        </PaginationItem> */}
         <PaginationItem>
           <PaginationNext href={`${pathname}?${nextPageParams}`} className={clsx({'invisible': pageCount === currentPage})} />
         </PaginationItem>
