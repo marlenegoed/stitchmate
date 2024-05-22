@@ -26,7 +26,7 @@ export default function ProjectListSearch() {
     <div className='sm:ml-12'>
       <HiOutlineMagnifyingGlass className='text-slate-800 absolute mt-3 ml-4' />
       <Input
-        placeholder='search Titles'
+        placeholder='Search by title'
         name="title"
         variant='inline'
         className='placeholder:text-slate-800 pl-10 text-base rounded-full bg-neutral-200 h-10'
