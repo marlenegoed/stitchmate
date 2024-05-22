@@ -35,6 +35,7 @@ import {TbZzz} from "react-icons/tb";
 import clsx from 'clsx';
 import DeleteDialog from '../sections/delete-dialog';
 import {HiAdjustmentsVertical} from 'react-icons/hi2';
+import {useToast} from '@/lib/use-toast';
 
 
 const formSchema = z.object({
@@ -61,7 +62,6 @@ interface ReminderFormProps {
 
 export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
-  const [isNotification, setIsNotification] = useState(true)
 
   if (reminder && reminder.note === null) {
     reminder.note = ''

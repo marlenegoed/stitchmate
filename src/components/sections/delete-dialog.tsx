@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
 import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/projects';
+import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 import {useRouter} from 'next/navigation';
 
@@ -27,25 +28,24 @@ interface AlertDialogProps {
 
 export default function DeleteDialog({section, projectId, reminderId, className}: AlertDialogProps) {
   const router = useRouter()
+  const {toast} = useToast()
 
   async function handleSubmit() {
     if (section) {
       try {
         await deleteSection(section)
       } catch (e) {
-        // TODO toast
-        console.log(e)
+        toast({title: "Failed to delete section"})
+        // TODO: Send error to sentry
       }
     } else if (projectId) {
-      deleteProject(projectId)
-      // redirect("/projects")
+      await deleteProject(projectId)
+      toast({title: "Projected deleted"})
     } else if (reminderId) {
       deleteReminder(reminderId)
-      //  TODO toast
       router.refresh();
+      toast({title: "Reminder deleted"})
     }
-
-    // setOpen(false)
   }
 
   function title() {

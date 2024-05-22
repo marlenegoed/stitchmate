@@ -5,19 +5,20 @@ import {NewReminder, createReminder, type Reminder} from '@/database/queries/pro
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {ScrollArea, ScrollBar} from '../ui/scroll-area';
+import {useToast} from '@/lib/use-toast';
 
 interface ReminderListProps {
   reminders: Reminder[],
   sectionId: number,
 }
 export default function ReminderList({reminders, sectionId}: ReminderListProps) {
-  const {storeCount} = useCounterStore(
-    (state) => state,
-  )
+  const {toast} = useToast()
+  const {storeCount} = useCounterStore((state) => state)
 
   async function onSubmit(values: FormValues) {
     const newReminder: NewReminder = {...values, sectionId}
     await createReminder(newReminder)
+    toast({title: "Created reminder"})
   }
 
   return (

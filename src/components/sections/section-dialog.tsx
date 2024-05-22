@@ -48,14 +48,14 @@ const formSchema = z.object({
   title: z.string({
     required_error: 'your section needs a title!'
   })
-    .min(5, {message: 'your title is too short. Must be 5 or more characters long.'})
+    .min(1, {message: 'your title is too short. Must be 1 or more characters long.'})
     .max(50, {message: 'your title is too long! Must be below 50 characters'}),
   count: z.coerce.number().int().positive({message: 'must be at least 1'}).max(999),
   rows: z.coerce.number().int().nonnegative(),
 })
 
 export default function SectionDialog({section}: {section: Section}) {
-  const {storeCount, storeTitle, setStoreTitle} = useCounterStore(state => state)
+  const {storeCount, storeTitle} = useCounterStore(state => state)
 
   const [open, setOpen] = useState(false)
 
@@ -73,7 +73,6 @@ export default function SectionDialog({section}: {section: Section}) {
   }, [storeCount])
 
   useEffect(() => {
-    console.log(storeTitle)
     form.resetField("title", {defaultValue: storeTitle})
   }, [storeTitle])
 

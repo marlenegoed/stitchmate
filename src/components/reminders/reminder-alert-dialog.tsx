@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
+import {useToast} from '@/lib/use-toast';
 
 interface ReminderAlertDialogProps {
   reminder: Reminder,
@@ -32,7 +33,7 @@ interface ReminderAlertDialogProps {
 }
 
 export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
-
+  const {toast} = useToast()
   const storeCount = useCounterStore((state) => state.storeCount)
 
   const {title, note, type, from, until, start, interval, times, notification} = reminder;
@@ -49,6 +50,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
   async function handleSubmit(values: FormValues) {
     const updatedReminder: Reminder = {...reminder, ...values}
     await updateReminder(updatedReminder)
+    toast({title: "Reminder updated"})
   }
 
   return (
