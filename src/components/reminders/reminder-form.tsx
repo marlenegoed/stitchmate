@@ -17,10 +17,6 @@ import {
 } from "@/components/ui/form"
 
 import {
-  Alert,
-} from "@/components/ui/alert";
-
-import {
   Dialog,
   DialogContent,
   DialogFooter,
@@ -102,16 +98,14 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Alert className='border-none p-0 m-0 bg-inherit'>
-          {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />}
-        </Alert>
+      <DialogTrigger className='border-none p-0 m-0 bg-inherit'>
+        {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <DialogHeader className='mb-2 -mt-4 flex flex-row justify-between w-full pr-6'>
+            <DialogHeader className='mb-2 -mt-4 justify-between'>
               <FormField
                 control={form.control}
                 name="title"
@@ -128,7 +122,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
               {reminder && <DeleteDialog reminderId={reminder.id} />}
 
               <Button
-                className='hover:bg-neutral-100 hover:opacity-70 transform-opacity' size='icon' variant='ghost' type='button'
+                className='hover:bg-neutral-100 hover:opacity-70 transform-opacity mt-1' size='icon' variant='ghost' type='button'
                 onClick={() => {
                   form.setValue('notification', !isNotification)
                   setIsNotification(!isNotification)

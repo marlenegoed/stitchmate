@@ -23,11 +23,7 @@ interface SectionHeaderProps {
 export default function SectionHeader({section, numOfSections, projectTitle, userId, userSettings}: SectionHeaderProps) {
   return (
     <div className='w-full'>
-
-
-
       <div className='grid grid-cols-12'>
-
         <div className='col-span-6 flex flex-row items-center w-full ml-6'>
           <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
           <SectionTitleField id={section.id} title={section.title} userId={userId} />
@@ -46,7 +42,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
         </div>
 
         {/* action bar mobile:  */}
-        <div className='md:hidden col-span-12 mt-2 mb-5 mx-6 bg-white rounded-full shadow-sm py-2 px-4'>
+        <div className='md:hidden col-span-12 mt-2 mb-5 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit justify-self-center'>
           <CounterActions section={section} userSettings={userSettings} />
         </div>
 

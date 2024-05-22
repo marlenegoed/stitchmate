@@ -88,14 +88,14 @@ export default function SectionDialog({section}: {section: Section}) {
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
-        <DialogHeader className='mb-2 -mt-2'>
-          <div className='flex flex-row justify-between items-center mr-6'>
-            <DialogTitle className='mb-2 font-semibold text-xl'>Section Settings</DialogTitle>
+        <DialogHeader className='items-center'>
+          {/* <div className='flex flex-row justify-between items-center mr-6'> */}
+            <DialogTitle className='font-semibold text-xl'>Section Settings</DialogTitle>
             {/* <div className='flex flex-row items-end -mt-1'> */}
-            <DeleteDialog section={section} />
+            <DeleteDialog className="ml-auto" section={section} />
             {/* <HiArrowUpTray size={20} /> */}
             {/* </div> */}
-          </div>
+          {/* </div> */}
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -126,7 +126,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={defaultValues.color}
-                    className="flex flex-row gap-6"
+                    className="flex flex-row flex-wrap gap-6"
                   >
 
                     <FormItem className="flex items-center space-x-3 space-y-0">

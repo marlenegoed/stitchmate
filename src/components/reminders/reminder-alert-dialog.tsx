@@ -63,15 +63,12 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
         </Alert>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
-        <DialogHeader className=' mb-2 flex flex-row justify-end mr-12 gap-6'>
-          <div className='flex gap-4 flex-row'>
-            <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
-            <span className='flex -mt-4 mr-10'>
-              <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} onSubmit={handleSubmit} />
-            </span>
-          </div>
+        <DialogHeader className='gap-4 items-center'>
+          <DialogTitle className='ml-1 text-xl mr-auto'>{title}</DialogTitle>
+
+          <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
+          <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} onSubmit={handleSubmit} />
         </DialogHeader>
-        <DialogTitle className='ml-1 mb-2 text-xl'>{title}</DialogTitle>
 
         <ScrollArea className='h-32 mb-4'>
           <p className='ml-1'>{note}</p>

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
 import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/projects';
+import {cn} from '@/lib/utils';
 import {useRouter} from 'next/navigation';
 
 import {HiOutlineTrash} from "react-icons/hi2";
@@ -20,10 +21,11 @@ import {HiOutlineTrash} from "react-icons/hi2";
 interface AlertDialogProps {
   section?: Section,
   projectId?: number,
-  reminderId?: number
+  reminderId?: number,
+  className?: string
 }
 
-export default function DeleteDialog({section, projectId, reminderId}: AlertDialogProps) {
+export default function DeleteDialog({section, projectId, reminderId, className}: AlertDialogProps) {
   const router = useRouter()
 
   async function handleSubmit() {
@@ -31,6 +33,7 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
       try {
         await deleteSection(section)
       } catch (e) {
+        // TODO toast
         console.log(e)
       }
     } else if (projectId) {
@@ -38,6 +41,7 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
       // redirect("/projects")
     } else if (reminderId) {
       deleteReminder(reminderId)
+      //  TODO toast
       router.refresh();
     }
 
@@ -53,7 +57,9 @@ export default function DeleteDialog({section, projectId, reminderId}: AlertDial
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className='hover:bg-neutral-200 text-sienna-400  hover:text-slate-700' size="icon"><HiOutlineTrash size={20} /></Button>
+        <Button variant="ghost" className={cn('hover:bg-neutral-200 text-sienna-400  hover:text-slate-700', className)} size="icon">
+          <HiOutlineTrash size={20} />
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
