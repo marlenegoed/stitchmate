@@ -40,8 +40,8 @@ export default function CounterActions({section, userSettings}: CounterActionPro
 
       <ResetDialog setOpen={() => true} sectionId={section.id} />
       <CloneSection section={section} />
-      <AddSection projectId={section.projectId} position={section.position}></AddSection>
-      <SectionDialog section={section}></SectionDialog>
+      <AddSection projectId={section.projectId} position={section.position} />
+      <SectionDialog section={section} />
     </div>
   )
 }

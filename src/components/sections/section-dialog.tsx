@@ -39,7 +39,8 @@ import {
 import {updateSection, type Section} from '@/database/queries/projects';
 import Link from 'next/link';
 import DeleteDialog from './delete-dialog';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useCounterStore} from '@/providers/counter-store-provider';
 
 
 const formSchema = z.object({
@@ -50,10 +51,10 @@ const formSchema = z.object({
     .max(50, {message: 'your title is too long! Must be below 50 characters'}),
   count: z.coerce.number().int().positive({message: 'must be at least 1'}).max(999),
   rows: z.coerce.number().int().nonnegative(),
-
 })
 
 export default function SectionDialog({section}: {section: Section}) {
+  const count = useCounterStore(state => state.storeCount)
 
   const [open, setOpen] = useState(false)
 
@@ -61,10 +62,14 @@ export default function SectionDialog({section}: {section: Section}) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: section.title,
-      count: section.count,
+      count: count || section.count,
       rows: section.numOfRows || 0,
     }
   })
+
+  useEffect(() => {
+    form.setValue("count", count)
+  }, [count])
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
