@@ -1,7 +1,9 @@
 'use client'
 
-import {HiOutlineBookmarkSquare} from "react-icons/hi2";
+import {HiArrowRightOnRectangle, HiOutlineBookmarkSquare} from "react-icons/hi2";
 import {HiOutlineDocumentDuplicate} from "react-icons/hi2";
+import {HiOutlineSquare2Stack} from "react-icons/hi2";
+
 import {Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
 import {Button} from '../ui/button';
 import Link from 'next/link';
@@ -9,7 +11,7 @@ import {updateCount} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
-import {HiOutlinePlusCircle} from "react-icons/hi2";
+// import {HiOutlinePlusCircle} from "react-icons/hi2";
 import {ToggleSound} from '../ui/toggle-sound-button';
 import {CountDownButton} from '../ui/count-down-button';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
@@ -68,7 +70,7 @@ export function AddSection({projectId, position}: AddSectionProps) {
   return (
     <Tooltip title="Add section">
       <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleNewSection}>
-        <HiOutlinePlusCircle size={24} />
+        <HiArrowRightOnRectangle size={24} />
       </Button>
     </Tooltip>
   )
@@ -101,7 +103,7 @@ export function CloneSection({section}: {section: Section}) {
   return (
     <Tooltip title='Duplicate section'>
       <Button type='button' size='icon' variant='ghost' className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors' onClick={handleClick}>
-        <HiOutlineDocumentDuplicate size={24} />
+        <HiOutlineSquare2Stack size={24} />
       </Button>
     </Tooltip>
   )

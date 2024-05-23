@@ -23,13 +23,15 @@ import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {useToast} from '@/lib/use-toast';
+import {cn} from '@/lib/utils';
 
 interface ReminderAlertDialogProps {
   reminder: Reminder,
-  isTag?: boolean
+  isTag?: boolean,
+  className?: string,
 }
 
-export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
+export default function ReminderAlertDialog({reminder, isTag, className}: ReminderAlertDialogProps) {
   const {toast} = useToast()
   const storeCount = useCounterStore((state) => state.storeCount)
 
@@ -52,7 +54,7 @@ export default function ReminderAlertDialog({reminder, isTag}: ReminderAlertDial
 
   return (
     <Dialog>
-      <DialogTrigger className='border-none p-0 m-0 bg-inherit flex justify-center cursor-pointer text-left'>
+      <DialogTrigger className={cn('border-none p-0 m-0 bg-inherit flex justify-center cursor-pointer text-left', className)}>
         {
           isTag ?
             <ReminderTag title={title} /> :

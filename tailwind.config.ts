@@ -32,7 +32,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        eggshell: '#F0EAD6',
+        eggshell: '#EDEAE0',
         champagne: '#F4DDCD',
         olivine: '#AEC397',
         orchid: '#CFB4CF',
@@ -52,7 +52,7 @@ module.exports = {
           700: '#B84D00',
           800: '#8A3A05',
           900: '#8A3A05',
-          950: '#8A3A05' 
+          950: '#8A3A05'
         },
 
         viridian: {

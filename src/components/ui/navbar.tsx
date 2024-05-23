@@ -45,7 +45,7 @@ export function UserMenu() {
 
 export default function Nav() {
   return (
-    <nav className='flex justify-between px-6 py-3'>
+    <nav className='flex justify-between px-6 py-3 w-full max-w-6xl mx-auto'>
       <HomeLink />
       <div className='flex items-center gap-4 flex-row'>
         <Tooltip title="Go to projects">

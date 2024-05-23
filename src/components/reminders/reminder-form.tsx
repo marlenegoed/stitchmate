@@ -126,38 +126,38 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
               control={form.control}
               name="type"
               render={({field}) => (
-                <div className='flex flex-row'>
-                  <FormItem className="text-base font-semibold space-y-3 flex flex-row items-center justify-between w-full">
-                    <FormLabel className='text-base font-semibold self-center pt-2'>Repeat...</FormLabel>
-                    <FormControl>
+                // <div className=''>
+                <FormItem className="flex flex-col font-semibold space-y-3 w-full">
+                  <FormLabel className='text-base font-semibold pt-2'>Repeat</FormLabel>
+                  <FormControl>
 
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex flex-row space-y-1 gap-12"
-                      >
-                        <FormItem className="flex items-center space-x-2 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="range" />
-                          </FormControl>
-                          <FormLabel className="text-base pb-1">
-                            ...on row(s)
-                          </FormLabel>
-                        </FormItem>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className='pl-1'
+                    >
+                      <FormItem className='flex items-center space-x-2 space-y-0'>
+                        <FormControl>
+                          <RadioGroupItem value="range" />
+                        </FormControl>
+                        <FormLabel className="text-base pb-1">
+                          ...on row(s)
+                        </FormLabel>
+                      </FormItem>
 
-                        <FormItem className="flex items-center space-x-2 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="repeating" />
-                          </FormControl>
-                          <FormLabel className="text-base pb-1">
-                            ...every
-                          </FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                </div>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="repeating" />
+                        </FormControl>
+                        <FormLabel className="text-base pb-1">
+                          ...every
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+                // </div>
               )}
             />
 
@@ -183,13 +183,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
               />
             </div>
 
-            <DialogFooter>
-              <div className='grid grid-cols-2 gap-4'>
-                <DialogClose asChild>
-                  <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
-                </DialogClose>
-                <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save changes</Button>
-              </div>
+            <DialogFooter className='grid grid-cols-2 gap-4 px-1'>
+              <DialogClose asChild>
+                <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
+              </DialogClose>
+              <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save</Button>
             </DialogFooter>
           </form>
         </Form>

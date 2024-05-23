@@ -15,6 +15,7 @@ import {
 import {updateSectionTitle} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {useToast} from '@/lib/use-toast';
+import {cn} from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1).max(50),
@@ -23,9 +24,10 @@ const formSchema = z.object({
 interface SectionTitleFieldProps {
   id: number,
   title: string
+  className?: string
 }
 
-export default function SectionTitleField({id, title}: SectionTitleFieldProps) {
+export default function SectionTitleField({id, title, className}: SectionTitleFieldProps) {
   const {storeTitle, setStoreTitle} = useCounterStore(state => state)
   const {toast} = useToast()
 
@@ -72,7 +74,7 @@ export default function SectionTitleField({id, title}: SectionTitleFieldProps) {
                 <Input
                   placeholder='Add title'
                   variant='inline'
-                  className='placeholder:text-slate-800/50 font-semibold text-xl max-w-max'
+                  className={cn('placeholder:text-slate-800/50 font-semibold text-xl max-w-max', className)}
                   {...field}
                   onBlur={() => formRef.current?.requestSubmit()}
                   ref={inputRef}

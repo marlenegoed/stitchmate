@@ -33,6 +33,7 @@ import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
 import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
+import {cn} from '@/lib/utils';
 
 
 const formSchema = z.object({
@@ -44,7 +45,7 @@ const formSchema = z.object({
   // color: z.number().int().positive({message: 'must be at least 1'}).max(999),
 })
 
-export default function ProjectDialog({userId}: {userId: string}) {
+export default function ProjectDialog({userId, className}: {userId: string, className?: string}) {
   const {toast} = useToast()
   const [open, setOpen] = useState(false)
 
@@ -79,18 +80,14 @@ export default function ProjectDialog({userId}: {userId: string}) {
     <Dialog open={open} onOpenChange={setOpen}>
       <Tooltip title="Create new project">
         <DialogTrigger asChild>
-          <Button type='button' size='icon' variant='ghost' className='text-sienna-400 hover:bg-neutral-200'>
+          <Button type='button' size='icon' variant='ghost' className={cn('text-sienna-400 hover:bg-neutral-200', className)}>
             <HiOutlineSquaresPlus size={22} />
           </Button>
         </DialogTrigger>
       </Tooltip>
       <DialogContent className="sm:max-w-[425px] p-10">
         <DialogHeader className='mb-2 -mt-2'>
-          <div className='flex flex-row justify-between items-center mr-10'>
-            <DialogTitle className='mb-2 font-semibold text-xl'>New Project</DialogTitle>
-            <div className='flex flex-row gap-4 items-center -mt-1'>
-            </div>
-          </div>
+          <DialogTitle className='mb-2 mr-auto font-semibold text-xl'>New Project</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -123,7 +120,7 @@ export default function ProjectDialog({userId}: {userId: string}) {
           </form>
         </Form>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 }
 

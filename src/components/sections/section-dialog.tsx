@@ -95,9 +95,9 @@ export default function SectionDialog({section}: {section: Section}) {
         </DialogTrigger>
       </Tooltip>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
-        <DialogHeader className='items-center'>
+        <DialogHeader className='items-center gap-2'>
           <DialogTitle className='font-semibold text-xl'>Section Settings</DialogTitle>
-          <DeleteDialog className="ml-auto" section={section} />
+          <DeleteDialog className="ml-auto gap-4" section={section} />
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -148,19 +148,22 @@ export default function SectionDialog({section}: {section: Section}) {
               />
               <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Track your progress by adding your final row count.</p>
             </div>
-            <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 hover:text-slate-950 transition-opacity'>
-              <Link className='flex px-1 flex-row font-semibold  text-sm text-slate-600 underline underline-offset-4 w-fit' href={`/projects/${section.projectId}/edit`}>
-                Manage project
-              </Link>
-            </div>
+
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
-                <Button type="submit" className='col-span-2 sm:col-span-1 px-12 w-full order-2'>Save changes</Button>
+                <Button type="submit" className='col-span-2 sm:col-span-1 order-1 sm:order-2 px-12 w-full'>Save changes</Button>
                 <DialogClose asChild>
-                  <Button type="button" className='col-span-2 sm:col-span-1 px-12 w-full order-1' variant='outline'>Cancel</Button>
+                  <Button type="button" className='col-span-2 sm:col-span-1 px-12 w-full sm:order-2 order-2' variant='outline'>Cancel</Button>
                 </DialogClose>
               </div>
             </DialogFooter>
+
+            <div className='w-full justify-center flex flex-row items-center '>
+              <Link className='flex flex-row text-sm text-neutral-500 underline underline-offset-4 w-fit  hover:text-neutral-900 transition-colors' href={`/projects/${section.projectId}/edit`}>
+                Manage project
+              </Link>
+            </div>
+
           </form>
         </Form>
       </DialogContent>

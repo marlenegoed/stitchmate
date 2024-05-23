@@ -5,6 +5,7 @@ import {HiOutlineHeart} from "react-icons/hi2";
 import {Button} from '../ui/button';
 import {toggleFavorite} from '@/database/queries/projects';
 import {useState} from 'react';
+import {Tooltip} from '../ui/tooltip';
 
 interface FavoriteProjectProps {
   projectId: number,
@@ -23,9 +24,8 @@ export default function FavoriteProject({projectId, isFavorite}: FavoriteProject
   }
 
   return (
-
-    <Button onClick={handleClick} variant='ghost' size='icon'>{heart}</Button>
-
+    <Tooltip title="Favorite project">
+      <Button onClick={handleClick} variant='ghost' size='icon'>{heart}</Button>
+    </Tooltip>
   )
-
 }

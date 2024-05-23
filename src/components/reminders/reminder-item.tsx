@@ -13,13 +13,13 @@ export default function ReminderItem({reminder}: {reminder: Reminder}) {
 
   return (
     <div className={clsx({'opacity-50': !notification})}>
-      <div className='flex flex-col justify-between bg-lilac-200 rounded-xl py-3 px-4 w-40 h-40'>
+      <div className='flex flex-col justify-between bg-eggshell rounded-xl py-3 px-4 w-40 h-40 shadow'>
         <div className='flex flex-row justify-between'>
-          <ReminderRepeat reminder={reminder} className='text-sm text-lilac-800' />
-          {!notification && <TbZzz className='mt-1 text-viridian-800' />}
+          <ReminderRepeat reminder={reminder} className='text-sm text-slate-700' />
+          {!notification && <TbZzz className='mt-1 text-sienna-400' />}
         </div>
         <div>
-          <h4 className='font-semibold text-slate-800 mb-2'>{title}</h4>
+          <h4 className='font-semibold text-slate-700 mb-2'>{shortenText(title, 15)}</h4>
 
           <p className='text-sm text-neutral-600'>{shortenText(note || '', 30)}</p>
         </div>

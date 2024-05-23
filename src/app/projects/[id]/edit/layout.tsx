@@ -6,7 +6,7 @@ export default function PageLayout({children}: Readonly<{
   return (
     <>
       <div className='h-screen'>
-        <main className='flex-1 flex flex-col mx-auto items-center w-full bg-neutral-100 rounded-t-2xl'>{children}</main>
+        <section className='flex-1 flex flex-col mx-auto items-center w-full bg-neutral-100 rounded-t-2xl'>{children}</section>
       </div>
     </>
   );

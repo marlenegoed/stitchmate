@@ -5,8 +5,9 @@ import {HiOutlineHeart} from 'react-icons/hi2'
 import {Button} from '../ui/button'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import {Tooltip} from '../ui/tooltip'
+import {cn} from '@/lib/utils'
 
-export default function FilterProjectFavorites() {
+export default function FilterProjectFavorites({className}: {className?: string}) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
@@ -26,7 +27,7 @@ export default function FilterProjectFavorites() {
 
   return (
     <Tooltip title="Filter by favorites">
-      <Button type="submit" variant='ghost' className='hover:bg-neutral-200' size='icon' onClick={handleFilter}>
+      <Button type="submit" variant='ghost' className={cn('hover:bg-neutral-200', className)} size='icon' onClick={handleFilter}>
         {heart}
       </Button>
     </Tooltip>

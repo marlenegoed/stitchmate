@@ -4,6 +4,7 @@ import {Section} from '@/database/queries/projects';
 import BackButton from './back-button';
 import Title from './title';
 import DeleteDialog from '../sections/delete-dialog';
+import {Tooltip} from './tooltip';
 
 interface PageTitleProps {
   pageTitle: string,
@@ -16,13 +17,11 @@ export default async function PageNav({pageTitle, urlPath, projectId, section}: 
 
   return (
     <div className='flex justify-between items-center flex-row w-full p-8 pt-4 pb-6'>
-      <BackButton urlPath={urlPath} className='ml-0 self-start flex' />
+      <Tooltip title="Back">
+        <BackButton urlPath={urlPath} className='ml-0 self-start flex' />
+      </Tooltip>
       <Title>{pageTitle}</Title>
       <DeleteDialog projectId={projectId} section={section} />
-
     </div>
-
   )
-
-
 }
