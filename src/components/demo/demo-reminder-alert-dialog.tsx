@@ -23,21 +23,25 @@ import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area';
 import DemoReminderForm from './demo-reminder-form';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import {useCounterStore} from '@/providers/counter-store-provider';
+import {cn} from '@/lib/utils';
 
 
 
 interface ReminderAlertDialogProps {
   reminder: Reminder,
-  isTag?: boolean
+  isTag?: boolean,
+  className?: string,
 }
 
-export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlertDialogProps) {
+export default function DemoReminderAlertDialog({className, reminder, isTag}: ReminderAlertDialogProps) {
   const storeCount = useCounterStore(state => state.storeCount)
   const updateReminder = useDemoStore((state) => state.updateReminder)
 
   const {title, note, type, from, until, start, interval, times, notification} = reminder;
 
-  const reminderProgress = type === 'range' ? <RangeProgress className='font-semibold text-slate-700' from={from} until={until} /> : <RepeatProgress className='font-semibold text-slate-700' start={start} interval={interval} times={times} />
+  const reminderProgress = type === 'range'
+    ? <RangeProgress from={from} until={until} />
+    : <RepeatProgress start={start} interval={interval} times={times} />
 
   function handleSnooze() {
     const newReminder = {...reminder, notification: !reminder.notification, sectionId: 0}
@@ -46,7 +50,7 @@ export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlert
 
   return (
     <Dialog>
-      <DialogTrigger className='border-none p-0 m-0 bg-inherit cursor-pointer text-left'>
+      <DialogTrigger className={cn('border-none p-0 m-0 bg-inherit flex justify-center cursor-pointer text-left', className)}>
         {
           isTag ?
             <ReminderTag title={title} /> :
@@ -54,26 +58,23 @@ export default function DemoReminderAlertDialog({reminder, isTag}: ReminderAlert
         }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
-        <DialogHeader className='gap-4'>
-          <DialogTitle className='text-xl mr-auto'>{title}</DialogTitle>
-          <span className="flex items-center">
-            <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
-          </span>
+        <DialogHeader className='gap-4 items-center'>
+          <DialogTitle className='ml-1 text-xl mr-auto'>{title}</DialogTitle>
+          <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
           <DemoReminderForm reminder={reminder} isIcon={true} count={storeCount} />
         </DialogHeader>
 
 
         <ScrollArea className='h-32 mb-4'>
           <p className='ml-1'>{note}</p>
-          <ScrollBar orientation="vertical" className='bg-neutral-100 transition-colors duration-[160ms] ease-out hover:bg-black' />
+          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-[160ms] ease-out hover:bg-black' />
         </ScrollArea>
 
 
-        <DialogFooter className='flex flex-row justify-start w-full sm:justify-between'>
-          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-neutral-200'>
-            < ReminderRepeat reminder={reminder} />
-            <div className='flex flex-row gap-3 font-semibold text-neutral-500'>
-              <span>|</span>
+        <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
+          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-white shadow-sm'>
+            <ReminderRepeat reminder={reminder} />
+            <div className='max-[640px]:text-sm flex flex-row gap-3 font-semibold text-neutral-500'>
               {reminderProgress}
             </div>
           </div>

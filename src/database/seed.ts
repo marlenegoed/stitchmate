@@ -10,7 +10,7 @@ async function seed() {
   await db.delete(reminders)
   await db.delete(userSettings)
 
-  await db.insert(userSettings).values({userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'})
+  // await db.insert(userSettings).values({userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'})
 
   for (let i = 0; i <= 100; i++) {
 

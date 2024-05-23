@@ -57,10 +57,11 @@ interface ReminderFormProps {
   count: number,
   sectionId: number,
   isIcon?: boolean,
-  onSubmit: (values: FormValues) => Promise<void>
+  onSubmit: (values: FormValues) => Promise<void>,
+  handleDelete?: () => void,
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit}: ReminderFormProps) {
+export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit, handleDelete}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
 
   if (reminder && reminder.note === null) {
@@ -119,14 +120,13 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
                 )}
               />
 
-              {reminder && <DeleteDialog reminderId={reminder.id} />}
+              {reminder && <DeleteDialog reminderId={reminder.id} handleDelete={handleDelete} />}
             </DialogHeader>
 
             <FormField
               control={form.control}
               name="type"
               render={({field}) => (
-                // <div className=''>
                 <FormItem className="flex flex-col font-semibold space-y-3 w-full">
                   <FormLabel className='text-base font-semibold pt-2'>Repeat</FormLabel>
                   <FormControl>
@@ -157,7 +157,6 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-                // </div>
               )}
             />
 

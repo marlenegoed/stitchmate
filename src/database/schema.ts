@@ -2,7 +2,7 @@
 import {relations, sql} from 'drizzle-orm';
 import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar} from "drizzle-orm/pg-core";
 
-export const projectColorEnum = pgEnum('color', ['champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel'])
+export const projectColorEnum = pgEnum('color', ['olivine', 'orchid', 'flax', 'jordy', 'tangerine'])
 export const projectGaugeEnum = pgEnum('gauge_inch', ['1"', '2"', '4"']);
 
 // Todo: add blob id 

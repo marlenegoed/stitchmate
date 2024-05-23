@@ -30,7 +30,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 
         <div className='col-span-6 flex flex-row justify-end'>
           <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
-            <CounterActions section={section} userSettings={userSettings} />
+            <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} />
           </div>
 
           <div className='hidden mr-6 sm:flex flex-row items-center'>
@@ -52,7 +52,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 
         {/* action bar mobile:  */}
         <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
-          <CounterActions section={section} userSettings={userSettings} />
+          <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} />
         </div>
       </div>
     </div>

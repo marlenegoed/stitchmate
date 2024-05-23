@@ -41,9 +41,11 @@ export default async function Page({params}: {params: {sectionId: number}}) {
             <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={project.blobId} />
           </ZustandHydration>
         </div>
-        <div className='absolute max-w-40 s:max-w-m md:max-w-md l:max-w-xl xl:max-w-3xl min-h-10 flex flex-wrap justify-center gap-4 -top-8'>
-          <ReminderPrompt reminders={reminders} className='z-10' />
-        </div>
+        <ZustandHydration>
+          <div className='absolute max-w-40 s:max-w-m md:max-w-md l:max-w-xl xl:max-w-3xl min-h-10 flex flex-wrap justify-center gap-4 -top-8'>
+            <ReminderPrompt reminders={reminders} className='z-10' />
+          </div>
+        </ZustandHydration>
       </section>
 
       <ReminderList sectionId={section.id} reminders={reminders} className='max-w-6xl' />

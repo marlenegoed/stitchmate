@@ -14,7 +14,7 @@ interface ReminderFormProps {
 
 export default function DemoReminderForm({reminder, isIcon}: ReminderFormProps) {
   const storeCount = useCounterStore(state => state.storeCount)
-  const {updateReminder, setReminder} = useDemoStore((state) => state)
+  const {updateReminder, setReminder, deleteReminder} = useDemoStore((state) => state)
   const {toast} = useToast()
 
   async function onSubmit(values: FormValues) {
@@ -29,6 +29,13 @@ export default function DemoReminderForm({reminder, isIcon}: ReminderFormProps) 
     }
   }
 
-  return <ReminderForm count={storeCount} reminder={reminder} isIcon={isIcon} onSubmit={onSubmit} sectionId={0} />
+  function handleDelete() {
+    if (reminder) {
+      deleteReminder(reminder.id)
+    }
+    toast({title: "Deleted reminder"})
+  }
+
+  return <ReminderForm count={storeCount} reminder={reminder} isIcon={isIcon} onSubmit={onSubmit} sectionId={0} handleDelete={handleDelete} />
 }
 

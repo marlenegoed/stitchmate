@@ -5,7 +5,6 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -13,13 +12,6 @@ import {
   DialogClose
 } from "@/components/ui/dialog";
 import {HiMiniAdjustmentsVertical} from "react-icons/hi2";
-import {HiArrowUpTray} from "react-icons/hi2";
-
-
-import {HiChevronRight} from "react-icons/hi";
-
-
-
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
@@ -42,6 +34,7 @@ import DeleteDialog from './delete-dialog';
 import {useEffect, useState} from 'react';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {Tooltip} from '../ui/tooltip';
+import {useToast} from '@/lib/use-toast';
 
 
 const formSchema = z.object({
@@ -54,7 +47,8 @@ const formSchema = z.object({
   rows: z.coerce.number().int().nonnegative(),
 })
 
-export default function SectionDialog({section}: {section: Section}) {
+export default function SectionDialog({section, numOfSections}: {section: Section, numOfSections: number}) {
+  const {toast} = useToast()
   const {storeCount, storeTitle} = useCounterStore(state => state)
 
   const [open, setOpen] = useState(false)
@@ -80,8 +74,8 @@ export default function SectionDialog({section}: {section: Section}) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
     setOpen(false)
+    toast({title: "Section updated"})
   }
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -96,9 +90,10 @@ export default function SectionDialog({section}: {section: Section}) {
       </Tooltip>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
         <DialogHeader className='items-center gap-2'>
-          <DialogTitle className='font-semibold text-xl'>Section Settings</DialogTitle>
-          <DeleteDialog className="ml-auto gap-4" section={section} />
+          <DialogTitle className='font-semibold text-xl mr-auto'>Section Settings</DialogTitle>
+          <DeleteDialog className="ml-auto gap-4" section={section} disabled={numOfSections < 2} />
         </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -170,4 +165,3 @@ export default function SectionDialog({section}: {section: Section}) {
     </Dialog>
   );
 }
-

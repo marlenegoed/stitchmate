@@ -1,5 +1,5 @@
 DO $$ BEGIN
- CREATE TYPE "color" AS ENUM('champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel');
+ CREATE TYPE "color" AS ENUM('olivine', 'orchid', 'flax', 'jordy', 'tangerine');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

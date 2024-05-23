@@ -25,7 +25,7 @@ export function UserMenu() {
   const userEmail = user?.emailAddresses[0]?.emailAddress[0]?.toUpperCase()
 
   return (
-    <SignedIn >
+    <>
       <Popover>
         <PopoverTrigger>
           <Avatar >
@@ -39,7 +39,7 @@ export function UserMenu() {
           <Link href='/about'><p className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>About</p></Link>
         </PopoverContent>
       </Popover>
-    </SignedIn>
+    </>
   )
 }
 
@@ -53,7 +53,9 @@ export default function Nav() {
             <HiOutlineSquares2X2 className='text-slate-600' size={24} />
           </Link>
         </Tooltip>
-        <UserMenu />
+        <SignedIn>
+          <UserMenu />
+        </SignedIn>
         <SignedOut>
           <SignInButton />
         </SignedOut>

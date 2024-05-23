@@ -89,6 +89,7 @@ export async function findProject(userId: string, id: number) {
 
 export async function deleteProject(id: number) {
   await db.delete(projects).where(eq(projects.id, id));
+  redirect("/projects")
 }
 
 
@@ -137,7 +138,8 @@ export async function findAllSections(projectId: number) {
 
 export async function findSectionReminders(sectionId: number) {
   return await db.query.reminders.findMany({
-    where: eq(reminders.sectionId, sectionId)
+    where: eq(reminders.sectionId, sectionId),
+    orderBy: sql`coalesce("from", "start") asc`
   })
 }
 

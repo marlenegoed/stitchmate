@@ -38,8 +38,8 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
   const {title, note, type, from, until, start, interval, times, notification} = reminder;
 
   const reminderProgress = type === 'range'
-    ? <RangeProgress className='font-semibold text-slate-700' from={from} until={until} />
-    : <RepeatProgress className='font-semibold text-slate-700' start={start} interval={interval} times={times} />
+    ? <RangeProgress from={from} until={until} />
+    : <RepeatProgress start={start} interval={interval} times={times} />
 
   async function handleSnooze() {
     const newReminder = {...reminder, notification: !reminder.notification}
@@ -64,7 +64,6 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
         <DialogHeader className='gap-4 items-center'>
           <DialogTitle className='ml-1 text-xl mr-auto'>{title}</DialogTitle>
-
           <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
           <ReminderForm reminder={reminder} count={storeCount} sectionId={reminder.sectionId} isIcon={true} onSubmit={handleSubmit} />
         </DialogHeader>
@@ -76,7 +75,7 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
 
         <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
           <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-white shadow-sm'>
-            < ReminderRepeat reminder={reminder} />
+            <ReminderRepeat reminder={reminder} />
             <div className='max-[640px]:text-sm flex flex-row gap-3 font-semibold text-neutral-500'>
               {reminderProgress}
             </div>

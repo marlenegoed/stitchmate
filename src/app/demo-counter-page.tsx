@@ -1,62 +1,69 @@
 'use client'
 
-import {Button} from '@/components/ui/button'
 import {FormItem} from '@/components/ui/form'
 import {Input} from '@/components/ui/input'
 import {useDemoStore} from '@/providers/demo-store-provider'
-import {FormEvent, ReactNode, useEffect, useRef, useState} from 'react'
-import {
-  HiChevronLeft,
-  HiChevronRight,
-  HiOutlineDocumentDuplicate,
-  HiOutlinePlusCircle
-} from 'react-icons/hi2';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import {FormEvent, ReactNode, useRef, useState} from 'react'
+import {Tooltip} from "@/components/ui/tooltip"
 import DemoSectionDialog from '@/components/demo/demo-section-dialog'
-import clsx from 'clsx'
-import {Progress} from '@/components/ui/progress'
 import findNextReminders from '@/lib/find-next-reminders'
 import DemoReminderAlertDialog from '@/components/demo/demo-reminder-alert-dialog'
 import dynamic from 'next/dynamic'
 import {ToggleSound} from '@/components/ui/toggle-sound-button'
 import {CountDownButton} from '@/components/ui/count-down-button'
 import ReminderForm, {FormValues} from '@/components/reminders/reminder-form'
-import {ScrollBar} from '@/components/ui/scroll-area'
+import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area'
 import {type NewReminder} from '@/database/queries/projects'
-import {ScrollArea} from '@radix-ui/react-scroll-area'
 import {useCounterStore} from '@/providers/counter-store-provider'
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider'
 import ResetDialog from '@/components/sections/reset-dialog'
+import {cn} from '@/lib/utils'
+import SectionProgress from '@/components/sections/section-progress'
+import {AddSectionButton, CloneSectionButton, CounterActionBar} from '@/components/sections/couter-actions'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
 
 export function DemoCounterPage() {
   return (
     <>
-      <div className='flex justify-between w-full px-6'>
-        <TitleField />
-        <ActionBar />
-      </div>
-      <SectionProgress />
+      <CounterHeader className="max-w-6xl" />
+      <CounterProgress className='max-w-6xl' />
 
-      <section className='w-full flex-1 flex-col flex justify-center items-center' >
+      <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >
         <div className='mb-auto'>
-          <div className='w-full min-h-10 flex justify-center'>
-            <ReminderPrompt />
-          </div >
           <DemoCounter />
-          <div className='flex flex-row w-full justify-between self-end pr-2 mb-4' />
+        </div>
+        <div className='absolute max-w-40 s:max-w-m md:max-w-md l:max-w-xl xl:max-w-3xl min-h-10 flex flex-wrap justify-center gap-4 -top-8'>
+          <ReminderPrompt className='z-10' />
         </div>
       </section>
 
-      <section className='flex w-full mt-auto mb-4 px-6'>
-        <ReminderList />
-      </section>
+      <ReminderList className='max-w-6xl' />
     </>
+  )
+}
+
+function CounterHeader({className}: {className?: string}) {
+  return (
+    <div className={cn('w-full', className)}>
+      <div className='grid grid-cols-12 items-center mb-4'>
+        <div className='hidden col-span-6 flex-row items-center w-full ml-6 sm:flex '>
+          <TitleField />
+        </div>
+
+        <div className='col-span-6 flex flex-row justify-end'>
+          <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
+            <ActionBar />
+          </div>
+        </div>
+
+
+        {/* action bar mobile:  */}
+        <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
+          <ActionBar />
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -73,31 +80,21 @@ function ActionBar() {
   }
 
   return (
-    <div className='flex flex-row items-center gap-6'>
+    <CounterActionBar>
       <CountDownButton count={storeCount} sound={storeSound} handleChange={countStoreDown} />
       <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
 
       <ResetDialog handleReset={resetCounter} />
-      <UserLoginInfo>
-        <Button type='button' size='icon' variant='ghost' className='border-slate-800 opacity-30'>
-          <HiOutlineDocumentDuplicate size={24} />
-        </Button>
-      </UserLoginInfo>
+      <UserLoginToolTip>
+        <CloneSectionButton disabled={true} />
+      </UserLoginToolTip>
 
-      <UserLoginInfo>
-        <Button type='button' size='icon' variant='ghost' className='border-slate-800 opacity-30'>
-          <HiOutlinePlusCircle size={24} />
-        </Button>
-      </UserLoginInfo>
+      <UserLoginToolTip>
+        <AddSectionButton disabled={true} />
+      </UserLoginToolTip>
+
       <DemoSectionDialog />
-
-      <UserLoginInfo>
-        <div className='flex flex-row text-slate-700'>
-          <Button size='icon' variant='ghost' className='opacity-30'><HiChevronLeft size={24} /></Button>
-          <Button size='icon' variant='ghost' className='opacity-30'><HiChevronRight size={24} /></Button>
-        </div>
-      </UserLoginInfo>
-    </div>
+    </CounterActionBar>
   )
 }
 
@@ -124,7 +121,7 @@ function TitleField() {
           ref={inputRef}
           placeholder='currentTitle'
           variant='inline'
-          className='placeholder:text-slate-800 font-semibold text-xl'
+          className='placeholder:text-slate-800/50 font-semibold text-xl max-w-max'
           name="title"
           value={storeTitle}
           onChange={(e) => setStoreTitle(e.target.value)}
@@ -135,12 +132,7 @@ function TitleField() {
 
 }
 
-
-interface UserLoginInfoProps {
-  children: ReactNode,
-}
-
-function UserLoginInfo({children}: UserLoginInfoProps) {
+function UserLoginToolTip({children}: {children: ReactNode}) {
   return (
     <Tooltip title="Sign in for all features">
       {children}
@@ -148,51 +140,23 @@ function UserLoginInfo({children}: UserLoginInfoProps) {
   )
 }
 
-
-
-
-function SectionProgress() {
-  const {storeCount} = useCounterStore(state => state)
+function CounterProgress(props: {className?: string}) {
   const numOfRows = useDemoStore(state => state.numOfRows)
-
-  const [progress, setProgress] = useState(numOfRows);
-
-  const isNumOfRows = numOfRows > 0
-
-  useEffect(() => {
-    if (numOfRows > 0) {
-      setProgress(Math.min(storeCount / numOfRows * 100, 100));
-    } else {
-      setProgress(0);
-    }
-  }, [numOfRows, storeCount]);
-
-  return (
-    <>
-      <Progress value={progress} className={clsx('w-full', {'invisible': !isNumOfRows})} />
-      <div className='flex flex-col items-end w-full px-6 pt-2'>
-        <span className={clsx('font-semibold bg-white text-slate-700 rounded-full shadow-sm px-4 py-1', {'invisible': !isNumOfRows})}>{numOfRows}</span>
-      </div>
-    </>
-  );
+  return <SectionProgress numOfRows={numOfRows} {...props} />
 }
 
-
-function ReminderPrompt() {
+function ReminderPrompt(props: {className?: string}) {
   const storeCount = useCounterStore(state => state.storeCount)
-
   const reminders = useDemoStore((state) => state.reminders)
   const nextReminders = findNextReminders(reminders, storeCount)
 
-  return (
-    <div className="flex gap-4 -mt-4">
-      {nextReminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} isTag={true} />)}
-    </div>
-  );
+  return nextReminders.map(reminder =>
+    <DemoReminderAlertDialog key={reminder.id} reminder={reminder} isTag={true} {...props} />
+  )
 }
 
 
-export default function ReminderList() {
+export default function ReminderList({className}: {className?: string}) {
   const storeCount = useCounterStore(state => state.storeCount)
   const {setReminder, reminders} = useDemoStore((state) => state)
 
@@ -202,7 +166,7 @@ export default function ReminderList() {
   }
 
   return (
-    <section className='w-full flex flex-row gap-4 justify-end'>
+    <section className={cn('w-full flex flex-row gap-4 justify-end mt-auto mb-4 px-6', className)}>
       <ScrollArea className="w-full">
         <div className='flex flex-row-reverse gap-4 justify-end w-max'>
           {reminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} />)}

@@ -32,6 +32,8 @@ import {
 import {useEffect, useState} from 'react';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import {useCounterStore} from '@/providers/counter-store-provider';
+import {useToast} from '@/lib/use-toast';
+import {Tooltip} from '../ui/tooltip';
 
 
 const formSchema = z.object({
@@ -51,6 +53,8 @@ export default function DemoSectionDialog() {
   const {numOfRows, setNumOfRows} = useDemoStore(
     (state) => state,
   )
+
+  const {toast} = useToast()
 
   const [open, setOpen] = useState(false)
 
@@ -86,17 +90,25 @@ export default function DemoSectionDialog() {
     setNumOfRows(values.rows)
     setOpen(false)
     form.reset(values)
+    toast({title: "Section updated"})
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="border-none p-0 m-0 bg-inherit">
-        <HiMiniAdjustmentsVertical size={20} className='text-slate-700' />
-      </DialogTrigger>
+      <Tooltip title="Section settings">
+        <DialogTrigger asChild>
+          <Alert className='border-none p-0 m-0 bg-inherit'>
+            <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+              <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
+            </Button>
+          </Alert>
+        </DialogTrigger>
+      </Tooltip>
       <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
-        <DialogHeader className='mb-2 -mt-2 items-center'>
-          <DialogTitle className='mb-2 font-semibold text-xl mr-auto'>Counter Settings</DialogTitle>
+        <DialogHeader className='items-center gap-2'>
+          <DialogTitle className='font-semibold text-xl mr-auto'>Section Settings</DialogTitle>
         </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             <FormField
@@ -134,7 +146,7 @@ export default function DemoSectionDialog() {
                 name="rows"
                 render={({field}) => (
                   <FormItem>
-                    <FormLabel>Final Row (optional) *</FormLabel>
+                    <FormLabel>Final Row *</FormLabel>
                     <FormControl>
                       <Input variant='form' placeholder={!numOfRows ? '--' : numOfRows.toString()} type="number" {...field} />
                     </FormControl>
@@ -142,15 +154,14 @@ export default function DemoSectionDialog() {
                   </FormItem>
                 )}
               />
-              <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Track your progress by adding your final row count.</p>
+              <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Optional: track your progress by adding your final row count.</p>
             </div>
-            <div className='w-full justify-center -ml-3 flex flex-row items-center my-4 pb-2 opacity-80 hover:opacity-90 transition-opacity'>
-            </div>
+
             <DialogFooter>
               <div className='grid grid-cols-2 gap-4'>
-                <Button type="submit" className='px-12 w-full'>Save changes</Button>
+                <Button type="submit" className='col-span-2 sm:col-span-1 order-1 sm:order-2 px-12 w-full'>Save changes</Button>
                 <DialogClose asChild>
-                  <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
+                  <Button type="button" className='col-span-2 sm:col-span-1 px-12 w-full sm:order-2 order-2' variant='outline'>Cancel</Button>
                 </DialogClose>
               </div>
             </DialogFooter>

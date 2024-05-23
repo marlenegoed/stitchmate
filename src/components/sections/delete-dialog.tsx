@@ -23,24 +23,32 @@ interface AlertDialogProps {
   section?: Section,
   projectId?: number,
   reminderId?: number,
-  className?: string
+  className?: string,
+  handleDelete?: () => void,
+  disabled?: boolean,
 }
 
-export default function DeleteDialog({section, projectId, reminderId, className}: AlertDialogProps) {
+export default function DeleteDialog({section, projectId, reminderId, className, handleDelete, disabled = false}: AlertDialogProps) {
   const router = useRouter()
   const {toast} = useToast()
 
   async function handleSubmit() {
+    if (handleDelete) {
+      handleDelete()
+      return
+    }
+
     if (section) {
       try {
         await deleteSection(section)
+        toast({title: "Section deleted"})
       } catch (e) {
         toast({title: "Failed to delete section"})
         // TODO: Send error to sentry
       }
     } else if (projectId) {
       await deleteProject(projectId)
-      toast({title: "Projected deleted"})
+      toast({title: "Project deleted"})
     } else if (reminderId) {
       deleteReminder(reminderId)
       router.refresh();
@@ -57,7 +65,7 @@ export default function DeleteDialog({section, projectId, reminderId, className}
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className={cn('hover:bg-neutral-200 text-sienna-400  hover:text-slate-700', className)} size="icon">
+        <Button variant="ghost" className={cn('hover:bg-neutral-200 text-sienna-400  hover:text-slate-700', className)} size="icon" disabled={disabled}>
           <HiOutlineTrash size={20} />
         </Button>
       </AlertDialogTrigger>

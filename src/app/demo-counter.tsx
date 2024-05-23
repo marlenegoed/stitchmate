@@ -7,7 +7,7 @@ import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import {useState} from 'react';
 
 export default function DemoCounter() {
-  const colors = ['eggshell', 'champagne', 'olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'caramel']
+  const colors = ['olivine', 'orchid', 'flax', 'jordy', 'tangerine']
   const [randomColor] = useState(colors[Math.floor(Math.random() * colors.length)])
 
   const blobIndex = useRandom(8)

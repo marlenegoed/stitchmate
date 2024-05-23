@@ -38,10 +38,10 @@ const formSchema = z.object({
   title: z.string({
     required_error: "please name your project (you can change the title later).",
   }).max(50, {message: "Your title is too long. Must be 50 or fewer characters."}),
-  color: z.enum(['olivine', 'orchid', 'flax', 'jordy', 'tangerine', 'champagne', 'caramel'], {message: 'please choose a color.'}),
+  color: z.enum(['olivine', 'orchid', 'flax', 'jordy', 'tangerine'], {message: 'please choose a color.'}),
   needles: z.array(z.object({size: z.string().optional()})).optional(),
-  gaugeStitches: z.number().optional(),
-  gaugeRows: z.number().optional(),
+  gaugeStitches: z.coerce.number().optional(),
+  gaugeRows: z.coerce.number().optional(),
   gaugeInch: z.enum(['1"', '2"', '4"']).optional(),
   yarn: z.array(z.object({yarn: z.string().optional()})).optional(),
   description: z.string().optional()

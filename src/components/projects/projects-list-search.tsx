@@ -15,21 +15,24 @@ export default function ProjectListSearch({className}: {className?: string}) {
 
   return (
     <label className={cn('sm:ml-12', className)}>
-      <ProjectSearchIcon variant='mini' className="absolute mt-3 ml-4  cursor-pointer" />
-      <ProjectSearchInput defaultValue={title || ''} onChange={(e) => handleSearch(e.target.value)} />
+      <ProjectSearchIcon variant='mini' className="absolute mt-3 ml-4 cursor-pointer" />
+      <ProjectSearchInput className="pl-12" defaultValue={title || ''} onChange={(e) => handleSearch(e.target.value)} />
     </label>
   )
 }
 
 const ProjectSearchInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>((props, ref) => {
-  return <Input
-    ref={ref}
-    placeholder='Search by title'
-    name="project-title"
-    id="project-title"
-    variant='inline'
-    className={cn('placeholder:text-slate-800 pl-10 text-base rounded-full bg-neutral-100 sm:bg-neutral-200 h-10', props.className)}
-    {...props} />
+  return (
+    <Input
+      ref={ref}
+      placeholder='Search by title'
+      name="project-title"
+      id="project-title"
+      variant='inline'
+      {...props}
+      className={cn('placeholder:text-slate-800 text-base rounded-full bg-neutral-100 sm:bg-neutral-200 h-10', props.className)}
+    />
+  )
 })
 
 export interface ProjectSearchIconProps extends IconBaseProps {
