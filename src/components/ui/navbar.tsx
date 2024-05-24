@@ -18,6 +18,8 @@ import {
   SignOutButton,
   useAuth
 } from '@clerk/nextjs'
+import {Button} from './button';
+import {usePathname} from 'next/navigation';
 
 export function UserMenu() {
   const {user} = useUser()
@@ -43,18 +45,22 @@ export function UserMenu() {
 }
 
 export default function Nav() {
+
+  const pathname = usePathname()
+  const isDemo = pathname.startsWith('/demo')
+
   return (
     <nav className='flex justify-between px-6 py-3 w-full max-w-6xl mx-auto'>
       <HomeLink />
       <div className='flex items-center gap-4 flex-row'>
-        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
+        {!isDemo && <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
           <HiOutlineSquares2X2 className='text-slate-600' size={24} />
-        </Link>
+        </Link>}
         <SignedIn>
           <UserMenu />
         </SignedIn>
         <SignedOut>
-          <SignInButton mode="modal" />
+          <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors'>Sign in</span></SignInButton>
         </SignedOut>
       </div>
     </nav>

@@ -74,7 +74,7 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
         </ScrollArea>
 
         <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
-          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2 bg-white shadow-sm'>
+          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2'>
             <ReminderRepeat reminder={reminder} />
             <div className='max-[640px]:text-sm flex flex-row gap-3 font-semibold text-neutral-500'>
               {reminderProgress}
