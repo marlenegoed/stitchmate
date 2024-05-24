@@ -30,7 +30,6 @@ import {
 import {createNewProject, quickStartProject} from '@/database/queries/projects';
 import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
-import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 

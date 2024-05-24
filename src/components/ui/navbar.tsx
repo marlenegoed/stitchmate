@@ -18,7 +18,6 @@ import {
   SignOutButton,
   useAuth
 } from '@clerk/nextjs'
-import {Tooltip} from './tooltip';
 
 export function UserMenu() {
   const {user} = useUser()
@@ -34,7 +33,7 @@ export function UserMenu() {
         </PopoverTrigger>
         <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
           <div className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>
-            <SignOutButton redirectUrl='/' />
+            <SignOutButton redirectUrl='/sign-in' />
           </div>
           <Link href='/about'><p className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>About</p></Link>
         </PopoverContent>

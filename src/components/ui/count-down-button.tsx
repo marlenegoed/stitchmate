@@ -2,7 +2,7 @@ import {HiMiniArrowUturnLeft} from 'react-icons/hi2'
 
 import {Button} from './button'
 import useSound from 'use-sound';
-import {Tooltip, TooltipContent, TooltipTrigger} from './tooltip';
+import {Tooltip} from './tooltip';
 
 export function CountDownButton({count, handleChange, sound = false}: {sound: boolean, count: number, handleChange: (count: number) => void}) {
   const [play] = useSound('/sot13.mp3', {interrupt: true});

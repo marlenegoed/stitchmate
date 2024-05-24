@@ -4,7 +4,7 @@ import {eq, and, gte, sql, asc, gt, ilike, desc, not, count} from 'drizzle-orm'
 import {db} from '../db'
 import {projects, sections, reminders, userSettings} from '../schema'
 import {redirect} from 'next/navigation';
-
+import {revalidatePath} from 'next/cache';
 
 export type NewProject = typeof projects.$inferInsert;
 export type Project = typeof projects.$inferSelect;
@@ -50,6 +50,7 @@ export async function updateProject(id: number, project: NewProject) {
 
 export async function toggleFavorite(projectId: number) {
   await db.update(projects).set({favorite: sql`not favorite`}).where(eq(projects.id, projectId)).returning()
+  revalidatePath('/projects')
 }
 
 export async function getAllProjects(userId: string, title?: string, favorite?: boolean, page: number = 0,) {

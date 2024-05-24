@@ -6,7 +6,6 @@ import ProjectListSearch, {ProjectSearchIcon, ProjectSearchInput, useTitleSearch
 import {Button} from '@/components/ui/button';
 import autoAnimate from '@formkit/auto-animate';
 import {Title} from '@radix-ui/react-toast';
-import clsx from 'clsx';
 import {useEffect, useRef, useState} from 'react';
 
 export function ProjectsHeader({userId}: {userId: string}) {

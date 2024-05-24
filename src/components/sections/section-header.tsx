@@ -92,7 +92,7 @@ function SectionPagination({section, numOfSections}: SectionPaginationProps) {
         </Button>
       </Tooltip>
 
-      <Tooltip title="Go to nexta  section">
+      <Tooltip title="Go to next section">
         <Button
           size='icon'
           variant='ghost'
@@ -127,28 +127,21 @@ function MoveToNextSection({section, numOfSections, className}: MoveToSectionPro
   return (
 
     <div className={cn('flex flex-row text-slate-700', className)}>
-
-      <Tooltip title="Go to next section">
-        <Button
-          size='icon'
-          variant='ghost'
-          className='disabled:opacity-30 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
-          onClick={moveToNextSection}
-          disabled={section.position + 1 >= numOfSections ? true : false}
-        >
-          <HiChevronRight size={24} />
-        </Button>
-      </Tooltip>
+      <Button
+        size='icon'
+        variant='ghost'
+        className='disabled:opacity-30 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
+        onClick={moveToNextSection}
+        disabled={section.position + 1 >= numOfSections ? true : false}
+      >
+        <HiChevronRight size={24} />
+      </Button>
     </div>
-
   )
-
 }
 
 
-function MoveToPrevSection({section, numOfSections, className}: MoveToSectionProps) {
-
-
+function MoveToPrevSection({section, className}: MoveToSectionProps) {
   async function moveToPrevSection() {
     if (section.position <= 0) return
     const newPosition = section.position - 1
@@ -157,17 +150,15 @@ function MoveToPrevSection({section, numOfSections, className}: MoveToSectionPro
 
   return (
     <div className={cn('flex flex-row text-slate-700', className)}>
-      <Tooltip title="Go to previous section">
-        <Button
-          size='icon'
-          variant='ghost'
-          className='disabled:opacity-30 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
-          onClick={moveToPrevSection}
-          disabled={section.position <= 0 ? true : false}
-        >
-          <HiChevronLeft size={24} />
-        </Button>
-      </Tooltip>
+      <Button
+        size='icon'
+        variant='ghost'
+        className='disabled:opacity-30 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
+        onClick={moveToPrevSection}
+        disabled={section.position <= 0 ? true : false}
+      >
+        <HiChevronLeft size={24} />
+      </Button>
     </div>
   )
 }

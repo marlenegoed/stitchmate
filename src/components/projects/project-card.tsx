@@ -5,7 +5,6 @@ import FavoriteProject from './favorite-project-button';
 import BackgroundBlob from '../ui/background-blobs';
 import {Button} from '../ui/button';
 import shortenText from '@/lib/shorten-text';
-import {Tooltip} from '../ui/tooltip';
 
 
 interface ProjectCardProps {
@@ -41,13 +40,11 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
         <div className="col-span-1 pr-4 pt-3 pb-5 flex flex-col justify-between items-end">
           <FavoriteProject projectId={project.id} isFavorite={project.favorite} />
 
-          <Tooltip title="Edit project">
-            <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
-              <Button size='icon' variant='ghost'>
-                <HiEllipsisVertical className='fill-slate-700' size={24} />
-              </Button>
-            </Link>
-          </Tooltip>
+          <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
+            <Button size='icon' variant='ghost'>
+              <HiEllipsisVertical className='fill-slate-700' size={24} />
+            </Button>
+          </Link>
         </div>
       </div>
     </div >

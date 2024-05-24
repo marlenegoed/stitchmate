@@ -4,7 +4,6 @@ import {HiMiniHeart} from 'react-icons/hi2'
 import {HiOutlineHeart} from 'react-icons/hi2'
 import {Button} from '../ui/button'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
-import {Tooltip} from '../ui/tooltip'
 import {cn} from '@/lib/utils'
 
 export default function FilterProjectFavorites({className}: {className?: string}) {
