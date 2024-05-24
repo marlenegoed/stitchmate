@@ -7,6 +7,7 @@ import {getAllProjects, countProjects} from '@/database/queries/projects';
 
 export default async function Page({searchParams}: {searchParams?: {title?: string, favorite?: string, page?: number}}) {
   const {userId} = auth().protect();
+
   const title = searchParams?.title || ''
   const favorite = searchParams?.favorite === '1' ? true : false;
   const page = searchParams?.page || 0

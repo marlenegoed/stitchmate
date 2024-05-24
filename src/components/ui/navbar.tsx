@@ -32,10 +32,10 @@ export function UserMenu() {
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
-          <div className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>
-            <SignOutButton redirectUrl='/sign-in' />
+          <div className='rounded h-fit w-fit px-6 py-2  hover:bg-neutral-100'>
+            <SignOutButton redirectUrl='/' />
           </div>
-          <Link href='/about'><p className='rounded-full h-fit w-fit px-6 py-2 font-semibold hover:bg-neutral-100'>About</p></Link>
+          <Link href='/about'><p className='rounded h-fit w-fit px-6 py-2 hover:bg-neutral-100'>About</p></Link>
         </PopoverContent>
       </Popover>
     </>
@@ -54,7 +54,7 @@ export default function Nav() {
           <UserMenu />
         </SignedIn>
         <SignedOut>
-          <SignInButton />
+          <SignInButton mode="modal" />
         </SignedOut>
       </div>
     </nav>

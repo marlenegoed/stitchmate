@@ -5,7 +5,7 @@ import useSound from 'use-sound';
 import {Tooltip} from './tooltip';
 
 export function CountDownButton({count, handleChange, sound = false}: {sound: boolean, count: number, handleChange: (count: number) => void}) {
-  const [play] = useSound('/sot13.mp3', {interrupt: true});
+  const [play] = useSound('/glitch-click.wav', {interrupt: true});
 
   function handleClick() {
     let newCount = count

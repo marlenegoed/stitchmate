@@ -29,13 +29,10 @@ import {Textarea} from "@/components/ui/textarea";
 import makeOrdinal from '@/lib/make-ordinal';
 import {type Reminder} from '@/database/queries/projects';
 import AddReminder from './add-reminder';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
-import {TbZzz} from "react-icons/tb";
-import clsx from 'clsx';
 import DeleteDialog from '../sections/delete-dialog';
 import {HiAdjustmentsVertical} from 'react-icons/hi2';
-import {useToast} from '@/lib/use-toast';
 
 
 const formSchema = z.object({

@@ -110,10 +110,6 @@ module.exports = {
           900: '#17324F',
           950: '#17324F'
         },
-
-
-
-
       },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans]
