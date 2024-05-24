@@ -34,7 +34,6 @@ import DeleteDialog from './delete-dialog';
 import {useEffect, useState} from 'react';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {Tooltip} from '../ui/tooltip';
-import {useToast} from '@/lib/use-toast';
 
 
 const formSchema = z.object({
@@ -48,7 +47,6 @@ const formSchema = z.object({
 })
 
 export default function SectionDialog({section, numOfSections}: {section: Section, numOfSections: number}) {
-  const {toast} = useToast()
   const {storeCount, storeTitle} = useCounterStore(state => state)
 
   const [open, setOpen] = useState(false)
@@ -74,7 +72,6 @@ export default function SectionDialog({section, numOfSections}: {section: Sectio
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
     setOpen(false)
-    toast({title: "Section updated"})
   }
 
   return (

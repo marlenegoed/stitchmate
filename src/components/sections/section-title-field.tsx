@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form"
 import {updateSectionTitle} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider';
-import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
 const formSchema = z.object({
@@ -29,7 +28,6 @@ interface SectionTitleFieldProps {
 
 export default function SectionTitleField({id, title, className}: SectionTitleFieldProps) {
   const {storeTitle, setStoreTitle} = useCounterStore(state => state)
-  const {toast} = useToast()
 
   const formRef = useRef<HTMLFormElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -52,8 +50,6 @@ export default function SectionTitleField({id, title, className}: SectionTitleFi
 
     form.reset(values)
     inputRef.current?.blur()
-
-    toast({title: "Title saved"})
   }
 
   const handleInvalid: SubmitErrorHandler<z.infer<typeof formSchema>> = async (_values, e) => {

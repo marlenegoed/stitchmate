@@ -23,7 +23,6 @@ import {Input} from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -32,7 +31,6 @@ import {
 import {useEffect, useState} from 'react';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import {useCounterStore} from '@/providers/counter-store-provider';
-import {useToast} from '@/lib/use-toast';
 import {Tooltip} from '../ui/tooltip';
 
 
@@ -53,9 +51,6 @@ export default function DemoSectionDialog() {
   const {numOfRows, setNumOfRows} = useDemoStore(
     (state) => state,
   )
-
-  const {toast} = useToast()
-
   const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -90,7 +85,6 @@ export default function DemoSectionDialog() {
     setNumOfRows(values.rows)
     setOpen(false)
     form.reset(values)
-    toast({title: "Section updated"})
   }
 
   return (

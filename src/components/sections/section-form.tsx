@@ -18,7 +18,6 @@ import {
 
 import {updateSection, type Section} from '@/database/queries/projects';
 import Link from 'next/link';
-import {useToast} from '@/lib/use-toast';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {useEffect} from 'react';
 
@@ -31,7 +30,6 @@ const formSchema = z.object({
 })
 
 export default function SectionForm({section}: {section: Section}) {
-  const {toast} = useToast()
   const {storeCount, storeTitle} = useCounterStore(state => state)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +53,6 @@ export default function SectionForm({section}: {section: Section}) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
-    toast({title: "Section updated"})
   }
 
   return (

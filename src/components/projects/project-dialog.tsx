@@ -30,7 +30,6 @@ import {
 import {createNewProject, quickStartProject} from '@/database/queries/projects';
 import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
-import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
 
@@ -44,7 +43,6 @@ const formSchema = z.object({
 })
 
 export default function ProjectDialog({userId, className}: {userId: string, className?: string}) {
-  const {toast} = useToast()
   const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,7 +56,6 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await quickStartProject(userId, values.title, generateBlobId())
     setOpen(false)
-    toast({title: "Created project"})
   }
 
   async function handleClick() {
@@ -71,7 +68,6 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
     }
     await createNewProject(userId, title, generateBlobId())
     setOpen(false)
-    toast({title: "Created project"})
   }
 
   return (
