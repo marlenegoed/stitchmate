@@ -15,7 +15,7 @@ export default function ReminderItem({reminder}: {reminder: Reminder}) {
     <div className={clsx({'opacity-50': !notification})}>
       <div className='flex flex-col justify-between bg-eggshell rounded-xl py-3 px-4 w-40 h-40 shadow'>
         <div className='flex flex-row justify-between'>
-          <ReminderRepeat reminder={reminder} className='text-sm text-slate-700' />
+          <ReminderRepeat reminder={reminder} className='text-sm text-sienna-400' />
           {!notification && <TbZzz className='mt-1 text-sienna-400' />}
         </div>
         <div>

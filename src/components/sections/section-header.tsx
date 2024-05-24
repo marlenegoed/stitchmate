@@ -4,7 +4,7 @@ import CounterActions from './couter-actions'
 import {HiChevronLeft} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import {Button} from '../ui/button';
-import {Section, UserSettings, changeActiveSection} from '@/database/queries/projects';
+import {Reminder, Section, UserSettings, changeActiveSection} from '@/database/queries/projects';
 import SectionTitleField from './section-title-field';
 import Title from '../ui/title';
 import shortenText from '@/lib/shorten-text';
@@ -16,10 +16,11 @@ interface SectionHeaderProps {
   numOfSections: number,
   projectTitle: string,
   userSettings: UserSettings,
-  className?: string
+  className?: string,
+  reminders: Reminder[]
 }
 
-export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className}: SectionHeaderProps) {
+export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className, reminders}: SectionHeaderProps) {
   return (
     <div className={cn('w-full', className)}>
       <div className='grid grid-cols-12 items-center mb-4'>
@@ -30,7 +31,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 
         <div className='col-span-6 flex flex-row justify-end'>
           <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
-            <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} />
+            <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
           </div>
 
           <div className='hidden mr-6 sm:flex flex-row items-center'>
@@ -52,7 +53,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 
         {/* action bar mobile:  */}
         <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
-          <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} />
+          <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
         </div>
       </div>
     </div>

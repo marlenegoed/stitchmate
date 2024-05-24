@@ -2,7 +2,7 @@
 
 import {HiArrowRightOnRectangle} from "react-icons/hi2";
 import {HiOutlineSquare2Stack} from "react-icons/hi2";
-import {Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
+import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
 import {Button} from '../ui/button';
 import {updateCount} from '@/database/queries/projects';
 import {useCounterStore} from '@/providers/counter-store-provider';
@@ -21,9 +21,10 @@ interface CounterActionProps {
   section: Section,
   userSettings: UserSettings,
   numOfSections: number,
+  reminders: Reminder[]
 }
 
-export default function CounterActions({section, userSettings, numOfSections}: CounterActionProps) {
+export default function CounterActions({section, userSettings, numOfSections, reminders}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
   async function handleSoundToggle() {
@@ -38,7 +39,7 @@ export default function CounterActions({section, userSettings, numOfSections}: C
 
   return (
     <CounterActionBar>
-      <CountDown sectionId={section.id} sound={storeSound} />
+      <CountDown sectionId={section.id} sound={storeSound} reminders={reminders} />
       <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
         <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
       </ZustandHydration>
@@ -94,7 +95,7 @@ const AddSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTML
 ))
 AddSectionButton.displayName = "AddSectionButton"
 
-export function CountDown({sectionId, sound}: {sectionId: number, sound: boolean}) {
+export function CountDown({sectionId, sound, reminders}: {sectionId: number, sound: boolean, reminders: Reminder[]}) {
   const {storeCount, setStoreCount} = useCounterStore(
     (state) => state,
   )
@@ -105,7 +106,7 @@ export function CountDown({sectionId, sound}: {sectionId: number, sound: boolean
     await setActiveSection(sectionId)
   }
 
-  return <CountDownButton count={storeCount} handleChange={handleCountDown} sound={sound} />
+  return <CountDownButton count={storeCount} handleChange={handleCountDown} sound={sound} reminders={reminders} />
 }
 
 export function CloneSection({section}: {section: Section}) {

@@ -57,7 +57,6 @@ function CounterHeader({className}: {className?: string}) {
           </div>
         </div>
 
-
         {/* action bar mobile:  */}
         <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
           <ActionBar />
@@ -73,6 +72,7 @@ function ActionBar() {
 
   const resetCounterStore = useCounterStore(state => state.reset)
   const resetDemoStore = useDemoStore((state) => state.resetStore)
+  const reminders = useDemoStore((state) => state.reminders)
 
   async function resetCounter() {
     resetDemoStore()
@@ -81,7 +81,7 @@ function ActionBar() {
 
   return (
     <CounterActionBar>
-      <CountDownButton count={storeCount} sound={storeSound} handleChange={countStoreDown} />
+      <CountDownButton reminders={reminders} count={storeCount} sound={storeSound} handleChange={countStoreDown} />
       <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
 
       <ResetDialog handleReset={resetCounter} />
@@ -155,8 +155,7 @@ function ReminderPrompt(props: {className?: string}) {
   )
 }
 
-
-export function ReminderList({className}: {className?: string}) {
+function ReminderList({className}: {className?: string}) {
   const storeCount = useCounterStore(state => state.storeCount)
   const {setReminder, reminders} = useDemoStore((state) => state)
 

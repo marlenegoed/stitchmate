@@ -2,6 +2,9 @@
 
 import useSound from 'use-sound';
 import BackgroundBlob from './background-blobs';
+import {Reminder} from '@/database/queries/projects';
+import hasUpComingReminder from '@/lib/has-upcoming-reminder';
+
 
 interface BlobCounterProps {
   count: number,
@@ -9,17 +12,20 @@ interface BlobCounterProps {
   blobIndex: number,
   sound?: boolean,
   onClick?: (newCount: number) => void
+  reminders: Reminder[]
 }
 
-export function BlobCounter({color, count, blobIndex, onClick, sound = false}: BlobCounterProps) {
+export function BlobCounter({color, count, blobIndex, onClick, sound = false, reminders}: BlobCounterProps) {
   const [play] = useSound('/button-pressed.wav', {interrupt: true});
   const [playReminder] = useSound('/teasounds_click.wav', {interrupt: true})
 
+
   function handleClick() {
     if (sound) {
-
-      
-      play()
+      if (hasUpComingReminder(count, reminders, 1)) {
+        playReminder()
+      } else
+        play()
     }
 
     if (onClick) {
@@ -36,3 +42,4 @@ export function BlobCounter({color, count, blobIndex, onClick, sound = false}: B
     </div>
   )
 }
+

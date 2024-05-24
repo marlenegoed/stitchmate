@@ -12,6 +12,7 @@ import {notFound} from 'next/navigation';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
 import {BlobCounter} from '@/components/ui/blob-counter';
 import SectionProgress from '@/components/sections/section-progress';
+import {reminderRelations} from '@/database/schema';
 
 
 export default async function Page({params}: {params: {sectionId: number}}) {
@@ -32,13 +33,13 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <HydrateUserSettingsStore storeSound={userSettings.sound} />
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
 
-      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='max-w-6xl' />
+      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='max-w-6xl' reminders={reminders}/>
       <SectionProgress numOfRows={section.numOfRows || 0} className="max-w-6xl" />
 
       <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >
         <div className='mb-auto'>
-          <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} />}>
-            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} />
+          <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
+            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>
         </div>
         <ZustandHydration>
