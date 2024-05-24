@@ -26,10 +26,8 @@ export default function FilterProjectFavorites({className}: {className?: string}
   }
 
   return (
-    <Tooltip title="Filter by favorites">
-      <Button type="submit" variant='ghost' className={cn('hover:bg-neutral-200', className)} size='icon' onClick={handleFilter}>
-        {heart}
-      </Button>
-    </Tooltip>
+    <Button type="submit" variant='ghost' className={cn('hover:bg-neutral-200', className)} size='icon' onClick={handleFilter}>
+      {heart}
+    </Button>
   )
 }

@@ -1,6 +1,5 @@
 'use client'
 
-
 import {
   Dialog,
   DialogContent,
@@ -78,13 +77,11 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Tooltip title="Create new project">
-        <DialogTrigger asChild>
-          <Button type='button' size='icon' variant='ghost' className={cn('text-sienna-400 hover:bg-neutral-200', className)}>
-            <HiOutlineSquaresPlus size={22} />
-          </Button>
-        </DialogTrigger>
-      </Tooltip>
+      <DialogTrigger asChild>
+        <Button type='button' size='icon' variant='ghost' className={cn('text-sienna-400 hover:bg-neutral-200', className)}>
+          <HiOutlineSquaresPlus size={22} />
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10">
         <DialogHeader className='mb-2 -mt-2'>
           <DialogTitle className='mb-2 mr-auto font-semibold text-xl'>New Project</DialogTitle>

@@ -28,8 +28,8 @@ export function UserMenu() {
     <>
       <Popover>
         <PopoverTrigger>
-          <Avatar >
-            <AvatarFallback>{userEmail}</AvatarFallback>
+          <Avatar>
+            <AvatarFallback className='hover:text-sienna-400 hover:transition-colors' >{userEmail}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
@@ -48,11 +48,9 @@ export default function Nav() {
     <nav className='flex justify-between px-6 py-3 w-full max-w-6xl mx-auto'>
       <HomeLink />
       <div className='flex items-center gap-4 flex-row'>
-        <Tooltip title="Go to projects">
-          <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
-            <HiOutlineSquares2X2 className='text-slate-600' size={24} />
-          </Link>
-        </Tooltip>
+        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
+          <HiOutlineSquares2X2 className='text-slate-600' size={24} />
+        </Link>
         <SignedIn>
           <UserMenu />
         </SignedIn>

@@ -21,6 +21,7 @@ export function ProjectsHeader({userId}: {userId: string}) {
 
   return (
     <div className='grid grid-cols-12 w-full items-center px-4 mt-2'>
+
       <div className="col-span-4 flex sm:hidden">
         <Button
           variant='ghost'
@@ -36,7 +37,7 @@ export function ProjectsHeader({userId}: {userId: string}) {
         <FilterProjectFavorites />
       </div>
 
-      <Title className='col-span-4 sm:col-span-3 justify-self-center sm:justify-self-start font-semibold'>My Projects</Title>
+      <Title className='text-xl col-span-4 sm:col-span-3 justify-self-center sm:justify-self-start font-semibold sm:pl-2'>My Projects</Title>
 
       <ProjectDialog userId={userId} className='col-span-4 flex justify-self-end sm:hidden' />
 
@@ -46,13 +47,18 @@ export function ProjectsHeader({userId}: {userId: string}) {
         }
       </div>
 
-      <div className='hidden sm:col-span-9 sm:grid sm:grid-cols-12'>
-        <div className='sm:justify-end sm:col-span-8 flex flex-row gap-4 md:justify-center'>
-          <ProjectListSearch className="w-fit" />
-          <FilterProjectFavorites />
-        </div>
+      <div className='hidden sm:grid sm:col-span-9'>
 
-        <ProjectDialog userId={userId} className='sm:col-start-12 hidden sm:flex justify-self-end' />
+        <div className='sm:grid grid-cols-12'>
+
+          <div className='sm:justify-end sm:col-span-8 flex flex-row gap-4 md:justify-center'>
+            <ProjectListSearch className="w-fit" />
+            <FilterProjectFavorites />
+          </div>
+
+
+          <ProjectDialog userId={userId} className='sm:col-start-12 hidden sm:flex justify-self-end' />
+        </div>
       </div>
     </div >
   )
