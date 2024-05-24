@@ -37,7 +37,8 @@ export const sections = pgTable('sections', {
   numOfRows: integer('num_of_rows').default(0),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
-  active: boolean('active').notNull().default(false)
+  active: boolean('active').notNull().default(false),
+  blobId: integer('blob_id').notNull(),
 })
 
 export const sectionRelations = relations(sections, ({one, many}) => ({

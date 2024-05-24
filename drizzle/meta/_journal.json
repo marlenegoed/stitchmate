@@ -29,6 +29,20 @@
       "when": 1716189955012,
       "tag": "0003_mighty_molly_hayes",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1716565899047,
+      "tag": "0004_lumpy_prowler",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1716565905933,
+      "tag": "0005_typical_proteus",
+      "breakpoints": true
     }
   ]
 }

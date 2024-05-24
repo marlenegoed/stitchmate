@@ -38,7 +38,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >
         <div className='mb-auto'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} />}>
-            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={project.blobId} />
+            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} />
           </ZustandHydration>
         </div>
         <ZustandHydration>

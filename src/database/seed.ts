@@ -17,7 +17,7 @@ async function seed() {
 
     const projectIds = await db.insert(projects).values({title: 'My First Project', color: generateColor(), blobId: generateBlobId(), userId: 'user_2ggkIiS15V0w7nm0Nu5MOUIT27A'}).returning({id: projects.id})
 
-    const sectionIds = await db.insert(sections).values({title: 'my First Section', projectId: projectIds[0].id, position: 0, active: true}).returning({id: sections.id})
+    const sectionIds = await db.insert(sections).values({title: 'my First Section', projectId: projectIds[0].id, position: 0, active: true, blobId: generateBlobId()}).returning({id: sections.id})
 
     await db.insert(reminders).values([
       {

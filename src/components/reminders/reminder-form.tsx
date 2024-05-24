@@ -29,7 +29,7 @@ import {Textarea} from "@/components/ui/textarea";
 import makeOrdinal from '@/lib/make-ordinal';
 import {type Reminder} from '@/database/queries/projects';
 import AddReminder from './add-reminder';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
 import {TbZzz} from "react-icons/tb";
 import clsx from 'clsx';
@@ -87,6 +87,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
   async function handleSubmit(values: FormValues) {
     await onSubmit(values)
     setOpen(false)
+    form.reset()
   }
 
   // toggle form input 

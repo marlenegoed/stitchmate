@@ -1,10 +1,11 @@
 'use server'
 
-import {eq, and, gte, sql, asc, gt, ilike, desc, not, count} from 'drizzle-orm'
+import {eq, and, gte, sql, asc, gt, ilike, desc, not, count, or} from 'drizzle-orm'
 import {db} from '../db'
 import {projects, sections, reminders, userSettings} from '../schema'
 import {redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
+import generateBlobId from '@/lib/generate-blob-id';
 
 export type NewProject = typeof projects.$inferInsert;
 export type Project = typeof projects.$inferSelect;
@@ -20,7 +21,7 @@ export async function createNewProject(userId: string, title: string, blobId: nu
   const projectId = await db.transaction(async (tx) => {
     const result = await tx.insert(projects).values({title, blobId, userId}).returning({id: projects.id})
     const projectId = result[0].id
-    await tx.insert(sections).values({title: 'Section 1', projectId, position: 0, active: true})
+    await tx.insert(sections).values({title: 'Section 1', projectId, position: 0, active: true, blobId: generateBlobId()})
     return projectId
   })
   redirect(`/projects/${projectId}/edit`)
@@ -33,7 +34,7 @@ export async function quickStartProject(userId: string, title: string, blobId: n
       .returning({id: projects.id})
 
     const result = await tx.insert(sections)
-      .values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true})
+      .values({title: 'Section 1', projectId: projectId[0].id, position: 0, active: true, blobId: generateBlobId()})
       .returning({id: sections.id})
     return result[0].id
   })
@@ -103,12 +104,16 @@ export async function createNewSection(projectId: number, position: number, titl
     await tx.update(sections).set({active: false}).where(eq(sections.projectId, projectId))
     await tx.update(sections).set({position: sql`${sections.position} + 1`}).where(and(eq(sections.projectId, projectId), gte(sections.position, position)))
 
-    const newSection = await tx.insert(sections).values({projectId, position, title, active: true}).returning({id: sections.id})
+    const neighbouringSections = await tx.select({blobId: sections.blobId}).from(sections)
+      .where(and(eq(sections.projectId, projectId), or(eq(sections.position, position + 1), eq(sections.position, position - 1))))
+      .limit(2)
+    const existingBlobIds = neighbouringSections.map(section => section.blobId)
+
+    const newSection = await tx.insert(sections).values({projectId, position, title, active: true, blobId: generateBlobId(existingBlobIds)}).returning({id: sections.id})
     return newSection[0].id
   })
   redirect(`/sections/${sectionId}`)
 }
-
 
 // find sections
 export async function findActiveSection(projectId: number) {
@@ -132,7 +137,7 @@ export async function findAllSections(projectId: number) {
     orderBy: asc(sections.position)
   })
   if (result.length === 0) {
-    return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true}).returning()
+    return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true, blobId: generateBlobId()}).returning()
   }
   return result
 }
@@ -233,7 +238,12 @@ export async function cloneSection(section: Section) {
       numOfRows: section.numOfRows,
     }
 
-    const newSectionId = await tx.insert(sections).values({...sectionClone}).returning({id: sections.id})
+    const neighbouringSections = await tx.select({blobId: sections.blobId}).from(sections)
+      .where(and(eq(sections.projectId, sectionClone.projectId), or(eq(sections.position, sectionClone.position - 1), eq(sections.position, sectionClone.position + 1))))
+      .limit(2)
+    const existingBlobIds = neighbouringSections.map(section => section.blobId)
+
+    const newSectionId = await tx.insert(sections).values({...sectionClone, blobId: generateBlobId(existingBlobIds)}).returning({id: sections.id})
 
     for (let reminder of sectionReminders) {
       delete reminder.id
