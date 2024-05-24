@@ -152,7 +152,7 @@ export default function SectionDialog({section, numOfSections}: {section: Sectio
 
             <div className='w-full justify-center flex flex-row items-center '>
               <Link className='flex flex-row text-sm text-neutral-500 underline underline-offset-4 w-fit  hover:text-neutral-900 transition-colors' href={`/projects/${section.projectId}/edit`}>
-                Manage project
+                Edit project
               </Link>
             </div>
 
