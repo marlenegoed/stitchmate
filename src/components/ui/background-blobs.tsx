@@ -19,7 +19,7 @@ export default function BackgroundBlob({className, stroke = true, strokeClassNam
     <Blob6 key='5' className={className} stroke={stroke} strokeClassName={strokeClassName} />,
     <Blob7 key='6' className={className} stroke={stroke} strokeClassName={strokeClassName} />,
     <Blob8 key='7' className={className} stroke={stroke} strokeClassName={strokeClassName} />
-  ], [className, stroke]);
+  ], [className, stroke, strokeClassName]);
 
   return blobs[blobIndex]
 }

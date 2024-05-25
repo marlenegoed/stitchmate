@@ -39,7 +39,7 @@ export default function SectionTitleField({id, title, className}: SectionTitleFi
 
   useEffect(() => {
     form.reset({title: storeTitle})
-  }, [storeTitle])
+  }, [storeTitle, form])
 
   const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values, e) => {
     e?.preventDefault()

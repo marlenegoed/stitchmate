@@ -44,12 +44,12 @@ export default function SectionForm({section}: {section: Section}) {
   useEffect(() => {
     form.setValue("count", storeCount)
     form.resetField("count", {defaultValue: storeCount})
-  }, [storeCount])
+  }, [storeCount, form])
 
   useEffect(() => {
     form.setValue("title", storeTitle)
     form.resetField("title", {defaultValue: storeTitle})
-  }, [storeTitle])
+  }, [storeTitle, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateSection(section.id, values.title, values.count, section.projectId, values.rows)

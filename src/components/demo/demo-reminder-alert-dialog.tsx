@@ -67,7 +67,7 @@ export default function DemoReminderAlertDialog({className, reminder, isTag}: Re
 
         <ScrollArea className='h-32 mb-4'>
           <p className='ml-1'>{note}</p>
-          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-[160ms] ease-out hover:bg-black' />
+          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-150 ease-out hover:bg-black' />
         </ScrollArea>
 
 

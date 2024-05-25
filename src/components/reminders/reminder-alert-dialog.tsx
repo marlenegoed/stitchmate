@@ -70,7 +70,7 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
 
         <ScrollArea className='h-32 mb-4'>
           <p className='ml-1'>{note}</p>
-          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-[160ms] ease-out hover:bg-black' />
+          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors transition-duration-150 ease-out hover:bg-black' />
         </ScrollArea>
 
         <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>

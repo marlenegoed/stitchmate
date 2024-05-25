@@ -8,8 +8,6 @@ import {cn} from '@/lib/utils';
 import {IconBaseProps} from 'react-icons';
 import {forwardRef} from 'react';
 
-
-
 export default function ProjectListSearch({className}: {className?: string}) {
   const [title, handleSearch] = useTitleSearch()
 
@@ -34,6 +32,7 @@ const ProjectSearchInput = forwardRef<HTMLInputElement, React.InputHTMLAttribute
     />
   )
 })
+ProjectSearchInput.displayName = "ProjectSearchInput"
 
 export interface ProjectSearchIconProps extends IconBaseProps {
   className?: string,

@@ -62,11 +62,11 @@ export default function SectionDialog({section, numOfSections}: {section: Sectio
 
   useEffect(() => {
     form.resetField("count", {defaultValue: storeCount})
-  }, [storeCount])
+  }, [storeCount, form])
 
   useEffect(() => {
     form.resetField("title", {defaultValue: storeTitle})
-  }, [storeTitle])
+  }, [storeTitle, form])
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

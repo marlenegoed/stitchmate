@@ -65,17 +65,17 @@ export default function DemoSectionDialog() {
   useEffect(() => {
     form.setValue("rows", numOfRows)
     form.resetField("rows", {defaultValue: numOfRows})
-  }, [numOfRows])
+  }, [numOfRows, form])
 
   useEffect(() => {
     form.setValue("count", storeCount)
     form.resetField("count", {defaultValue: storeCount})
-  }, [storeCount])
+  }, [storeCount, form])
 
   useEffect(() => {
     form.setValue("title", storeTitle)
     form.resetField("title", {defaultValue: storeTitle})
-  }, [storeTitle])
+  }, [storeTitle, form])
 
 
   const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = (values, e) => {
