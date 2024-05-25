@@ -1,11 +1,10 @@
 import {redirect} from 'next/navigation'
 import {auth} from "@clerk/nextjs/server";
-import Title from '@/components/ui/title';
 import Link from 'next/link';
 import {SignInButton} from '@clerk/nextjs';
 import {Button} from '@/components/ui/button';
 import {PageBackground} from '@/components/ui/page-background';
-import {kalam, shortStack} from '@/components/ui/fonts';
+import {indieFlower} from '@/components/ui/fonts';
 
 export default function Page() {
   if (auth().userId) redirect('/projects')
@@ -13,10 +12,10 @@ export default function Page() {
   return (
     <PageBackground className="flex-col">
 
-      <div className='bg-white/80 shadow rounded-lg p-8 pb-4 max-w-96 text-center m-10'>
-        <p className={`${shortStack.className} text-slate-800 mb-4`}>welcome knitters</p>
-        <h4 className={`${shortStack.className} text-xl font-semibold text-slate-800 mb-8`}>stitchmate keeps track while you stay focused on your craft.</h4>
-        <section className='grid grid-cols-2 gap-4 justify-center items-center w-full mb-4'>
+      <div className='bg-white/80 shadow rounded-lg p-8 pb-6 max-w-96 text-center m-10'>
+        <p className={`${indieFlower.className} text-slate-800 text-xl mb-4`}>welcome knitters</p>
+        <h4 className={`${indieFlower.className}  font-semibold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
+        <section className='grid grid-cols-2 gap-4 justify-center items-center w-full mb-3'>
           <SignInButton mode="modal">
             <Button variant='outline' className='col-span-2 sm:col-span-1'>Sign In</Button>
           </SignInButton>
@@ -26,9 +25,7 @@ export default function Page() {
           </Link>
         </section>
 
-        <Link href='/about' className='text-neutral-500/70'>
-          <Button size='icon' variant='ghost'>?</Button>
-        </Link>
+        <Link href='/about' className='text-neutral-500/70 hover:text-neutral-500 transition-colors'>?</Link>
       </div>
     </PageBackground >
   )
