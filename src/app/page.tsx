@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {SignInButton} from '@clerk/nextjs';
 import {Button} from '@/components/ui/button';
 import {PageBackground} from '@/components/ui/page-background';
-import {indieFlower} from '@/components/ui/fonts';
+import {kalam} from '@/components/ui/fonts';
 
 export default function Page() {
   if (auth().userId) redirect('/projects')
@@ -13,8 +13,8 @@ export default function Page() {
     <PageBackground className="flex-col">
 
       <div className='bg-white/80 shadow rounded-lg p-8 pb-6 max-w-96 text-center m-10'>
-        <p className={`${indieFlower.className} text-slate-800 text-xl mb-4`}>welcome knitters</p>
-        <h4 className={`${indieFlower.className}  font-semibold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
+        <p className={` text-slate-800 text-base mb-4`}>welcome knitters</p>
+        <h4 className={`${kalam.className} font-bold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
         <section className='grid grid-cols-2 gap-4 justify-center items-center w-full mb-3'>
           <SignInButton mode="modal">
             <Button variant='outline' className='col-span-2 sm:col-span-1'>Sign In</Button>

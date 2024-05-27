@@ -4,6 +4,7 @@ import useSound from 'use-sound';
 import BackgroundBlob from './background-blobs';
 import {Reminder} from '@/database/queries/projects';
 import hasUpComingReminder from '@/lib/has-upcoming-reminder';
+import {kalam} from './fonts';
 
 
 interface BlobCounterProps {
@@ -36,7 +37,7 @@ export function BlobCounter({color, count, blobIndex, onClick, sound = false, re
   return (
     <div className='relative flex items-center justify-center' onClick={handleClick}>
       <button className='text-8xl text-center z-10 relative text-zinc-800 p-16 w-[5ch]'>
-        <span>{count}</span>
+        <span className={`${kalam.className} font-normal`}>{count}</span>
       </button>
       <BackgroundBlob className={`fill-${color} absolute w-full top-0 left-0`} stroke={true} blobIndex={blobIndex} />
     </div>
