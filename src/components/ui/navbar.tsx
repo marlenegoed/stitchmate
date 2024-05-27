@@ -53,9 +53,11 @@ export default function Nav() {
     <nav className='flex justify-between px-6 py-3 w-full max-w-6xl mx-auto'>
       <HomeLink />
       <div className='flex items-center gap-4 flex-row'>
+
         {!isDemo && <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
           <HiOutlineSquares2X2 className='text-slate-600' size={24} />
         </Link>}
+
         <SignedIn>
           <UserMenu />
         </SignedIn>
@@ -74,7 +76,7 @@ function HomeLink() {
   return (
     <Link href={url}>
       <div className='mt-1'>
-        <LogoSmall className={'fill-neutral-200 h-8 hover:fill-sienna-200 transition-colors'} />
+        <LogoSmall className={'fill-neutral-200 h-8 w-8 hover:fill-sienna-200 transition-colors'} />
       </div>
     </Link>
   )
