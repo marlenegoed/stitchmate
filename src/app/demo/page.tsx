@@ -21,7 +21,7 @@ import {cn} from '@/lib/utils'
 import SectionProgress from '@/components/sections/section-progress'
 import {AddSectionButton, CloneSectionButton, CounterActionBar} from '@/components/sections/couter-actions'
 
-const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p>Loading...</p>})
+const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p className='h-full'>Loading...</p>})
 
 export default function DemoCounterPage() {
   return (
