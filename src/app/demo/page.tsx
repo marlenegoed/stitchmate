@@ -37,7 +37,6 @@ export default function DemoCounterPage() {
           <ReminderPrompt className='z-10' />
         </div>
       </section>
-
       <ReminderList className='max-w-6xl' />
     </>
   )
