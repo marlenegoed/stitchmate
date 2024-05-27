@@ -19,13 +19,17 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
   const [playReminder] = useSound('/teasounds_click.wav', {interrupt: true});
 
   function handleClick() {
+
     let newCount = count
 
     if (count > 1) {
       newCount = count - 1
     }
 
-    if (newCount <= 1) {newCount = 1}
+    if (count <= 1) {newCount = 1}
+
+    handleChange(newCount)
+
     if (sound) {
       if (hasUpComingReminder(count, reminders, -1)) {
         playReminder()
@@ -33,7 +37,6 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
         play()
       }
 
-      handleChange(newCount)
     }
   }
 

@@ -38,7 +38,7 @@ export function BlobCounter({color, count, blobIndex, onClick, sound = false, re
       <button className='text-8xl text-center z-10 relative text-zinc-800 p-16 w-[5ch]'>
         <span>{count}</span>
       </button>
-      <BackgroundBlob className={`fill-${color} absolute top-0 left-0`} stroke={true} blobIndex={blobIndex} />
+      <BackgroundBlob className={`fill-${color} absolute w-full top-0 left-0`} stroke={true} blobIndex={blobIndex} />
     </div>
   )
 }

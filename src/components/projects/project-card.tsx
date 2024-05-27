@@ -23,7 +23,7 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
   return (
     <div className='relative'>
       <div className={`absolute h-full w-full top-0 bg-white rounded-lg shadow-sm`}>
-        <BackgroundBlob className={`fill-${project.color} top-0 left-0 w-fit h-1/2 absolute m-6 pb-6`} stroke={false} blobIndex={project.blobId} />
+        <BackgroundBlob className={`fill-${project.color} top-0 left-0 h-1/2 absolute m-6 pb-6`} stroke={false} blobIndex={project.blobId} />
       </div>
 
       <div className='grid grid-cols-5 relative'>
