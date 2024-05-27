@@ -36,7 +36,7 @@ export default function ProjectListPagination({pageCount}: {pageCount: number}) 
 
 
   return (
-    <Pagination className='mb-4 mt-auto text-slate-800'>
+    <Pagination className={clsx({'hidden': pageCount < 2, 'mb-4 mt-auto text-slate-800': pageCount >= 2})}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious href={`${pathname}?${prevPageParams}`} className={clsx({'invisible': Number.isNaN(currentPage) || currentPage < 1})} />
