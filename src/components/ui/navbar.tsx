@@ -35,7 +35,7 @@ export function UserMenu() {
             <AvatarFallback className='hover:text-sienna-400 hover:transition-colors' >{userEmail}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
-        <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
+        <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-2 bg-white'>
           <Link href='/user-profile'><p className='rounded h-fit w-fit px-6 py-2 hover:bg-neutral-100'>Account</p></Link>
           <div className='rounded h-fit w-fit px-6 py-2  hover:bg-neutral-100'>
             <SignOutButton redirectUrl='/' />
@@ -65,7 +65,6 @@ export default function Nav() {
       <SignedOut>
         <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors'>Sign in</span></SignInButton>
       </SignedOut>
-      {/* </div> */}
     </nav>
   );
 }

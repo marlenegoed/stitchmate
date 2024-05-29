@@ -166,7 +166,7 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
               <div className='grid grid-cols-2 gap-4'>
                 <p onClick={handleClick} className="sm:col-span-1 col-span-2 cursor-pointer underline underline-offset-4 text-neutral-400 hover:text-neutral-500 transition-colors font-semibold flex justify-self-center sm:justify-self-start	self-center pl-1 sm:order-1 order-2 sm:pt-0 pt-2">More Settings
                 </p>
-                <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-full sm:col-span-1 col-span-2 justify-self-center sm:justify-self-end sm:mt-0 mt-2 sm:order-2 order-1'>
+                <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-full sm:w-fit sm:col-span-1 col-span-2 justify-self-center sm:justify-self-end sm:mt-0 mt-2 sm:order-2 order-1'>
                   <span className='flex flex-row items-center gap-2 justify-center'>
                     Quickstart
                     <HiChevronRight size={20} className='text-sienna-300' />
