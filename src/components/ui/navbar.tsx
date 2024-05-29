@@ -16,7 +16,9 @@ import {
   SignedIn,
   SignedOut,
   SignOutButton,
-  useAuth
+  useAuth,
+  UserButton,
+  UserProfile
 } from '@clerk/nextjs'
 import {Button} from './button';
 import {usePathname} from 'next/navigation';
@@ -34,6 +36,7 @@ export function UserMenu() {
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-4 bg-white'>
+          <Link href='/user-profile'><p className='rounded h-fit w-fit px-6 py-2 hover:bg-neutral-100'>Account</p></Link>
           <div className='rounded h-fit w-fit px-6 py-2  hover:bg-neutral-100'>
             <SignOutButton redirectUrl='/' />
           </div>
@@ -50,21 +53,19 @@ export default function Nav() {
   const isDemo = pathname.startsWith('/demo')
 
   return (
-    <nav className='flex justify-between px-6 py-3 w-full max-w-6xl mx-auto'>
-      <HomeLink />
-      <div className='flex items-center gap-4 flex-row'>
-
-        {!isDemo && <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
+    <nav className='flex justify-between items-center px-6 py-3 w-full max-w-6xl mx-auto'>
+      {isDemo ? <HomeLink /> :
+        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
           <HiOutlineSquares2X2 className='text-slate-600' size={24} />
-        </Link>}
-
-        <SignedIn>
-          <UserMenu />
-        </SignedIn>
-        <SignedOut>
-          <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors'>Sign in</span></SignInButton>
-        </SignedOut>
-      </div>
+        </Link>
+      }
+      <SignedIn>
+        <UserMenu />
+      </SignedIn>
+      <SignedOut>
+        <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors'>Sign in</span></SignInButton>
+      </SignedOut>
+      {/* </div> */}
     </nav>
   );
 }
