@@ -53,7 +53,7 @@ export default function Nav() {
   const isDemo = pathname.startsWith('/demo')
 
   return (
-    <nav className='flex justify-between items-center px-6 py-3 w-full max-w-6xl mx-auto'>
+    <nav className='flex justify-between items-center px-4 py-3 w-full max-w-6xl mx-auto'>
       {isDemo ? <HomeLink /> :
         <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
           <HiOutlineSquares2X2 className='text-slate-600' size={24} />
