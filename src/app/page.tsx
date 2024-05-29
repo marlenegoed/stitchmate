@@ -5,13 +5,14 @@ import {SignInButton} from '@clerk/nextjs';
 import {Button} from '@/components/ui/button';
 import {PageBackground} from '@/components/ui/page-background';
 import {kalam} from '@/components/ui/fonts';
+import BetaBanner from '@/components/ui/beta-banner';
 
 export default function Page() {
   if (auth().userId) redirect('/projects')
 
   return (
     <PageBackground className="flex-col">
-
+      <BetaBanner />
       <div className='bg-white/80 shadow rounded-lg p-8 pb-6 max-w-96 text-center m-10'>
         <p className={` text-slate-800 text-base mb-4`}>welcome knitters</p>
         <h4 className={`${kalam.className} font-bold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
