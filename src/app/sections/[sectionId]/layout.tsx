@@ -10,7 +10,7 @@ export default function PageLayout({children}: Readonly<{
       <Nav />
       <UserSettingsStoreProvider>
         <CounterStoreProvider>
-          <main className='h-[calc(100%-4rem)] flex flex-col mx-auto items-center py-3 w-full bg-neutral-100 rounded-t-2xl shadow'>
+          <main className='min-h-[calc(100dvh_-_4rem)] flex flex-col mx-auto items-center py-3 w-full bg-neutral-100 rounded-t-2xl shadow'>
             {children}
           </main>
         </CounterStoreProvider>
