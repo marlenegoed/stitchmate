@@ -154,7 +154,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
 
               <ReminderFormInputs count={count} />
 
-              <DrawerFooter className="pt-2">
+              <DrawerFooter className="pt-2 gap-4">
                 <DrawerClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DrawerClose>
