@@ -18,7 +18,7 @@ export default function Page() {
         <h4 className={`${kalam.className} font-bold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
         <section className='grid grid-cols-2 gap-4 justify-center items-center w-full mb-3'>
           <SignInButton mode="modal">
-            <Button variant='outline' className='col-span-2 sm:col-span-1'>Sign In</Button>
+            <Button variant='outline' className='col-span-2 sm:col-span-1 border-slate-700 text-slate-800 hover:text-slate-600 hover:border-slate-500'>Sign In</Button>
           </SignInButton>
 
           <Link href='/demo' className='col-span-2 sm:col-span-1 '>

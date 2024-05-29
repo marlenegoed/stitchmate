@@ -18,7 +18,6 @@ export default function Page() {
         </p>
       </section >
 
-
       < footer className={`${notoSans.className} opacity-70 p-6 antialiased flex flex-col max-w-96 items-center text-center justify-center mb-4 space-y-8`} >
 
         <span className=' text-sm'>
