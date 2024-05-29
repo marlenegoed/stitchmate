@@ -14,7 +14,7 @@ export default function Page() {
     <PageBackground className="flex-col">
       <BetaBanner />
       <div className='bg-white/80 shadow rounded-lg p-8 pb-6 max-w-96 text-center m-10'>
-        <p className={` text-slate-800 text-base mb-4`}>welcome knitters</p>
+        <p className={` text-slate-800 text-base font-semibold mb-6`}>welcome knitters</p>
         <h4 className={`${kalam.className} font-bold text-slate-800 mb-8 text-4xl`}>stitchmate keeps track while you stay focused on your craft.</h4>
         <section className='grid grid-cols-2 gap-4 justify-center items-center w-full mb-3'>
           <SignInButton mode="modal">
