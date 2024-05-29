@@ -74,7 +74,7 @@ interface ReminderFormProps {
 
 export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit, handleDelete}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   if (reminder && reminder.note === null) {
     reminder.note = ''

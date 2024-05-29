@@ -13,7 +13,7 @@ const inputVariants = cva(
         default: "focus:outline-none focus:ring-none",
         inline:
           "bg-inherit border-none focus:outline-none",
-        form: "rounded bg-white text-md focus:outline-none border-none px-5 h-14",
+        form: "rounded bg-white text-base focus:outline-none border-none px-5 h-14",
         noring: "focus:outline-none focus:bg-neutral-100 hover:bg-neutral-100 transition-colors"
       },
     },
