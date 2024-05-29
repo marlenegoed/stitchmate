@@ -17,10 +17,7 @@ import {
   SignedOut,
   SignOutButton,
   useAuth,
-  UserButton,
-  UserProfile
 } from '@clerk/nextjs'
-import {Button} from './button';
 import {usePathname} from 'next/navigation';
 
 export function UserMenu() {
@@ -63,7 +60,7 @@ export default function Nav() {
         <UserMenu />
       </SignedIn>
       <SignedOut>
-        <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors'>Sign in</span></SignInButton>
+        <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors pr-4'>Sign in</span></SignInButton>
       </SignedOut>
     </nav>
   );
