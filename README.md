@@ -1,30 +1,41 @@
-TODO: 
-- [] Title Component, fix className (className must be provided?)
+[![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
+# [Stitchmate.xyz](https://stitchmate.xyz)
 
-
-# Stitchmate
-
-Stitchmate is a knitting companion app that simplifies row counting with features like click tracking, versatile counting options & customizable reminders.
+Stitchmate is a knitting companion app that simplifies counting and project organisation with features like row tracking and customizable 'reminder' rows.
 
 Counting rows in knitting is like keeping track of the steps in a recipe. Just as each step in cooking contributes to the final dish, each row in knitting builds up the fabric of your garment. By counting rows, you ensure that the pattern looks consistent and the garment turns out the right size and shape.
 
+![image](./images/sm-slide-demo.gif)
+
+
 ## Features: 
 
-- Tap to Count: Count rows up or down on tap
+**Manage multiple projects:**
+- Track as many projects as you like
+- Take notes like yarn, needle and gauge
+- Choose your favorite out of five beautifully selected colors 
+- Search projects by titles and organise them by favorites 
+<br>
 
-- Customisable Reminders: The 'reminder' feature prompts for an action on a designated row, making it much more sophisticated than a traditional row counter. Reminders can be configured prompting between a range of rows to represent a section in a knitting pattern or on intervals which is for example useful to decrease on sleeves. 
+**Follow your pattern in sections:**
+- projects consist of sections, following the logic of a knitting pattern
+- each section tracks your current progress using an individual counter 
+- manage and configure sections individually  
+- clone sections to jumpstart similar tasks (e.g. sleeves) 
+- use and configure a progress bar
+- count backwards in case you need to unravel 
+- toggle audiofeedback and knit without looking to your device
 
-- Progress bar: By configurating the counter and giving a max number of rows to knit for, a progress bar is displayed on the top. 
 
-- Sounds: Users can toggle sounds on or off according to their preferences.
+**Set custom reminders:**
 
-- Offline Accessibility: the data is stored directly on the device and row counts can be accessed anytime, anywhere, even when offline. 
+- prompt for an action on a designated row
+- configured prompting between a range of rows or at intervals
+- easily track repetitive actions (e.g. increasing or decreasing sts, or pattern repeats) 
 
-> [!NOTE]  
-> Responsive Design is still under construction. Currently works best for iPhone SE. 
 
-![image](./images/preview_stitchmate.jpg)
+![image](./images/sm-slides-responsive.png)
 
 
 ## Running the application
