@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select"
 import {Textarea} from '../ui/textarea';
 
-import {updateProject, type NewProject} from '@/database/queries/projects';
+import {updateProject, type NewProject} from '@/database/queries/queries';
 
 import {HiOutlinePlus} from "react-icons/hi";
 import {HiOutlineX} from "react-icons/hi";
@@ -92,7 +92,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
       blobId,
       userId
     }
-    await updateProject(projectId, validProject)
+    await updateProject(userId, projectId, validProject)
   }
 
   return (

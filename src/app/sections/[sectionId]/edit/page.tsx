@@ -1,7 +1,7 @@
 'use server'
 import SectionForm from '@/components/sections/section-form'
 import Title from '@/components/ui/title'
-import {findSectionById} from '@/database/queries/projects'
+import {findSectionById} from '@/database/queries/queries'
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
 

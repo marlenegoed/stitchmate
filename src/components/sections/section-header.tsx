@@ -4,7 +4,7 @@ import CounterActions from './couter-actions'
 import {HiChevronLeft} from "react-icons/hi2";
 import {HiChevronRight} from "react-icons/hi2";
 import {Button} from '../ui/button';
-import {Reminder, Section, UserSettings, changeActiveSection} from '@/database/queries/projects';
+import {Reminder, Section, UserSettings, changeActiveSection} from '@/database/queries/queries';
 import SectionTitleField from './section-title-field';
 import Title from '../ui/title';
 import shortenText from '@/lib/shorten-text';

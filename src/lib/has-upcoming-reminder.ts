@@ -1,4 +1,4 @@
-import {Reminder} from '@/database/queries/projects'
+import {Reminder} from '@/database/queries/queries'
 import findNextReminders from './find-next-reminders'
 
 export default function hasUpComingReminder(count: number, reminders: Reminder[], direction: number) {

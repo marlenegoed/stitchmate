@@ -1,6 +1,6 @@
 import ProjectCard from '@/components/projects/project-card'
 import ProjectListPagination from '@/components/projects/project-list-pagination'
-import {getAllProjects, countProjects} from '@/database/queries/projects'
+import {getAllProjects, countProjects} from '@/database/queries/queries'
 
 export async function ProjectList({title, favorite, userId, page}: {title?: string, favorite?: boolean, userId: string, page: number}) {
   const projects = await getAllProjects(userId, title, favorite, page)

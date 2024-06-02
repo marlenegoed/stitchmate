@@ -2,9 +2,9 @@
 
 import {HiArrowRightOnRectangle} from "react-icons/hi2";
 import {HiOutlineSquare2Stack} from "react-icons/hi2";
-import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/projects';
+import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
 import {Button} from '../ui/button';
-import {updateCount} from '@/database/queries/projects';
+import {updateCount} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';

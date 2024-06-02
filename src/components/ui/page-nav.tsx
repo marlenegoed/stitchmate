@@ -1,6 +1,6 @@
 'use server'
 
-import {Section} from '@/database/queries/projects';
+import {Section} from '@/database/queries/queries';
 import BackButton from './back-button';
 import Title from './title';
 import DeleteDialog from '../sections/delete-dialog';

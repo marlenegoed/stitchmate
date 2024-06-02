@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import {updateSection, type Section} from '@/database/queries/projects';
+import {updateSection, type Section} from '@/database/queries/queries';
 import Link from 'next/link';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {useEffect} from 'react';

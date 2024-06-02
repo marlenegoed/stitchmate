@@ -40,7 +40,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import {updateSection, type Section} from '@/database/queries/projects';
+import {updateSection, type Section} from '@/database/queries/queries';
 import Link from 'next/link';
 import DeleteDialog from './delete-dialog';
 import {useEffect, useState} from 'react';

@@ -1,7 +1,7 @@
 'use client';
 
 import ReminderAlertDialog from './reminder-alert-dialog';
-import {NewReminder, createReminder, type Reminder} from '@/database/queries/projects';
+import {NewReminder, createReminder, type Reminder} from '@/database/queries/queries';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {ScrollArea, ScrollBar} from '../ui/scroll-area';

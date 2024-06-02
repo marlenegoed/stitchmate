@@ -38,7 +38,7 @@ import {
 
 import {Textarea} from "@/components/ui/textarea";
 import makeOrdinal from '@/lib/make-ordinal';
-import {type Reminder} from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/queries';
 import AddReminder from './add-reminder';
 import {useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';

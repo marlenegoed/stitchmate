@@ -2,7 +2,7 @@
 
 import useSound from 'use-sound';
 import BackgroundBlob from './background-blobs';
-import {Reminder} from '@/database/queries/projects';
+import {Reminder} from '@/database/queries/queries';
 import hasUpComingReminder from '@/lib/has-upcoming-reminder';
 import {kalam} from './fonts';
 

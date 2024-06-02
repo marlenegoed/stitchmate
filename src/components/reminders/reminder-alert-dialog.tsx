@@ -13,7 +13,7 @@ import {Button} from "@/components/ui/button";
 import {DialogClose} from '@radix-ui/react-dialog';
 import ReminderItem from './reminder-item';
 import ReminderTag from './reminder-tag';
-import {updateReminder, type Reminder} from '@/database/queries/projects';
+import {updateReminder, type Reminder} from '@/database/queries/queries';
 import {RangeProgress, RepeatProgress} from './reminder-progress';
 import ReminderRepeat from './reminder-repeat';
 import {TbZzz} from "react-icons/tb";

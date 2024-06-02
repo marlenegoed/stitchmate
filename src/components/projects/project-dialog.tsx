@@ -39,7 +39,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
-import {createNewProject, quickStartProject} from '@/database/queries/projects';
+import {createNewProject, quickStartProject} from '@/database/queries/queries';
 import {useState} from 'react';
 import generateBlobId from '@/lib/generate-blob-id';
 import {cn} from '@/lib/utils';

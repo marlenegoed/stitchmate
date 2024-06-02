@@ -1,4 +1,4 @@
-import {Reminder, NewReminder} from '@/database/queries/projects'
+import {Reminder, NewReminder} from '@/database/queries/queries'
 
 export default function findNextReminders(reminders: Reminder[], count: number): Reminder[] {
 

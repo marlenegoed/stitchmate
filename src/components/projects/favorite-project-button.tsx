@@ -3,7 +3,7 @@
 import {HiMiniHeart} from "react-icons/hi2";
 import {HiOutlineHeart} from "react-icons/hi2";
 import {Button} from '../ui/button';
-import {toggleFavorite} from '@/database/queries/projects';
+import {toggleFavorite} from '@/database/queries/queries';
 
 interface FavoriteProjectProps {
   projectId: number,

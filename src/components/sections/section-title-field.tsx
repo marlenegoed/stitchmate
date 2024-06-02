@@ -12,7 +12,7 @@ import {
   FormField,
   FormItem,
 } from "@/components/ui/form"
-import {updateSectionTitle} from '@/database/queries/projects';
+import {updateSectionTitle} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {cn} from '@/lib/utils';
 

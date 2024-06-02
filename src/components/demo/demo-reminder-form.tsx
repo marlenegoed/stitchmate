@@ -1,6 +1,6 @@
 'use client';
 
-import {type Reminder, type NewReminder} from '@/database/queries/projects';
+import {type Reminder, type NewReminder} from '@/database/queries/queries';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import ReminderForm, {FormValues} from '../reminders/reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';

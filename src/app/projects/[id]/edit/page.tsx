@@ -1,7 +1,7 @@
 'use server'
 
 import ProjectForm from '@/components/projects/project-form';
-import {findProject} from '@/database/queries/projects';
+import {findProject} from '@/database/queries/queries';
 import PageNav from '@/components/ui/page-nav';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';

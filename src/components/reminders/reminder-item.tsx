@@ -1,6 +1,6 @@
 
 import shortenText from '@/lib/shorten-text';
-import {type Reminder} from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/queries';
 import clsx from 'clsx';
 import {TbZzz} from "react-icons/tb";
 import ReminderRepeat from './reminder-repeat';

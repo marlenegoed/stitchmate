@@ -3,7 +3,7 @@ import {HiMiniArrowUturnLeft} from 'react-icons/hi2'
 import {Button} from './button'
 import useSound from 'use-sound';
 import {Tooltip} from './tooltip';
-import {Reminder} from '@/database/queries/projects';
+import {Reminder} from '@/database/queries/queries';
 import hasUpComingReminder from '@/lib/has-upcoming-reminder';
 
 interface CountDownButtonProps {

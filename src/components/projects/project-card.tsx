@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import {HiEllipsisVertical} from "react-icons/hi2";
-import {Project, Section} from '@/database/queries/projects';
+import {Project, Section} from '@/database/queries/queries';
 import FavoriteProject from './favorite-project-button';
 import BackgroundBlob from '../ui/background-blobs';
 import {Button} from '../ui/button';

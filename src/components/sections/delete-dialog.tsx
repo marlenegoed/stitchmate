@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/projects';
+import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/queries';
 import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 import {useRouter} from 'next/navigation';

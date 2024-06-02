@@ -1,6 +1,6 @@
 'use client'
 
-import {type Reminder} from '@/database/queries/projects';
+import {type Reminder} from '@/database/queries/queries';
 import ReminderAlertDialog from './reminder-alert-dialog';
 import {useCounterStore} from '@/providers/counter-store-provider'
 import findNextReminders from '@/lib/find-next-reminders';

@@ -1,4 +1,4 @@
-import {type Reminder} from '@/database/queries/projects'
+import {type Reminder} from '@/database/queries/queries'
 import makeOrdinal from '../../lib/make-ordinal'
 import {cn} from '@/lib/utils'
 

@@ -2,7 +2,7 @@
 
 import {create} from 'zustand';
 import {persist, devtools, createJSONStorage} from 'zustand/middleware'
-import {type NewReminder, type Reminder} from '@/database/queries/projects';
+import {type NewReminder, type Reminder} from '@/database/queries/queries';
 
 export type DemoState = {
   reminders: Reminder[],
@@ -41,8 +41,8 @@ export const createDemoStore = (
           ...initState,
 
           setNumOfRows: (numOfRows) => set((state) => ({
-              ...state,
-              numOfRows
+            ...state,
+            numOfRows
           })),
 
           resetStore: () => set(() => ({
