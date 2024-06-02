@@ -3,7 +3,7 @@
 import {eq, and, gte, sql, asc, gt, ilike, desc, not, count, or} from 'drizzle-orm'
 import {db} from '../db'
 import {projects, sections, reminders, userSettings} from '../schema'
-import {redirect} from 'next/navigation';
+import {notFound, redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 import generateBlobId from '@/lib/generate-blob-id';
 
@@ -98,9 +98,14 @@ export async function deleteProject(userId: string, id: number) {
 
 // sections
 
-// TODO: add userID
-export async function createNewSection(projectId: number, position: number, title: string) {
+
+export async function createNewSection(userId: string, projectId: number, position: number, title: string) {
   const sectionId = await db.transaction(async (tx) => {
+    const userProjects = await tx.select({userId: projects.userId}).from(projects).where(and(eq(projects.userId, userId), eq(projects.id, projectId)))
+    if (userProjects.length < 1) return
+    // SELECT user_id from projects where projects.id = projectId and projects.user_id = userID
+
+    // UPDATE sections set active = false where se
     await tx.update(sections).set({active: false}).where(eq(sections.projectId, projectId))
     await tx.update(sections).set({position: sql`${sections.position} + 1`}).where(and(eq(sections.projectId, projectId), gte(sections.position, position)))
 
@@ -112,7 +117,11 @@ export async function createNewSection(projectId: number, position: number, titl
     const newSection = await tx.insert(sections).values({projectId, position, title, active: true, blobId: generateBlobId(existingBlobIds)}).returning({id: sections.id})
     return newSection[0].id
   })
-  redirect(`/sections/${sectionId}`)
+  if (sectionId) {
+    redirect(`/sections/${sectionId}`)
+  } else {
+    notFound()
+  }
 }
 
 // TODO: add userID

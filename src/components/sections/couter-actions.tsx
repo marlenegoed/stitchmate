@@ -46,7 +46,7 @@ export default function CounterActions({section, userSettings, numOfSections, re
 
       <ResetDialog handleReset={handleReset} />
       <CloneSection section={section} />
-      <AddSection projectId={section.projectId} position={section.position} />
+      <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
       <SectionDialog section={section} numOfSections={numOfSections} />
     </CounterActionBar>
   )
@@ -61,16 +61,17 @@ export function CounterActionBar({children}: {children: ReactNode}) {
 }
 
 interface AddSectionProps {
+  userId: string, 
   projectId: number,
   position: number
 }
 
-export function AddSection({projectId, position}: AddSectionProps) {
+export function AddSection({userId, projectId, position}: AddSectionProps) {
   const {toast} = useToast()
   async function handleNewSection() {
     const newPosition = position + 1
     const newSectionTitle = `Section ${newPosition}`
-    await createNewSection(projectId, newPosition, newSectionTitle)
+    await createNewSection(userId, projectId, newPosition, newSectionTitle)
     toast({title: "Section created"})
   }
 
