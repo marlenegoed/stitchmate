@@ -90,15 +90,13 @@ export async function findProject(userId: string, id: number) {
   return result[0]
 }
 
-// TODO: add userID
-export async function deleteProject(id: number) {
-  await db.delete(projects).where(eq(projects.id, id));
+export async function deleteProject(userId: string, id: number) {
+  await db.delete(projects).where(and(eq(projects.id, id), eq(projects.userId, userId)));
   redirect("/projects")
 }
 
 
 // sections
-
 
 // TODO: add userID
 export async function createNewSection(projectId: number, position: number, title: string) {

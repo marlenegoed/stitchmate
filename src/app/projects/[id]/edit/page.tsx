@@ -38,7 +38,7 @@ export default async function Page({params}: {params: {id: number}}) {
   return (
     <>
       <div className='flex w-full items-center'>
-        <PageNav pageTitle='Edit Project' urlPath={`/sections/${section!.id}`} projectId={params.id} />
+        <PageNav userId={userId} pageTitle='Edit Project' urlPath={`/sections/${section!.id}`} projectId={params.id} />
       </div>
       <ProjectForm defaultValues={defaultValues} projectId={params.id} blobId={project.blobId} userId={userId} />
     </>

@@ -20,6 +20,7 @@ import {useRouter} from 'next/navigation';
 import {HiOutlineTrash} from "react-icons/hi2";
 
 interface AlertDialogProps {
+  userId?: string,
   section?: Section,
   projectId?: number,
   reminderId?: number,
@@ -28,7 +29,7 @@ interface AlertDialogProps {
   disabled?: boolean,
 }
 
-export default function DeleteDialog({section, projectId, reminderId, className, handleDelete, disabled = false}: AlertDialogProps) {
+export default function DeleteDialog({userId, section, projectId, reminderId, className, handleDelete, disabled = false}: AlertDialogProps) {
   const router = useRouter()
   const {toast} = useToast()
 
@@ -46,8 +47,8 @@ export default function DeleteDialog({section, projectId, reminderId, className,
         toast({title: "Failed to delete section"})
         // TODO: Send error to sentry
       }
-    } else if (projectId) {
-      await deleteProject(projectId)
+    } else if (projectId && userId) {
+      await deleteProject(userId, projectId)
       toast({title: "Project deleted"})
     } else if (reminderId) {
       deleteReminder(reminderId)
