@@ -38,7 +38,7 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
           </Link>
         </div>
         <div className="col-span-1 pr-4 pt-3 pb-5 flex flex-col justify-between items-end">
-          <FavoriteProject projectId={project.id} isFavorite={project.favorite} />
+          <FavoriteProject userId={project.userId} projectId={project.id} isFavorite={project.favorite} />
 
           <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
             <Button size='icon' variant='ghost'>
