@@ -45,9 +45,9 @@ export async function quickStartProject(userId: string, title: string, blobId: n
 export async function updateProject(userId: string, id: number, project: NewProject) {
   const result = await db.update(projects).set({...project}).where(and(eq(projects.id, id), eq(projects.userId, userId)))
   if (result.length < 1) return
-  const section = await findActiveSection(id)
-  if (!section) {throw new Error('no section found')}
-  redirect(`/sections/${section.id}`)
+  const section = await findActiveSection(userId, id)
+  if (!section.length) notFound()
+  redirect(`/sections/${section[0].sections.id}`)
 }
 
 export async function toggleFavorite(userId: string, projectId: number) {
@@ -124,11 +124,8 @@ export async function createNewSection(userId: string, projectId: number, positi
   }
 }
 
-// TODO: add userID
-export async function findActiveSection(projectId: number) {
-  return await db.query.sections.findFirst({
-    where: and(eq(sections.projectId, projectId), eq(sections.active, true)),
-  })
+export async function findActiveSection(userId: string, projectId: number) {
+  return await db.select().from(sections).innerJoin(projects, eq(projects.id, sections.projectId)).where(and(eq(projects.userId, userId), eq(sections.projectId, projectId), eq(sections.active, true)))
 }
 
 export async function findSectionById(userId: string, sectionId: number) {
@@ -140,16 +137,22 @@ export async function findSectionById(userId: string, sectionId: number) {
   return result[0]
 }
 
+// stopped here
+// TODO: find and update references
 // TODO: add userID
-export async function findAllSections(projectId: number) {
-  const result = await db.query.sections.findMany({
-    where: eq(sections.projectId, projectId),
-    orderBy: asc(sections.position)
-  })
+export async function findAllSections(userId: string, projectId: number) {
+
+  const result = await db.select().from(projects)
+    .leftJoin(sections, eq(sections.projectId, projects.id))
+    .where(and(eq(projects.id, projectId), eq(projects.userId, userId)))
+    .orderBy(asc(sections.position))
+
   if (result.length === 0) {
+    notFound()
+  } else if (result.length === 1 && !result[0].sections) {
     return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true, blobId: generateBlobId()}).returning()
   }
-  return result
+  return result.map(row => row.sections!)
 }
 
 // TODO: add userID
