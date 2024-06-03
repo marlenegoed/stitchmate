@@ -238,7 +238,11 @@ export async function deleteSection(userId: string, section: Section) {
 }
 
 // TODO: add userID
-export async function cloneSection(section: Section) {
+export async function cloneSection(userId: string, section: Section) {
+
+  const isUserSection = await findSectionById(userId, section.id)
+  if (!isUserSection) notFound()
+
   const newSectionId = await db.transaction(async (tx) => {
     await tx.update(sections).set({active: false}).where(eq(sections.projectId, section.projectId))
     await tx.update(sections).set({position: sql`${sections.position} + 1`}).where(and(eq(sections.projectId, section.projectId), gt(sections.position, section.position)))
