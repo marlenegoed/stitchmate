@@ -148,16 +148,20 @@ export async function findAllSections(userId: string, projectId: number) {
     notFound()
   } else if (result.length === 1 && !result[0].sections) {
     return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true, blobId: generateBlobId()}).returning()
-  } 
+  }
   return result.map(row => row.sections!)
 }
 
-// TODO: add userID
-export async function findSectionReminders(sectionId: number) {
-  return await db.query.reminders.findMany({
-    where: eq(reminders.sectionId, sectionId),
-    orderBy: sql`coalesce("from", "start") asc`
-  })
+
+export async function findSectionReminders(userId: string, sectionId: number) {
+  const result = await db.select().from(reminders)
+    .innerJoin(sections, eq(sections.id, reminders.sectionId))
+    .innerJoin(projects, eq(sections.projectId, projects.id))
+    .where(and(eq(projects.userId, userId), eq(reminders.sectionId, sectionId)))
+    .orderBy(sql`coalesce("from", "start") asc`)
+
+  return result.map(row => row.reminders)
+
 }
 
 

@@ -23,7 +23,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
   const userSettings = await getUserSettings(userId)
   const {sections: section, projects: project} = result
-  const reminders = await findSectionReminders(section.id)
+  const reminders = await findSectionReminders(userId, section.id)
 
   await setActiveSection(params.sectionId)
   const allSections = await findAllSections(userId, section.projectId)
@@ -33,7 +33,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <HydrateUserSettingsStore storeSound={userSettings.sound} />
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
 
-      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='max-w-6xl' reminders={reminders}/>
+      <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='max-w-6xl' reminders={reminders} />
       <SectionProgress numOfRows={section.numOfRows || 0} className="max-w-6xl" />
 
       <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >

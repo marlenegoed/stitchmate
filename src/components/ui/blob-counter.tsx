@@ -13,7 +13,7 @@ interface BlobCounterProps {
   blobIndex: number,
   sound?: boolean,
   onClick?: (newCount: number) => void
-  reminders: Reminder[]
+  reminders: Reminder[] 
 }
 
 export function BlobCounter({color, count, blobIndex, onClick, sound = false, reminders}: BlobCounterProps) {
