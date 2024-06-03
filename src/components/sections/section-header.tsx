@@ -26,7 +26,7 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
       <div className='grid grid-cols-12 items-center mb-4'>
         <div className='hidden col-span-6 flex-row items-center w-full ml-6 sm:flex '>
           <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
-          <SectionTitleField id={section.id} title={section.title} />
+          <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
         </div>
 
         <div className='col-span-6 flex flex-row justify-end'>
@@ -35,18 +35,18 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
           </div>
 
           <div className='hidden mr-6 sm:flex flex-row items-center'>
-            <SectionPagination section={section} numOfSections={numOfSections} />
+            <SectionPagination userId={userSettings.userId} section={section} numOfSections={numOfSections} />
           </div>
         </div>
 
         {/* mobile header */}
         <div className='col-span-12 justify-center px-4 sm:hidden mb-1'>
           <div className='grid grid-cols-12 justify-center items-center'>
-            <MoveToPrevSection section={section} numOfSections={numOfSections} className='col-span-2 justify-self-start self-center' />
+            <MoveToPrevSection userId={userSettings.userId} section={section} numOfSections={numOfSections} className='col-span-2 justify-self-start self-center' />
             <div className='col-span-8 justify-self-center self-center'>
-              <SectionTitleField id={section.id} title={section.title} className='w-full text-center' />
+              <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} className='w-full text-center' />
             </div>
-            <MoveToNextSection section={section} numOfSections={numOfSections} className='col-span-2 justify-self-end self-center' />
+            <MoveToNextSection userId={userSettings.userId} section={section} numOfSections={numOfSections} className='col-span-2 justify-self-end self-center' />
           </div>
         </div>
 
@@ -61,22 +61,23 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 }
 
 interface SectionPaginationProps {
+  userId: string,
   section: Section,
   numOfSections: number
 }
 
-function SectionPagination({section, numOfSections}: SectionPaginationProps) {
+function SectionPagination({userId, section, numOfSections}: SectionPaginationProps) {
   // TODO: Make this more flexibel and show current position 
   async function moveToPrevSection() {
     if (section.position <= 0) return
     const newPosition = section.position - 1
-    await changeActiveSection(section.projectId, newPosition)
+    await changeActiveSection(userId, section.projectId, newPosition)
   }
 
   async function moveToNextSection() {
     const newPosition = section.position + 1
     if (newPosition >= numOfSections) return
-    await changeActiveSection(section.projectId, newPosition)
+    await changeActiveSection(userId, section.projectId, newPosition)
   }
 
   return (
@@ -111,18 +112,19 @@ function SectionPagination({section, numOfSections}: SectionPaginationProps) {
 
 
 interface MoveToSectionProps {
+  userId: string,
   section: Section,
   numOfSections: number,
   className?: string
 }
 
-function MoveToNextSection({section, numOfSections, className}: MoveToSectionProps) {
+function MoveToNextSection({userId, section, numOfSections, className}: MoveToSectionProps) {
 
 
   async function moveToNextSection() {
     const newPosition = section.position + 1
     if (newPosition >= numOfSections) return
-    await changeActiveSection(section.projectId, newPosition)
+    await changeActiveSection(userId, section.projectId, newPosition)
   }
 
   return (
@@ -142,11 +144,11 @@ function MoveToNextSection({section, numOfSections, className}: MoveToSectionPro
 }
 
 
-function MoveToPrevSection({section, className}: MoveToSectionProps) {
+function MoveToPrevSection({userId, section, className}: MoveToSectionProps) {
   async function moveToPrevSection() {
     if (section.position <= 0) return
     const newPosition = section.position - 1
-    await changeActiveSection(section.projectId, newPosition)
+    await changeActiveSection(userId, section.projectId, newPosition)
   }
 
   return (

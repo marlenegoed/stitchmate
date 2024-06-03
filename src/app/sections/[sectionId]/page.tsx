@@ -25,7 +25,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
   const {sections: section, projects: project} = result
   const reminders = await findSectionReminders(userId, section.id)
 
-  await setActiveSection(params.sectionId)
+  await setActiveSection(userId, params.sectionId)
   const allSections = await findAllSections(userId, section.projectId)
 
   return (
@@ -39,7 +39,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >
         <div className='mb-auto'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
-            <Counter sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
+            <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>
         </div>
         <ZustandHydration>

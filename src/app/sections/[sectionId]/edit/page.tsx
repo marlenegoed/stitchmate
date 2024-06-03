@@ -17,7 +17,7 @@ export default async function Page({params}: {params: {sectionId: string}}) {
   return (
     <>
       <Title>Edit section</Title>
-      <SectionForm section={result.sections} />
+      <SectionForm userId={userId} section={result.sections} />
     </>
   )
 

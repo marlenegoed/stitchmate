@@ -98,14 +98,12 @@ export async function deleteProject(userId: string, id: number) {
 
 // sections
 
-
 export async function createNewSection(userId: string, projectId: number, position: number, title: string) {
   const sectionId = await db.transaction(async (tx) => {
+
     const userProjects = await tx.select({userId: projects.userId}).from(projects).where(and(eq(projects.userId, userId), eq(projects.id, projectId)))
     if (userProjects.length < 1) return
-    // SELECT user_id from projects where projects.id = projectId and projects.user_id = userID
 
-    // UPDATE sections set active = false where se
     await tx.update(sections).set({active: false}).where(eq(sections.projectId, projectId))
     await tx.update(sections).set({position: sql`${sections.position} + 1`}).where(and(eq(sections.projectId, projectId), gte(sections.position, position)))
 
@@ -165,19 +163,30 @@ export async function findSectionReminders(userId: string, sectionId: number) {
 }
 
 
-// TODO: add userID
-export async function updateSectionTitle(id: number, title: string) {
+export async function updateSectionTitle(userId: string, id: number, title: string) {
+
+  const isUserSection = await findSectionById(userId, id)
+  if (!isUserSection) notFound()
+
   await db.update(sections).set({title}).where(eq(sections.id, id))
 }
 
-// TODO: add userID
-export async function updateSection(id: number, title: string, count: number, projectId: number, numOfRows?: number) {
+
+export async function updateSection(userId: string, id: number, title: string, count: number, projectId: number, numOfRows?: number) {
+
+  const isUserSection = await findSectionById(userId, id)
+  if (!isUserSection) notFound()
+
   await db.update(sections).set({title, count, numOfRows}).where(eq(sections.id, id))
   redirect(`/sections/${id}`)
 }
 
-// TODO: add userID
-export async function updateCount(sectionId: number, newCount: number) {
+
+export async function updateCount(userId: string, sectionId: number, newCount: number) {
+
+  const isUserSection = await findSectionById(userId, sectionId)
+  if (!isUserSection) notFound()
+
   if (newCount <= 1) {newCount = 1}
   if (newCount >= 999) {newCount = 999}
 
@@ -188,8 +197,11 @@ export async function updateCount(sectionId: number, newCount: number) {
   return updatedCount
 }
 
-// TODO: add userID
-export async function changeActiveSection(projectId: number, position: number) {
+
+export async function changeActiveSection(userId: string, projectId: number, position: number) {
+
+  const isUserProject = await findProject(userId, projectId)
+  if (!isUserProject) notFound()
 
   await db.update(sections).set({active: false}).where(eq(sections.projectId, projectId))
 
@@ -203,8 +215,12 @@ export async function changeActiveSection(projectId: number, position: number) {
   redirect(`/sections/${nextActiveSection[0].id}`)
 }
 
-// TODO: add userID
-export async function setActiveSection(sectionId: number) {
+
+export async function setActiveSection(userId: string, sectionId: number) {
+
+  const isUserSection = await findSectionById(userId, sectionId)
+  if (!isUserSection) notFound()
+
   await db.transaction(async (tx) => {
     const projectId = tx.select({projectId: sections.projectId}).from(sections).where(eq(sections.id, sectionId))
     await tx.update(sections).set({active: false}).where(eq(projectId, sections.projectId))
@@ -212,8 +228,8 @@ export async function setActiveSection(sectionId: number) {
   })
 }
 
-// TODO: add userID
 export async function deleteSection(userId: string, section: Section) {
+
   const hasSections = await findAllSections(userId, section.projectId)
 
   if (hasSections.length <= 1) {
@@ -237,7 +253,6 @@ export async function deleteSection(userId: string, section: Section) {
   }
 }
 
-// TODO: add userID
 export async function cloneSection(userId: string, section: Section) {
 
   const isUserSection = await findSectionById(userId, section.id)

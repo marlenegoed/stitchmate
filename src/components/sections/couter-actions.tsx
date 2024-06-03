@@ -33,21 +33,21 @@ export default function CounterActions({section, userSettings, numOfSections, re
   }
 
   async function handleReset() {
-    await updateCount(section.id, 1)
+    await updateCount(userSettings.userId, section.id, 1)
     resetCounter()
   }
 
   return (
     <CounterActionBar>
-      <CountDown sectionId={section.id} sound={storeSound} reminders={reminders} />
+      <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
       <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
         <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
       </ZustandHydration>
 
       <ResetDialog handleReset={handleReset} />
-      <CloneSection section={section} />
+      <CloneSection userId={userSettings.userId} section={section} />
       <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
-      <SectionDialog section={section} numOfSections={numOfSections} />
+      <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
     </CounterActionBar>
   )
 }
@@ -61,7 +61,7 @@ export function CounterActionBar({children}: {children: ReactNode}) {
 }
 
 interface AddSectionProps {
-  userId: string, 
+  userId: string,
   projectId: number,
   position: number
 }
@@ -96,24 +96,24 @@ const AddSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTML
 ))
 AddSectionButton.displayName = "AddSectionButton"
 
-export function CountDown({sectionId, sound, reminders}: {sectionId: number, sound: boolean, reminders: Reminder[]}) {
+export function CountDown({userId, sectionId, sound, reminders}: {userId: string, sectionId: number, sound: boolean, reminders: Reminder[]}) {
   const {storeCount, setStoreCount} = useCounterStore(
     (state) => state,
   )
 
   async function handleCountDown(newCount: number) {
     setStoreCount(newCount)
-    await updateCount(sectionId, newCount)
-    await setActiveSection(sectionId)
+    await updateCount(userId, sectionId, newCount)
+    await setActiveSection(userId, sectionId)
   }
 
   return <CountDownButton count={storeCount} handleChange={handleCountDown} sound={sound} reminders={reminders} />
 }
 
-export function CloneSection({section}: {section: Section}) {
+export function CloneSection({userId, section}: {userId: string, section: Section}) {
   const {toast} = useToast()
   async function handleClick() {
-    await cloneSection(section)
+    await cloneSection(userId, section)
     toast({
       title: "Section cloned"
     })

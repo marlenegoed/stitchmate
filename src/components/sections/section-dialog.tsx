@@ -60,7 +60,7 @@ const formSchema = z.object({
   rows: z.coerce.number().int().nonnegative(),
 })
 
-export default function SectionDialog({section, numOfSections}: {section: Section, numOfSections: number}) {
+export default function SectionDialog({userId, section, numOfSections}: {userId: string, section: Section, numOfSections: number}) {
   const {storeCount, storeTitle} = useCounterStore(state => state)
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
@@ -85,7 +85,7 @@ export default function SectionDialog({section, numOfSections}: {section: Sectio
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
+    await updateSection(userId, section.id, values.title, values.count, section.projectId, values.rows)
     setOpen(false)
   }
 

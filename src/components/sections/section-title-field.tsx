@@ -21,12 +21,13 @@ const formSchema = z.object({
 })
 
 interface SectionTitleFieldProps {
+  userId: string,
   id: number,
   title: string
   className?: string
 }
 
-export default function SectionTitleField({id, title, className}: SectionTitleFieldProps) {
+export default function SectionTitleField({userId, id, title, className}: SectionTitleFieldProps) {
   const {storeTitle, setStoreTitle} = useCounterStore(state => state)
 
   const formRef = useRef<HTMLFormElement>(null)
@@ -45,7 +46,7 @@ export default function SectionTitleField({id, title, className}: SectionTitleFi
     e?.preventDefault()
     if (!form.formState.isDirty) return
 
-    await updateSectionTitle(id, values.title)
+    await updateSectionTitle(userId, id, values.title)
     setStoreTitle(values.title)
 
     form.reset(values)

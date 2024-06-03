@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 })
 
-export default function SectionForm({section}: {section: Section}) {
+export default function SectionForm({userId, section}: {userId: string, section: Section}) {
   const {storeCount, storeTitle} = useCounterStore(state => state)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,7 +52,7 @@ export default function SectionForm({section}: {section: Section}) {
   }, [storeTitle, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await updateSection(section.id, values.title, values.count, section.projectId, values.rows)
+    await updateSection(userId, section.id, values.title, values.count, section.projectId, values.rows)
   }
 
   return (
