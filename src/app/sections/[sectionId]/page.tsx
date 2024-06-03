@@ -49,7 +49,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
         </ZustandHydration>
       </section>
 
-      <ReminderList sectionId={section.id} reminders={reminders} className='max-w-6xl' />
+      <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className='max-w-6xl' />
     </>
   );
 }

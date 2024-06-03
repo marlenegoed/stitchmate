@@ -12,24 +12,25 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
-import {Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/queries';
+import {Reminder, Section, deleteProject, deleteReminder, deleteSection} from '@/database/queries/queries';
 import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
+import {useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/navigation';
 
 import {HiOutlineTrash} from "react-icons/hi2";
 
 interface AlertDialogProps {
-  userId?: string,
   section?: Section,
   projectId?: number,
-  reminderId?: number,
+  reminder: Reminder,
   className?: string,
   handleDelete?: () => void,
   disabled?: boolean,
 }
 
-export default function DeleteDialog({userId, section, projectId, reminderId, className, handleDelete, disabled = false}: AlertDialogProps) {
+export default function DeleteDialog({section, projectId, reminder, className, handleDelete, disabled = false}: AlertDialogProps) {
+  const {user} = useUser()
   const router = useRouter()
   const {toast} = useToast()
 
@@ -38,20 +39,21 @@ export default function DeleteDialog({userId, section, projectId, reminderId, cl
       handleDelete()
       return
     }
+    if (!user) return
 
     if (section) {
       try {
-        await deleteSection(section)
+        await deleteSection(user.id, section)
         toast({title: "Section deleted"})
       } catch (e) {
         toast({title: "Failed to delete section"})
         // TODO: Send error to sentry
       }
-    } else if (projectId && userId) {
-      await deleteProject(userId, projectId)
+    } else if (projectId) {
+      await deleteProject(user.id, projectId)
       toast({title: "Project deleted"})
-    } else if (reminderId) {
-      deleteReminder(reminderId)
+    } else if (reminder) {
+      deleteReminder(user.id, reminder.sectionId, reminder.id)
       router.refresh();
       toast({title: "Reminder deleted"})
     }
@@ -60,7 +62,7 @@ export default function DeleteDialog({userId, section, projectId, reminderId, cl
   function title() {
     if (section) {return 'section'}
     else if (projectId) {return 'project'}
-    else if (reminderId) {return 'reminder'}
+    else if (reminder) {return 'reminder'}
   }
 
   return (

@@ -294,21 +294,34 @@ export async function cloneSection(userId: string, section: Section) {
   redirect(`/sections/${newSectionId}`)
 }
 
-// TODO: add userID
+
 // reminder 
 
-export async function updateReminder(reminder: Reminder) {
+export async function updateReminder(userId: string, reminder: Reminder) {
+
+  const isUser = findSectionById(userId, reminder.sectionId)
+  if (!isUser) notFound()
+
   await db.update(reminders).set({...reminder}).where(eq(reminders.id, reminder.id))
   redirect(`/sections/${reminder.sectionId}`)
 }
 
-export async function createReminder(reminder: NewReminder) {
+
+export async function createReminder(userId: string, reminder: NewReminder) {
+
+  const isUser = findSectionById(userId, reminder.sectionId)
+  if (!isUser) notFound()
+
   await db.insert(reminders).values({...reminder, sectionId: reminder.sectionId})
 
   redirect(`/sections/${reminder.sectionId}`)
 }
 
-export async function deleteReminder(reminderId: number) {
+export async function deleteReminder(userId: string, sectionId: number, reminderId: number) {
+
+  const isUser = findSectionById(userId, sectionId)
+  if (!isUser) notFound()
+
   return await db.delete(reminders).where(eq(reminders.id, reminderId))
 }
 

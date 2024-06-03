@@ -116,7 +116,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
               <DialogHeader className='mb-2 -mt-4 justify-between items-center'>
                 <ReminderTitleField />
-                {reminder && <DeleteDialog reminderId={reminder.id} handleDelete={handleDelete} />}
+                {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
               </DialogHeader>
               <ReminderFormInputs count={count} />
               <DialogFooter className='grid grid-cols-2 gap-4 px-1'>
@@ -149,7 +149,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
                 <DrawerTitle>
                   < ReminderTitleField />
                 </DrawerTitle>
-                {reminder && <DeleteDialog reminderId={reminder.id} handleDelete={handleDelete} />}
+                {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
               </DrawerHeader>
 
               <ReminderFormInputs count={count} />

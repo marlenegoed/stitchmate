@@ -26,12 +26,13 @@ import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
 interface ReminderAlertDialogProps {
+  userId: string, 
   reminder: Reminder,
   isTag?: boolean,
   className?: string,
 }
 
-export default function ReminderAlertDialog({reminder, isTag, className}: ReminderAlertDialogProps) {
+export default function ReminderAlertDialog({userId, reminder, isTag, className}: ReminderAlertDialogProps) {
   const {toast} = useToast()
   const storeCount = useCounterStore((state) => state.storeCount)
 
@@ -43,12 +44,12 @@ export default function ReminderAlertDialog({reminder, isTag, className}: Remind
 
   async function handleSnooze() {
     const newReminder = {...reminder, notification: !reminder.notification}
-    await updateReminder(newReminder)
+    await updateReminder(userId, newReminder)
   }
 
   async function handleSubmit(values: FormValues) {
     const updatedReminder: Reminder = {...reminder, ...values}
-    await updateReminder(updatedReminder)
+    await updateReminder(userId, updatedReminder)
     toast({title: "Reminder updated"})
   }
 
