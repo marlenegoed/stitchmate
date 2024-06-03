@@ -137,9 +137,6 @@ export async function findSectionById(userId: string, sectionId: number) {
   return result[0]
 }
 
-// stopped here
-// TODO: find and update references
-// TODO: add userID
 export async function findAllSections(userId: string, projectId: number) {
 
   const result = await db.select().from(projects)
@@ -151,7 +148,7 @@ export async function findAllSections(userId: string, projectId: number) {
     notFound()
   } else if (result.length === 1 && !result[0].sections) {
     return await db.insert(sections).values({projectId, position: 0, title: 'Section 1', active: true, blobId: generateBlobId()}).returning()
-  }
+  } 
   return result.map(row => row.sections!)
 }
 
@@ -212,8 +209,8 @@ export async function setActiveSection(sectionId: number) {
 }
 
 // TODO: add userID
-export async function deleteSection(section: Section) {
-  const hasSections = await findAllSections(section.projectId)
+export async function deleteSection(userId: string, section: Section) {
+  const hasSections = await findAllSections(userId, section.projectId)
 
   if (hasSections.length <= 1) {
     throw new Error('project must have at least one section')

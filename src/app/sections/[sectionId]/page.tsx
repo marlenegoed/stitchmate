@@ -26,7 +26,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
   const reminders = await findSectionReminders(section.id)
 
   await setActiveSection(params.sectionId)
-  const allSections = await findAllSections(section.projectId)
+  const allSections = await findAllSections(userId, section.projectId)
 
   return (
     <>
