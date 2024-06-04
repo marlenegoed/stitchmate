@@ -267,7 +267,7 @@ export async function cloneSection(userId: string, section: Section) {
     })
 
     const sectionClone = {
-      title: section.title + '2',
+      title: section.title + ' copy',
       active: true,
       position: section.position + 1,
       count: section.count,

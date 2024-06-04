@@ -18,11 +18,72 @@ const repeatingReminder: Reminder = {
   createdAt: null
 }
 
-// TODO: 
-// test Range Reminder 
-// test with array of Range and Repeating Reminders 
-// test with array of 2 range and 2 repeating reminders
-// test notification true false 
+const repeatingReminder2: Reminder = {
+  id: 2,
+  sectionId: 1,
+  title: 'decrease sts',
+  note: null,
+  notification: true,
+  type: 'repeating',
+  interval: 7,
+  times: 3,
+  start: 7,
+  from: null,
+  until: null,
+  updatedAt: null,
+  createdAt: null
+}
+
+const rangeReminder: Reminder = {
+  id: 3,
+  sectionId: 1,
+  title: 'short rows',
+  note: null,
+  notification: true,
+  type: 'range',
+  from: 5,
+  until: 12,
+  start: null,
+  interval: null,
+  times: null,
+  updatedAt: null,
+  createdAt: null
+}
+
+const rangeReminder2: Reminder = {
+  id: 4,
+  sectionId: 1,
+  title: 'neckline increase',
+  note: null,
+  notification: true,
+  type: 'range',
+  from: 2,
+  until: 7,
+  start: null,
+  interval: null,
+  times: null,
+  updatedAt: null,
+  createdAt: null
+}
+
+const silentRangeReminder: Reminder = {
+  id: 5,
+  sectionId: 1,
+  title: 'silent note',
+  note: null,
+  notification: false,
+  type: 'range',
+  from: 2,
+  until: 12,
+  start: null,
+  interval: null,
+  times: null,
+  updatedAt: null,
+  createdAt: null
+}
+
+const testReminders = [repeatingReminder, repeatingReminder2, rangeReminder, rangeReminder2, silentRangeReminder]
+
 
 describe('repeatingReminder', () => {
   test('count < start', () => {
@@ -52,4 +113,42 @@ describe('repeatingReminder', () => {
     expect(findNextReminders([repeatingReminder], 9)).to.eql([])
     expect(findNextReminders([repeatingReminder], 46)).to.eql([])
   })
+})
+
+describe('rangeReminder', () => {
+  test('count < from', () => {
+    expect(findNextReminders([rangeReminder], 4)).to.eql([])
+  })
+
+  test('count === from', () => {
+    expect(findNextReminders([rangeReminder], 5)).to.eql([rangeReminder])
+  })
+
+  test('appears from row 5 until row 12', () => {
+    for (let i = 5; i <= 12; i++) {
+      expect(findNextReminders([rangeReminder], i)).to.eql([rangeReminder])
+    }
+  })
+
+  test('does not appear on rows < 5 and > 12', () => {
+    expect(findNextReminders([rangeReminder], 1)).to.eql([])
+    expect(findNextReminders([rangeReminder], 4)).to.eql([])
+    expect(findNextReminders([rangeReminder], 13)).to.eql([])
+    expect(findNextReminders([rangeReminder], 55)).to.eql([])
+  })
+})
+
+describe('multiple reminders', () => {
+  test('no reminder on rnd 1', () => {
+    expect(findNextReminders([...testReminders], 1)).to.eql([])
+  })
+
+  test('rangeReminder2 on rnd 2', () => {
+    expect(findNextReminders([...testReminders], 2)).to.eql([rangeReminder2])
+  })
+
+  test('3 reminders on rnd 5', () => {
+    expect(findNextReminders([...testReminders], 5)).to.eql([repeatingReminder, rangeReminder, rangeReminder2])
+  })
+
 }) 

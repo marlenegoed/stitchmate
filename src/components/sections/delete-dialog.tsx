@@ -23,7 +23,7 @@ import {HiOutlineTrash} from "react-icons/hi2";
 interface AlertDialogProps {
   section?: Section,
   projectId?: number,
-  reminder: Reminder,
+  reminder?: Reminder,
   className?: string,
   handleDelete?: () => void,
   disabled?: boolean,
