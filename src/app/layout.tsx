@@ -10,7 +10,7 @@ export default function RootLayout({children}: Readonly<{
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${notoSans.className} antialiased h-full min-h-dvh bg-white`}>
+        <body className={`${notoSans.className} antialiased h-full min-h-dvh bg-neutral-50`}>
           {children}
           <Toaster />
         </body>
