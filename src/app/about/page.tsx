@@ -9,10 +9,10 @@ export default function Page() {
     <>
       <section className={`${notoSans.className} opacity-80 antialiased space-y-8 flex flex-col text-left p-6 text-3xl h-full font-medium leading-normal max-w-screen-lg`}>
         <p>
-          <span className='opacity-60 cursor-pointer'><Link href="/">stitchmate.xyz </Link></span>is an ongoing hobby project born out of my passion for knitting. If you have questions or improvements don&apos;t hestitate to <span><a className='whitespace-nowrap cursor-pointer opacity-60' href='mailto:stitchmate.contact@gmail.com'>contact me.</a></span>
+          <span className='text-sienna-400 cursor-pointer'><Link href="/">stitchmate.xyz </Link></span>is an ongoing hobby project born out of my passion for knitting. If you have questions or improvements don&apos;t hestitate to <span><a className='whitespace-nowrap cursor-pointer text-sienna-400' href='mailto:stitchmate.contact@gmail.com'>contact me.</a></span>
         </p>
         <p>
-          Find my source code on <a href="https://github.com/marlenegoed/stitchmate" className="opacity-60 whitespace-nowrap">github <FaGithub className='inline' size={20} />. </a>Attributions: <a href="https://www.vecteezy.com/free-vector/blob" className="opacity-60">Blob Vectors by Vecteezy.</a>
+          Find my source code on <a href="https://github.com/marlenegoed/stitchmate" className="text-sienna-400 whitespace-nowrap">github <FaGithub className='inline -mt-1' size={24} />. </a>Attributions: <a href="https://www.vecteezy.com/free-vector/blob" className="text-sienna-400">Blob Vectors by Vecteezy.</a>
         </p>
 
 
