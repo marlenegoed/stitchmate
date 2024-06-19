@@ -16,18 +16,17 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-import {HiMiniAdjustmentsVertical} from "react-icons/hi2";
+import {HiAdjustments} from "react-icons/hi";
 
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
-import {SubmitHandler, useForm, useFormContext, useFormState} from "react-hook-form";
+import {SubmitHandler, useForm, useFormContext} from "react-hook-form";
 
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -110,7 +109,7 @@ export default function DemoSectionDialog() {
           <DialogTrigger asChild>
             <Alert className='border-none p-0 m-0 bg-inherit'>
               <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-                <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
+                <HiAdjustments size={20} className='text-slate-700 ' />
               </Button>
             </Alert>
           </DialogTrigger>
@@ -144,7 +143,7 @@ export default function DemoSectionDialog() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-          <HiMiniAdjustmentsVertical size={20} className='text-slate-700 ' />
+          <HiAdjustments size={20} className='text-slate-700 ' />
         </Button>
       </DrawerTrigger>
       <DrawerContent>

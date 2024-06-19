@@ -20,12 +20,14 @@ import ResetDialog from '@/components/sections/reset-dialog'
 import {cn} from '@/lib/utils'
 import SectionProgress from '@/components/sections/section-progress'
 import {AddSectionButton, CloneSectionButton, CounterActionBar} from '@/components/sections/couter-actions'
+import Guide from '@/components/ui/guide'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p className='h-full'>Loading...</p>})
 
 export default function DemoCounterPage() {
   return (
     <>
+      <Guide />
       <CounterHeader className="max-w-6xl" />
       <CounterProgress className='max-w-6xl' />
 
@@ -118,9 +120,9 @@ function TitleField() {
       <FormItem>
         <Input
           ref={inputRef}
-          placeholder='currentTitle'
+          placeholder='add title'
           variant='inline'
-          className='placeholder:text-slate-800/50 font-semibold text-xl max-w-max'
+          className='placeholder:text-neutral-500 text-2xl font-semibold max-w-max pl-0'
           name="title"
           value={storeTitle}
           onChange={(e) => setStoreTitle(e.target.value)}

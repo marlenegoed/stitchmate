@@ -1,8 +1,8 @@
 'use client';
 
-import {LogoSmall} from '@/components/ui/logo';
+import Image from 'next/image'
 import Link from 'next/link';
-import {HiOutlineSquares2X2} from "react-icons/hi2";
+import {HiViewGrid} from "react-icons/hi";
 import {Avatar, AvatarFallback} from './avatar';
 import {
   Popover,
@@ -18,7 +18,58 @@ import {
   SignOutButton,
   useAuth,
 } from '@clerk/nextjs'
-import {usePathname} from 'next/navigation';
+import logo from '../../../public/stitchmate_logo.svg'
+
+
+
+export default function Nav() {
+
+  return (
+    <nav className='flex justify-between items-center px-4 py-4 w-full max-w-6xl mx-auto'>
+      <ProjectPageButton />
+      <Logo />
+      <SignedIn>
+        <UserMenu />
+      </SignedIn>
+      <SignedOut>
+        <SignInButton mode="modal" ><span className='font-semibold cursor-pointer bg-inherit text-gray-800 hover:text-gray-600 hover:transition-colors pr-4'>Sign in</span></SignInButton>
+      </SignedOut>
+    </nav>
+  );
+}
+
+function Logo() {
+  const {isSignedIn} = useAuth()
+
+  const url = isSignedIn ? '/projects' : '/'
+  return (
+    <Link href={url}>
+      <div className='w-24'>
+        <Image src={logo} alt='' style={{objectFit: "contain"}} />
+      </div>
+    </Link>
+  )
+}
+
+
+function ProjectPageButton() {
+  const {isSignedIn} = useAuth()
+
+  return (
+    <>
+      {isSignedIn ?
+        <Link href='/projects'
+          className="hover:text-neutral-600">
+          <HiViewGrid className='text-gray-800' size={24} />
+        </Link>
+        :
+        <SignInButton mode="modal">
+          <HiViewGrid className='text-gray-800 cursor-pointer hover:text-neutral-600' size={24} />
+        </SignInButton>
+      }
+    </>
+  )
+}
 
 export function UserMenu() {
   const {user} = useUser()
@@ -41,40 +92,5 @@ export function UserMenu() {
         </PopoverContent>
       </Popover>
     </>
-  )
-}
-
-export default function Nav() {
-
-  const pathname = usePathname()
-  const isDemo = pathname.startsWith('/demo')
-
-  return (
-    <nav className='flex justify-between items-center px-4 py-3 w-full max-w-6xl mx-auto'>
-      {isDemo ? <HomeLink /> :
-        <Link href='/projects' className='hover:bg-slate-100 h-10 w-10 flex justify-center items-center rounded-full'>
-          <HiOutlineSquares2X2 className='text-slate-600' size={24} />
-        </Link>
-      }
-      <SignedIn>
-        <UserMenu />
-      </SignedIn>
-      <SignedOut>
-        <SignInButton mode="modal" ><span className='font-semibold text-sm cursor-pointer bg-inherit text-sienna-400/70 hover:text-sienna-400/90 transition-colors pr-4'>Sign in</span></SignInButton>
-      </SignedOut>
-    </nav>
-  );
-}
-
-function HomeLink() {
-  const {isSignedIn} = useAuth()
-
-  const url = isSignedIn ? '/projects' : '/'
-  return (
-    <Link href={url}>
-      <div className='mt-1'>
-        <LogoSmall className={'fill-neutral-200 h-8 w-8 hover:fill-sienna-200 transition-colors'} />
-      </div>
-    </Link>
   )
 }

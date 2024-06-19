@@ -1,7 +1,6 @@
 'use client'
 
-import {HiArrowRightOnRectangle} from "react-icons/hi2";
-import {HiOutlineSquare2Stack} from "react-icons/hi2";
+import {HiOutlineDuplicate, HiOutlinePlusCircle} from "react-icons/hi";
 import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
 import {Button} from '../ui/button';
 import {updateCount} from '@/database/queries/queries';
@@ -91,7 +90,7 @@ const AddSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTML
     ref={ref}
     {...props}
   >
-    <HiArrowRightOnRectangle size={24} />
+    <HiOutlinePlusCircle size={24} />
   </Button>
 ))
 AddSectionButton.displayName = "AddSectionButton"
@@ -135,7 +134,7 @@ const CloneSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HT
     ref={ref}
     {...props}
   >
-    <HiOutlineSquare2Stack size={24} />
+    <HiOutlineDuplicate size={24} />
   </Button>
 ))
 CloneSectionButton.displayName = "CloneSectionButton"

@@ -18,6 +18,7 @@ const buttonVariants = cva(
           "bg-viridian-800 text-neutral-50 hover:bg-viridian-700/90 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         ghost: "hover:bg-neutral-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
+        nohover: "hover:bg-transparent dark:hover:bg-transparent",
       },
       size: {
         default: "min-w-12 h-12 p-5",
