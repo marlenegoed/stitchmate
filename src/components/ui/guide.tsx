@@ -36,7 +36,7 @@ export default function Guide() {
     <>
       <Dialog>
         <DialogTrigger asChild className='relative'>
-          <Button size="icon" className="fixed z-50 bottom-2 right-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-sienna-400 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
+          <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-sienna-400 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[440px] p-0 bg-white">
 
@@ -46,15 +46,11 @@ export default function Guide() {
             </Button>
           </DialogClose>
 
-          <Carousel className="">
+          <Carousel>
             <CarouselContent>
-              {!isSignedIn && <CarouselItem><DemoStartSlide /> </CarouselItem>}
-              <CarouselItem><CountRowsSlide /></CarouselItem>
-              <CarouselItem><ToolbarSlide /></CarouselItem>
-              <CarouselItem>...</CarouselItem>
-              <CarouselItem>...</CarouselItem>
-              <CarouselItem>...</CarouselItem>
-
+              {!isSignedIn && <DemoStartSlide />}
+              <CountRowsSlide />
+              <ToolbarSlide />
             </CarouselContent>
 
             <GuideNavigation />
@@ -102,7 +98,6 @@ function CountRowsSlide() {
 }
 
 function ToolbarSlide() {
-
   return (
     <SlideLayout className="bg-prussian-200">
       <div className="flex">
@@ -161,8 +156,8 @@ function GuideParagraph({children, className}: {children: ReactNode, className?:
 
 function SlideLayout({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <div className={cn("p-10 pb-0 w-full h-full flex flex-col rounded-t-lg", className)}>
+    <CarouselItem className={cn("p-10 pb-0 rounded-t-lg", className)}>
       {children}
-    </div>
+    </CarouselItem>
   )
 }

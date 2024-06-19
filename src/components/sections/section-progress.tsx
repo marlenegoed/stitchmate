@@ -9,10 +9,10 @@ import {cn} from '@/lib/utils';
 
 interface SectionProgressProps {
   numOfRows: number,
-  className?: string,
+  color: string,
 }
 
-export default function SectionProgress({numOfRows, className}: SectionProgressProps) {
+export default function SectionProgress({numOfRows, color}: SectionProgressProps) {
   const count = useCounterStore(state => state.storeCount)
 
   const [progress, setProgress] = useState(numOfRows);
@@ -28,13 +28,6 @@ export default function SectionProgress({numOfRows, className}: SectionProgressP
   }, [numOfRows, count]);
 
   return (
-    <>
-      <Progress value={progress} className={clsx('w-full min-h-1', {'invisible': !isNumOfRows})} />
-      <div className={cn('flex flex-col items-end w-full px-6 pt-4 select-none', className)}>
-        <span className={clsx('font-semibold bg-white text-slate-700 rounded-full shadow-sm px-4 py-1', {'invisible': !isNumOfRows})}>
-          {numOfRows}
-        </span>
-      </div>
-    </>
+    <Progress value={progress} className={clsx('w-full min-h-1', {'invisible': !isNumOfRows})} color={color} />
   );
 }

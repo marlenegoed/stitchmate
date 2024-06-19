@@ -21,48 +21,48 @@ import {cn} from '@/lib/utils'
 import SectionProgress from '@/components/sections/section-progress'
 import {AddSectionButton, CloneSectionButton, CounterActionBar} from '@/components/sections/couter-actions'
 import Guide from '@/components/ui/guide'
+import NumOfRows from '@/components/sections/num-of-rows'
+import {ReminderDefaultItem} from '@/components/reminders/reminder-item'
+import shortenText from '@/lib/shorten-text'
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p className='h-full'>Loading...</p>})
+
+const CounterProgress = dynamic(() => import('./counter-progress'), {ssr: false})
 
 export default function DemoCounterPage() {
   return (
     <>
       <Guide />
-      <CounterHeader className="max-w-6xl" />
-      <CounterProgress className='max-w-6xl' />
+      <CounterProgress />
 
-      <section className='max-w-6xl w-full flex-1 flex-col flex justify-center items-center mb-4 relative' >
-        <div className='mb-auto'>
+      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+        <div className='col-span-3 justify-start'>
+          <CounterHeader />
+        </div>
+        <div className="col-span-6 col-start-4 row-start-1 place-content-center	justify-self-center">
+          <ReminderPrompt />
+        </div>
+        <div className="col-start-end row-start-end row-span-6 justify-self-end">
+          <ActionBar />
+        </div>
+        <div className='col-span-10 row-span-8 row-start-2 col-start-2'>
           <DemoCounter />
         </div>
-        <div className='absolute max-w-40 s:max-w-m md:max-w-md l:max-w-xl xl:max-w-3xl min-h-10 flex flex-wrap justify-center gap-4 -top-8'>
-          <ReminderPrompt className='z-10' />
-        </div>
-      </section>
-      <ReminderList className='max-w-6xl' />
+        <ReminderList />
+      </div>
     </>
   )
 }
 
+
 function CounterHeader({className}: {className?: string}) {
+
+  const numOfRows = useDemoStore((state) => state.numOfRows)
+
   return (
-    <div className={cn('w-full', className)}>
-      <div className='grid grid-cols-12 items-center mb-4'>
-        <div className='hidden col-span-6 flex-row items-center w-full ml-6 sm:flex '>
-          <TitleField />
-        </div>
-
-        <div className='col-span-6 flex flex-row justify-end'>
-          <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
-            <ActionBar />
-          </div>
-        </div>
-
-        {/* action bar mobile:  */}
-        <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
-          <ActionBar />
-        </div>
-      </div>
+    <div className='flex flex-col items-start w-full gap-2'>
+      <TitleField />
+      <NumOfRows numOfRows={numOfRows} />
     </div>
   )
 }
@@ -116,7 +116,7 @@ function TitleField() {
   }
 
   return (
-    <form className="space-y-6" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <FormItem>
         <Input
           ref={inputRef}
@@ -124,7 +124,7 @@ function TitleField() {
           variant='inline'
           className='placeholder:text-neutral-500 text-2xl font-semibold max-w-max pl-0'
           name="title"
-          value={storeTitle}
+          value={shortenText(storeTitle, 24)}
           onChange={(e) => setStoreTitle(e.target.value)}
         />
       </FormItem>
@@ -139,11 +139,6 @@ function UserLoginToolTip({children}: {children: ReactNode}) {
       {children}
     </Tooltip>
   )
-}
-
-function CounterProgress(props: {className?: string}) {
-  const numOfRows = useDemoStore(state => state.numOfRows)
-  return <SectionProgress numOfRows={numOfRows} {...props} />
 }
 
 function ReminderPrompt(props: {className?: string}) {
@@ -166,10 +161,11 @@ function ReminderList({className}: {className?: string}) {
   }
 
   return (
-    <section className={cn('w-full flex flex-row gap-4 justify-end mt-auto mb-4 px-6', className)}>
-      <ScrollArea className="w-full">
-        <div className='flex flex-row-reverse gap-4 justify-end w-max'>
-          {reminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} />)}
+    <section className={cn('col-start-1 col-span-11 row-start-9 row-span-4 flex flex-row gap-6', className)}>
+      <ScrollArea className="w-fit max-w-full">
+        <div className='flex flex-row-reverse gap-6 justify-end w-max h-full'>
+          {reminders.length === 0 ? <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} isDefaultReminderItem={true} /> :
+            reminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} />)}
         </div>
         <ScrollBar orientation='horizontal' />
       </ScrollArea>

@@ -12,18 +12,26 @@ export default function ReminderItem({reminder}: {reminder: Reminder}) {
   // bg-[#FFFAF0]/50
 
   return (
-    <div className={clsx({'opacity-50': !notification})}>
-      <div className='flex flex-col justify-between bg-eggshell rounded-xl py-3 px-4 w-40 h-40 shadow'>
-        <div className='flex flex-row justify-between'>
-          <ReminderRepeat reminder={reminder} className='text-sm text-sienna-400/70' />
-          {!notification && <TbZzz className='mt-1 text-sienna-400' />}
+    <div className={clsx('h-full', {'opacity-50': !notification})}>
+      <div className='flex flex-col justify-between h-full rounded-lg py-3 px-4 w-52 border border-dashed border-black/30'>
+        <div className='flex flex-row justify-between self-start'>
+          <ReminderRepeat reminder={reminder} className='text-black/40' />
+          {!notification && <TbZzz className=' text-black/40' size={20} />}
         </div>
+        <h4 className='font-semibold text-lg text-gray-800 mb-2'>{shortenText(title, 38)}</h4>
         <div>
-          <h4 className='font-semibold text-slate-700 mb-2'>{shortenText(title, 15)}</h4>
-
-          <p className='text-sm text-neutral-600'>{shortenText(note || '', 30)}</p>
+          <p className="text-gray-800 text-lg h-full">{shortenText(note || '', 60)}</p>
         </div>
       </div>
     </div>
   );
 };
+
+export function ReminderDefaultItem() {
+
+  return (
+    <div className='flex flex-col justify-center text-left h-full rounded-lg py-3 px-4 w-52 border border-dashed border-neutral-400 '>
+      <p className='text-xl text-neutral-500 mb-4'>Nothing in here. Add some reminders or notes...</p>
+    </div>
+  )
+}

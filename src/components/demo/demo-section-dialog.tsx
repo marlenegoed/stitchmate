@@ -108,8 +108,8 @@ export default function DemoSectionDialog() {
         <Tooltip title="Section settings">
           <DialogTrigger asChild>
             <Alert className='border-none p-0 m-0 bg-inherit'>
-              <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-                <HiAdjustments size={20} className='text-slate-700 ' />
+              <Button type='button' size='icon' variant='ghost'>
+                <HiAdjustments size={20} className='text-gray-800 ' />
               </Button>
             </Alert>
           </DialogTrigger>

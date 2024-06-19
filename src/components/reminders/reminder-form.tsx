@@ -47,6 +47,7 @@ import {HiAdjustmentsVertical} from 'react-icons/hi2';
 import {useMediaQuery} from '@/lib/use-media-query';
 import {IoAdd} from 'react-icons/io5';
 import {ScrollArea} from '../ui/scroll-area';
+import {ReminderDefaultItem} from './reminder-item';
 
 
 const formSchema = z.object({
@@ -68,11 +69,12 @@ interface ReminderFormProps {
   count: number,
   sectionId: number,
   isIcon?: boolean,
+  isDefaultReminderItem?: boolean,
   onSubmit: (values: FormValues) => Promise<void>,
   handleDelete?: () => void,
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon, onSubmit, handleDelete}: ReminderFormProps) {
+export default function ReminderForm({reminder, count, sectionId, isIcon, isDefaultReminderItem, onSubmit, handleDelete}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
@@ -102,13 +104,23 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
     form.reset()
   }
 
+  let trigger
+  if (isIcon) {
+    trigger = <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' />
+  } else if (isDefaultReminderItem) {
+    trigger = <ReminderDefaultItem />
+  } else {
+    trigger = <AddReminder sectionId={sectionId} />
+  }
+
 
   if (isDesktop) {
 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className='border-none p-0 m-0 bg-inherit'>
-          {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />}
+          {trigger}
+          {/* {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />} */}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
 
@@ -137,7 +149,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, onSubm
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <button>
-          {isIcon ? <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' /> : <AddReminder sectionId={sectionId} />}
+          {trigger}
         </button>
       </DrawerTrigger>
       <DrawerContent>

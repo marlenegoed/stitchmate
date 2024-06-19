@@ -25,7 +25,7 @@ import logo from '../../../public/stitchmate_logo.svg'
 export default function Nav() {
 
   return (
-    <nav className='flex justify-between items-center px-4 py-4 w-full max-w-6xl mx-auto'>
+    <nav className='flex justify-between items-center px-4 py-4 w-full mx-auto'>
       <ProjectPageButton />
       <Logo />
       <SignedIn>

@@ -26,7 +26,7 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
     <AlertDialog>
       <Tooltip title="Reset counter">
         <AlertDialogTrigger asChild>
-          <Button variant='ghost' size="icon" className=' hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
+          <Button variant='ghost' size="icon">
             <HiOutlineRefresh size={24} />
           </Button>
         </AlertDialogTrigger>

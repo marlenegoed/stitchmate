@@ -12,8 +12,8 @@ export default function Page() {
     <>
       <BetaBanner />
       <div className='h-dvh flex flex-col justify-between items-center py-6 px-8 sm:px-12'>
-       <Intro />
+        <Intro />
       </div>
-      </>
+    </>
   )
 }

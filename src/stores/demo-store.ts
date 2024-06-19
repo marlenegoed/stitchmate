@@ -3,11 +3,13 @@
 import {create} from 'zustand';
 import {persist, devtools, createJSONStorage} from 'zustand/middleware'
 import {type NewReminder, type Reminder} from '@/database/queries/queries';
+import {colors} from '@/lib/colors'
 
 export type DemoState = {
   reminders: Reminder[],
   id: number,
   numOfRows: number,
+  color: string,
 }
 
 export type DemoActions = {
@@ -17,6 +19,7 @@ export type DemoActions = {
   updateReminder: (updatedReminder: Reminder) => void
   deleteReminder: (id: number) => void,
   initialize: (state: DemoState) => void,
+
 }
 
 export type DemoStore = DemoState & DemoActions
@@ -28,7 +31,8 @@ export const initDemoStore = (): DemoState => {
 export const defaultInitState: DemoState = {
   reminders: [],
   id: 0,
-  numOfRows: 0,
+  numOfRows: 20,
+  color: colors[Math.floor(Math.random() * colors.length)],
 }
 
 export const createDemoStore = (

@@ -15,7 +15,7 @@ export default function DemoLayout({children}: Readonly<{children: React.ReactNo
       <CounterStoreProvider>
         <UserSettingsStoreProvider>
           <DemoStoreProvider>
-            <main className='min-h-[calc(100dvh_-_4rem)] flex flex-col mx-auto items-center py-3 w-full bg-neutral-100 rounded-t-xl'>
+            <main className='min-h-[calc(100dvh_-_4rem)] flex flex-col mx-auto items-center w-full bg-neutral-100'>
               {children}
             </main>
           </DemoStoreProvider>

@@ -51,9 +51,11 @@ export default function CounterActions({section, userSettings, numOfSections, re
   )
 }
 
+{/* <div className='absolute z-20 right-6 top-[calc(1.5rem_+_3rem)] grid grid-rows-6 gap-6 text-gray-800 justify-items-center'> */}
+
 export function CounterActionBar({children}: {children: ReactNode}) {
   return (
-    <div className='grid grid-cols-6 gap-6 text-slate-700 opactiy-80 justify-items-center	'>
+    <div className='flex flex-col gap-6 justify-center items-center w-fit text-gray-800'>
       {children}
     </div>
   )
@@ -86,7 +88,6 @@ const AddSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTML
     type='button'
     size='icon'
     variant='ghost'
-    className='border-slate-800  hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
     ref={ref}
     {...props}
   >
@@ -130,7 +131,6 @@ const CloneSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HT
     type='button'
     size='icon'
     variant='ghost'
-    className='border-slate-800 hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'
     ref={ref}
     {...props}
   >

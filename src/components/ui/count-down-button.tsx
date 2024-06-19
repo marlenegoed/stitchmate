@@ -46,7 +46,7 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
         type='button'
         size='icon'
         variant='ghost'
-        className='border-gray-800 hover:bg-neutral-200 hover:transition-colors'
+        className='border-gray-800 hover:transition-colors'
         onClick={handleClick}
         disabled={count === 1}
       >

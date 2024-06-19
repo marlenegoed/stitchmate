@@ -13,7 +13,7 @@ interface BlobCounterProps {
   blobIndex: number,
   sound?: boolean,
   onClick?: (newCount: number) => void
-  reminders: Reminder[] 
+  reminders: Reminder[]
 }
 
 export function BlobCounter({color, count, blobIndex, onClick, sound = false, reminders}: BlobCounterProps) {
@@ -35,8 +35,8 @@ export function BlobCounter({color, count, blobIndex, onClick, sound = false, re
   }
 
   return (
-    <div className='relative flex items-center justify-center' onClick={handleClick}>
-      <button className='text-8xl text-center z-10 relative text-zinc-800 p-16 w-[5ch]'>
+    <div className='relative flex items-center justify-center p-32' onClick={handleClick}>
+      <button className='text-9xl text-center z-10 relative text-zinc-800 w-[5ch]'>
         <span className={`${kalam.className} font-normal`}>{count}</span>
       </button>
       <BackgroundBlob className={`fill-${color} absolute w-full top-0 left-0`} stroke={true} blobIndex={blobIndex} />

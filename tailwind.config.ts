@@ -19,6 +19,11 @@ module.exports = {
     'fill-jordy',
     'fill-tangerine',
     'fill-caramel',
+    'bg-tangerine',
+    'bg-olivine',
+    'bg-orchid',
+    'bg-flax',
+    'bg-jordy',
   ],
   prefix: "",
   theme: {
