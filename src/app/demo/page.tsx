@@ -36,10 +36,10 @@ export default function DemoCounterPage() {
       <CounterProgress />
 
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
-        <div className='col-span-3 justify-start'>
+        <div className='col-span-4 col-start-1 lg:col-span-3 justify-start'>
           <CounterHeader />
         </div>
-        <div className="col-span-6 col-start-4 row-start-1 place-content-center	justify-self-center flex flex-row flex-wrap gap-2">
+        <div className="relative z-30 col-span-4 col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 pt-3">
           <ReminderPrompt />
         </div>
         <div className="row-start-3 row-span-6 col-end-13 justify-self-end">
