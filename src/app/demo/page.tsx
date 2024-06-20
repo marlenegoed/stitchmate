@@ -39,10 +39,10 @@ export default function DemoCounterPage() {
         <div className='col-span-3 justify-start'>
           <CounterHeader />
         </div>
-        <div className="col-span-6 col-start-4 row-start-1 place-content-center	justify-self-center">
+        <div className="col-span-6 col-start-4 row-start-1 place-content-center	justify-self-center flex flex-row flex-wrap gap-2">
           <ReminderPrompt />
         </div>
-        <div className="col-start-end row-start-end row-span-6 justify-self-end">
+        <div className="row-start-3 row-span-6 col-end-13 justify-self-end">
           <ActionBar />
         </div>
         <div className='col-span-10 row-span-8 row-start-2 col-start-2'>
@@ -161,13 +161,13 @@ function ReminderList({className}: {className?: string}) {
   }
 
   return (
-    <section className={cn('col-start-1 col-span-11 row-start-9 row-span-4 flex flex-row gap-6', className)}>
-      <ScrollArea className="w-fit max-w-full">
+    <section className={cn('col-start-1 col-span-11 row-start-9 row-span-4 flex flex-row gap-6 items-end h-full', className)}>
+      <ScrollArea className="w-fit max-w-full flex">
         <div className='flex flex-row-reverse gap-6 justify-end w-max h-full'>
           {reminders.length === 0 ? <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} isDefaultReminderItem={true} /> :
             reminders.map(reminder => <DemoReminderAlertDialog key={reminder.id} reminder={reminder} />)}
         </div>
-        <ScrollBar orientation='horizontal' />
+        <ScrollBar orientation='horizontal' className="hidden" />
       </ScrollArea>
       <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} />
     </section>

@@ -115,8 +115,8 @@ export default function DemoSectionDialog() {
           </DialogTrigger>
         </Tooltip>
         <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
-          <DialogHeader className='items-center gap-2'>
-            <DialogTitle className='font-semibold text-xl mr-auto'>Section Settings</DialogTitle>
+          <DialogHeader className='items-center gap-2 mb-4'>
+            <DialogTitle className='font-semibold text-2xl mr-auto'>Section Settings</DialogTitle>
           </DialogHeader>
 
           <Form {...form}>
@@ -124,11 +124,11 @@ export default function DemoSectionDialog() {
               <SectionSettingsForm storeCount={storeCount} numOfRows={numOfRows} />
 
               <DialogFooter>
-                <div className='grid grid-cols-2 gap-4'>
-                  <Button type="submit" className='col-span-2 sm:col-span-1 order-1 sm:order-2 px-12 w-full'>Save changes</Button>
+                <div className='grid grid-cols-2 gap-4 mt-4'>
                   <DialogClose asChild>
-                    <Button type="button" className='col-span-2 sm:col-span-1 px-12 w-full sm:order-2 order-2' variant='outline'>Cancel</Button>
+                    <Button type="button" variant="outline" className="col-span-2 sm:col-span-1 px-12 w-full order-2">Cancel</Button>
                   </DialogClose>
+                  <Button type="submit" className='col-span-2 sm:col-span-1 order-1 sm:order-2 px-12 w-full'>Save changes</Button>
                 </div>
               </DialogFooter>
             </form>
@@ -142,8 +142,8 @@ export default function DemoSectionDialog() {
 
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button type='button' size='icon' variant='ghost' className='hover:bg-neutral-200 hover:bg-opacity-80 transition-colors'>
-          <HiAdjustments size={20} className='text-slate-700 ' />
+        <Button type='button' size='icon' variant='ghost'>
+          <HiAdjustments size={20} className='text-gray-800 ' />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -224,7 +224,7 @@ function SectionSettingsForm({storeCount, numOfRows}: {storeCount: number, numOf
             </FormItem>
           )}
         />
-        <p className='text-sm text-slate-800 -mt-2 col-span-2'>* Optional: track your progress by adding your final row count.</p>
+        <p className='text-sm font-medium text-neutral-500 -mt-2 col-span-2'>* Optional: track your progress by adding your final row count.</p>
       </div>
 
     </>

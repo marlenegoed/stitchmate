@@ -9,7 +9,7 @@ import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
 interface ReminderListProps {
-  userId: string, 
+  userId: string,
   reminders: Reminder[],
   sectionId: number,
   className?: string
@@ -26,11 +26,11 @@ export default function ReminderList({userId, reminders, sectionId, className}: 
 
   return (
     <section className={cn('w-full flex flex-row gap-4 justify-end mt-auto mb-4 px-6', className)}>
-      <ScrollArea className="w-full">
+      <ScrollArea className="w-full flex ">
         <div className='flex flex-row-reverse gap-4 justify-end w-max'>
           {reminders.map(reminder => <ReminderAlertDialog key={reminder.id} userId={userId} reminder={reminder} />)}
         </div>
-        <ScrollBar orientation='horizontal' />
+        {/* <ScrollBar orientation='horizontal' /> */}
       </ScrollArea>
       <ReminderForm sectionId={sectionId} count={storeCount} onSubmit={onSubmit} />
     </section>

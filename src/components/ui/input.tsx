@@ -6,14 +6,14 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  "flex h-12 w-full rounded-lg border border-input px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-base file:font-mediumx placeholder:text-neutral-500 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+  "flex h-12 w-full rounded-lg border border-input px-3 py-2 text-base file:border-0 focus:outline-none focus:border-neutral-400 file:bg-transparent file:text-base file:font-mediumx placeholder:text-neutral-500 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "focus:outline-none focus:ring-none",
+        default: "font-semibold bg-transparent rounded-lg border border-neutral-300 text-base px-5 h-14 text-gray-800 placeholder:text-neutral-500 focus:border-neutral-400",
         inline:
           "bg-inherit border-none focus:outline-none",
-        form: "rounded bg-white text-base focus:outline-none border-none px-5 h-14",
+        form: "font-semibold bg-transparent rounded-lg border border-neutral-300 text-base px-5 h-14 text-gray-800 placeholder:text-neutral-500 focus:border-neutral-400",
         noring: "focus:outline-none focus:bg-neutral-100 hover:bg-neutral-100 transition-colors"
       },
     },

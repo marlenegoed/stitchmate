@@ -10,7 +10,7 @@ export default function AddReminder({sectionId}: {sectionId: number}) {
   // const blob = useMemo(() => <BackgroundBlob colorClass='rose-200' stroke={false} className='absolute bottom-3 right-3 fill-white w-24  h-24 opacity-50' />, []);
 
   return (
-    <div className='hover:opacity-80 relative z-20 hover:cursor-pointer w-24 h-full flex items-center justify-center rounded-lg border border-dashed border-neutral-400'>
+    <div className='hover:opacity-80 hover:cursor-pointer relative z-20 w-24 min-h-52 flex items-center justify-center rounded-lg border border-dashed border-neutral-400'>
       <div className="bg-black rounded-full w-12 h-12 flex items-center justify-center">
         <HiOutlinePlus className='text-white' size={20} />
       </div>

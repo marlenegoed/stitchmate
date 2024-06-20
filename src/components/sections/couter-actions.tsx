@@ -55,7 +55,7 @@ export default function CounterActions({section, userSettings, numOfSections, re
 
 export function CounterActionBar({children}: {children: ReactNode}) {
   return (
-    <div className='flex flex-col gap-6 justify-center items-center w-fit text-gray-800'>
+    <div className='flex flex-col gap-4 justify-center items-center w-fit text-gray-800 border border-dashed border-neutral-400 rounded-lg px-2 py-3'>
       {children}
     </div>
   )

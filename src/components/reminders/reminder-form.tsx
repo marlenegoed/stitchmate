@@ -43,11 +43,13 @@ import AddReminder from './add-reminder';
 import {useState} from 'react';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
 import DeleteDialog from '../sections/delete-dialog';
-import {HiAdjustmentsVertical} from 'react-icons/hi2';
+import {HiAdjustmentsVertical, HiOutlinePlus} from 'react-icons/hi2';
 import {useMediaQuery} from '@/lib/use-media-query';
 import {IoAdd} from 'react-icons/io5';
 import {ScrollArea} from '../ui/scroll-area';
 import {ReminderDefaultItem} from './reminder-item';
+import clsx from 'clsx';
+import shortenText from '@/lib/shorten-text';
 
 
 const formSchema = z.object({
@@ -70,11 +72,12 @@ interface ReminderFormProps {
   sectionId: number,
   isIcon?: boolean,
   isDefaultReminderItem?: boolean,
+  isEmptyNote?: boolean,
   onSubmit: (values: FormValues) => Promise<void>,
   handleDelete?: () => void,
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon, isDefaultReminderItem, onSubmit, handleDelete}: ReminderFormProps) {
+export default function ReminderForm({reminder, count, sectionId, isIcon, isDefaultReminderItem, onSubmit, handleDelete, isEmptyNote}: ReminderFormProps) {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
@@ -106,9 +109,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
 
   let trigger
   if (isIcon) {
-    trigger = <HiAdjustmentsVertical size={20} className='text-slate-800 transition-colors cursor-pointer hover:text-sienna-400' />
+    trigger = <HiAdjustmentsVertical size={22} className='text-gray-800 transition-colors cursor-pointer hover:text-gray-700' />
   } else if (isDefaultReminderItem) {
     trigger = <ReminderDefaultItem />
+  } else if (isEmptyNote) {
+    trigger = <AddNote />
   } else {
     trigger = <AddReminder sectionId={sectionId} />
   }
@@ -199,7 +204,7 @@ function ReminderFormInputs({count}: {count: number}) {
         name="type"
         render={({field}) => (
           <FormItem className="flex flex-col font-semibold space-y-3 w-full">
-            <FormLabel className='text-base font-semibold pt-2'>Repeat</FormLabel>
+            <FormLabel className='text-lg font-semibold pt-2'>Select repetition:</FormLabel>
             <FormControl>
 
               <RadioGroup
@@ -239,11 +244,10 @@ function ReminderFormInputs({count}: {count: number}) {
           name="note"
           render={({field}) => (
             <FormItem>
-              <FormLabel className='font-semibold text-base'>Notes (optional)</FormLabel>
+              <FormLabel className='font-semibold text-lg'>Notes (optional)</FormLabel>
               <FormControl>
                 <Textarea
-                  className="boder-none rounded-lg p-3"
-                  placeholder="add note"
+                  placeholder="add notes..."
                   rows={5}
                   {...field}
                 />
@@ -260,6 +264,7 @@ function ReminderFormInputs({count}: {count: number}) {
 function ReminderTitleField() {
   const form = useFormContext()
 
+
   return (
     <FormField
       control={form.control}
@@ -267,7 +272,7 @@ function ReminderTitleField() {
       render={({field}) => (
         <FormItem>
           <FormControl>
-            <Input variant='noring' className='pl-0 bg-inherit border-none text-xl font-semibold' placeholder='Enter Title' {...field} />
+            <Input className='placeholder:neutral-500 pl-0 bg-inherit text-2xl border-none focus:border-b font-semibold' placeholder='Enter Title' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -288,7 +293,7 @@ function RepeatEveryInputs({count}: {count: number}) {
           <FormItem>
             <FormLabel className='text-neutral-500'>start row</FormLabel>
             <FormControl>
-              <Input className='border-none' type="number" min="1" placeholder={count.toString()} {...field} />
+              <Input type="number" min="1" placeholder={count.toString()} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -302,7 +307,7 @@ function RepeatEveryInputs({count}: {count: number}) {
           <FormItem>
             <FormLabel className='text-neutral-500'>{`every ${makeOrdinal(field.value)}`}</FormLabel>
             <FormControl>
-              <Input className='border-none' type="number" placeholder="1" min="1" {...field} />
+              <Input type="number" placeholder="1" min="1" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -316,7 +321,7 @@ function RepeatEveryInputs({count}: {count: number}) {
           <FormItem>
             <FormLabel className='text-neutral-500'>times</FormLabel>
             <FormControl>
-              <Input className='border-none' type="number" placeholder="0" min="0" {...field} />
+              <Input type="number" placeholder="0" min="0" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -337,9 +342,9 @@ function ForRowsInputs() {
         name="from"
         render={({field}) => (
           <FormItem>
-            <FormLabel className='text-neutral-500'>from</FormLabel>
+            <FormLabel>from</FormLabel>
             <FormControl>
-              <Input className='border-none' type="number" min="1" {...field} />
+              <Input type="number" min="1" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -353,7 +358,7 @@ function ForRowsInputs() {
           <FormItem>
             <FormLabel className='text-neutral-500'>until</FormLabel>
             <FormControl>
-              <Input className='border-none' type="number" min="1" {...field} />
+              <Input type="number" min="1" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -361,4 +366,15 @@ function ForRowsInputs() {
       />
     </div>
   );
+}
+
+function AddNote() {
+  return (
+    <div className='border border-dashed rounded-lg border-neutral-400 flex justify-center flex-col items-center py-10 gap-2'>
+      <div className="border border-dashed border-neutral-400 rounded-full w-12 h-12 flex items-center justify-center">
+        <HiOutlinePlus className='text-neutral-400' size={20} />
+      </div>
+      <p className="text-left text-neutral-400/80 text-lg">add notes</p>
+    </div>
+  )
 }

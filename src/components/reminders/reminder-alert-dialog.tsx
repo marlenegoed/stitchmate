@@ -26,7 +26,7 @@ import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
 interface ReminderAlertDialogProps {
-  userId: string, 
+  userId: string,
   reminder: Reminder,
   isTag?: boolean,
   className?: string,

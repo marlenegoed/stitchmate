@@ -24,6 +24,7 @@ import DemoReminderForm from './demo-reminder-form';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {cn} from '@/lib/utils';
+import shortenText from '@/lib/shorten-text';
 
 
 
@@ -58,21 +59,22 @@ export default function DemoReminderAlertDialog({className, reminder, isTag}: Re
         }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] p-10 pr-9">
-        <DialogHeader className='gap-4 items-center'>
-          <DialogTitle className='ml-1 text-xl mr-auto'>{title}</DialogTitle>
-          <TbZzz onClick={handleSnooze} size={20} className={clsx('transition-colors cursor-pointer', {'text-sienna-400 hover:text-sienna-500': !notification, 'text-neutral-500 hover:text-sienna-400': notification})} />
-          <DemoReminderForm reminder={reminder} isIcon={true} count={storeCount} />
+        <DialogHeader className='gap-4 items-start mb-2'>
+          <DialogTitle className='-mt-1 text-2xl mr-auto tracking-normal'>{shortenText(title, 40)}</DialogTitle>
+          <TbZzz onClick={handleSnooze} size={22} className={clsx('cursor-pointer', {'text-sienna-300 hover:text-sienna-300/70': !notification, 'text-gray-800 hover:text-gray-700': notification})} />
+          <DemoReminderForm reminder={reminder} isIcon={true} />
         </DialogHeader>
 
+        {note ?
+          <ScrollArea className='h-32 mb-4 pr-1'>
+            <p className='ml-1 leading-relaxed text-gray-800 text-base font-medium'>{note}</p>
+            <ScrollBar orientation="vertical" className='bg-neutral-100 transition-colors duration-150 ease-out hover:bg-black' />
+          </ScrollArea>
+          :
+          <DemoReminderForm reminder={reminder} isEmptyNote={true} />}
 
-        <ScrollArea className='h-32 mb-4'>
-          <p className='ml-1'>{note}</p>
-          <ScrollBar orientation="vertical" className='bg-neutral-200 transition-colors duration-150 ease-out hover:bg-black' />
-        </ScrollArea>
-
-
-        <DialogFooter className='flex flex-row w-full sm:justify-between justify-between gap-4'>
-          <div className='flex flex-row gap-4 items-center px-4 rounded-full py-2'>
+        <DialogFooter className='mt-2 flex flex-row w-full sm:justify-between justify-between gap-4'>
+          <div className='flex flex-row gap-4 items-center px-4 rounded-lg py-2 bg-sienna-100'>
             <ReminderRepeat reminder={reminder} />
             <div className='max-[640px]:text-sm flex flex-row gap-3 font-semibold text-neutral-500'>
               {reminderProgress}
@@ -80,7 +82,7 @@ export default function DemoReminderAlertDialog({className, reminder, isTag}: Re
           </div>
 
           <DialogClose asChild>
-            <Button size='icon' className='flex justify-self-end'><HiChevronRight size={20} /></Button>
+            <Button size='icon' className='flex justify-self-end rounded-full'><HiChevronRight size={20} /></Button>
           </DialogClose>
         </DialogFooter>
 

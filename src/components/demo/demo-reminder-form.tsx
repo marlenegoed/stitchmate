@@ -7,11 +7,11 @@ import {useCounterStore} from '@/providers/counter-store-provider';
 
 interface ReminderFormProps {
   reminder?: Reminder
-  count: number,
-  isIcon?: boolean
+  isIcon?: boolean,
+  isEmptyNote?: boolean
 }
 
-export default function DemoReminderForm({reminder, isIcon}: ReminderFormProps) {
+export default function DemoReminderForm({reminder, isIcon, isEmptyNote}: ReminderFormProps) {
   const storeCount = useCounterStore(state => state.storeCount)
   const {updateReminder, setReminder, deleteReminder} = useDemoStore((state) => state)
 
@@ -31,6 +31,6 @@ export default function DemoReminderForm({reminder, isIcon}: ReminderFormProps) 
     }
   }
 
-  return <ReminderForm count={storeCount} reminder={reminder} isIcon={isIcon} onSubmit={onSubmit} sectionId={0} handleDelete={handleDelete} />
+  return <ReminderForm count={storeCount} reminder={reminder} isIcon={isIcon} isEmptyNote={isEmptyNote} onSubmit={onSubmit} sectionId={0} handleDelete={handleDelete} />
 }
 

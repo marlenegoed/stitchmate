@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link';
-import {HiViewGrid} from "react-icons/hi";
 import {Avatar, AvatarFallback} from './avatar';
 import {
   Popover,
@@ -19,6 +18,8 @@ import {
   useAuth,
 } from '@clerk/nextjs'
 import logo from '../../../public/stitchmate_logo.svg'
+import {Button} from './button';
+import {HiSquares2X2} from 'react-icons/hi2';
 
 
 
@@ -55,17 +56,18 @@ function Logo() {
 function ProjectPageButton() {
   const {isSignedIn} = useAuth()
 
+
   return (
     <>
       {isSignedIn ?
         <Link href='/projects'
           className="hover:text-neutral-600">
-          <HiViewGrid className='text-gray-800' size={24} />
+          <HiSquares2X2 className='text-gray-800' size={24} />
         </Link>
         :
-        <SignInButton mode="modal">
-          <HiViewGrid className='text-gray-800 cursor-pointer hover:text-neutral-600' size={24} />
-        </SignInButton>
+        <Link className="hover:opacity-80" href="/">
+          <Button className="bg-sienna-100 text-sienna-400 hover:bg-sienna-100 hover:text-sienna-400" size="sm">demo</Button>
+        </Link>
       }
     </>
   )
