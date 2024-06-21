@@ -26,7 +26,7 @@ import {HiSquares2X2} from 'react-icons/hi2';
 export default function Nav() {
 
   return (
-    <nav className='flex justify-between items-center px-4 py-4 w-full mx-auto'>
+    <nav className='flex justify-between items-center px-4 py-4 w-full mx-auto border-b border-neutral-300'>
       <ProjectPageButton />
       <Logo />
       <SignedIn>
