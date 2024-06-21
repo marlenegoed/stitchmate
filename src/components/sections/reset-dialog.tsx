@@ -24,13 +24,13 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
 
   return (
     <AlertDialog>
-      <Tooltip title="Reset counter">
-        <AlertDialogTrigger asChild>
-          <Button variant='ghost' size="icon">
-            <HiArrowPath size={20} />
-          </Button>
-        </AlertDialogTrigger>
-      </Tooltip>
+      {/* <Tooltip title="Reset counter"> */}
+      <AlertDialogTrigger asChild>
+        <Button variant='ghost' size="icon">
+          <HiArrowPath size={20} />
+        </Button>
+      </AlertDialogTrigger>
+      {/* </Tooltip> */}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to reset?</AlertDialogTitle>

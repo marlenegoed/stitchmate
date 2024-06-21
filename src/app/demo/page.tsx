@@ -157,14 +157,14 @@ function ToggleableActionBar() {
           <ResetDialog handleReset={resetCounter} />
         </motion.li>
         <motion.li variants={itemVariants}>
-          <UserLoginToolTip>
+          {/* <UserLoginToolTip> */}
             <CloneSectionButton disabled={true} />
-          </UserLoginToolTip>
+          {/* </UserLoginToolTip> */}
         </motion.li>
         <motion.li variants={itemVariants}>
-          <UserLoginToolTip>
+          {/* <UserLoginToolTip> */}
             <AddSectionButton disabled={true} />
-          </UserLoginToolTip>
+          {/* </UserLoginToolTip> */}
         </motion.li>
         <motion.li variants={itemVariants}>
           <DemoSectionDialog />

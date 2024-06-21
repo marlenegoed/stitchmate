@@ -40,17 +40,17 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
   }
 
   return (
-    <Tooltip title="Unravel">
-      <Button
-        type='button'
-        size='icon'
-        variant='ghost'
-        className='border-gray-800 hover:transition-colors'
-        onClick={handleClick}
-        disabled={count === 1}
-      >
-        <HiArrowUturnLeft size={20} />
-      </Button>
-    </Tooltip>
+    // <Tooltip title="Unravel">
+    <Button
+      type='button'
+      size='icon'
+      variant='ghost'
+      className='border-gray-800 hover:transition-colors'
+      onClick={handleClick}
+      disabled={count === 1}
+    >
+      <HiArrowUturnLeft size={20} />
+    </Button>
+    // </Tooltip>
   )
 }

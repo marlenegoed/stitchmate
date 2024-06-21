@@ -105,15 +105,15 @@ export default function DemoSectionDialog() {
 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <Tooltip title="Section settings">
-          <DialogTrigger asChild>
-            <Alert className='border-none p-0 m-0 bg-inherit'>
-              <Button type='button' size='icon' variant='ghost'>
-                <HiAdjustmentsVertical size={20} className='text-gray-800 ' />
-              </Button>
-            </Alert>
-          </DialogTrigger>
-        </Tooltip>
+        {/* <Tooltip title="Section settings"> */}
+        <DialogTrigger asChild>
+          <Alert className='border-none p-0 m-0 bg-inherit'>
+            <Button type='button' size='icon' variant='ghost'>
+              <HiAdjustmentsVertical size={20} className='text-gray-800 ' />
+            </Button>
+          </Alert>
+        </DialogTrigger>
+        {/* </Tooltip> */}
         <DialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
           <DialogHeader className='items-center gap-2 mb-4'>
             <DialogTitle className='font-semibold text-2xl mr-auto'>Section Settings</DialogTitle>

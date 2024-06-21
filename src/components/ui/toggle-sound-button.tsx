@@ -21,10 +21,10 @@ export function ToggleSound({sound, onToggle}: {sound: boolean, onToggle?: () =>
   const speaker = enabled ? <HiOutlineSpeakerWave size={20} /> : <HiOutlineSpeakerXMark size={20} />
 
   return (
-    <Tooltip title="Toggle sound">
-      <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={toggleSound}>
-        {speaker}
-      </Button>
-    </Tooltip>
+    // <Tooltip title="Toggle sound">
+    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={toggleSound}>
+      {speaker}
+    </Button>
+    // </Tooltip>
   )
 }

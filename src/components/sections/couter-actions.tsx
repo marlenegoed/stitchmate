@@ -80,9 +80,9 @@ export function AddSection({userId, projectId, position}: AddSectionProps) {
   }
 
   return (
-    <Tooltip title="Add section">
-      <AddSectionButton onMouseDown={handleNewSection} />
-    </Tooltip>
+    // <Tooltip title="Add section">
+    <AddSectionButton onMouseDown={handleNewSection} />
+    // </Tooltip>
   )
 }
 
@@ -123,9 +123,9 @@ export function CloneSection({userId, section}: {userId: string, section: Sectio
   }
 
   return (
-    <Tooltip title='Duplicate section'>
-      <CloneSectionButton onMouseDown={handleClick} />
-    </Tooltip>
+    // <Tooltip title='Duplicate section'>
+    <CloneSectionButton onMouseDown={handleClick} />
+    // </Tooltip>
   )
 }
 
