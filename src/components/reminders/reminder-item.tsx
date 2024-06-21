@@ -28,8 +28,8 @@ export default function ReminderItem({reminder}: {reminder: Reminder}) {
 export function ReminderDefaultItem() {
 
   return (
-    <div className='flex flex-col justify-center text-left h-full rounded-lg py-3 px-4 w-52 border border-dashed border-neutral-400'>
-      <p className='text-xl text-neutral-500 mb-4'>Nothing in here. Add your reminders and notes...</p>
+    <div className='flex flex-col text-left h-full rounded-lg py-3 px-4 min-h-52 w-52 border border-dashed border-neutral-400'>
+      <p className='text-xl text-neutral-400 mt-1'>Nothing in here. Add your reminders and notes...</p>
     </div>
   )
 }

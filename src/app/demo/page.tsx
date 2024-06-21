@@ -41,10 +41,10 @@ export default function DemoCounterPage() {
         <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
           <CounterHeader />
         </div>
-        <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2">
+        <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 mt-4">
           <ReminderPrompt />
         </div>
-        <div className="relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
+        <div className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
           <ToggleableActionBar />
         </div>
         <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
@@ -158,12 +158,12 @@ function ToggleableActionBar() {
         </motion.li>
         <motion.li variants={itemVariants}>
           {/* <UserLoginToolTip> */}
-            <CloneSectionButton disabled={true} />
+          <CloneSectionButton disabled={true} />
           {/* </UserLoginToolTip> */}
         </motion.li>
         <motion.li variants={itemVariants}>
           {/* <UserLoginToolTip> */}
-            <AddSectionButton disabled={true} />
+          <AddSectionButton disabled={true} />
           {/* </UserLoginToolTip> */}
         </motion.li>
         <motion.li variants={itemVariants}>

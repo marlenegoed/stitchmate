@@ -36,7 +36,7 @@ export default function Guide() {
     <>
       <Dialog>
         <DialogTrigger asChild className='relative'>
-          <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-sienna-400 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
+          <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[440px] p-0 bg-white">
 
@@ -69,7 +69,7 @@ function DemoStartSlide() {
     <SlideLayout className="bg-goldenrod-100/50 ">
       <GuideHeading> 3 minutes til cast on!</GuideHeading>
       <GuideParagraph>Follow this short guide to understand how stitchmate works.</GuideParagraph>
-      <GuideParagraph className="opacity-50"> You are currently in the demo version. Sign In to access all features. It’s 100% free!</GuideParagraph>
+      <GuideParagraph className="opacity-50 pb-10"> You are currently in the demo version. Sign In for free to access all features.</GuideParagraph>
       <div className="w-10/12 m-auto">
         <Image
           src={guide_01}
@@ -143,13 +143,13 @@ function GuideNavigation() {
 
 function GuideHeading({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <h2 className={cn("text-2xl text-gray-800 font-semibold mb-4", className)}>{children}</h2>
+    <h2 className={cn("text-2xl text-gray-800 font-semibold mb-6", className)}>{children}</h2>
   )
 }
 
 function GuideParagraph({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <p className={cn("font-medium text-lg leading-relaxed pr-4 mb-4", className)}>{children}</p>
+    <p className={cn("font-medium text-lg leading-normal pr-4", className)}>{children}</p>
   )
 }
 
