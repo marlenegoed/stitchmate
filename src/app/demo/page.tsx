@@ -24,6 +24,10 @@ import Guide from '@/components/ui/guide'
 import NumOfRows from '@/components/sections/num-of-rows'
 import {ReminderDefaultItem} from '@/components/reminders/reminder-item'
 import shortenText from '@/lib/shorten-text'
+import {Button} from '@/components/ui/button'
+import {CgMenuGridO} from "react-icons/cg";
+import {motion, Variants} from "framer-motion";
+
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <p className='h-full'>Loading...</p>})
 
@@ -34,16 +38,16 @@ export default function DemoCounterPage() {
     <>
       <Guide />
       <CounterProgress />
-
+      <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' />
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
-        <div className='col-span-4 col-start-1 lg:col-span-3 justify-start'>
+        <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
           <CounterHeader />
         </div>
-        <div className="relative z-30 col-span-4 col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 pt-3">
+        <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2">
           <ReminderPrompt />
         </div>
-        <div className="row-start-3 row-span-6 col-end-13 justify-self-end">
-          <ActionBar />
+        <div className="relativ z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
+          <ToggleableActionBar />
         </div>
         <div className='col-span-10 row-span-8 row-start-2 col-start-2'>
           <DemoCounter />
@@ -54,20 +58,46 @@ export default function DemoCounterPage() {
   )
 }
 
-
-function CounterHeader({className}: {className?: string}) {
+function CounterMobileHeader({className}: {className?: string}) {
 
   const numOfRows = useDemoStore((state) => state.numOfRows)
 
   return (
-    <div className='flex flex-col items-start w-full gap-2'>
+    <div className={className}>
       <TitleField />
       <NumOfRows numOfRows={numOfRows} />
     </div>
   )
 }
 
-function ActionBar() {
+
+function CounterHeader({className}: {className?: string}) {
+
+  const numOfRows = useDemoStore((state) => state.numOfRows)
+
+  return (
+    <div className={cn('flex flex-col items-start w-full gap-2', className)}>
+      <TitleField />
+      <NumOfRows numOfRows={numOfRows} />
+    </div>
+  )
+}
+
+
+
+const itemVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {type: "spring", stiffness: 300, damping: 24}
+  },
+  closed: {opacity: 0, y: 20, transition: {duration: 0.2}}
+};
+
+function ToggleableActionBar() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const {storeCount, countStoreDown} = useCounterStore(state => state)
 
@@ -81,23 +111,72 @@ function ActionBar() {
   }
 
   return (
-    <CounterActionBar>
-      <CountDownButton reminders={reminders} count={storeCount} sound={storeSound} handleChange={countStoreDown} />
-      <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
 
-      <ResetDialog handleReset={resetCounter} />
-      <UserLoginToolTip>
-        <CloneSectionButton disabled={true} />
-      </UserLoginToolTip>
+    <motion.nav
+      initial={false}
+      animate={isOpen ? "open" : "closed"}
+      className="flex flex-col gap-4"
+    >
+      <motion.button
+        whileTap={{scale: 0.97}}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <Button size="icon" className="rounded-full text-white"><CgMenuGridO /></Button>
+        {/* <ActionBar className={clsx({"hidden": !open})} /> */}
+      </motion.button>
 
-      <UserLoginToolTip>
-        <AddSectionButton disabled={true} />
-      </UserLoginToolTip>
+      <motion.ul
+        variants={{
+          open: {
+            clipPath: "inset(0% 0% 0% 0% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.7,
+              delayChildren: 0.3,
+              staggerChildren: 0.05
+            }
+          },
+          closed: {
+            clipPath: "inset(10% 50% 90% 50% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.3
+            }
+          }
+        }}
+        style={{pointerEvents: isOpen ? "auto" : "none"}}
+        className="flex flex-col gap-4"
+      >
+        <motion.li variants={itemVariants}>
+          <CountDownButton reminders={reminders} count={storeCount} sound={storeSound} handleChange={countStoreDown} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <ResetDialog handleReset={resetCounter} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <UserLoginToolTip>
+            <CloneSectionButton disabled={true} />
+          </UserLoginToolTip>
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <UserLoginToolTip>
+            <AddSectionButton disabled={true} />
+          </UserLoginToolTip>
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <DemoSectionDialog />
+        </motion.li>
+      </motion.ul>
+    </motion.nav>
 
-      <DemoSectionDialog />
-    </CounterActionBar>
   )
 }
+
 
 function TitleField() {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -122,7 +201,7 @@ function TitleField() {
           ref={inputRef}
           placeholder='add title'
           variant='inline'
-          className='placeholder:text-neutral-500 text-2xl font-semibold max-w-max pl-0'
+          className='placeholder:text-neutral-500 sm:text-2xl text-lg font-semibold max-w-max pl-0'
           name="title"
           value={shortenText(storeTitle, 24)}
           onChange={(e) => setStoreTitle(e.target.value)}

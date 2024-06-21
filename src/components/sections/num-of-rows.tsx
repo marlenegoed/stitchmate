@@ -10,7 +10,7 @@ export default function NumOfRows({className, numOfRows}: NumOfRowsProps) {
 
   return (
     <div className={cn('flex select-none', className)}>
-      <span className={clsx('text-neutral-500 border  border-neutral-400 rounded-full px-4 py-1', {'invisible': !numOfRows})}>
+      <span className={clsx('text-neutral-500 border  border-neutral-400 rounded-full px-4 py-1 sm:text-base text-sm', {'invisible': !numOfRows})}>
         {numOfRows} rows
       </span>
     </div>

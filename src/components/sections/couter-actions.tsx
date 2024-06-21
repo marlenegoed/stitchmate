@@ -1,6 +1,5 @@
 'use client'
 
-import {HiOutlineDuplicate, HiOutlinePlusCircle} from "react-icons/hi";
 import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
 import {Button} from '../ui/button';
 import {updateCount} from '@/database/queries/queries';
@@ -14,6 +13,9 @@ import ZustandHydration from '../store/zustand-hydration';
 import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
 import {ButtonHTMLAttributes, ReactNode, forwardRef} from 'react';
+import {SlOptionsVertical} from "react-icons/sl";
+import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
+
 
 
 interface CounterActionProps {
@@ -51,7 +53,8 @@ export default function CounterActions({section, userSettings, numOfSections, re
   )
 }
 
-{/* <div className='absolute z-20 right-6 top-[calc(1.5rem_+_3rem)] grid grid-rows-6 gap-6 text-gray-800 justify-items-center'> */}
+
+
 
 export function CounterActionBar({children}: {children: ReactNode}) {
   return (
@@ -134,9 +137,11 @@ const CloneSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HT
     ref={ref}
     {...props}
   >
-    <HiOutlineDuplicate size={24} />
+    <HiOutlineSquare2Stack size={24} />
   </Button>
 ))
 CloneSectionButton.displayName = "CloneSectionButton"
+
+
 
 export {CloneSectionButton, AddSectionButton}

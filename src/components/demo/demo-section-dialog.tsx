@@ -22,7 +22,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-import {HiAdjustments} from "react-icons/hi";
+import {HiAdjustmentsVertical} from "react-icons/hi2";
 
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -109,7 +109,7 @@ export default function DemoSectionDialog() {
           <DialogTrigger asChild>
             <Alert className='border-none p-0 m-0 bg-inherit'>
               <Button type='button' size='icon' variant='ghost'>
-                <HiAdjustments size={20} className='text-gray-800 ' />
+                <HiAdjustmentsVertical size={20} className='text-gray-800 ' />
               </Button>
             </Alert>
           </DialogTrigger>
@@ -143,7 +143,7 @@ export default function DemoSectionDialog() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button type='button' size='icon' variant='ghost'>
-          <HiAdjustments size={20} className='text-gray-800 ' />
+          <HiAdjustmentsVertical size={20} className='text-gray-800 ' />
         </Button>
       </DrawerTrigger>
       <DrawerContent>

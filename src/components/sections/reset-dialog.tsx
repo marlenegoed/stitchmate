@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {Button} from "@/components/ui/button";
 import {Tooltip} from '../ui/tooltip';
-import {HiOutlineRefresh} from "react-icons/hi";
+import {HiArrowPath} from "react-icons/hi2";
 
 
 interface AlertDialogProps {
@@ -27,7 +27,7 @@ export default function ResetDialog({handleReset}: AlertDialogProps) {
       <Tooltip title="Reset counter">
         <AlertDialogTrigger asChild>
           <Button variant='ghost' size="icon">
-            <HiOutlineRefresh size={24} />
+            <HiArrowPath size={20} />
           </Button>
         </AlertDialogTrigger>
       </Tooltip>

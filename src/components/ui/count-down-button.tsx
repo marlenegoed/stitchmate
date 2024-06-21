@@ -1,5 +1,4 @@
-import {HiMiniArrowUturnLeft} from 'react-icons/hi2'
-import {HiReply} from "react-icons/hi";
+import {HiArrowUturnLeft} from 'react-icons/hi2'
 import {Button} from './button'
 import useSound from 'use-sound';
 import {Tooltip} from './tooltip';
@@ -50,7 +49,7 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
         onClick={handleClick}
         disabled={count === 1}
       >
-        <HiReply size={24} />
+        <HiArrowUturnLeft size={20} />
       </Button>
     </Tooltip>
   )
