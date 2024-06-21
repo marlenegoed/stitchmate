@@ -39,17 +39,17 @@ export default function DemoCounterPage() {
       <Guide />
       <CounterProgress />
       <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' />
-      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_2rem)] min-[380px]:h-[calc(100dvh_-_9rem)] lg:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
         <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
           <CounterHeader />
         </div>
         <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2">
           <ReminderPrompt />
         </div>
-        <div className="relativ z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
+        <div className="relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
           <ToggleableActionBar />
         </div>
-        <div className='col-span-10 row-span-8 row-start-2 col-start-2'>
+        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
           <DemoCounter />
         </div>
         <ReminderList />
@@ -240,7 +240,7 @@ function ReminderList({className}: {className?: string}) {
   }
 
   return (
-    <section className={cn('col-start-1 col-span-11 row-start-9 row-span-4 flex flex-row gap-6 items-end h-full', className)}>
+    <section className={cn('col-start-1 col-span-12 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full', className)}>
       <ScrollArea className="w-fit max-w-full flex">
         <div className='flex flex-row-reverse gap-6 justify-end w-max h-full'>
           {reminders.length === 0 ? <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} isDefaultReminderItem={true} /> :
