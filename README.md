@@ -6,8 +6,6 @@ Stitchmate is a knitting companion app that simplifies counting and project orga
 
 Counting rows in knitting is like keeping track of the steps in a recipe. Just as each step in cooking contributes to the final dish, each row in knitting builds up the fabric of your garment. By counting rows, you ensure that the pattern looks consistent and the garment turns out the right size and shape.
 
-![image](./images/sm-slide-demo.gif)
-
 
 ## Features: 
 
@@ -26,16 +24,13 @@ Counting rows in knitting is like keeping track of the steps in a recipe. Just a
 - use and configure a progress bar
 - count backwards in case you need to unravel 
 - toggle audiofeedback and knit without looking to your device
-
+<br>
 
 **Set custom reminders:**
 
 - prompt for an action on a designated row
 - configured prompting between a range of rows or at intervals
 - easily track repetitive actions (e.g. increasing or decreasing sts, or pattern repeats) 
-
-
-![image](./images/sm-slides-responsive.png)
 
 
 ## Running the application
