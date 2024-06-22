@@ -4,7 +4,7 @@ import {cn} from '@/lib/utils';
 import {useMemo} from 'react';
 
 interface BlobProps {
-  className: string,
+  className?: string,
   stroke: boolean,
   strokeClassName?: string,
 }
