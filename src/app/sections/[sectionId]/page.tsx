@@ -49,18 +49,11 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
         <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
-        {/* <ZustandHydration>
-          <div className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
-            <ToggleableActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} />
-          </div>
-        </ZustandHydration> */}
-
         <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
             <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>
         </div>
-
         <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-12 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full" />
 
       </div>
