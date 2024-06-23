@@ -12,10 +12,7 @@ import {notFound} from 'next/navigation';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
 import {BlobCounter} from '@/components/ui/blob-counter';
 import SectionProgress from '@/components/sections/section-progress';
-import {reminderRelations} from '@/database/schema';
 import Guide from '@/components/ui/guide';
-import ToggleableActionBar from '@/components/sections/toggeable-actionbar';
-import Zustand from 'zustand';
 import CounterActionBar from '@/components/sections/couter-actions';
 
 
@@ -50,7 +47,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           </div>
         </ZustandHydration>
 
-        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} />
+        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
         {/* <ZustandHydration>
           <div className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
@@ -64,8 +61,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           </ZustandHydration>
         </div>
 
-
-        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} />
+        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-12 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full" />
 
       </div>
 

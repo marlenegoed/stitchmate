@@ -12,11 +12,11 @@ import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import ZustandHydration from '../store/zustand-hydration';
 import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
-import {ButtonHTMLAttributes, ReactNode, forwardRef, useState} from 'react';
-import {SlOptionsVertical} from "react-icons/sl";
+import {ButtonHTMLAttributes, forwardRef, useState} from 'react';
 import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
 import {Variants, motion} from 'framer-motion';
 import {CgMenuGridO} from 'react-icons/cg';
+import {cn} from '@/lib/utils';
 
 const itemVariants: Variants = {
   open: {
@@ -31,10 +31,11 @@ interface CounterActionProps {
   section: Section,
   userSettings: UserSettings,
   numOfSections: number,
-  reminders: Reminder[]
+  reminders: Reminder[],
+  className?: string,
 }
 
-export default function CounterActionBar({section, userSettings, numOfSections, reminders}: CounterActionProps) {
+export default function CounterActionBar({section, userSettings, numOfSections, reminders, className}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
   const [isOpen, setIsOpen] = useState(false)
@@ -45,7 +46,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
   }
 
   async function handleReset() {
-    await updateCount(userSettings.userId, section.id, 1)
+    await updateCount(userSettings.userId, section.id, 1) 
     resetCounter()
   }
 
@@ -55,7 +56,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
     <motion.nav
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      className="flex flex-col gap-4"
+      className={cn("flex flex-col gap-4", className)}
     >
       <motion.button
         whileTap={{scale: 0.97}}
