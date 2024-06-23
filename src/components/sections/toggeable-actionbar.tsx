@@ -1,7 +1,7 @@
 'use client'
 import {useCounterStore} from '@/providers/counter-store-provider';
-import {useDemoStore} from '@/providers/demo-store-provider';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
+import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound, updateCount} from '@/database/queries/queries';
 import {Variants, motion} from 'framer-motion';
 import {useState} from 'react';
 import {CgMenuGridO} from 'react-icons/cg';
@@ -21,21 +21,32 @@ const itemVariants: Variants = {
   closed: {opacity: 0, y: 20, transition: {duration: 0.2}}
 };
 
-export default function ToggleableActionBar() {
+interface ToggleableActionBarProps {
+  section: Section,
+  userSettings: UserSettings,
+  numOfSections: number,
+  reminders: Reminder[]
+}
+
+export default function ToggleableActionBar({section, userSettings, numOfSections, reminders}: ToggleableActionBarProps) {
 
   const [isOpen, setIsOpen] = useState(false);
 
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const {storeCount, countStoreDown} = useCounterStore(state => state)
+  const resetCounter = useCounterStore(state => state.reset)
 
-  const resetCounterStore = useCounterStore(state => state.reset)
-  const resetDemoStore = useDemoStore((state) => state.resetStore)
-  const reminders = useDemoStore((state) => state.reminders)
 
-  async function resetCounter() {
-    resetDemoStore()
-    resetCounterStore()
+  async function handleSoundToggle() {
+    toggleStoreSound()
+    await toggleSound(userSettings.userId)
   }
+
+  async function handleReset() {
+    await updateCount(userSettings.userId, section.id, 1)
+    resetCounter()
+  }
+
 
   return (
 
@@ -83,7 +94,7 @@ export default function ToggleableActionBar() {
           <ToggleSound sound={storeSound} onToggle={toggleStoreSound} />
         </motion.li>
         <motion.li variants={itemVariants}>
-          <ResetDialog handleReset={resetCounter} />
+          <ResetDialog handleReset={handleReset} />
         </motion.li>
         <motion.li variants={itemVariants}>
           {/* <UserLoginToolTip> */}
@@ -100,6 +111,5 @@ export default function ToggleableActionBar() {
         </motion.li>
       </motion.ul>
     </motion.nav>
-
   )
 }

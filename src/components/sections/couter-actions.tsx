@@ -12,11 +12,20 @@ import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import ZustandHydration from '../store/zustand-hydration';
 import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
-import {ButtonHTMLAttributes, ReactNode, forwardRef} from 'react';
+import {ButtonHTMLAttributes, ReactNode, forwardRef, useState} from 'react';
 import {SlOptionsVertical} from "react-icons/sl";
 import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
+import {Variants, motion} from 'framer-motion';
+import {CgMenuGridO} from 'react-icons/cg';
 
-
+const itemVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {type: "spring", stiffness: 300, damping: 24}
+  },
+  closed: {opacity: 0, y: 20, transition: {duration: 0.2}}
+};
 
 interface CounterActionProps {
   section: Section,
@@ -25,9 +34,11 @@ interface CounterActionProps {
   reminders: Reminder[]
 }
 
-export default function CounterActions({section, userSettings, numOfSections, reminders}: CounterActionProps) {
+export default function CounterActionBar({section, userSettings, numOfSections, reminders}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
+  const [isOpen, setIsOpen] = useState(false)
+
   async function handleSoundToggle() {
     toggleStoreSound()
     await toggleSound(userSettings.userId)
@@ -39,30 +50,80 @@ export default function CounterActions({section, userSettings, numOfSections, re
   }
 
   return (
-    <CounterActionBar>
-      <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
-      <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
-        <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
-      </ZustandHydration>
 
-      <ResetDialog handleReset={handleReset} />
-      <CloneSection userId={userSettings.userId} section={section} />
-      <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
-      <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
-    </CounterActionBar>
+
+    <motion.nav
+      initial={false}
+      animate={isOpen ? "open" : "closed"}
+      className="flex flex-col gap-4"
+    >
+      <motion.button
+        whileTap={{scale: 0.97}}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <Button size="icon" className="rounded-full text-white"><CgMenuGridO /></Button>
+        {/* <ActionBar className={clsx({"hidden": !open})} /> */}
+      </motion.button>
+      {/* <CounterActionBar > */}
+      <motion.ul
+        variants={{
+          open: {
+            clipPath: "inset(0% 0% 0% 0% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.7,
+              delayChildren: 0.3,
+              staggerChildren: 0.05
+            }
+          },
+          closed: {
+            clipPath: "inset(10% 50% 90% 50% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.3
+            }
+          }
+        }}
+        style={{pointerEvents: isOpen ? "auto" : "none"}}
+        className="flex flex-col gap-4"
+      >
+        <motion.li variants={itemVariants}>
+          <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
+            <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
+          </ZustandHydration>
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <ResetDialog handleReset={handleReset} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <CloneSection userId={userSettings.userId} section={section} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
+        </motion.li>
+      </motion.ul>
+      {/* </CounterActionBar > */}
+    </motion.nav>
   )
 }
 
 
 
-
-export function CounterActionBar({children}: {children: ReactNode}) {
-  return (
-    <div className='flex flex-col gap-4 justify-center items-center w-fit text-gray-800 border border-dashed border-neutral-400 rounded-lg px-2 py-3'>
-      {children}
-    </div>
-  )
-}
+// export function CounterActionBar({children}: {children: ReactNode}) {
+//   return (
+//     <div className='flex flex-col gap-4 justify-center items-center w-fit text-gray-800 border border-dashed border-neutral-400 rounded-lg px-2 py-3'>
+//       {children}
+//     </div>
+//   )
+// }
 
 interface AddSectionProps {
   userId: string,
