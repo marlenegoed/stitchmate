@@ -4,7 +4,7 @@
 
 /* .cl-formButtonPrimary {
   @apply inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md px-3 text-xs font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 text-red-700;
-}
+} */
 
 .cl-card,
 .cl-socialButtonsBlockButton,
@@ -53,8 +53,8 @@
 .cl-fileDropAreaHint,
 .cl-fileDropAreaFooterHint,
 .cl-form
-  p[data-localization-key='userProfile.emailAddressPage.emailCode.formHint'],
-p[data-localization-key='userProfile.profilePage.successMessage'] {
+  p[data-localization-key="userProfile.emailAddressPage.emailCode.formHint"],
+p[data-localization-key="userProfile.profilePage.successMessage"] {
   @apply text-gray-300;
 }
 
@@ -62,9 +62,9 @@ p[data-localization-key='userProfile.profilePage.successMessage'] {
   @apply bg-gray-300;
 }
 
-.cl-formFieldInput[type='text'],
-.cl-formFieldInput[type='email'],
-.cl-formFieldInput[type='password'] {
+.cl-formFieldInput[type="text"],
+.cl-formFieldInput[type="email"],
+.cl-formFieldInput[type="password"] {
   @apply flex h-10 w-full rounded-md border px-3 py-2 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50;
 }
 
@@ -96,7 +96,7 @@ p[data-localization-key='userProfile.profilePage.successMessage'] {
   @apply border-b;
 }
 
-button[data-localization-key='userProfile.start.dangerSection.deleteAccountButton'] {
+button[data-localization-key="userProfile.start.dangerSection.deleteAccountButton"] {
 }
 
 .cl-fileDropAreaBox {
@@ -112,7 +112,7 @@ button[data-localization-key='userProfile.start.dangerSection.deleteAccountButto
 }
 
 .cl-fileDropAreaButtonPrimary {
-  @apply h-10 px-4 py-2 transition-colors ;
+  @apply h-10 px-4 py-2 transition-colors;
 }
 
 .cl-userButtonPopoverActionButton,
@@ -136,9 +136,15 @@ button[data-localization-key='userProfile.start.dangerSection.deleteAccountButto
   @apply rounded-full px-2.5 py-0.5 text-xs;
 }
 
-.cl-badge[data-localization-key='badge__unverified'] {
+.cl-badge[data-localization-key="badge__unverified"] {
   @apply border dark:text-red-500;
 }
 
 .cl-formButtonReset {
-} */
+}
+
+.cl-modalBackdrop {
+  @apply bg-black/30;
+}
+.cl-headerTitle {
+}

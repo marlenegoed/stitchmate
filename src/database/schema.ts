@@ -78,4 +78,6 @@ export const reminderRelations = relations(reminders, ({one}) => ({
 export const userSettings = pgTable('user_settings', {
   userId: text('user_id').notNull(),
   sound: boolean('sound').notNull().default(true),
+  guide: boolean('guide').notNull().default(true),
 })
+

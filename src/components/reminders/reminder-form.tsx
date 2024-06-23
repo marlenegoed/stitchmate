@@ -131,16 +131,16 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-              <DialogHeader className='mb-2 -mt-4 justify-between items-center'>
-                <ReminderTitleField />
+              <DialogHeader className='mb-6 -mt-4 justify-between items-center'>
+                <ReminderTitleField isDesktop={true} />
                 {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
               </DialogHeader>
               <ReminderFormInputs count={count} />
-              <DialogFooter className='grid grid-cols-2 gap-4 px-1'>
+              <DialogFooter className='flex flex-row justify-between gap-4 w-full'>
                 <DialogClose asChild>
-                  <Button type="button" className='px-12 w-full' variant='outline'>Cancel</Button>
+                  <Button type="button" variant='outline'>Cancel</Button>
                 </DialogClose>
-                <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save</Button>
+                <Button type="submit" disabled={form.formState.isSubmitting}>Save</Button>
               </DialogFooter>
             </form>
           </Form>
@@ -158,11 +158,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
         </button>
       </DrawerTrigger>
       <DrawerContent>
-        <ScrollArea className='overflow-auto p-4'>
+        <ScrollArea className='overflow-auto p-4 max-w-lg flex justify-center flex-col mx-auto'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
 
-              <DrawerHeader className="text-left">
+              <DrawerHeader className="text-left mb-8 mt-4">
                 <DrawerTitle>
                   < ReminderTitleField />
                 </DrawerTitle>
@@ -171,11 +171,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
 
               <ReminderFormInputs count={count} />
 
-              <DrawerFooter className="pt-2 gap-4">
+              <DrawerFooter className="p-0 gap-4 sm:flex-row sm:justify-between">
                 <DrawerClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DrawerClose>
-                <Button type="submit" className='px-12 w-full' disabled={form.formState.isSubmitting}>Save</Button>
+                <Button type="submit" disabled={form.formState.isSubmitting}>Save</Button>
               </DrawerFooter>
             </form>
           </Form>
@@ -203,8 +203,8 @@ function ReminderFormInputs({count}: {count: number}) {
         control={form.control}
         name="type"
         render={({field}) => (
-          <FormItem className="flex flex-col font-semibold space-y-3 w-full">
-            <FormLabel className='text-lg font-semibold pt-2'>Select repetition:</FormLabel>
+          <FormItem className="flex flex-row font-medium gap-4 w-full items-start">
+            <FormLabel className='text-lg font-medium text-gray-900 pt-1'>Repetition:</FormLabel>
             <FormControl>
 
               <RadioGroup
@@ -216,7 +216,7 @@ function ReminderFormInputs({count}: {count: number}) {
                   <FormControl>
                     <RadioGroupItem value="range" />
                   </FormControl>
-                  <FormLabel className="text-base pb-1">
+                  <FormLabel className="text-base pb-1 text-neutral-900">
                     ...on row(s)
                   </FormLabel>
                 </FormItem>
@@ -225,7 +225,7 @@ function ReminderFormInputs({count}: {count: number}) {
                   <FormControl>
                     <RadioGroupItem value="repeating" />
                   </FormControl>
-                  <FormLabel className="text-base pb-1">
+                  <FormLabel className="text-base pb-1  text-neutral-900">
                     ...every
                   </FormLabel>
                 </FormItem>
@@ -244,12 +244,13 @@ function ReminderFormInputs({count}: {count: number}) {
           name="note"
           render={({field}) => (
             <FormItem>
-              <FormLabel className='font-semibold text-lg'>Notes (optional)</FormLabel>
+              <FormLabel className='font-medium text-lg text-gray-900'>Notes (optional)</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="add notes..."
                   rows={5}
                   {...field}
+
                 />
               </FormControl>
               <FormMessage />
@@ -261,7 +262,7 @@ function ReminderFormInputs({count}: {count: number}) {
   )
 }
 
-function ReminderTitleField() {
+function ReminderTitleField({isDesktop}: {isDesktop?: boolean}) {
   const form = useFormContext()
 
 
@@ -272,7 +273,7 @@ function ReminderTitleField() {
       render={({field}) => (
         <FormItem>
           <FormControl>
-            <Input className='placeholder:neutral-500 pl-0 bg-inherit text-2xl border-none focus:border-b font-semibold' placeholder='Enter Title' {...field} />
+            <Input variant="borderbottom" className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold', {'max-w-72': isDesktop})} placeholder='Enter Title' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -291,7 +292,7 @@ function RepeatEveryInputs({count}: {count: number}) {
         name="start"
         render={({field}) => (
           <FormItem>
-            <FormLabel className='text-neutral-500'>start row</FormLabel>
+            <FormLabel>start row</FormLabel>
             <FormControl>
               <Input type="number" min="1" placeholder={count.toString()} {...field} />
             </FormControl>
@@ -305,7 +306,7 @@ function RepeatEveryInputs({count}: {count: number}) {
         name="interval"
         render={({field}) => (
           <FormItem>
-            <FormLabel className='text-neutral-500'>{`every ${makeOrdinal(field.value)}`}</FormLabel>
+            <FormLabel>{`every ${makeOrdinal(field.value)}`}</FormLabel>
             <FormControl>
               <Input type="number" placeholder="1" min="1" {...field} />
             </FormControl>
@@ -319,7 +320,7 @@ function RepeatEveryInputs({count}: {count: number}) {
         name="times"
         render={({field}) => (
           <FormItem>
-            <FormLabel className='text-neutral-500'>times</FormLabel>
+            <FormLabel>times</FormLabel>
             <FormControl>
               <Input type="number" placeholder="0" min="0" {...field} />
             </FormControl>
@@ -356,7 +357,7 @@ function ForRowsInputs() {
         name="until"
         render={({field}) => (
           <FormItem>
-            <FormLabel className='text-neutral-500'>until</FormLabel>
+            <FormLabel>until</FormLabel>
             <FormControl>
               <Input type="number" min="1" {...field} />
             </FormControl>

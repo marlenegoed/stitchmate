@@ -1,7 +1,6 @@
 'use client'
 
 import {Button} from './button';
-import {HiOutlineVolumeUp, HiOutlineVolumeOff} from "react-icons/hi";
 import {HiOutlineSpeakerWave, HiOutlineSpeakerXMark} from "react-icons/hi2";
 
 import {useState} from 'react';

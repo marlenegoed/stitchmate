@@ -344,3 +344,7 @@ export async function getUserSettings(userId: string) {
 export async function toggleSound(userId: string) {
   return await db.update(userSettings).set({sound: not(userSettings.sound)}).where(eq(userSettings.userId, userId))
 }
+
+export async function toggleGuide(userId: string) {
+  return await db.update(userSettings).set({sound: not(userSettings.sound)}).where(eq(userSettings.userId, userId))
+}

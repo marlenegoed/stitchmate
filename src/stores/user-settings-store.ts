@@ -5,10 +5,12 @@ import {persist, devtools} from 'zustand/middleware'
 
 export type UserSettingsState = {
   storeSound: boolean,
+  showGuide: boolean,
 }
 
 export type UserSettingsActions = {
   toggleStoreSound: () => void,
+  hideGuide: () => void,
   initialize: (state: UserSettingsState) => void,
 }
 
@@ -20,6 +22,7 @@ export const initUserSettingsStore = (): UserSettingsState => {
 
 export const defaultInitState: UserSettingsState = {
   storeSound: false,
+  showGuide: true,
 }
 
 export const createUserSettingsStore = (
@@ -31,6 +34,7 @@ export const createUserSettingsStore = (
         (set) => ({
           ...initState,
           toggleStoreSound: () => set((state) => ({storeSound: !state.storeSound})),
+          hideGuide: () => set((state) => ({showGuide: false})),
           initialize: (state: UserSettingsState) => set(() => ({...state}))
         }),
         {name: "user-settings-store"}

@@ -70,7 +70,7 @@ const DialogCloseButton = ({...props}: React.HTMLAttributes<HTMLButtonElement>) 
   return (
     <DialogPrimitive.Close
       className="rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400" tabIndex={-1} {...props}>
-      <HiMiniXMark size={24} />
+      <HiMiniXMark size={20} />
       <span className="sr-only">Close</span>
     </DialogPrimitive.Close>
   )
@@ -81,7 +81,7 @@ const DialogFooter = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
+    className={cn("flex flex-col-reverse sm:flex-row sm:space-x-2", className)}
     {...props} />
 );
 DialogFooter.displayName = "DialogFooter";

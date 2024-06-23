@@ -10,6 +10,7 @@ import Title from '../ui/title';
 import shortenText from '@/lib/shorten-text';
 import {Tooltip} from '../ui/tooltip';
 import {cn} from '@/lib/utils';
+import NumOfRows from './num-of-rows';
 
 interface SectionHeaderProps {
   section: Section,
@@ -22,14 +23,14 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className, reminders}: SectionHeaderProps) {
   return (
-    <div className={cn('w-full', className)}>
-      <div className='grid grid-cols-12 items-center mb-4'>
-        <div className='hidden col-span-6 flex-row items-center w-full ml-6 sm:flex '>
-          <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
-          <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
-        </div>
+    <div className={cn('w-full flex flex-col items-start gap-2', className)}>
+      <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
+      <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
+      {section.numOfRows &&
+        <NumOfRows numOfRows={section.numOfRows} />
+      }
 
-        <div className='col-span-6 flex flex-row justify-end'>
+      {/* <div className='col-span-6 flex flex-row justify-end'>
           <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
             <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
           </div>
@@ -37,27 +38,27 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
           <div className='hidden mr-6 sm:flex flex-row items-center'>
             <SectionPagination userId={userSettings.userId} section={section} numOfSections={numOfSections} />
           </div>
-        </div>
-
-        {/* mobile header */}
-        <div className='col-span-12 justify-center px-4 sm:hidden mb-1'>
-          <div className='grid grid-cols-12 justify-center items-center'>
-            <MoveToPrevSection userId={userSettings.userId} section={section} numOfSections={numOfSections} className='col-span-2 justify-self-start self-center' />
-            <div className='col-span-8 justify-self-center self-center'>
-              <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} className='w-full text-center' />
-            </div>
-            <MoveToNextSection userId={userSettings.userId} section={section} numOfSections={numOfSections} className='col-span-2 justify-self-end self-center' />
-          </div>
-        </div>
+        </div> */}
 
 
-        {/* action bar mobile:  */}
-        <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
+      {/* action bar mobile:  */}
+      {/* <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
           <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
-        </div>
-      </div>
+        </div> */}
     </div>
   )
+}
+
+export function MobileSectionHeader({section, userSettings}: SectionHeaderProps) {
+  return (
+
+    <div className='lg:hidden flex w-full justify-between items-center px-6 pt-2' >
+      <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
+      {section.numOfRows && <NumOfRows numOfRows={section.numOfRows} />}
+    </div>
+
+  )
+
 }
 
 interface SectionPaginationProps {
