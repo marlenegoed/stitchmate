@@ -22,12 +22,20 @@ interface SectionHeaderProps {
 }
 
 export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className, reminders}: SectionHeaderProps) {
+
+  let numOfRows
+  if (!section.numOfRows) {
+    numOfRows = 0
+  } else {
+    numOfRows = section.numOfRows
+  }
+
   return (
     <div className={cn('w-full flex flex-col items-start gap-2', className)}>
-      <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title>
+      {/* <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title> */}
       <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
-      {section.numOfRows &&
-        <NumOfRows numOfRows={section.numOfRows} />
+      {numOfRows !== 0 &&
+        <NumOfRows numOfRows={numOfRows} />
       }
 
       {/* <div className='col-span-6 flex flex-row justify-end'>
@@ -50,11 +58,20 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
 }
 
 export function MobileSectionHeader({section, userSettings}: SectionHeaderProps) {
+
+  let numOfRows
+  if (!section.numOfRows) {
+    numOfRows = 0
+  } else {
+    numOfRows = section.numOfRows
+  }
+
   return (
 
     <div className='lg:hidden flex w-full justify-between items-center px-6 pt-2' >
       <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
-      {section.numOfRows && <NumOfRows numOfRows={section.numOfRows} />}
+      {numOfRows !== 0 &&
+        <NumOfRows numOfRows={numOfRows} />}
     </div>
 
   )

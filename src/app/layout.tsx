@@ -1,5 +1,5 @@
 import './globals.css';
-import {notoSans} from '@/components/ui/fonts';
+import {notoSans, openSans, nunitoSans} from '@/components/ui/fonts';
 import {Toaster} from '@/components/ui/toaster';
 import {ClerkProvider} from '@clerk/nextjs'
 
@@ -10,7 +10,7 @@ export default function RootLayout({children}: Readonly<{
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${notoSans.className} antialiased h-full min-h-dvh bg-neutral-100`}>
+        <body className={`${openSans.className} antialiased h-full min-h-dvh bg-neutral-100`}>
           {children}
           <Toaster />
         </body>

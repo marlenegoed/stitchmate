@@ -47,7 +47,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           </div>
         </ZustandHydration>
 
-        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
+        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
         <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>

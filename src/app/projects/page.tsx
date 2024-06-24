@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import {auth} from "@clerk/nextjs/server";
-import {ProjectsHeader} from './projects-header';
-import {ProjectList} from './project-list';
+import {ProjectsHeader} from '../../components/projects/projects-header';
+import {ProjectList} from '../../components/projects/project-list';
 
 export default async function Page({searchParams}: {searchParams?: {title?: string, favorite?: string, page?: number}}) {
   const {userId} = auth().protect();

@@ -28,6 +28,6 @@ export default function SectionProgress({numOfRows, color}: SectionProgressProps
   }, [numOfRows, count]);
 
   return (
-    <Progress value={progress} className={clsx('w-full min-h-1', {'invisible': !isNumOfRows})} color={color} />
+    <Progress value={progress} className={clsx('w-full min-h-1', {'invisible': numOfRows === 0})} color={color} />
   );
 }

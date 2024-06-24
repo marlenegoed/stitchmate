@@ -26,7 +26,7 @@ import {HiSquares2X2} from 'react-icons/hi2';
 export default function Nav() {
 
   return (
-    <nav className='flex justify-between items-center px-4 py-4 w-full mx-auto'>
+    <nav className='flex justify-between items-center py-4 px-6 w-full mx-auto'>
       <ProjectPageButton />
       <Logo />
       <SignedIn>
@@ -56,13 +56,11 @@ function Logo() {
 function ProjectPageButton() {
   const {isSignedIn} = useAuth()
 
-
   return (
     <>
       {isSignedIn ?
-        <Link href='/projects'
-          className="hover:text-neutral-600">
-          <HiSquares2X2 className='text-gray-800' size={24} />
+        <Link href='/projects'>
+          <HiSquares2X2 className='text-gray-800 hover:text-neutral-600' size={24} />
         </Link>
         :
         <Link className="hover:opacity-80" href="/">
@@ -82,7 +80,7 @@ export function UserMenu() {
       <Popover>
         <PopoverTrigger>
           <Avatar>
-            <AvatarFallback className='hover:text-sienna-400 hover:transition-colors' >{userEmail}</AvatarFallback>
+            <AvatarFallback className='hover:bg-neutral-300/70 transition hover:transition-colors' >{userEmail}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-2 bg-white'>

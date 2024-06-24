@@ -10,7 +10,7 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        default: "rounded-lg border border-input border-dashed font-semibold bg-transparent border-neutral-400 text-base px-5 h-14 text-gray-800 placeholder:text-neutral-500 focus:border-neutral-500",
+        default: "rounded-lg border border-input border font-semibold bg-transparent border-neutral-400 text-base px-5 h-14 text-gray-800 placeholder:text-neutral-500 focus:border-neutral-500",
         inline:
           "bg-inherit border-none focus:outline-none",
         form: "font-semibold bg-transparent rounded-lg border border-neutral-400 text-base px-5 h-14 text-gray-800 placeholder:text-neutral-500 focus:border-neutral-400",

@@ -71,7 +71,7 @@ export default function SectionTitleField({userId, id, title, className}: Sectio
                 <Input
                   placeholder='Add title'
                   variant='inline'
-                  className={cn('placeholder:text-slate-800/50 font-semibold text-xl max-w-max', className)}
+                  className={cn('placeholder:text-slate-800/50 font-semibold text-xl max-w-max pl-0', className)}
                   {...field}
                   onBlur={() => formRef.current?.requestSubmit()}
                   ref={inputRef}
