@@ -14,7 +14,7 @@ export default function ProjectListSearch({className}: {className?: string}) {
   return (
     <label className={cn('sm:ml-12', className)}>
       <ProjectSearchIcon variant='mini' className="absolute mt-3 ml-4 cursor-pointer" />
-      <ProjectSearchInput className="pl-12" defaultValue={title || ''} onChange={(e) => handleSearch(e.target.value)} />
+      <ProjectSearchInput defaultValue={title || ''} onChange={(e) => handleSearch(e.target.value)} />
     </label>
   )
 }
@@ -28,7 +28,7 @@ const ProjectSearchInput = forwardRef<HTMLInputElement, React.InputHTMLAttribute
       id="project-title"
       variant='inline'
       {...props}
-      className={cn('placeholder:text-slate-800 text-base rounded-full bg-neutral-100 sm:bg-neutral-200 h-10', props.className)}
+      className={cn('placeholder:text-gray-800 text-base rounded-lg h-10 pl-0', props.className)}
     />
   )
 })

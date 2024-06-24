@@ -19,7 +19,7 @@ import {
 } from '@clerk/nextjs'
 import logo from '../../../public/stitchmate_logo.svg'
 import {Button} from './button';
-import {HiSquares2X2} from 'react-icons/hi2';
+import {HiOutlineSquares2X2} from 'react-icons/hi2';
 
 
 
@@ -60,7 +60,7 @@ function ProjectPageButton() {
     <>
       {isSignedIn ?
         <Link href='/projects'>
-          <HiSquares2X2 className='text-gray-800 hover:text-neutral-600' size={24} />
+          <HiOutlineSquares2X2 className='text-gray-800 hover:text-neutral-600' size={24} />
         </Link>
         :
         <Link className="hover:opacity-80" href="/">
