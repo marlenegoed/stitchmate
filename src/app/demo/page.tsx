@@ -26,7 +26,7 @@ import {Button} from '@/components/ui/button'
 import {CgMenuGridO} from "react-icons/cg";
 import {motion, Variants} from "framer-motion";
 import Spinner from '@/components/ui/spinner'
-import Loading from '../projects/loading'
+import Loading from '../loading'
 
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <Spinner />})

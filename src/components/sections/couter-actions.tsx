@@ -10,7 +10,7 @@ import {ToggleSound} from '../ui/toggle-sound-button';
 import {CountDownButton} from '../ui/count-down-button';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import ZustandHydration from '../store/zustand-hydration';
-import {Tooltip} from '../ui/tooltip';
+// import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
 import {ButtonHTMLAttributes, forwardRef, useState} from 'react';
 import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
@@ -46,7 +46,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
   }
 
   async function handleReset() {
-    await updateCount(userSettings.userId, section.id, 1) 
+    await updateCount(userSettings.userId, section.id, 1)
     resetCounter()
   }
 
@@ -62,7 +62,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
         whileTap={{scale: 0.97}}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Button size="icon" className="rounded-full text-white"><CgMenuGridO /></Button>
+        <div className="h-10 w-10 bg-gray-900 flex justify-center items-center rounded-full text-white"><CgMenuGridO /></div>
         {/* <ActionBar className={clsx({"hidden": !open})} /> */}
       </motion.button>
       {/* <CounterActionBar > */}

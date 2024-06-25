@@ -46,10 +46,7 @@ export default function Guide() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[440px] p-0 bg-white">
 
-          <DialogClose className="absolute right-0 top-0 z-50" asChild>
-            <Button type="button" variant="nohover" size="icon">
-              <HiX />
-            </Button>
+          <DialogClose className="absolute right-3 top-3 z-50"><HiX />
           </DialogClose>
 
           <Carousel>
