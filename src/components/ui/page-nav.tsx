@@ -12,11 +12,10 @@ interface PageTitleProps {
   projectId?: number,
 }
 
-export default async function PageNav({pageTitle, urlPath, projectId, section}: PageTitleProps) {
+export default async function PageNav({pageTitle, projectId, section}: PageTitleProps) {
 
   return (
-    <div className='flex justify-between items-center flex-row w-full p-8 pt-4 pb-6'>
-      <BackButton urlPath={urlPath} className='ml-0 self-start flex' />
+    <div className='flex justify-between flex-row w-full pt-4 pb-6'>
       <Title>{pageTitle}</Title>
       <DeleteDialog projectId={projectId} section={section} />
     </div>

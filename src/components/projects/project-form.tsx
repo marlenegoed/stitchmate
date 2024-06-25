@@ -98,29 +98,27 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
   return (
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-6 grid grid-cols-12 gap-4" method="post">
-
-        <div className='grid col-span-12  md:col-span-6 lg:col-span-6 xl:col-span-6 order-1 bg-white rounded-xl shadow-sm pt-6 px-8 pb-10 gap-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full grid grid-cols-12 gap-4" method="post">
+        <div className='grid col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6 order-1 bg-white rounded-lg pt-6 px-8 pb-10 gap-y-6'>
+          <p className='font-semibold mt-2'>Title</p>
           <FormField
             control={form.control}
             name="title"
             render={({field}) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input variant='noring' placeholder={'my project'} {...field} className='pl-1 bg-inherit border-none text-2xl font-semibold' />
+                  <Input placeholder={'my project'} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
+          <p className='font-semibold mt-2 mb-4'>Color</p>
           <FormField
             control={form.control}
             name="color"
             render={({field}) => (
               <FormItem className="space-y-3 pl-1">
-                {/* <FormLabel>Notify me about...</FormLabel> */}
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -169,7 +167,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
         <NeedleSelectField />
 
-        <div className='col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 order-4 bg-white rounded-xl shadow-sm py-6 pb-8 px-8'>
+        <div className='col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 order-4 bg-white rounded-lg py-6 pb-8 px-8'>
           <p className='font-semibold mt-2 mb-4'>Gauge (optional)</p>
           <div className='grid grid-cols-3 gap-4'>
             <FormField
@@ -177,7 +175,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
               name="gaugeStitches"
               render={({field}) => (
                 <FormItem >
-                  <FormLabel >stitches</FormLabel>
+                  <FormLabel>stitches</FormLabel>
                   <FormControl>
                     <Input placeholder={''} type="number" {...field} />
                   </FormControl>
@@ -226,7 +224,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
         </div>
 
 
-        <div className='col-span-12 sm:col-span-6 order-2 bg-white rounded-xl shadow-sm px-8 pt-8 pb-10'>
+        <div className='col-span-12 sm:col-span-6 order-2 bg-white rounded-lg px-8 pt-8 pb-10'>
           <FormField
             control={form.control}
             name="description"
@@ -238,7 +236,7 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
                 <FormControl>
                   <Textarea
                     placeholder="add description..."
-                    className="resize-none border rounded-md text-sm placeholder:text-muted-foreground"
+                    className="resize-none border"
                     rows={5}
                     {...field}
                   />
@@ -251,7 +249,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
 
         <YarnSelectField />
 
-        {/* max-[600px]:grid  */}
 
         <div className='col-span-12 mt-4 mb-6 order-last '>
           <div className='flex justify-center sm:justify-end gap-4 max-[638px]:grid max-[638px]:grid-cols-2'>
@@ -271,7 +268,7 @@ function NeedleSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "needles"})
 
   return (
-    <div className="order-3 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 flex flex-col bg-white shadow-sm rounded-xl p-8 pr-4 py-6">
+    <div className="order-3 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 flex flex-col bg-white rounded-lg p-8 pr-4 py-6">
       <div className="flex items-center justify-between mb-3">
         <FormLabel className='text-md font-semibold'>Needles (optional)</FormLabel>
         <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
@@ -288,7 +285,7 @@ function NeedleSelectField() {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className='font-normal border mr-2 mb-4'>
-                        <SelectValue placeholder="select needle" className='text-muted-foreground' />
+                        <SelectValue placeholder="select needle" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -313,7 +310,7 @@ function YarnSelectField() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "yarn"})
 
   return (
-    <div className="order-5 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-6 flex flex-col gap-y-4 bg-white rounded-xl shadow-sm pt-6 pb-10 pr-6 pl-8 ">
+    <div className="order-5 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-6 flex flex-col gap-y-4 bg-white rounded-lg pt-6 pb-10 pr-4 pl-8 ">
       <div className="flex items-center justify-between">
         <FormLabel className='font-semibold text-md'>Yarn (optional)</FormLabel>
         <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
@@ -328,7 +325,7 @@ function YarnSelectField() {
               <FormItem>
                 <div className="flex items-center">
                   <FormControl>
-                    <Input placeholder="add yarn" className='py-6 mr-2' {...field} />
+                    <Input placeholder="add yarn" className='py-6 mr-2 font-normal' {...field} />
                   </FormControl>
                   <Button type="button" variant="ghost" size="icon" className=' hover:bg-white hover:text-slate-700 text-neutral-500 disabled:opacity-50 transform opacity' disabled={fields.length < 2} onClick={() => remove(index)}>
                     <HiOutlineX className='mr-2' />

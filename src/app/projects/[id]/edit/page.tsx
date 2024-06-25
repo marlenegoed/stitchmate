@@ -5,6 +5,7 @@ import {findProject} from '@/database/queries/queries';
 import PageNav from '@/components/ui/page-nav';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
+import shortenText from '@/lib/shorten-text';
 
 export default async function Page({params}: {params: {id: number}}) {
   const {userId} = auth().protect();
@@ -17,7 +18,7 @@ export default async function Page({params}: {params: {id: number}}) {
   const section = result.sections;
 
   const defaultValues = {
-    title: project.title,
+    title: shortenText(project.title, 26),
     description: project.description || undefined,
     gaugeStitches: project.gaugeStitches || undefined,
     gaugeRows: project.gaugeRows || undefined,

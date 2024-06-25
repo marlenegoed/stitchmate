@@ -41,16 +41,17 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
           </div>
         </div>
 
-        <div className='flex flex-row justify-between items-start h-20 pt-3 pl-4 pr-2'>
-          <h4 className='text-xl font-semibold'>{shortenText(project.title, 34)}</h4>
-          <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
-            <Button size='icon' variant='ghost'>
-              <HiEllipsisVertical className='fill-slate-700' size={24} />
-            </Button>
-          </Link>
-        </div>
-
       </Link>
+
+      <div className='flex flex-row justify-between items-start h-20 pt-3 pl-4 pr-2'>
+        <h4 className='text-xl font-semibold'>{shortenText(project.title, 34)}</h4>
+        <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
+          <Button size='icon' variant='ghost'>
+            <HiEllipsisVertical className='fill-slate-700' size={24} />
+          </Button>
+        </Link>
+      </div>
+
 
     </div >
   )

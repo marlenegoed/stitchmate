@@ -1,5 +1,5 @@
 import './globals.css';
-import {notoSans, openSans, nunitoSans} from '@/components/ui/fonts';
+import {openSans} from '@/components/ui/fonts';
 import {Toaster} from '@/components/ui/toaster';
 import {ClerkProvider} from '@clerk/nextjs'
 

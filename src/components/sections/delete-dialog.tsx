@@ -68,18 +68,18 @@ export default function DeleteDialog({section, projectId, reminder, className, h
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className={cn(' text-sienna-400/70  hover:text-sienna-400/90', className)} size="icon" disabled={disabled}>
+        <Button variant="ghost" className={cn(' text-sienna-400  hover:text-sienna-300', className)} size="icon" disabled={disabled}>
           <HiOutlineTrash size={20} />
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="space-y-4">
         <AlertDialogHeader>
-          <AlertDialogTitle >Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle className='mb-2'>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className='text-base'>
             Deleting a {title()} cannot be undone. All your progress and settings will be permanently removed.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className='flex flex-row w-full justify-between sm:justify-between'>
           <AlertDialogCancel className='px-10'>Cancel</AlertDialogCancel>
           <AlertDialogAction className='px-10' onClick={handleSubmit}>Delete</AlertDialogAction>
         </AlertDialogFooter>
