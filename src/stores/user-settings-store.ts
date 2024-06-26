@@ -1,7 +1,7 @@
 // import {createStore} from 'zustand/vanilla'
 
 import {create} from 'zustand';
-import {persist, devtools} from 'zustand/middleware'
+import {persist, devtools, createJSONStorage} from 'zustand/middleware'
 
 export type UserSettingsState = {
   storeSound: boolean,
@@ -37,7 +37,10 @@ export const createUserSettingsStore = (
           hideGuide: () => set((state) => ({showGuide: false})),
           initialize: (state: UserSettingsState) => set(() => ({...state}))
         }),
-        {name: "user-settings-store"}
+        {
+          name: "user-settings-store",
+          storage: createJSONStorage(() => sessionStorage)
+        }
       ),
     )
   )

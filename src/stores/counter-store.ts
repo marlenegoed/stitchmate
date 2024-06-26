@@ -1,7 +1,7 @@
 // import {createStore} from 'zustand/vanilla'
 
 import {create} from 'zustand';
-import {persist, devtools} from 'zustand/middleware'
+import {persist, devtools, createJSONStorage} from 'zustand/middleware'
 
 // the store itself does not need any change
 
@@ -53,7 +53,10 @@ export const createCounterStore = (
           reset: () => set((state) => ({...state, storeCount: 1})),
           initialize: (state: CounterState) => set(() => ({...state}))
         }),
-        {name: "counter-store"}
+        {
+          name: "counter-store",
+          storage: createJSONStorage(() => sessionStorage)
+        }
       ),
     )
   )

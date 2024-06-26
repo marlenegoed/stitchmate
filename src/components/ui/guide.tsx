@@ -33,7 +33,6 @@ import {HiAdjustmentsVertical, HiArrowPath, HiArrowUturnLeft, HiMiniHeart, HiOut
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import {toggleGuide} from '@/database/queries/queries';
 
-
 export default function Guide() {
 
   const {isSignedIn, user} = useUser()
