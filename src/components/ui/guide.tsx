@@ -39,8 +39,6 @@ export default function Guide() {
   const {showGuide} = useUserSettingsStore(state => state)
   const [isOpen, setIsOpen] = useState(showGuide)
 
-  console.log(user)
-
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
