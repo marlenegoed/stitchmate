@@ -14,9 +14,11 @@ import {BlobCounter} from '@/components/ui/blob-counter';
 import SectionProgress from '@/components/sections/section-progress';
 import Guide from '@/components/ui/guide';
 import CounterActionBar from '@/components/sections/couter-actions';
+import dynamic from 'next/dynamic';
 
 
 export default async function Page({params}: {params: {sectionId: number}}) {
+
   const {userId} = auth().protect();
 
   const result = await findSectionById(userId, params.sectionId)
@@ -28,6 +30,8 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
   await setActiveSection(userId, params.sectionId)
   const allSections = await findAllSections(userId, section.projectId)
+
+  const Guide = dynamic(() => import('@/components/ui/guide'), {ssr: false})
 
   return (
     <>
@@ -42,14 +46,14 @@ export default async function Page({params}: {params: {sectionId: number}}) {
         <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start' reminders={reminders} />
 
         <ZustandHydration>
-          <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 mt-4">
+          <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-1 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 mt-4">
             <ReminderPrompt userId={userId} reminders={reminders} />
           </div>
         </ZustandHydration>
 
         <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
-        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
+        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-1 col-start-2'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
             <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>

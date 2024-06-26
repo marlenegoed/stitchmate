@@ -51,7 +51,7 @@ export default function Guide() {
 
           <Carousel>
             <CarouselContent>
-              {!isSignedIn && <DemoStartSlide />}
+              <DemoStartSlide isSignedIn />
               <CountRowsSlide />
               <ToolbarSlide />
               <NameSectionSlide />
@@ -72,12 +72,16 @@ export default function Guide() {
 }
 
 
-function DemoStartSlide() {
+function DemoStartSlide({isSignedIn}: {isSignedIn: boolean}) {
+
+  let intro = isSignedIn
+    ? <GuideParagraph>Follow this short guide to understand how stitchmate works.</GuideParagraph>
+    : <GuideParagraph>Follow this short guide to understand how stitchmate works. You are currently in the demo version. Sign In for free to access all features.</GuideParagraph>
 
   return (
     <SlideLayout className="bg-neutral-50">
       <GuideHeading> It&apos;s 3 minutes til cast on!</GuideHeading>
-      <GuideParagraph>Follow this short guide to understand how stitchmate works. You are currently in the demo version. Sign In for free to access all features.</GuideParagraph>
+      {intro}
       <div className="w-8/12 mt-auto mx-auto">
         <Image
           src={guide_01}
