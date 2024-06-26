@@ -26,19 +26,21 @@ import guide_02 from "../../../public/guide_02.svg";
 import guide_03 from "../../../public/guide_03.svg";
 import guide_04 from "../../../public/guide_04.svg";
 import guide_05 from "../../../public/guide_05.svg";
-import guide_07 from "../../../public/guide_07.svg";
 import highlight_01 from "../../../public/highlight_01.svg";
 
 import {CgMenuGridO} from 'react-icons/cg';
 import {HiAdjustmentsVertical, HiArrowPath, HiArrowUturnLeft, HiMiniHeart, HiOutlinePlusCircle, HiOutlineSpeakerWave, HiOutlineSquare2Stack, HiOutlineSquares2X2} from 'react-icons/hi2';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
+import {toggleGuide} from '@/database/queries/queries';
 
 
 export default function Guide() {
 
-  const {isSignedIn} = useUser()
+  const {isSignedIn, user} = useUser()
   const {showGuide} = useUserSettingsStore(state => state)
   const [isOpen, setIsOpen] = useState(showGuide)
+
+  console.log(user)
 
   return (
     <>
@@ -53,7 +55,7 @@ export default function Guide() {
 
           <Carousel>
             <CarouselContent>
-              <DemoStartSlide isSignedIn />
+              <DemoStartSlide isSignedIn={isSignedIn} />
               <CountRowsSlide />
               <ToolbarSlide />
               <NameSectionSlide />
@@ -62,7 +64,7 @@ export default function Guide() {
               <ReminderNotesSlide />
               <FollowPatternSlide />
               <ManageProjectsSlide />
-              <ContactSlide setIsOpen={() => setIsOpen} />
+              <ContactSlide setIsOpen={() => setIsOpen} userId={user?.id} />
             </CarouselContent>
 
             <GuideNavigation />
@@ -75,7 +77,7 @@ export default function Guide() {
 }
 
 
-function DemoStartSlide({isSignedIn}: {isSignedIn: boolean}) {
+function DemoStartSlide({isSignedIn}: {isSignedIn?: boolean}) {
 
   let intro = isSignedIn
     ? <GuideParagraph>Follow this short guide to understand how stitchmate works.</GuideParagraph>
@@ -270,14 +272,17 @@ function ManageProjectsSlide() {
 }
 
 
-function ContactSlide({setIsOpen}: {setIsOpen: () => void}) {
+function ContactSlide({userId, setIsOpen}: {userId?: string, setIsOpen: () => void}) {
 
-  const {hideGuide} = useUserSettingsStore(state => state)
+  const {hideGuide, showGuide} = useUserSettingsStore(state => state)
 
-  // function hideDialog() {
-  //   toggleShowGuide()
-  //   setIsOpen()
-  // }
+  async function handleClose() {
+    hideGuide()
+
+    if (userId && showGuide) {
+      await toggleGuide(userId)
+    }
+  }
 
   return (
     <SlideLayout className='px-16 pt-16'>
@@ -287,7 +292,7 @@ function ContactSlide({setIsOpen}: {setIsOpen: () => void}) {
       <GuideParagraph><HiMiniHeart className='inline mr-2 text-sienna-300' />Happy making!</GuideParagraph>
 
       <DialogClose className='self-end' asChild>
-        <Button className='w-fit text-lg font-semibold' onClick={hideGuide} >close guide</Button>
+        <Button className='w-fit text-lg font-semibold' onClick={handleClose} >close guide</Button>
       </DialogClose>
     </SlideLayout>
   )
