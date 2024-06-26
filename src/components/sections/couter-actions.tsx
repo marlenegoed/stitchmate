@@ -63,9 +63,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="h-10 w-10 bg-gray-900 flex justify-center items-center rounded-full text-white"><CgMenuGridO /></div>
-        {/* <ActionBar className={clsx({"hidden": !open})} /> */}
       </motion.button>
-      {/* <CounterActionBar > */}
       <motion.ul
         variants={{
           open: {
@@ -111,20 +109,10 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
           <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
         </motion.li>
       </motion.ul>
-      {/* </CounterActionBar > */}
     </motion.nav>
   )
 }
 
-
-
-// export function CounterActionBar({children}: {children: ReactNode}) {
-//   return (
-//     <div className='flex flex-col gap-4 justify-center items-center w-fit text-gray-800 border border-dashed border-neutral-400 rounded-lg px-2 py-3'>
-//       {children}
-//     </div>
-//   )
-// }
 
 interface AddSectionProps {
   userId: string,

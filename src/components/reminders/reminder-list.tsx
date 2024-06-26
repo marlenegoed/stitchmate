@@ -4,7 +4,7 @@ import ReminderAlertDialog from './reminder-alert-dialog';
 import {NewReminder, createReminder, type Reminder} from '@/database/queries/queries';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
-import {ScrollArea, ScrollBar} from '../ui/scroll-area';
+import {ScrollArea} from '../ui/scroll-area';
 import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 
@@ -31,7 +31,6 @@ export default function ReminderList({userId, reminders, sectionId, className}: 
           {reminders.length === 0 ? <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} isDefaultReminderItem={true} /> :
             reminders.map(reminder => <ReminderAlertDialog key={reminder.id} userId={userId} reminder={reminder} />)}
         </div>
-        {/* <ScrollBar orientation='horizontal' /> */}
       </ScrollArea>
       <ReminderForm sectionId={sectionId} count={storeCount} onSubmit={onSubmit} />
     </section>

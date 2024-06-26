@@ -26,7 +26,6 @@ import {Button} from '@/components/ui/button'
 import {CgMenuGridO} from "react-icons/cg";
 import {motion, Variants} from "framer-motion";
 import Spinner from '@/components/ui/spinner'
-import Loading from '../loading'
 
 
 const DemoCounter = dynamic(() => import('./demo-counter'), {ssr: false, loading: () => <Spinner />})
@@ -39,7 +38,9 @@ export default function DemoCounterPage() {
       <Guide />
       <CounterProgress />
       <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' />
+
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_2rem)] min-[380px]:h-[calc(100dvh_-_9rem)] lg:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+        
         <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
           <CounterHeader />
         </div>
