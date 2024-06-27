@@ -32,44 +32,110 @@ import {CgMenuGridO} from 'react-icons/cg';
 import {HiAdjustmentsVertical, HiArrowPath, HiArrowUturnLeft, HiMiniHeart, HiOutlinePlusCircle, HiOutlineSpeakerWave, HiOutlineSquare2Stack, HiOutlineSquares2X2} from 'react-icons/hi2';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import {toggleGuide} from '@/database/queries/queries';
+import {useMediaQuery} from '@/lib/use-media-query';
+import {Drawer, DrawerTrigger, DrawerContent} from './drawer';
+import {ScrollArea} from './scroll-area';
 
 export default function Guide() {
 
   const {isSignedIn, user} = useUser()
   const {showGuide} = useUserSettingsStore(state => state)
   const [isOpen, setIsOpen] = useState(showGuide)
+  const isDialog = useMediaQuery("(min-width: 768px)")
 
-  return (
-    <>
+  if (isDialog) {
+    return (
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild className='relative'>
           <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[520px] p-0 bg-white">
-
           <DialogClose className="absolute right-6 top-6 z-50"><HiX />
           </DialogClose>
-
-          <Carousel>
-            <CarouselContent>
-              <DemoStartSlide isSignedIn={isSignedIn} />
-              <CountRowsSlide />
-              <ToolbarSlide />
-              <NameSectionSlide />
-              <TrackProgressSlide />
-              <AddReminderSlide />
-              <ReminderNotesSlide />
-              <FollowPatternSlide />
-              <ManageProjectsSlide />
-              <ContactSlide setIsOpen={() => setIsOpen} userId={user?.id} />
-            </CarouselContent>
-
-            <GuideNavigation />
-          </Carousel>
-
+          <CarouselSlides isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} />
         </DialogContent>
       </Dialog>
-    </>
+    )
+  }
+
+  return (
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerTrigger asChild>
+        <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
+      </DrawerTrigger>
+      <DrawerContent className='bg-neutral-50 max-h-full rounded-none'>
+        {/* <ScrollArea className='overflow-y-auto p-4 max-w-lg flex justify-center flex-col mx-auto'> */}
+        <MobileGuide isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} />
+        {/* </ScrollArea> */}
+      </DrawerContent>
+    </Drawer >
+  )
+}
+
+
+interface SlideProps {
+  isSignedIn: boolean,
+  setIsOpen: () => void,
+  userId?: string,
+}
+
+function MobileGuide({isSignedIn, setIsOpen, userId}: SlideProps) {
+
+  return (
+    <div className='w-full overflow-auto'>
+      <DemoStartSlide isSignedIn={isSignedIn} />
+      <CountRowsSlide />
+      <ToolbarSlide />
+      <NameSectionSlide />
+      <TrackProgressSlide />
+      <AddReminderSlide />
+      <ReminderNotesSlide />
+      <FollowPatternSlide />
+      <ManageProjectsSlide />
+      <ContactSlide setIsOpen={() => setIsOpen} userId={userId} />
+    </div>
+  )
+}
+
+
+function CarouselSlides({isSignedIn, setIsOpen, userId}: SlideProps) {
+
+  return (
+    <Carousel>
+      <CarouselContent>
+        <CarouselItem>
+          <DemoStartSlide isSignedIn={isSignedIn} />
+        </CarouselItem>
+        <CarouselItem>
+          <CountRowsSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <ToolbarSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <NameSectionSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <TrackProgressSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <AddReminderSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <ReminderNotesSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <FollowPatternSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <ManageProjectsSlide />
+        </CarouselItem>
+        <CarouselItem>
+          <ContactSlide setIsOpen={() => setIsOpen} userId={userId} />
+        </CarouselItem>
+      </CarouselContent>
+      <GuideNavigation />
+    </Carousel>
   )
 }
 
@@ -82,7 +148,7 @@ function DemoStartSlide({isSignedIn}: {isSignedIn?: boolean}) {
 
   return (
     <SlideLayout className="bg-neutral-50">
-      <div className='flex flex-col p-8'>
+      <div className='flex flex-col'>
         <GuideHeading> It&apos;s 3 minutes til cast on!</GuideHeading>
         {intro}
       </div>
@@ -99,7 +165,7 @@ function DemoStartSlide({isSignedIn}: {isSignedIn?: boolean}) {
 
 function CountRowsSlide() {
   return (
-    <SlideLayout className='px-16 pt-16'>
+    <SlideLayout>
       <GuideHeading>Count rows</GuideHeading>
       <GuideParagraph>Count rows by tapping the blob counter. Note that blobs change appearence, so yours might look differently.</GuideParagraph>
       <div className='w-10/12 mt-auto mx-auto'>
@@ -109,7 +175,6 @@ function CountRowsSlide() {
         <Image src={guide_02} alt='' />
       </div>
     </SlideLayout>
-
   )
 }
 
@@ -253,7 +318,7 @@ function FollowPatternSlide() {
 function ManageProjectsSlide() {
 
   return (
-    <SlideLayout className='px-16 pt-16'>
+    <SlideLayout className='px-8 pt-8 sm:px-16 sm:pt-16'>
 
       <GuideHeading className='mb-6'>Manage projects</GuideHeading>
       <div className='flex flex-row gap-4 w-full items-start mb-4'>
@@ -308,22 +373,20 @@ function GuideNavigation() {
 
 function GuideHeading({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <h2 className={cn("text-2xl text-gray-900 font-semibold mb-4", className)}>{children}</h2>
+    <h2 className={cn("text-xl sm:text-2xl text-gray-900 font-semibold mb-4", className)}>{children}</h2>
   )
 }
 
 function GuideParagraph({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <p className={cn("font-medium text-neutral-500 text-lg leading-normal pb-4 pr-4", className)}>{children}</p>
+    <p className={cn("font-medium text-neutral-500 text-base sm:text-lg leading-normal pb-4 pr-4", className)}>{children}</p>
   )
 }
 
 function SlideLayout({children, className}: {children: ReactNode, className?: string}) {
   return (
-    <CarouselItem>
-      <div className={cn('flex flex-col rounded-t-lg p-10 pb-0 h-full bg-neutral-50', className)}>
-        {children}
-      </div>
-    </CarouselItem>
+    <div className={cn('flex flex-col rounded-t-lg px-8 pt-8 h-full bg-neutral-50', className)}>
+      {children}
+    </div>
   )
 }

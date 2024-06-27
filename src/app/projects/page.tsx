@@ -23,7 +23,6 @@ export default async function Page({searchParams}: {searchParams?: {title?: stri
       <HydrateUserSettingsStore storeSound={userSettings.sound} showGuide={userSettings.guide} />
       <Guide />
       <ProjectsHeader userId={userId} />
-
       <Suspense fallback={<Loading />}>
         <ProjectList title={title} favorite={favorite} userId={userId} page={page} />
       </Suspense>
