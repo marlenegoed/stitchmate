@@ -173,7 +173,7 @@ function CountRowsSlide() {
       <GuideHeading>Count rows</GuideHeading>
       <GuideParagraph>Count rows by tapping the blob counter. Note that blobs change appearence, so yours might look differently.</GuideParagraph>
       <div className='w-10/12 mt-auto mx-auto'>
-        <span className={clsx({'w-14 h-14 animate-ping absolute bottom-24 left-[42rem]': isDialog}, 'hidden')}>
+        <span className={clsx({'w-14 h-14 animate-ping absolute bottom-24 left-[42rem]': isDialog}, {'hidden': !isDialog})}>
           <svg width="100%" height="100%" viewBox="0 0 259 259" version="1.1"><g><circle cx="129.167" cy="129.167" r="125" className="fill-transparent stroke-white stroke-[10px]" /><circle cx="129.167" cy="129.167" r="95.833" className="fill-transparent stroke-white stroke-[10px]" /><circle cx="129.167" cy="129.167" r="62.5" className="fill-transparent stroke-white stroke-[10px]" /></g></svg>
         </span>
         <Image src={guide_02} alt='' />
@@ -184,7 +184,7 @@ function CountRowsSlide() {
 
 function ToolbarSlide() {
   return (
-    <SlideLayout className=''>
+    <SlideLayout>
       <GuideHeading>Toolbar</GuideHeading>
       <div className="grid grid-cols-6 gap-y-4">
         <div className="rounded-full text-white bg-black h-8 w-8 flex justify-center items-center shrink-0 mt-2"><CgMenuGridO /></div>
@@ -283,7 +283,7 @@ function AddReminderSlide() {
 
 function ReminderNotesSlide() {
   return (
-    <SlideLayout className='pt-4 sm:pt-16'>
+    <SlideLayout className='pt-4 sm:px-12 sm:pt-12'>
       <GuideParagraph className='mb-3'>You can access and change all your reminder notes by tapping the prompt or the cards in the gallery.</GuideParagraph>
       <div className="w-10/12 mx-auto mt-3 mb-6">
         <Image
@@ -301,7 +301,7 @@ function ReminderNotesSlide() {
 function FollowPatternSlide() {
 
   return (
-    <SlideLayout>
+    <SlideLayout className='sm:px-12 sm:pt-12'>
       <GuideHeading>Follow your pattern</GuideHeading>
       <GuideParagraph className='col-span-5'>Back in the toolbar, we have 2 actions left:</GuideParagraph>
       <div className="grid grid-cols-6 gap-y-2 px-4">
