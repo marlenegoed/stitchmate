@@ -40,7 +40,7 @@ export default function DemoCounterPage() {
       <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' />
 
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_2rem)] min-[380px]:h-[calc(100dvh_-_9rem)] lg:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
-        
+
         <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
           <CounterHeader />
         </div>
@@ -122,8 +122,7 @@ function ToggleableActionBar() {
         whileTap={{scale: 0.97}}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Button size="icon" className="rounded-full text-white"><CgMenuGridO /></Button>
-        {/* <ActionBar className={clsx({"hidden": !open})} /> */}
+        <div className="h-10 w-10 bg-gray-900 flex justify-center items-center rounded-full text-white"><CgMenuGridO /></div>
       </motion.button>
 
       <motion.ul

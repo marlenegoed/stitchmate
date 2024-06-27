@@ -2,26 +2,24 @@
 
 import {motion} from 'framer-motion'
 import Link from 'next/link';
-import {SignInButton, useUser} from '@clerk/nextjs';
+import {SignInButton} from '@clerk/nextjs';
 import {Button} from '@/components/ui/button';
 import Image from 'next/image'
 import logo from '../../../public/stitchmate_logo.svg'
 import {HiHeart} from "react-icons/hi2";
-
 import BackgroundBlob from './background-blobs';
-
+import arrow_loop from '../../../public/arrow_loop.svg'
 
 
 export default function Intro() {
-  const user = useUser()
 
   return (<>
-    <BackgroundBlob stroke={false} blobIndex={5} className="fill-prussian-200 absolute -top-36 -left-16 w-72 h-auto" />
     <LandingPageHeader />
-    <section className="max-w-screen-lg justify-center flex items-center mx-auto h-full">
+
+    <section className="max-w-screen-xl sm:px-4 xl:px-0 justify-center flex items-start mx-auto h-full">
 
       <motion.div
-        className='flex items-end justify-center flex-row my-auto'
+        className='flex justify-center flex-col my-auto items-start'
         initial={{opacity: 0, scale: 0.5}}
         animate={{opacity: 1, scale: 1}}
         transition={{
@@ -31,18 +29,32 @@ export default function Intro() {
         }}>
 
         <div>
-          <h4 className={`font-medium text-gray-800 text-6xl max-w-8/12 leading-relaxed`}>hey there, knitters, crocheters, and yarn addicts!</h4>
-          <p className="text-gray-800 text-xl sm:text-2xl lg:text-3xl mt-10">stitchmate keeps track while you stay focused on your craft.</p>
-          <span ><HiHeart className='inline text-goldenrod-300 py-1' /></span>
+          <h4 className={`font-semibold text-gray-800 lg:text-6xl lg:leading-relaxed md:text-5xl md:leading-relaxed sm:text-4xl sm:leading-relaxed text-3xl leading-normal max-w-8/12 relative `}><span>
+            <motion.div
+              className='absolute -z-10'
+              initial={{opacity: 0, scale: 0.5}}
+              animate={{opacity: 1, scale: 1}}
+              transition={{
+                duration: 0.8,
+                delay: 0.5,
+                circIn: [0, 0.71, 0.2, 1.01],
+              }}
+            ><BackgroundBlob stroke={false} blobIndex={0} className="fill-goldenrod-300 w-56 h-auto absolute -top-10 -left-16 -z-10" /></motion.div>
+          </span>hey there, knitters, crocheters, <br /> and yarn addicts!</h4>
+          <p className="text-gray-800 font-medium text-xl sm:text-2xl lg:text-3xl mt-10">stitchmate keeps track while you stay focused on your craft.</p>
         </div>
 
-        <div className="flex flex-row">
-          {/* <Image src={arrow_curve} alt='' width={120} /> */}
-          <Link href='/demo' className=' mt-auto'>
+
+        <div className="flex flex-row items-center gap-6">
+          <div className='w-1/3'>
+            <Image src={arrow_loop} alt='' />
+          </div>
+          <Link href='/demo'>
             <motion.div
               whileHover={{scale: 1.1}}
-              transition={{type: "spring", stiffness: 400, damping: 10}} >
-              <Button size='lg' className='font-medium bg-transparent border border-dashed border-sienna-400 hover:bg-transparent text-sienna-400'>Try demo</Button>
+              transition={{type: "spring", stiffness: 400, damping: 10}}
+            >
+              <Button size="lg" className='font-medium bg-transparent border-2 border-dashed border-sienna-400 hover:bg-transparent text-sienna-400 text-xl sm:text-2xl px-6 py-6 sm:px-10 sm:py-8'>Try demo</Button>
             </motion.div>
           </Link>
         </div>
@@ -56,15 +68,15 @@ export default function Intro() {
 function LandingPageHeader() {
 
   return (
-    <nav className="flex flex-row justify-between w-full relativ z-20">
+    <nav className="flex flex-row justify-between w-full sm:px-4">
       <div className='flex flex-row gap-1'>
         <Image src={logo} alt='' width={120} />
-        <div className="w-fit border border-neutral-100 h-fit px-1 rounded-full flex justify-center items-center"><p className="text-neutral-100 text-xs font-semibold">beta</p></div>
+        <div className="w-fit border border-prussian-300 h-fit px-1 rounded-full flex justify-center items-center"><p className="text-prussian-300 text-xs font-semibold">beta</p></div>
       </div>
       <div className='flex flex-row h-full items-center gap-6'>
-        <Link href='/about' className='cursor-pointer text-xl'>?</Link>
+        <Link href='/about' className='cursor-pointer '>?</Link>
         <SignInButton mode="modal">
-          <Button className='bg-black hover:bg-black'>Sign In</Button>
+          <Button className='bg-black hover:bg-black text-base md:text-lg'>Sign In</Button>
         </SignInButton>
       </div>
 

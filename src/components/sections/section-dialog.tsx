@@ -16,7 +16,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -187,7 +186,7 @@ function SectionSettingsForm({section}: {section: Section}) {
           <FormItem>
             <FormLabel>Title</FormLabel>
             <FormControl>
-              <Input variant='form' placeholder={section.title} {...field} />
+              <Input placeholder={section.title} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -202,7 +201,7 @@ function SectionSettingsForm({section}: {section: Section}) {
             <FormItem>
               <FormLabel>Current Count</FormLabel>
               <FormControl>
-                <Input variant='form' placeholder={section.count.toString()} type="number" {...field}
+                <Input placeholder={section.count.toString()} type="number" {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -217,7 +216,7 @@ function SectionSettingsForm({section}: {section: Section}) {
             <FormItem>
               <FormLabel>Final Row *</FormLabel>
               <FormControl>
-                <Input variant='form' placeholder={!section.numOfRows ? '--' : section.numOfRows.toString()} type="number" {...field} />
+                <Input placeholder={!section.numOfRows ? '--' : section.numOfRows.toString()} type="number" {...field} />
               </FormControl>
               <FormDescription>
               </FormDescription>

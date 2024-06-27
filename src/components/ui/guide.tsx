@@ -157,6 +157,7 @@ function DemoStartSlide({isSignedIn}: {isSignedIn?: boolean}) {
         <Image
           src={guide_01}
           alt=''
+          priority={true}
         >
         </Image>
       </div>

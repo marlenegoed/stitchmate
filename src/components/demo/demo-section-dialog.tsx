@@ -41,7 +41,7 @@ import {
 import {useEffect, useState} from 'react';
 import {useDemoStore} from '@/providers/demo-store-provider';
 import {useCounterStore} from '@/providers/counter-store-provider';
-import {Tooltip} from '../ui/tooltip';
+// import {Tooltip} from '../ui/tooltip';
 import {useMediaQuery} from '@/lib/use-media-query';
 import {ScrollArea} from '../ui/scroll-area';
 
