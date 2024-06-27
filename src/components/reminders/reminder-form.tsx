@@ -273,7 +273,7 @@ function ReminderTitleField({isDesktop}: {isDesktop?: boolean}) {
       render={({field}) => (
         <FormItem>
           <FormControl>
-            <Input variant="borderbottom" className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold', {'max-w-72': isDesktop})} placeholder='Enter Title' {...field} />
+            <Input className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold border-none pl-0', {'max-w-72': isDesktop})} placeholder='Enter Title' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
