@@ -15,35 +15,36 @@ export default function Page() {
 
   return (
     <>
-      <section className={`text-gray-900 flex flex-col text-left p-6 text-3xl h-full font-medium leading-normal max-w-screen-lg mx-auto space-y-10`}>
-        <p>I&apos;m Marlene, software developer and enthusiastic knitter. Stitchmate is a personal project that fuses my passion for knitting with my skills as a creative developer.
+      <section className={`text-gray-900 flex flex-col text-left p-6 text-2xl sm:text-3xl h-full font-medium max-w-screen-lg mx-auto space-y-10`}>
+        <p className='leading-relaxed'>I&apos;m Marlene, software developer and enthusiastic knitter. Stitchmate is a personal project that fuses my passion for knitting with my skills as a creative developer.
         </p>
         <hr />
-        <p className='text-2xl'>For questions and improvements <span><a className='hover:opacity-80 whitespace-nowrap cursor-pointer font-semibold' href='mailto:stitchmate.contact@gmail.com'>contact me.</a></span> </p>
+        <p className='text-xl sm:text-2xl leading-relaxed'>For questions and improvements <span><a className='hover:opacity-80 whitespace-nowrap cursor-pointer font-semibold' href='mailto:stitchmate.contact@gmail.com'>contact me.</a></span> </p>
 
-        <div className="grid grid-cols-3 gap-20">
-          <p className="text-lg">
-            Find my source code on <a href="https://github.com/marlenegoed/stitchmate" className="text-neutral-500 whitespace-nowrap">github
-              <FaGithub className='inline -mt-1' size={24} /></a>
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-20">
+
+          <p className="text-base sm:text-lg leading-relaxed">
+            Find my source code on <a href="https://github.com/marlenegoed/stitchmate" className="font-semibold whitespace-nowrap">github
+              <FaGithub className='inline -mt-1 ml-2' size={24} /></a>
           </p>
 
-          <p className="text-xl">
-            my crafting related social accounts:
-            <FaRavelry />
-            <FaInstagram />
+          <p className="text-base sm:text-lg leading-relaxed">
+            My crafting related social accounts:
+            <a href='https://www.ravelry.com/people/craftystitchess'><FaRavelry size={24} className='inline -mt-1 ml-2' /></a>
+            <a href='https://www.instagram.com/crafty_stitchess'><FaInstagram size={24} className='inline whitespace-nowrap -mt-1 ml-2' /></a>
           </p>
 
-          <p className="text-xl">
-            Attributions: <a href="https://www.vecteezy.com/free-vector/blob" className="text-neutral-500">Blob Vectors by Vecteezy.</a>
+          <p className="text-base sm:text-lg">
+            Attributions: <a href="https://www.vecteezy.com/free-vector/blob">Blob Vectors by Vecteezy</a>
           </p>
 
         </div>
 
-        <div className='flex flex-row w-full justify-between'>
+        <div className='sm:pt-10 flex flex-col sm:flex-row w-full justify-between items-start sm:items-center sm:gap-0 gap-4 self-end'>
 
-          <div className="flex flex-row items-center gap-2">
-            <p> Happy Making </p>
-            <HiHeart />
+          <div className="sm:text-3xl text-lg flex flex-row items-center gap-2">
+            <p>Happy Making</p>
+            <HiHeart size={24} className='mt-1' />
           </div>
 
           <Button size="lg" variant="outline" className="w-fit border-black hover:bg-black hover:border-black text-black hover:text-white transition hover:transition-all hover:duration-700 duration-700" onClick={() => router.back()}>
