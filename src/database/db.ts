@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import '@/../drizzle/envConfig';
 
 import {PostgresJsDatabase, drizzle} from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
@@ -8,8 +8,9 @@ export const connectionString = process.env.DATABASE_URL || 'postgres://localhos
 const sslCertificate = process.env.DATABASE_CERTIFICATE;
 
 const sslConfig = {
-  ca: [sslCertificate]
+  ca: [sslCertificate!]
 }
+
 export const options = {
   prepare: false,
   ssl: sslCertificate ? sslConfig : undefined,

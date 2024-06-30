@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import '@/../drizzle/envConfig';
 import type {Config} from 'drizzle-kit';
 import {connectionString} from '@/database/db';
 
