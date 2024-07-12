@@ -31,7 +31,6 @@ export const DrawerDialog = ({children, open, setOpen}: {children: ReactNode, op
   return <Drawer open={open} onOpenChange={setOpen}>{children}</Drawer >
 }
 
-
 export const DrawerDialogTrigger = ({children}: {children: ReactNode}) => {
   const isDesktop = useMediaQuery(BREAKPOINT)
   if (isDesktop) {
