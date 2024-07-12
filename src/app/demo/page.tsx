@@ -128,6 +128,7 @@ function ToggleableActionBar() {
       <motion.ul
         variants={{
           open: {
+            // check safari 
             clipPath: "inset(0% 0% 0% 0% round 10px)",
             transition: {
               type: "spring",
