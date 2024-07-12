@@ -21,7 +21,7 @@ const buttonVariants = cva(
         nohover: "hover:bg-transparent dark:hover:bg-transparent",
       },
       size: {
-        default: "min-w-32 h-12 p-5",
+        default: "min-w-32 h-10 p-5",
         sm: "h-6 text-xs px-2 hover:bg-current rounded-full",
         lg: "min-w-32 sm:h-14 h-12 rounded-full px-8 sm:text-xl",
         icon: "h-10 w-10",
