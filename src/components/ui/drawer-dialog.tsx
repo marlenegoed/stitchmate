@@ -18,6 +18,7 @@ import {
   DrawerFooter
 } from './drawer';
 import {useMediaQuery} from '@/lib/use-media-query';
+import {cn} from '@/lib/utils';
 
 const BREAKPOINT = "(min-width: 1024px)"
 
@@ -39,36 +40,36 @@ export const DrawerDialogTrigger = ({children}: {children: ReactNode}) => {
   return <DrawerTrigger asChild>{children}</DrawerTrigger>
 }
 
-export const DrawerDialogContent = ({children}: {children: ReactNode}) => {
+export const DrawerDialogContent = ({children, className}: {children: ReactNode, className?: string}) => {
   const isDesktop = useMediaQuery(BREAKPOINT)
   if (isDesktop) {
-    return <DialogContent>{children}</DialogContent>
+    return <DialogContent className={cn('min-w-[425px] p-10', className)}>{children}</DialogContent>
   }
-  return <DrawerContent>{children}</DrawerContent>
+  return <DrawerContent className='flex items-center'>{children}</DrawerContent>
 }
 
 export const DrawerDialogHeader = ({title}: {title: string}) => {
   const isDesktop = useMediaQuery(BREAKPOINT)
   if (isDesktop) {
     return (
-      <DialogHeader className='mb-2 -mt-2'>
+      <DialogHeader className='mb-2'>
         <DialogTitle className='mb-2 mr-auto font-semibold text-xl'>{title}</DialogTitle>
       </DialogHeader>
     )
   }
   return (
-    <DrawerHeader className="text-center my-6">
-      <DrawerTitle>{title}</DrawerTitle>
+    <DrawerHeader className="my-6 max-w-[425px]">
+      <DrawerTitle className='text-left'>{title}</DrawerTitle>
     </DrawerHeader>
   )
 }
 
-export const DrawerDialogFooter = ({children}: {children: ReactNode}) => {
+export const DrawerDialogFooter = ({children, className}: {children: ReactNode, className: string}) => {
   const isDesktop = useMediaQuery(BREAKPOINT)
   if (isDesktop) {
-    return <DialogFooter className='grid grid-cols-2 gap-4'>{children}</DialogFooter>
+    return <DialogFooter className={cn('grid grid-cols-2 gap-4', className)}>{children}</DialogFooter>
   }
-  return <DrawerFooter className='grid grid-cols-2 gap-4'>{children}</DrawerFooter>
+  return <DrawerFooter className={cn('grid grid-cols-2 gap-4 mb-10', className)}>{children}</DrawerFooter>
 }
 
 

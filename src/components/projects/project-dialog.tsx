@@ -72,7 +72,7 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
         <DrawerDialogHeader title="Create new Project:" />
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="">
             <FormField
               control={form.control}
               name="title"
@@ -80,18 +80,16 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input variant='form' placeholder='Project Title' {...field} />
+                    <Input className='' placeholder='add Title' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <DrawerDialogFooter>
-              <Button type='button' variant='secondary' className='' onClick={handleClick}>MoreSettings</Button>
-              {/* <p onClick={handleClick} className="sm:col-span-1 col-span-2 cursor-pointer underline underline-offset-4 text-slate-700 hover:text-slate-950 transition-colors font-semibold flex justify-self-center sm:justify-self-start	self-center pl-1 sm:order-1 order-2 sm:pt-0 pt-2">More Settings
-              </p> */}
-              <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-fit sm:col-span-1 col-span-2 justify-self-center sm:justify-self-end sm:mt-0 mt-2 sm:order-2 order-1'>
+            <DrawerDialogFooter className='mt-10'>
+              <Button type='button' variant='secondary' className='w-40 justify-self-center sm:justify-self-start' onClick={handleClick}>More Settings</Button>
+              <Button type='submit' variant='outline' className='border-sienna-300 text-sienna-300 hover:text-sienna-400/80 hover:border-sienna-400/80 pl-8 pr-6 w-40 justify-self-center sm:justify-self-end sm:order-2 order-1'>
                 <span className='flex flex-row items-center gap-2 justify-center'>
                   Quickstart
                   <HiChevronRight size={20} className='text-sienna-300' />
