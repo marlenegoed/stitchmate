@@ -22,7 +22,8 @@ import {
   DrawerDialogContent,
   DrawerDialogHeader,
   DrawerDialogTrigger,
-  DrawerDialogFooter
+  DrawerDialogFooter,
+  DrawerDialogTitle
 } from '../ui/drawer-dialog';
 import {Button} from '../ui/button';
 import {HiChevronRight, HiOutlineSquaresPlus} from 'react-icons/hi2';
@@ -69,7 +70,9 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
       </DrawerDialogTrigger>
 
       <DrawerDialogContent>
-        <DrawerDialogHeader title="Create new Project:" />
+        <DrawerDialogHeader>
+          <DrawerDialogTitle>Create new Project</DrawerDialogTitle>
+        </DrawerDialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="">

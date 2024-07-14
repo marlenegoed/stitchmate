@@ -3,6 +3,7 @@
 import {Dispatch, ReactNode, SetStateAction} from 'react';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -15,7 +16,8 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerFooter
+  DrawerFooter,
+  DrawerClose
 } from './drawer';
 import {useMediaQuery} from '@/lib/use-media-query';
 import {cn} from '@/lib/utils';
@@ -47,20 +49,20 @@ export const DrawerDialogContent = ({children, className}: {children: ReactNode,
   return <DrawerContent className='flex items-center'>{children}</DrawerContent>
 }
 
-export const DrawerDialogHeader = ({title}: {title: string}) => {
+export const DrawerDialogHeader = ({children, className}: {children: ReactNode, className?: string}) => {
   const isDesktop = useMediaQuery(BREAKPOINT)
   if (isDesktop) {
-    return (
-      <DialogHeader className='mb-2'>
-        <DialogTitle className='mb-2 mr-auto font-semibold text-xl'>{title}</DialogTitle>
-      </DialogHeader>
-    )
+    return <DialogHeader className={cn('mb-2', className)}>{children}</DialogHeader>
   }
-  return (
-    <DrawerHeader className="my-6 max-w-[425px]">
-      <DrawerTitle className='text-left'>{title}</DrawerTitle>
-    </DrawerHeader>
-  )
+  return <DrawerHeader className={cn('my-6 max-w-[425px]', className)}>{children}</DrawerHeader>
+}
+
+export const DrawerDialogTitle = ({children, className}: {children: ReactNode, className?: string}) => {
+  const isDesktop = useMediaQuery(BREAKPOINT)
+  if (isDesktop) {
+    return <DialogTitle className={cn('mb-2 mr-auto font-semibold text-xl', className)}>{children}</DialogTitle>
+  }
+  return <DrawerTitle className={cn('text-left', className)}>{children}</DrawerTitle>
 }
 
 export const DrawerDialogFooter = ({children, className}: {children: ReactNode, className: string}) => {
@@ -69,6 +71,14 @@ export const DrawerDialogFooter = ({children, className}: {children: ReactNode, 
     return <DialogFooter className={cn('grid grid-cols-2 gap-4', className)}>{children}</DialogFooter>
   }
   return <DrawerFooter className={cn('grid grid-cols-2 gap-4 mb-10', className)}>{children}</DrawerFooter>
+}
+
+export const DrawerDialogClose = ({children, asChild}: {children: ReactNode, asChild?: boolean}) => {
+  const isDesktop = useMediaQuery(BREAKPOINT)
+  if (isDesktop) {
+    return <DialogClose asChild={asChild}>{children}</DialogClose>
+  }
+  return <DrawerClose asChild={asChild}>{children}</DrawerClose>
 }
 
 
