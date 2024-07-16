@@ -33,7 +33,6 @@ interface DrawerDialogProps {
 export const DrawerDialog = ({children, open, setOpen, breakpoint}: {children: ReactNode, open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, breakpoint?: string}) => {
 
   const isDesktop = useMediaQuery(breakpoint ?? BREAKPOINT)
-  console.log(isDesktop)
   if (isDesktop) {
     return <Dialog open={open} onOpenChange={setOpen}>{children}</Dialog>
   }
