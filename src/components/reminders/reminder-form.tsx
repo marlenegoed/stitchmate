@@ -110,7 +110,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
         </button>
       </DrawerDialogTrigger>
 
-      <DrawerDialogContent className="sm:max-w-[425px] bg-neutral-100 p-10 pt-2">
+      <DrawerDialogContent className="bg-neutral-100 p-10 pt-2">
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">

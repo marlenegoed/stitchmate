@@ -36,7 +36,7 @@ export default function SectionTitleField({userId, id, title, className}: Sectio
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {title: storeTitle || title}
+    defaultValues: {title: shortenText(storeTitle, 10) || shortenText(title, 10)}
   })
 
   useEffect(() => {
@@ -49,8 +49,7 @@ export default function SectionTitleField({userId, id, title, className}: Sectio
 
     await updateSectionTitle(userId, id, values.title)
     setStoreTitle(values.title)
-
-    form.reset(values)
+    // form.reset(values)
     inputRef.current?.blur()
   }
 
