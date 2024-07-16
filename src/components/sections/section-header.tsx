@@ -11,6 +11,7 @@ import shortenText from '@/lib/shorten-text';
 import {Tooltip} from '../ui/tooltip';
 import {cn} from '@/lib/utils';
 import NumOfRows from './num-of-rows';
+import {useMediaQuery} from '@/lib/use-media-query';
 
 interface SectionHeaderProps {
   section: Section,
@@ -23,36 +24,19 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className, reminders}: SectionHeaderProps) {
 
-  let numOfRows
-  if (!section.numOfRows) {
-    numOfRows = 0
-  } else {
-    numOfRows = section.numOfRows
+  const isMobile = useMediaQuery("(min-width: 640px)")
+
+  let showNumOfRows
+  if (section.numOfRows && isMobile) {
+    showNumOfRows = true
   }
 
   return (
     <div className={cn('w-full flex flex-col items-start gap-2', className)}>
-      {/* <Title className='text-slate-800 opacity-70 text-xl font-normal min-[820px]:flex hidden '>{shortenText(projectTitle, 18)}</Title> */}
       <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
-      {numOfRows !== 0 &&
-        <NumOfRows numOfRows={numOfRows} />
+      {showNumOfRows &&
+        <NumOfRows numOfRows={section.numOfRows ? section.numOfRows : 0} />
       }
-
-      {/* <div className='col-span-6 flex flex-row justify-end'>
-          <div className='lg:flex flex-row hidden items-center gap-6 mr-6'>
-            <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
-          </div>
-
-          <div className='hidden mr-6 sm:flex flex-row items-center'>
-            <SectionPagination userId={userSettings.userId} section={section} numOfSections={numOfSections} />
-          </div>
-        </div> */}
-
-
-      {/* action bar mobile:  */}
-      {/* <div className='justify-self-center self-center lg:hidden col-span-12 my-1 mx-6 bg-white rounded-full shadow-sm py-2 px-4 max-w-fit '>
-          <CounterActions section={section} userSettings={userSettings} numOfSections={numOfSections} reminders={reminders} />
-        </div> */}
     </div>
   )
 }

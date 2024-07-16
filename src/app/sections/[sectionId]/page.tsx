@@ -12,7 +12,6 @@ import {notFound} from 'next/navigation';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
 import {BlobCounter} from '@/components/ui/blob-counter';
 import SectionProgress from '@/components/sections/section-progress';
-import Guide from '@/components/ui/guide';
 import CounterActionBar from '@/components/sections/couter-actions';
 import dynamic from 'next/dynamic';
 
@@ -39,21 +38,21 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
       <Guide />
       <SectionProgress numOfRows={section.numOfRows || 0} color={project.color} />
-      <MobileSectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='lg:hidden flex w-full justify-between items-center px-6 pt-2' reminders={reminders} />
+      {/* <MobileSectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='lg:hidden flex w-full justify-between items-center px-6 pt-2' reminders={reminders} /> */}
 
-      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_2rem)] min-[380px]:h-[calc(100dvh_-_9rem)] lg:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
 
-        <SectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start' reminders={reminders} />
+        <SectionHeader className='col-span-6 sm:col-span-2' section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} reminders={reminders} />
 
         <ZustandHydration>
-          <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-1 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 mt-4">
+          <div className="relative z-30 col-span-8 col-start-3 sm:col-span-4 sm:col-start-5 row-span-1 row-start-2 sm:row-start-1 place-content-start justify-center flex flex-row flex-wrap gap-2 mt-4">
             <ReminderPrompt userId={userId} reminders={reminders} />
           </div>
         </ZustandHydration>
 
         <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
-        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-1 col-start-2'>
+        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
             <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>

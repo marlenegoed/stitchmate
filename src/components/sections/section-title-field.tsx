@@ -15,6 +15,7 @@ import {
 import {updateSectionTitle} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {cn} from '@/lib/utils';
+import shortenText from '@/lib/shorten-text';
 
 const formSchema = z.object({
   title: z.string().min(1).max(50),
