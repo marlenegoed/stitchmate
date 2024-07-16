@@ -61,7 +61,7 @@ export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDial
   if (isDesktop) {
     return <DialogHeader className={cn('mb-2', className)}>{children}</DialogHeader>
   }
-  return <DrawerHeader className={cn('my-6 max-w-[425px]', className)}>{children}</DrawerHeader>
+  return <DrawerHeader className={cn('max-w-[425px]', className)}>{children}</DrawerHeader>
 }
 
 export const DrawerDialogTitle = ({children, className, breakpoint}: DrawerDialogProps) => {

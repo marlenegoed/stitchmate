@@ -110,11 +110,11 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
         </button>
       </DrawerDialogTrigger>
 
-      <DrawerDialogContent className="sm:max-w-[425px] bg-neutral-100 p-10">
+      <DrawerDialogContent className="sm:max-w-[425px] bg-neutral-100 p-10 pt-2">
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <DrawerDialogHeader className='mb-6 -mt-4 justify-between items-center'>
+            <DrawerDialogHeader className='-mt-4 justify-between items-center'>
               <ReminderTitleField isDesktop={true} />
               {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
             </DrawerDialogHeader>
