@@ -15,14 +15,11 @@ import {useMediaQuery} from '@/lib/use-media-query';
 
 interface SectionHeaderProps {
   section: Section,
-  numOfSections: number,
-  projectTitle: string,
   userSettings: UserSettings,
   className?: string,
-  reminders: Reminder[]
 }
 
-export default function SectionHeader({section, numOfSections, projectTitle, userSettings, className, reminders}: SectionHeaderProps) {
+export default function SectionHeader({section, userSettings, className,}: SectionHeaderProps) {
 
   const isMobile = useMediaQuery("(min-width: 640px)")
 
@@ -41,26 +38,6 @@ export default function SectionHeader({section, numOfSections, projectTitle, use
   )
 }
 
-export function MobileSectionHeader({section, userSettings}: SectionHeaderProps) {
-
-  let numOfRows
-  if (!section.numOfRows) {
-    numOfRows = 0
-  } else {
-    numOfRows = section.numOfRows
-  }
-
-  return (
-
-    <div className='lg:hidden flex w-full justify-between items-center px-6 pt-2' >
-      <SectionTitleField userId={userSettings.userId} id={section.id} title={section.title} />
-      {numOfRows !== 0 &&
-        <NumOfRows numOfRows={numOfRows} />}
-    </div>
-
-  )
-
-}
 
 interface SectionPaginationProps {
   userId: string,

@@ -6,7 +6,7 @@ import {findAllSections, findSectionById, findSectionReminders, getUserSettings,
 import ReminderPrompt from '@/components/reminders/reminder-prompt';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
-import SectionHeader, {MobileSectionHeader} from '@/components/sections/section-header';
+import SectionHeader from '@/components/sections/section-header';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
@@ -41,7 +41,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
 
-        <SectionHeader className='col-span-6 sm:col-span-2' section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} reminders={reminders} />
+        <SectionHeader className='col-span-6 sm:col-span-2' section={section} userSettings={userSettings} />
 
         <ZustandHydration>
           <div className="relative z-30 col-span-8 col-start-3 sm:col-span-4 sm:col-start-5 row-span-1 row-start-2 sm:row-start-1 place-content-start justify-center flex flex-row flex-wrap gap-2 mt-4">
