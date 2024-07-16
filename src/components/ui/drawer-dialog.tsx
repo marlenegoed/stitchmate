@@ -24,7 +24,7 @@ import {cn} from '@/lib/utils';
 
 const BREAKPOINT = "(min-width: 1024px)"
 
-type DrawerDialogProps = {
+interface DrawerDialogProps {
   children: ReactNode,
   className?: string,
   breakpoint?: string
