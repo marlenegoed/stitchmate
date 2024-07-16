@@ -54,11 +54,11 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
         <div className='self-start col-span-10 row-span-8 row-start-2 col-start-2 place-content-center flex items-center justify-center relative'>
           {/* <div className='flex items-center justify-center w-full'> */}
-          <PreviousSectionButton userId={userId} section={section} className='absolute -left-10 z-50' />
+          <PreviousSectionButton userId={userId} section={section} className='absolute -left-10 z-30' />
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
             <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>
-          <NextSectionButton userId={userId} section={section} numOfSections={allSections.length} className='absolute -right-10 z-50' />
+          <NextSectionButton userId={userId} section={section} numOfSections={allSections.length} className='absolute -right-10 z-30' />
           {/* </div> */}
         </div>
 
