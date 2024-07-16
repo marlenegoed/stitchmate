@@ -6,7 +6,6 @@ import {SignInButton} from '@clerk/nextjs';
 import {Button} from '@/components/ui/button';
 import Image from 'next/image'
 import logo from '../../../public/stitchmate_logo.svg'
-import {HiHeart} from "react-icons/hi2";
 import BackgroundBlob from './background-blobs';
 import arrow_loop from '../../../public/arrow_loop.svg'
 
@@ -17,6 +16,18 @@ export default function Intro() {
     <LandingPageHeader />
 
     <section className="max-w-screen-xl sm:px-4 xl:px-0 justify-center flex items-start mx-auto h-full">
+      <motion.div
+        className='absolute -z-10 top-40 sm:top-28 -left-12'
+        initial={{opacity: 0, scale: 0.5}}
+        animate={{opacity: 1, scale: 1}}
+        transition={{
+          duration: 0.8,
+          delay: 0.5,
+          circIn: [0, 0.71, 0.2, 1.01],
+        }}
+      >
+        <BackgroundBlob stroke={false} blobIndex={0} className="fill-goldenrod-300 w-72 sm:w-[420px] h-auto" />
+      </motion.div>
 
       <motion.div
         className='flex justify-center flex-col my-auto items-start'
@@ -29,24 +40,13 @@ export default function Intro() {
         }}>
 
         <div>
-          <h4 className={`font-semibold text-gray-800 lg:text-6xl lg:leading-relaxed md:text-5xl md:leading-relaxed sm:text-4xl sm:leading-relaxed text-3xl leading-normal max-w-8/12 relative `}><span>
-            <motion.div
-              className='absolute -z-10'
-              initial={{opacity: 0, scale: 0.5}}
-              animate={{opacity: 1, scale: 1}}
-              transition={{
-                duration: 0.8,
-                delay: 0.5,
-                circIn: [0, 0.71, 0.2, 1.01],
-              }}
-            ><BackgroundBlob stroke={false} blobIndex={0} className="fill-goldenrod-300 w-56 h-auto absolute -top-10 -left-16 -z-10" /></motion.div>
-          </span>hey there, knitters, crocheters, <br /> and yarn addicts!</h4>
+          <h4 className={`font-semibold text-gray-800 lg:text-6xl lg:leading-relaxed md:text-5xl md:leading-relaxed sm:text-4xl sm:leading-relaxed text-3xl leading-normal max-w-8/12 relative `}>hey there, knitters, crocheters, <br /> and yarn addicts!</h4>
           <p className="text-gray-800 font-medium text-xl sm:text-2xl lg:text-3xl mt-10">stitchmate keeps track while you stay focused on your craft.</p>
         </div>
 
 
-        <div className="flex flex-row items-center gap-6">
-          <div className='w-1/3'>
+        <div className="flex flex-row items-center gap-6 w-full mt-4">
+          <div className='max-w-1/3'>
             <Image src={arrow_loop} alt='' />
           </div>
           <Link href='/demo'>
@@ -69,14 +69,14 @@ function LandingPageHeader() {
 
   return (
     <nav className="flex flex-row justify-between w-full sm:px-4">
-      <div className='flex flex-row gap-1'>
-        <Image src={logo} alt='' width={120} />
-        <div className="w-fit border border-prussian-300 h-fit px-1 rounded-full flex justify-center items-center"><p className="text-prussian-300 text-xs font-semibold">beta</p></div>
+      <div className='flex flex-row gap-1 w-28 sm:w-36'>
+        <Image src={logo} alt='' />
+        <div className="w-fit border border-sienna-300 h-fit px-1 rounded-full flex justify-center items-center"><p className="text-sienna-300 text-xs font-semibold">beta</p></div>
       </div>
       <div className='flex flex-row h-full items-center gap-6'>
         <Link href='/about' className='cursor-pointer '>?</Link>
         <SignInButton mode="modal">
-          <Button className='bg-black hover:bg-black text-base md:text-lg'>Sign In</Button>
+          <Button className='h-8 min-w-24 sm:h-12 bg-black hover:bg-black text-base md:text-lg'>Sign In</Button>
         </SignInButton>
       </div>
 

@@ -60,7 +60,6 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
     setOpen(false)
   }
 
-
   return (
     <DrawerDialog open={open} setOpen={setOpen}>
       <DrawerDialogTrigger>
