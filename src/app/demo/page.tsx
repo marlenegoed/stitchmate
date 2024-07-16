@@ -37,14 +37,14 @@ export default function DemoCounterPage() {
     <>
       <Guide />
       <CounterProgress />
-      <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' />
+      {/* <CounterMobileHeader className='lg:hidden flex w-full justify-between items-center px-6 pt-2' /> */}
 
-      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_2rem)] min-[380px]:h-[calc(100dvh_-_9rem)] lg:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
 
-        <div className='lg:grid hidden lg:col-span-4 lg:col-start-1 lg:justify-start '>
+        <div className='col-span-6 sm:col-span-2'>
           <CounterHeader />
         </div>
-        <div className="relative z-30 col-span-10 col-start-2 lg:col-span-4 lg:col-start-5 row-span-2 row-start-1 place-content-start	justify-center flex flex-row flex-wrap gap-2 mt-4">
+        <div className="relative z-30 col-span-8 col-start-3 sm:col-span-4 sm:col-start-5 row-span-1 row-start-2 sm:row-start-1 place-content-start justify-center flex flex-row flex-wrap gap-2 mt-4">
           <ReminderPrompt />
         </div>
         <div className="mt-4 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto">
@@ -56,18 +56,6 @@ export default function DemoCounterPage() {
         <ReminderList />
       </div>
     </>
-  )
-}
-
-function CounterMobileHeader({className}: {className?: string}) {
-
-  const numOfRows = useDemoStore((state) => state.numOfRows)
-
-  return (
-    <div className={className}>
-      <TitleField />
-      <NumOfRows numOfRows={numOfRows} />
-    </div>
   )
 }
 
@@ -83,7 +71,6 @@ function CounterHeader({className}: {className?: string}) {
     </div>
   )
 }
-
 
 
 const itemVariants: Variants = {

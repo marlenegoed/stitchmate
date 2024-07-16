@@ -38,7 +38,6 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
       <Guide />
       <SectionProgress numOfRows={section.numOfRows || 0} color={project.color} />
-      {/* <MobileSectionHeader section={section} numOfSections={allSections.length} projectTitle={project.title} userSettings={userSettings} className='lg:hidden flex w-full justify-between items-center px-6 pt-2' reminders={reminders} /> */}
 
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
 
