@@ -44,7 +44,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
   })
 
   async function onSubmit(values: FormValues) {
-    console.log('inside submit')
     const validProject: NewProject = {
       ...values,
       needles: values?.needles?.filter(needle => needle.size)?.map(needle => needle.size!),
@@ -53,7 +52,6 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
       userId
     }
     await updateProject(userId, projectId, validProject)
-    console.log('done')
   }
 
   return (

@@ -25,7 +25,7 @@ export default function FilterProjectFavorites({className}: {className?: string}
   }
 
   return (
-    <Button type="submit" variant='ghost' className={cn('hover:bg-neutral-200', className)} size='icon' onClick={handleFilter}>
+    <Button type="submit" variant='ghost' className={cn(className)} size='icon' onClick={handleFilter}>
       {heart}
     </Button>
   )

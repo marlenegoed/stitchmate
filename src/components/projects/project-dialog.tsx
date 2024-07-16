@@ -63,7 +63,7 @@ export default function ProjectDialog({userId, className}: {userId: string, clas
   return (
     <DrawerDialog open={open} setOpen={setOpen}>
       <DrawerDialogTrigger>
-        <Button type='button' size='icon' variant='ghost' className={cn('text-sienna-400 hover:bg-neutral-200', className)}>
+        <Button type='button' size='icon' variant='ghost' className={cn('text-sienna-400', className)}>
           <HiOutlineSquaresPlus size={22} />
         </Button>
       </DrawerDialogTrigger>

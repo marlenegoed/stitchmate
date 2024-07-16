@@ -27,7 +27,6 @@ export function ProjectsHeader({userId}: {userId: string}) {
           <FilterProjectFavorites />
           <Button
             variant='ghost'
-            className='hover:bg-neutral-200'
             size='icon'
             onMouseDown={() => {
               setShowSearchInput(!showSearchInput)

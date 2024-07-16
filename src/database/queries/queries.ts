@@ -43,10 +43,11 @@ export async function quickStartProject(userId: string, title: string, blobId: n
 }
 
 export async function updateProject(userId: string, id: number, project: NewProject) {
-  const result = await db.update(projects).set({...project}).where(and(eq(projects.id, id), eq(projects.userId, userId)))
-  if (result.length < 1) return
+  const result = await db.update(projects).set({...project}).where(and(eq(projects.id, id), eq(projects.userId, userId))).returning()
+  if (result.length < 1) {return }
+
   const section = await findActiveSection(userId, id)
-  if (!section.length) notFound()
+  if (!section.length) {notFound()}
   redirect(`/sections/${section[0].sections.id}`)
 }
 
