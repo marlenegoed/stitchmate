@@ -45,7 +45,7 @@ export default function Intro() {
         </div>
 
 
-        <div className="flex flex-row items-center gap-6 w-full mt-4">
+        <div className="flex flex-row items-center gap-6 w-full mt-2">
           <div className='max-w-1/3'>
             <Image src={arrow_loop} alt='' />
           </div>
@@ -82,7 +82,6 @@ function LandingPageHeader() {
 
     </nav>
   )
-
 }
 
 function ArrowCircle() {
