@@ -62,7 +62,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           {/* </div> */}
         </div>
 
-        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-11 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full" />
+        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-11 row-start-auto row-span-4 flex flex-row items-end h-full" />
 
       </div>
 
