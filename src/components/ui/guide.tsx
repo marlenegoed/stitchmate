@@ -2,12 +2,6 @@
 
 import {Button} from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog"
-import {
   Carousel,
   CarouselContent,
   CarouselDotButtons,
@@ -33,43 +27,36 @@ import {HiAdjustmentsVertical, HiArrowPath, HiArrowUturnLeft, HiMiniHeart, HiOut
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
 import {toggleGuide} from '@/database/queries/queries';
 import {useMediaQuery} from '@/lib/use-media-query';
-import {Drawer, DrawerTrigger, DrawerContent} from './drawer';
-import {ScrollArea} from './scroll-area';
 import clsx from 'clsx';
+import {
+  DrawerDialog,
+  DrawerDialogTrigger,
+  DrawerDialogContent,
+  DrawerDialogClose,
+} from './drawer-dialog';
+
 
 export default function Guide() {
-
   const {isSignedIn, user} = useUser()
   const {showGuide} = useUserSettingsStore(state => state)
   const [isOpen, setIsOpen] = useState(showGuide)
-  const isDialog = useMediaQuery("(min-width: 768px)")
-
-  if (isDialog) {
-    return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild className='relative'>
-          <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[520px] p-0 bg-white">
-          <DialogClose className="absolute right-6 top-6 z-50"><HiX />
-          </DialogClose>
-          <CarouselSlides isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} />
-        </DialogContent>
-      </Dialog>
-    )
-  }
+  const BREAKPOINT = "(min-width: 768px)"
+  const isDesktop = useMediaQuery(BREAKPOINT)
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-black">?</Button>
-      </DrawerTrigger>
-      <DrawerContent className='bg-neutral-50 max-h-full rounded-none'>
-        {/* <ScrollArea className='overflow-y-auto p-4 max-w-lg flex justify-center flex-col mx-auto'> */}
-        <MobileGuide isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} />
-        {/* </ScrollArea> */}
-      </DrawerContent>
-    </Drawer >
+    <DrawerDialog open={isOpen} setOpen={setIsOpen} breakpoint={BREAKPOINT}>
+      <DrawerDialogTrigger className='relative' breakpoint={BREAKPOINT}>
+        <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-sienna-100 text-sienna-400 hover:bg-sienna-100 hover:text-sienna-400">?</Button>
+      </DrawerDialogTrigger>
+      <DrawerDialogContent className="sm:max-w-[520px] p-0 bg-white" breakpoint={BREAKPOINT}>
+        <DrawerDialogClose className='absolute right-6 top-6 z-50' breakpoint={BREAKPOINT}><HiX />
+        </DrawerDialogClose>
+        {isDesktop ?
+          <CarouselSlides isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} breakpoint={BREAKPOINT} /> :
+          <MobileGuide isSignedIn={isSignedIn || false} setIsOpen={() => setIsOpen} userId={user?.id} breakpoint={BREAKPOINT} />
+        }
+      </DrawerDialogContent>
+    </DrawerDialog>
   )
 }
 
@@ -78,9 +65,10 @@ interface SlideProps {
   isSignedIn: boolean,
   setIsOpen: () => void,
   userId?: string,
+  breakpoint: string,
 }
 
-function MobileGuide({isSignedIn, setIsOpen, userId}: SlideProps) {
+function MobileGuide({isSignedIn, setIsOpen, userId, breakpoint}: SlideProps) {
 
   return (
     <div className='w-full overflow-auto'>
@@ -93,13 +81,13 @@ function MobileGuide({isSignedIn, setIsOpen, userId}: SlideProps) {
       <ReminderNotesSlide />
       <FollowPatternSlide />
       <ManageProjectsSlide />
-      <ContactSlide setIsOpen={() => setIsOpen} userId={userId} />
+      <ContactSlide setIsOpen={() => setIsOpen} userId={userId} breakpoint={breakpoint} />
     </div>
   )
 }
 
 
-function CarouselSlides({isSignedIn, setIsOpen, userId}: SlideProps) {
+function CarouselSlides({isSignedIn, setIsOpen, userId, breakpoint}: SlideProps) {
 
   return (
     <Carousel>
@@ -132,7 +120,7 @@ function CarouselSlides({isSignedIn, setIsOpen, userId}: SlideProps) {
           <ManageProjectsSlide />
         </CarouselItem>
         <CarouselItem>
-          <ContactSlide setIsOpen={() => setIsOpen} userId={userId} />
+          <ContactSlide setIsOpen={() => setIsOpen} userId={userId} breakpoint={breakpoint} />
         </CarouselItem>
       </CarouselContent>
       <GuideNavigation />
@@ -339,7 +327,7 @@ function ManageProjectsSlide() {
 }
 
 
-function ContactSlide({userId, setIsOpen}: {userId?: string, setIsOpen: () => void}) {
+function ContactSlide({userId, setIsOpen, breakpoint}: {userId?: string, setIsOpen: () => void, breakpoint: string}) {
 
   const {hideGuide, showGuide} = useUserSettingsStore(state => state)
 
@@ -358,9 +346,9 @@ function ContactSlide({userId, setIsOpen}: {userId?: string, setIsOpen: () => vo
       <GuideParagraph>However, if you need additional support please <a className='text-gray-900' href='mailto:stitchmate.contact@gmail.com'>contact me.</a></GuideParagraph>
       <GuideParagraph className='mb-8'><HiMiniHeart className='inline mr-2 text-sienna-300' />Happy making!</GuideParagraph>
 
-      <DialogClose className='self-end' asChild>
+      <DrawerDialogClose className='self-end' asChild breakpoint={breakpoint}>
         <Button className='w-fit sm:text-lg font-semibold' onClick={handleClose} >close guide</Button>
-      </DialogClose>
+      </DrawerDialogClose>
     </SlideLayout>
   )
 }
