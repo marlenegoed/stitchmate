@@ -88,24 +88,24 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
         style={{pointerEvents: isOpen ? "auto" : "none"}}
         className="flex flex-col gap-4"
       >
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
             <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
           </ZustandHydration>
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <ResetDialog handleReset={handleReset} />
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <CloneSection userId={userSettings.userId} section={section} />
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
         </motion.li>
       </motion.ul>

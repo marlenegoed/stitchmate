@@ -12,7 +12,7 @@ interface SectionHeaderProps {
   className?: string,
 }
 
-export default function SectionHeader({section, userSettings, className,}: SectionHeaderProps) {
+export default function SectionHeader({section, userSettings, className, }: SectionHeaderProps) {
 
   const isMobile = useMediaQuery("(min-width: 640px)")
 

@@ -35,7 +35,7 @@ export function BlobCounter({color, count, blobIndex, onClick, sound = false, re
   }
 
   return (
-    <div className='relative flex items-center justify-center p-28' onClick={handleClick}>
+    <div className='relative flex items-center justify-center p-28 w-full' onClick={handleClick}>
       <button className='text-9xl text-center z-10 relative text-zinc-800 w-[5ch]'>
         <span className={`${kalam.className} font-normal`}>{count}</span>
       </button>

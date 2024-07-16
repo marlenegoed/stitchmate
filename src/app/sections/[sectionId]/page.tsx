@@ -14,7 +14,8 @@ import {BlobCounter} from '@/components/ui/blob-counter';
 import SectionProgress from '@/components/sections/section-progress';
 import CounterActionBar from '@/components/sections/couter-actions';
 import dynamic from 'next/dynamic';
-
+import PreviousSectionButton from '@/components/sections/previous-section-button';
+import NextSectionButton from '@/components/sections/next-section-button';
 
 export default async function Page({params}: {params: {sectionId: number}}) {
 
@@ -39,7 +40,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
       <Guide />
       <SectionProgress numOfRows={section.numOfRows || 0} color={project.color} />
 
-      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
+      <div className="grid grid-cols-12 grid-rows-12 h-[calc(100vh_+_2rem)] sm:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">
 
         <SectionHeader className='col-span-6 sm:col-span-2' section={section} userSettings={userSettings} />
 
@@ -51,12 +52,17 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
         <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
-        <div className='col-span-10 row-span-8 sm:row-span-8 row-start-2 col-start-2'>
+        <div className='self-start col-span-10 row-span-8 row-start-2 col-start-2 place-content-center flex items-center justify-center relative'>
+          {/* <div className='flex items-center justify-center w-full'> */}
+          <PreviousSectionButton userId={userId} section={section} className='absolute -left-10 z-50' />
           <ZustandHydration fallback={<BlobCounter count={section.count} color={project.color} blobIndex={project.blobId} sound={userSettings.sound} reminders={reminders} />}>
             <Counter userId={userId} sectionId={section.id} projectColor={project.color} userSettings={userSettings} blobIndex={section.blobId} reminders={reminders} />
           </ZustandHydration>
+          <NextSectionButton userId={userId} section={section} numOfSections={allSections.length} className='absolute -right-10 z-50' />
+          {/* </div> */}
         </div>
-        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-12 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full" />
+
+        <ReminderList userId={userId} sectionId={section.id} reminders={reminders} className="col-start-1 col-span-11 row-start-auto row-span-4 flex flex-row gap-6 items-end h-full" />
 
       </div>
 
