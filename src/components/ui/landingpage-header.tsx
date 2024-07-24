@@ -2,6 +2,7 @@ import logo from '../../../public/stitchmate_logo.svg'
 import {SignInButton} from '@clerk/nextjs';
 import {Button} from './button';
 import Image from 'next/image'
+import Tag from './tag';
 
 
 export default function LandingPageHeader() {
@@ -10,7 +11,7 @@ export default function LandingPageHeader() {
     <nav className="flex flex-row justify-between w-full sm:px-4">
       <div className='flex flex-row gap-1 w-28 sm:w-36'>
         <Image src={logo} alt='' />
-        <div className="w-fit border border-sienna-300 h-fit px-1 rounded-full flex justify-center items-center"><p className="text-sienna-300 text-xs font-semibold">beta</p></div>
+        <Tag>beta</Tag>
       </div>
       <div className='flex flex-row h-full items-center gap-6'>
 
