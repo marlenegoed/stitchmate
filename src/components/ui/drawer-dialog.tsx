@@ -21,6 +21,8 @@ import {
 } from './drawer';
 import {useMediaQuery} from '@/lib/use-media-query';
 import {cn} from '@/lib/utils';
+import {ScrollArea} from './scroll-area';
+
 
 const BREAKPOINT = "(min-width: 1024px)"
 
@@ -50,9 +52,17 @@ export const DrawerDialogTrigger = ({children, className, breakpoint}: DrawerDia
 export const DrawerDialogContent = ({children, className, breakpoint}: DrawerDialogProps) => {
   const isDesktop = useMediaQuery(breakpoint ?? BREAKPOINT)
   if (isDesktop) {
-    return <DialogContent className={cn('min-w-[425px] p-10', className)}>{children}</DialogContent>
+    return (
+      <DialogContent className={cn('min-w-[425px] p-10', className)}>
+        {children}
+      </DialogContent>
+    )
   }
-  return <DrawerContent className={cn('flex items-center p-4', className)}>{children}</DrawerContent>
+  return (
+    <DrawerContent className={cn('flex items-center p-4', className)}>
+      {children}
+    </DrawerContent>
+  )
 }
 
 export const DrawerDialogHeader = ({children, className, breakpoint, withDialogClose}: {children: ReactNode, className?: string, breakpoint?: string, withDialogClose?: boolean}) => {

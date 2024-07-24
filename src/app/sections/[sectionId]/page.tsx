@@ -2,7 +2,7 @@
 
 import Counter from '@/components/sections/counter';
 import ReminderList from '@/components/reminders/reminder-list';
-import {findAllSections, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/queries';
+import {findAllSections, findProject, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/queries';
 import ReminderPrompt from '@/components/reminders/reminder-prompt';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
@@ -50,7 +50,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           </div>
         </ZustandHydration>
 
-        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
+        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} project={project} className="mt-3 relative z-40 row-start-1 row-span-6 col-end-13 justify-self-end mb-auto" />
 
         <div className='self-start col-span-10 row-span-8 row-start-2 col-start-2 place-content-center flex items-center justify-center relative'>
           {/* <div className='flex items-center justify-center w-full'> */}

@@ -120,7 +120,6 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
               <DrawerDialogHeader className='-mt-4 items-center justify-start'>
                 <ReminderTitleField />
-                {/* <HiOutlinePencil size={20} /> */}
               </DrawerDialogHeader>
               <ReminderFormInputs count={count} />
               <DrawerDialogFooter className='flex flex-row justify-between gap-4 w-full'>

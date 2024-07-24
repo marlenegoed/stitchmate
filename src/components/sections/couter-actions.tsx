@@ -1,15 +1,13 @@
 'use client'
 
-import {Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
+import {Project, Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
 import {Button} from '../ui/button';
 import {updateCount} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import SectionDialog from './section-dialog';
 import ResetDialog from './reset-dialog';
-import {ToggleSound} from '../ui/toggle-sound-button';
 import {CountDownButton} from '../ui/count-down-button';
 import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
-import ZustandHydration from '../store/zustand-hydration';
 // import {Tooltip} from '../ui/tooltip';
 import {useToast} from '@/lib/use-toast';
 import {ButtonHTMLAttributes, forwardRef, useState} from 'react';
@@ -17,6 +15,9 @@ import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
 import {Variants, motion} from 'framer-motion';
 import {CgMenuGridO} from 'react-icons/cg';
 import {cn} from '@/lib/utils';
+import {HiOutlineBookOpen} from "react-icons/hi2";
+import ProjectDetails from '../projects/project-details';
+
 
 const itemVariants: Variants = {
   open: {
@@ -33,9 +34,10 @@ interface CounterActionProps {
   numOfSections: number,
   reminders: Reminder[],
   className?: string,
+  project: Project, 
 }
 
-export default function CounterActionBar({section, userSettings, numOfSections, reminders, className}: CounterActionProps) {
+export default function CounterActionBar({section, userSettings, numOfSections, reminders, className, project}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
   const [isOpen, setIsOpen] = useState(false)
@@ -92,11 +94,6 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
           <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
-          <ZustandHydration fallback={<ToggleSound sound={userSettings.sound} />}>
-            <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
-          </ZustandHydration>
-        </motion.li>
-        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <ResetDialog handleReset={handleReset} />
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
@@ -107,6 +104,9 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
+        </motion.li>
+        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
+          <ProjectDetails project={project}/>
         </motion.li>
       </motion.ul>
     </motion.nav>
