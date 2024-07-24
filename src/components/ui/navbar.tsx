@@ -20,6 +20,7 @@ import {
 import logo from '../../../public/stitchmate_logo.svg'
 import {Button} from './button';
 import {HiOutlineSquares2X2} from 'react-icons/hi2';
+import Tag from './tag';
 
 
 
@@ -64,7 +65,7 @@ function ProjectPageButton() {
         </Link>
         :
         <Link className="hover:opacity-80" href="/">
-          <Button className="bg-sienna-100 text-sienna-400 hover:bg-sienna-100 hover:text-sienna-400" size="sm">demo</Button>
+          <Tag className="hover:bg-sienna-100 hover:text-sienna-400">demo</Tag>
         </Link>
       }
     </>
