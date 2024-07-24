@@ -105,7 +105,7 @@ export function UserMenu() {
             <Link href='/about'><p className='rounded h-fit px-3 py-2 hover:bg-neutral-100'>About</p></Link>
           </div>
           <div className='border-t flex items-center justify-between px-3 py-2'>
-            <ZustandHydration fallback={<ToggleSound sound={false} />}>
+            <ZustandHydration>
               <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
             </ZustandHydration>
             <SignOutButton><Button size='icon' variant='ghost'><HiArrowRightOnRectangle size={20} /></Button></SignOutButton>
