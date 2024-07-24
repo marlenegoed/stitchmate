@@ -8,7 +8,7 @@ import Tag from './tag';
 export default function LandingPageHeader() {
 
   return (
-    <nav className="flex flex-row justify-between w-full sm:px-4">
+    <nav className="flex flex-row justify-between w-full p-6">
       <div className='flex flex-row gap-1 w-28 sm:w-36'>
         <Image src={logo} alt='' />
         <Tag>beta</Tag>
