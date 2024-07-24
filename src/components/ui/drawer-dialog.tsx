@@ -52,7 +52,7 @@ export const DrawerDialogContent = ({children, className, breakpoint}: DrawerDia
   if (isDesktop) {
     return <DialogContent className={cn('min-w-[425px] p-10', className)}>{children}</DialogContent>
   }
-  return <DrawerContent className={cn('flex items-center', className)}>{children}</DrawerContent>
+  return <DrawerContent className={cn('flex items-center p-4', className)}>{children}</DrawerContent>
 }
 
 export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDialogProps) => {
@@ -60,7 +60,7 @@ export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDial
   if (isDesktop) {
     return <DialogHeader className={cn('mb-2', className)}>{children}</DialogHeader>
   }
-  return <DrawerHeader className={cn('max-w-[425px]', className)}>{children}</DrawerHeader>
+  return <DrawerHeader className={cn('flex justify-between w-full', className)}>{children}</DrawerHeader>
 }
 
 export const DrawerDialogTitle = ({children, className, breakpoint}: DrawerDialogProps) => {

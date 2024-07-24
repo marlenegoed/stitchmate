@@ -110,23 +110,25 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
         </button>
       </DrawerDialogTrigger>
 
-      <DrawerDialogContent className="bg-neutral-100 p-10">
+      <DrawerDialogContent className="bg-neutral-100">
+        <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4">
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <DrawerDialogHeader className='-mt-4 justify-between items-center'>
-              <ReminderTitleField isDesktop={true} />
-              {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
-            </DrawerDialogHeader>
-            <ReminderFormInputs count={count} />
-            <DrawerDialogFooter className='flex flex-row justify-between gap-4 w-full'>
-              <DrawerDialogClose asChild>
-                <Button type="button" variant='outline'>Cancel</Button>
-              </DrawerDialogClose>
-              <Button type="submit" disabled={form.formState.isSubmitting}>Save</Button>
-            </DrawerDialogFooter>
-          </form>
-        </Form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+              <DrawerDialogHeader className='-mt-4 justify-between items-center'>
+                <ReminderTitleField isDesktop={true} />
+                {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
+              </DrawerDialogHeader>
+              <ReminderFormInputs count={count} />
+              <DrawerDialogFooter className='flex flex-row justify-between gap-4 w-full'>
+                <DrawerDialogClose asChild>
+                  <Button type="button" variant='outline'>Cancel</Button>
+                </DrawerDialogClose>
+                <Button type="submit" disabled={form.formState.isSubmitting}>Save</Button>
+              </DrawerDialogFooter>
+            </form>
+          </Form>
+        </div>
       </DrawerDialogContent>
     </DrawerDialog>
   );
