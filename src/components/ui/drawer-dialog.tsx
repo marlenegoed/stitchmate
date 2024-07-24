@@ -55,10 +55,10 @@ export const DrawerDialogContent = ({children, className, breakpoint}: DrawerDia
   return <DrawerContent className={cn('flex items-center p-4', className)}>{children}</DrawerContent>
 }
 
-export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDialogProps) => {
+export const DrawerDialogHeader = ({children, className, breakpoint, withDialogClose}: {children: ReactNode, className?: string, breakpoint?: string, withDialogClose?: boolean}) => {
   const isDesktop = useMediaQuery(breakpoint ?? BREAKPOINT)
   if (isDesktop) {
-    return <DialogHeader className={cn('mb-2', className)}>{children}</DialogHeader>
+    return <DialogHeader className={cn('mb-2', className)} withClose={withDialogClose}>{children}</DialogHeader>
   }
   return <DrawerHeader className={cn('flex justify-between w-full', className)}>{children}</DrawerHeader>
 }
@@ -84,7 +84,7 @@ export const DrawerDialogClose = ({children, asChild, breakpoint, className}: {c
   if (isDesktop) {
     return <DialogClose className={className} asChild={asChild}>{children}</DialogClose>
   }
-  // return <DrawerClose className={className} asChild={asChild}>{children}</DrawerClose>
+  return <DrawerClose className={className} asChild={asChild}>{children}</DrawerClose>
 }
 
 

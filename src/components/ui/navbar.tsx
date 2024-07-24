@@ -21,6 +21,13 @@ import logo from '../../../public/stitchmate_logo.svg'
 import {Button} from './button';
 import {HiOutlineSquares2X2} from 'react-icons/hi2';
 import Tag from './tag';
+import {HiArrowRightOnRectangle} from "react-icons/hi2";
+import ZustandHydration from '../store/zustand-hydration';
+import {ToggleSound} from '../ui/toggle-sound-button';
+import {useUserSettingsStore} from '@/providers/user-settings-store-provider';
+import {toggleSound} from '@/database/queries/queries';
+
+
 
 
 
@@ -73,8 +80,16 @@ function ProjectPageButton() {
 }
 
 export function UserMenu() {
+  const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const {user} = useUser()
   const userEmail = user?.emailAddresses[0]?.emailAddress[0]?.toUpperCase()
+
+  async function handleSoundToggle() {
+    toggleStoreSound()
+    if (user) {
+      await toggleSound(user.id)
+    }
+  }
 
   return (
     <>
@@ -84,12 +99,17 @@ export function UserMenu() {
             <AvatarFallback className='hover:bg-neutral-300/70 transition hover:transition-colors' >{userEmail}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
-        <PopoverContent className='w-fit p-6 rounded-lg shadow-sm flex flex-col gap-2 bg-white'>
-          <Link href='/user-profile'><p className='rounded h-fit w-fit px-6 py-2 hover:bg-neutral-100'>Account</p></Link>
-          <div className='rounded h-fit w-fit px-6 py-2  hover:bg-neutral-100'>
-            <SignOutButton redirectUrl='/' />
+        <PopoverContent className='w-fit rounded-lg shadow-sm flex flex-col bg-white p-0 m-4 mt-2'>
+          <div className='m-2 w-24 text-left'>
+            <Link href='/user-profile'><p className='rounded h-fit px-3 py-2 hover:bg-neutral-100'>Account</p></Link>
+            <Link href='/about'><p className='rounded h-fit px-3 py-2 hover:bg-neutral-100'>About</p></Link>
           </div>
-          <Link href='/about'><p className='rounded h-fit w-fit px-6 py-2 hover:bg-neutral-100'>About</p></Link>
+          <div className='border-t flex items-center justify-between px-3 py-2'>
+            <ZustandHydration fallback={<ToggleSound sound={false} />}>
+              <ToggleSound sound={storeSound} onToggle={handleSoundToggle} />
+            </ZustandHydration>
+            <SignOutButton><Button size='icon' variant='ghost'><HiArrowRightOnRectangle size={20} /></Button></SignOutButton>
+          </div>
         </PopoverContent>
       </Popover>
     </>

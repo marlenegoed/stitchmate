@@ -32,8 +32,10 @@ import {
 } from '../ui/drawer-dialog';
 
 import makeOrdinal from '@/lib/make-ordinal';
-import {useMediaQuery} from '@/lib/use-media-query';
 import {type Reminder} from '@/database/queries/queries';
+import {HiOutlinePencil} from "react-icons/hi2";
+import shortenText from '@/lib/shorten-text';
+
 
 
 const formSchema = z.object({
@@ -68,11 +70,12 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
     reminder.note = ''
   }
 
+  const defaultTitle = reminder ? shortenText(reminder.title, 20) : ''
   const defaultCount = count === 0 ? 1 : count;
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: reminder ? reminder.title : '',
+      title: defaultTitle,
       note: reminder?.note || undefined,
       notification: reminder ? reminder.notification : true,
       type: reminder ? reminder.type : 'range',
@@ -115,9 +118,9 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-              <DrawerDialogHeader className='-mt-4 justify-between items-center'>
-                <ReminderTitleField isDesktop={true} />
-                {reminder && <DeleteDialog reminder={reminder} handleDelete={handleDelete} />}
+              <DrawerDialogHeader className='-mt-4 items-center justify-start'>
+                <ReminderTitleField />
+                {/* <HiOutlinePencil size={20} /> */}
               </DrawerDialogHeader>
               <ReminderFormInputs count={count} />
               <DrawerDialogFooter className='flex flex-row justify-between gap-4 w-full'>
@@ -128,6 +131,7 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
               </DrawerDialogFooter>
             </form>
           </Form>
+          {reminder && <div className='w-full flex mt-6 border-t'><DeleteDialog reminder={reminder} handleDelete={handleDelete} className='justify-start' /></div>}
         </div>
       </DrawerDialogContent>
     </DrawerDialog>
@@ -211,22 +215,25 @@ function ReminderFormInputs({count}: {count: number}) {
   )
 }
 
-function ReminderTitleField({isDesktop}: {isDesktop?: boolean}) {
+function ReminderTitleField() {
   const form = useFormContext()
 
   return (
-    <FormField
-      control={form.control}
-      name="title"
-      render={({field}) => (
-        <FormItem>
-          <FormControl>
-            <Input className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold border-none pl-0', {'max-w-72': isDesktop})} placeholder='Enter Title' {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <div className='flex items-center justify-start'>
+      <FormField
+        control={form.control}
+        name="title"
+        render={({field}) => (
+          <FormItem>
+            <FormControl>
+              <Input className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold border-none pl-0 min-w-fit')} placeholder='Enter Title' {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <HiOutlinePencil size={20} />
+    </div>
   )
 }
 

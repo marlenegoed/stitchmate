@@ -10,7 +10,7 @@ export default function Page() {
 
   return (
     <>
-      <div className='h-dvh flex flex-col justify-between items-center'>
+      <div className='h-dvh flex flex-col justify-between items-center bg-dotted-spacing-6 bg-dotted-gray-300'>
         <Intro />
       </div>
     </>
