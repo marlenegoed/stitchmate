@@ -16,6 +16,7 @@ export default function Intro() {
     <LandingPageHeader />
 
     <section className="max-w-screen-xl sm:px-4 xl:px-0 justify-center flex items-start mx-auto h-full">
+
       <motion.div
         className='absolute -z-10 top-40 sm:top-28 -left-12'
         initial={{opacity: 0, scale: 0.5}}
