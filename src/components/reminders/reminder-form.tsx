@@ -214,9 +214,16 @@ function ReminderFormInputs({count}: {count: number}) {
   )
 }
 
-function ReminderTitleField() {
-  const form = useFormContext()
 
+function ReminderTitleField() {
+
+  const form = useFormContext()
+  const value = form.watch('title')
+
+  const [showPencil, setShowPencil] = useState(true)
+  console.log(value.length)
+
+  let inputWidth = value.length === 0 ? 130 + 10 + 'px' : value.length * 12 + 10 + 'px'
   return (
     <div className='flex items-center justify-start'>
       <FormField
@@ -225,13 +232,13 @@ function ReminderTitleField() {
         render={({field}) => (
           <FormItem>
             <FormControl>
-              <Input className={clsx('placeholder:text-neutral-400 bg-inherit text-2xl font-semibold border-none pl-0 min-w-fit')} placeholder='Enter Title' {...field} />
+              <Input style={{width: inputWidth}} className={`placeholder:text-neutral-400 bg-inherit text-2xl font-semibold border-none pl-0`} placeholder='Enter Title' {...field} onFocus={() => (setShowPencil(false))} onBlur={() => {setShowPencil(true)}} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <HiOutlinePencil size={20} />
+      {showPencil && <HiOutlinePencil size={20} />}
     </div>
   )
 }
