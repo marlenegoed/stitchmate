@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '../ui/select';
+import {Input} from '../ui/input';
 
 const needlesizes = [
   'US 0 - 2.0 mm',
@@ -41,38 +42,53 @@ export default function ProjectFormNeedleSelect() {
   const {fields, append, remove} = useFieldArray({control: form.control, name: "needles"})
 
   return (
-    <div className="order-3 col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 flex flex-col bg-white rounded-lg p-8 pr-4 py-6">
-      <div className="flex items-center justify-between mb-3">
-        <FormLabel className='text-md font-semibold'>Needles (optional)</FormLabel>
-        <Button type="button" variant="ghost" size="icon" onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /></Button>
-      </div>
+    <>
       {fields.map((field, index) => {
         return (
-          <FormField
-            key={field.id}
-            name={`needles.${index}.size`}
-            control={form.control}
-            render={({field}) => (
-              <FormItem>
-                <div className="flex items-center">
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <div key={field.id} className='grid grid-cols-11 gap-4'>
+            <FormField
+              name={`needles.${index}.size`}
+              control={form.control}
+              render={({field}) => (
+                <FormItem className='col-span-5'>
+                  <FormLabel className='text-md font-semibold'>size</FormLabel>
+                  <div className="flex items-center">
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className='font-normal border mr-2 mb-4'>
+                          <SelectValue placeholder="select needle size" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {needlesizes.map((needlesize) => <SelectItem key={needlesize} value={needlesize}>{needlesize}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name={`needles.${index}.usedFor`}
+              control={form.control}
+              render={({field}) => (
+                <FormItem className='col-span-5'>
+                  <FormLabel>used for</FormLabel>
+                  <div className="flex items-center">
                     <FormControl>
-                      <SelectTrigger className='font-normal border mr-2 mb-4'>
-                        <SelectValue placeholder="select needle" />
-                      </SelectTrigger>
+                      <Input defaultValue={field.value} placeholder='e.g. main fabric, ribbing...' />
                     </FormControl>
-                    <SelectContent>
-                      {needlesizes.map((needlesize) => <SelectItem key={needlesize} value={needlesize}>{needlesize}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                  <Button type="button" variant="ghost" size="icon" className='mr-1 -mt-4 text-neutral-500 disabled:opacity-50 transform opacity hover:bg-white hover:text-slate-700' disabled={fields.length < 2} onClick={() => remove(index)}><HiOutlineX /></Button>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="button" variant="ghost" size="icon" className='col-span-1 self-center justify-self-end justify-end mt-2 text-neutral-500 hover:bg-white hover:text-slate-700' onClick={() => remove(index)}><HiOutlineX /></Button>
+          </div>
         )
+
       })}
-    </div>
+      <Button type="button" size="sm" variant='outline' className='flex gap-2 rounded' onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /> add</Button>
+    </>
   )
 }

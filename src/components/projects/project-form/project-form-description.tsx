@@ -6,10 +6,10 @@ import {
   FormLabel,
   FormControl,
   FormMessage
-} from '../ui/form';
-import {Textarea} from '../ui/textarea';
+} from '../../ui/form';
+import {Textarea} from '../../ui/textarea';
 
-export default function ProjectFormDescription({className}: {className: string}) {
+export default function ProjectFormDescription({className}: {className?: string}) {
   const form = useFormContext();
   return (
     <div className={cn(className)}>
@@ -18,14 +18,14 @@ export default function ProjectFormDescription({className}: {className: string})
         name="description"
         render={({field}) => (
           <FormItem>
-            <div className='mb-6'>
+            <div className=''>
               <FormLabel className='font-semibold text-md'>Description (optional)</FormLabel>
             </div>
             <FormControl>
               <Textarea
                 placeholder="add description..."
-                className="resize-none border"
-                rows={5}
+                className="border"
+                rows={3}
                 {...field}
               />
             </FormControl>

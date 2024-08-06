@@ -1,7 +1,7 @@
 'use server'
 
 import ProjectForm from '@/components/projects/project-form';
-import {findProject} from '@/database/queries/queries';
+import {findProject, findProjectNeedles} from '@/database/queries/queries';
 import PageNav from '@/components/ui/page-nav';
 import {auth} from "@clerk/nextjs/server";
 import {notFound} from 'next/navigation';
@@ -14,8 +14,10 @@ export default async function Page({params}: {params: {id: number}}) {
   if (!result) {
     notFound()
   }
+
   const project = result.projects;
   const section = result.sections;
+  const needles = await findProjectNeedles(params.id)
 
   const defaultValues = {
     title: shortenText(project.title, 26),
@@ -23,13 +25,13 @@ export default async function Page({params}: {params: {id: number}}) {
     gaugeStitches: project.gaugeStitches || undefined,
     gaugeRows: project.gaugeRows || undefined,
     gaugeInch: project.gaugeInch || undefined,
-    needles: project.needles?.map(size => ({size})) || [{size: ""}],
+    needles: needles.map(needle => ({size: needle.size || "", usedFor: needle.usedFor || ""})),
     yarn: project.yarn?.map(yarn => ({yarn})) || [{yarn: ""}],
     color: project.color || 'tangerine',
-  }
-
-  if (defaultValues.needles.length === 0) {
-    defaultValues.needles.push({size: ""})
+    createdAt: project.createdAt || new Date(),
+    finishBy: project.finishBy || undefined,
+    completed: project.completed || undefined,
+    status: project.status || 'wip',
   }
 
   if (defaultValues.yarn.length === 0) {

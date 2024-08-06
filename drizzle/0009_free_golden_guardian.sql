@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "completed" timestamp (3);

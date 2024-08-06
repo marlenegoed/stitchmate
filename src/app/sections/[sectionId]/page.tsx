@@ -2,7 +2,7 @@
 
 import Counter from '@/components/sections/counter';
 import ReminderList from '@/components/reminders/reminder-list';
-import {findAllSections, findProject, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/queries';
+import {findAllSections, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/queries';
 import ReminderPrompt from '@/components/reminders/reminder-prompt';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';

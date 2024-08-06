@@ -1,5 +1,4 @@
-import { pgTable, pgEnum, text, boolean, serial, integer, timestamp } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+import {pgTable, pgEnum, text, boolean, serial, integer, timestamp, real} from "drizzle-orm/pg-core"
 
 export const keyStatus = pgEnum("key_status", ['default', 'valid', 'invalid', 'expired'])
 export const keyType = pgEnum("key_type", ['aead-ietf', 'aead-det', 'hmacsha512', 'hmacsha256', 'auth', 'shorthash', 'generichash', 'kdf', 'secretbox', 'secretstream', 'stream_xchacha20'])
@@ -33,8 +32,8 @@ export const reminders = pgTable("reminders", {
 	start: integer("start"),
 	from: integer("from"),
 	until: integer("until"),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
 });
 
 export const projects = pgTable("projects", {
@@ -46,8 +45,8 @@ export const projects = pgTable("projects", {
 	yarn: text("yarn").array(),
 	needles: text("needles").array(),
 	description: text("description"),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
 	favorite: boolean("favorite").default(false).notNull(),
 	blobId: integer("blob_id").notNull(),
 	color: color("color").default('tangerine').notNull(),
@@ -61,8 +60,27 @@ export const sections = pgTable("sections", {
 	position: integer("position").notNull(),
 	count: integer("count").default(1).notNull(),
 	numOfRows: integer("num_of_rows").default(0),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
 	active: boolean("active").default(false).notNull(),
 	blobId: integer("blob_id").notNull(),
+});
+
+export const needles = pgTable("needles", {
+	id: serial("id").primaryKey().notNull(),
+	projectId: integer("project_id").notNull(),
+	size: text("size"),
+	usedFor: text("used_for"),
+});
+
+export const yarn = pgTable("yarn", {
+	id: serial("id").primaryKey().notNull(),
+	projectId: integer("project_id").notNull(),
+	name: text("name").notNull(),
+	color: text("color"),
+	lot: integer("lot"),
+	meters: integer("meters"),
+	grams: integer("grams"),
+	skeins: real("skeins"),
+	material: text("material").array(),
 });

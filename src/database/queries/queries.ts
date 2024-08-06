@@ -2,7 +2,7 @@
 
 import {eq, and, gte, sql, asc, gt, ilike, desc, not, count, or} from 'drizzle-orm'
 import {db} from '../db'
-import {projects, sections, reminders, userSettings} from '../schema'
+import {projects, sections, reminders, userSettings, needles} from '../schema'
 import {notFound, redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 import generateBlobId from '@/lib/generate-blob-id';
@@ -348,4 +348,12 @@ export async function toggleSound(userId: string) {
 
 export async function toggleGuide(userId: string) {
   return await db.update(userSettings).set({guide: false}).where(eq(userSettings.userId, userId))
+}
+
+// needles
+
+export async function findProjectNeedles(projectId: number) {
+  return await db.query.needles.findMany({
+    where: eq(needles.projectId, projectId)
+  })
 }

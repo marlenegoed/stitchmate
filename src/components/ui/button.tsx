@@ -19,6 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:opacity-80 dark:hover:bg-slate-800 dark:hover:text-slate-50 hover:bg-transparent",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
         nohover: "hover:bg-transparent dark:hover:bg-transparent",
+        datepicker: "px-3 text-left font-normal text-neutral-800 gap-2 mr-3 border border-neutral-300 w-56",
       },
       size: {
         default: "min-w-32 h-12 p-5",

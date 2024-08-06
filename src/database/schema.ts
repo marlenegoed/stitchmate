@@ -1,9 +1,11 @@
 
 import {relations, sql} from 'drizzle-orm';
-import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar} from "drizzle-orm/pg-core";
+import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar, real} from "drizzle-orm/pg-core";
 
 export const projectColorEnum = pgEnum('color', ['olivine', 'orchid', 'flax', 'jordy', 'tangerine'])
 export const projectGaugeEnum = pgEnum('gauge_inch', ['1"', '2"', '4"']);
+export const projectStatusEnum = pgEnum('status', ['wip', 'finished', 'paused', 'frogged']);
+
 
 // Todo: add blob id 
 export const projects = pgTable('projects', {
@@ -17,9 +19,12 @@ export const projects = pgTable('projects', {
   description: text('description'),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
+  finishBy: timestamp('finish_by', {mode: 'date', precision: 3}),
+  completed: timestamp('completed', {mode: 'date', precision: 3}),
   favorite: boolean('favorite').notNull().default(false),
   blobId: integer('blob_id').notNull(),
   color: projectColorEnum('color').notNull().default('tangerine'),
+  status: projectStatusEnum('status').notNull().default('wip'),
   userId: text('user_id').notNull()
 });
 
@@ -81,3 +86,21 @@ export const userSettings = pgTable('user_settings', {
   guide: boolean('guide').notNull().default(true),
 })
 
+export const needles = pgTable("needles", {
+  id: serial("id").primaryKey().notNull(),
+  projectId: integer("project_id").notNull(),
+  size: text("size"),
+  usedFor: text("used_for"),
+});
+
+export const yarn = pgTable("yarn", {
+  id: serial("id").primaryKey().notNull(),
+  projectId: integer("project_id").notNull(),
+  name: text("name").notNull(),
+  color: text("color"),
+  lot: integer("lot"),
+  meters: integer("meters"),
+  grams: integer("grams"),
+  skeins: real("skeins"),
+  material: text("material").array(),
+});

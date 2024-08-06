@@ -3,20 +3,21 @@ import {
   FormField,
   FormItem,
   FormControl,
-  FormMessage
-} from '../ui/form';
-import {Input} from '../ui/input';
+  FormMessage,
+  FormLabel
+} from '../../ui/form';
+import {Input} from '../../ui/input';
 
 export default function ProjectFormTitleField() {
   const form = useFormContext();
   return (
     <>
-      <p className='font-semibold mt-2'>Title</p>
       <FormField
         control={form.control}
         name="title"
         render={({field}) => (
           <FormItem>
+            <FormLabel className='font-semibold mt-2'>Title (required)</FormLabel>
             <FormControl>
               <Input placeholder={'my project'} {...field} />
             </FormControl>

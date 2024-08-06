@@ -50,6 +50,27 @@
       "when": 1719064123873,
       "tag": "0006_right_screwball",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1722863498245,
+      "tag": "0007_brown_shriek",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1722880599176,
+      "tag": "0008_cute_xorn",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1722934242940,
+      "tag": "0009_free_golden_guardian",
+      "breakpoints": true
     }
   ]
 }
