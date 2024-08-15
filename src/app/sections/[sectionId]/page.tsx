@@ -31,13 +31,11 @@ export default async function Page({params}: {params: {sectionId: number}}) {
   await setActiveSection(userId, params.sectionId)
   const allSections = await findAllSections(userId, section.projectId)
 
-  const Guide = dynamic(() => import('@/components/ui/guide'), {ssr: false})
 
   return (
     <>
       <HydrateUserSettingsStore storeSound={userSettings.sound} showGuide={userSettings.guide} />
       <HydrateCounterStore storeCount={section.count} storeTitle={section.title} />
-      <Guide />
       <SectionProgress numOfRows={section.numOfRows || 0} color={project.color} />
 
       <div className="grid grid-cols-12 grid-rows-12 h-[calc(100vh_+_2rem)] sm:h-[calc(100dvh_-_4rem)] px-6 pt-2 pb-6 w-full">

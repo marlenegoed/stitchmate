@@ -16,12 +16,10 @@ export default async function Page({searchParams}: {searchParams?: {title?: stri
   const favorite = searchParams?.favorite === '1' ? true : false;
   const page = searchParams?.page || 0
 
-  const Guide = dynamic(() => import('@/components/ui/guide'), {ssr: false})
 
   return (
     <>
       <HydrateUserSettingsStore storeSound={userSettings.sound} showGuide={userSettings.guide} />
-      <Guide />
       <ProjectsHeader userId={userId} />
       <Suspense fallback={<Loading />}>
         <ProjectList title={title} favorite={favorite} userId={userId} page={page} />
