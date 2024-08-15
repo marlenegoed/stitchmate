@@ -21,7 +21,7 @@ export function ToggleSound({sound, onToggle}: {sound: boolean, onToggle?: () =>
 
   return (
     // <Tooltip title="Toggle sound">
-    <Button type='button' size='icon' variant='ghost' className='border-slate-800' onClick={toggleSound}>
+    <Button type='button' size='icon' variant='outline' className='h-8 w-8 border-neutral-300 rounded-full' onClick={toggleSound}>
       {speaker}
     </Button>
     // </Tooltip>

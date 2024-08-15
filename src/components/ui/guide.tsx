@@ -34,6 +34,8 @@ import {
   DrawerDialogContent,
   DrawerDialogClose,
 } from './drawer-dialog';
+import {HiOutlineBookOpen} from "react-icons/hi2";
+
 
 
 export default function Guide() {
@@ -46,7 +48,7 @@ export default function Guide() {
   return (
     <DrawerDialog open={isOpen} setOpen={setIsOpen} breakpoint={BREAKPOINT}>
       <DrawerDialogTrigger className='relative' breakpoint={BREAKPOINT}>
-        <Button size="icon" className="fixed z-50 bottom-6 right-6 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 font-semibold rounded-full text-xl text-white bg-sienna-100 text-sienna-400 hover:bg-sienna-100 hover:text-sienna-400">?</Button>
+        <Button size="icon" className='h-8 w-8 rounded-full bg-sienna-100 text-sienna-400'><HiOutlineBookOpen size={20} /></Button>
       </DrawerDialogTrigger>
       <DrawerDialogContent className="sm:max-w-[520px] p-0 bg-neutral-50" breakpoint={BREAKPOINT}>
         <DrawerDialogClose className='absolute right-6 top-6 z-50' breakpoint={BREAKPOINT}><HiX />
