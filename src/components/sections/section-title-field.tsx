@@ -2,8 +2,7 @@
 
 import {z} from 'zod';
 import {zodResolver} from "@hookform/resolvers/zod";
-import {SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import {useEffect, useRef} from 'react';
+import {SubmitHandler, useForm} from "react-hook-form";
 
 import {Input} from "@/components/ui/input";
 import {
@@ -11,6 +10,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormMessage,
 } from "@/components/ui/form"
 import {updateSectionTitle} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
@@ -18,7 +18,7 @@ import {cn} from '@/lib/utils';
 import shortenText from '@/lib/shorten-text';
 
 const formSchema = z.object({
-  title: z.string().min(1).max(50),
+  title: z.string().min(1, {message: "Must be 1 or more characters long"}).max(50, {message: "Must be 50 or fewer characters long"}),
 })
 
 interface SectionTitleFieldProps {
@@ -31,37 +31,19 @@ interface SectionTitleFieldProps {
 export default function SectionTitleField({userId, id, title, className}: SectionTitleFieldProps) {
   const {storeTitle, setStoreTitle} = useCounterStore(state => state)
 
-  const formRef = useRef<HTMLFormElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {title: shortenText(storeTitle, 10) || shortenText(title, 10)}
   })
 
-  useEffect(() => {
-    form.reset({title: storeTitle})
-  }, [storeTitle, form])
-
-  const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values, e) => {
-    e?.preventDefault()
-    if (!form.formState.isDirty) return
-
+  const handleSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     await updateSectionTitle(userId, id, values.title)
     setStoreTitle(values.title)
-    // form.reset(values)
-    inputRef.current?.blur()
-  }
-
-  const handleInvalid: SubmitErrorHandler<z.infer<typeof formSchema>> = async (_values, e) => {
-    e?.preventDefault()
-    form.reset()
-    inputRef.current?.blur()
   }
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit, handleInvalid)} ref={formRef}>
+      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)} onBlur={form.handleSubmit(handleSubmit)}>
         <FormField
           control={form.control}
           name="title"
@@ -73,14 +55,12 @@ export default function SectionTitleField({userId, id, title, className}: Sectio
                   variant='inline'
                   className={cn('placeholder:text-slate-800/50 font-semibold text-xl max-w-max pl-0', className)}
                   {...field}
-                  onBlur={() => formRef.current?.requestSubmit()}
-                  ref={inputRef}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
-        <button className="hidden" type="submit" />
       </form>
     </Form>
   )

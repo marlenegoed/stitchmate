@@ -5,7 +5,15 @@ import FavoriteProject from './favorite-project-button';
 import BackgroundBlob from '../ui/background-blobs';
 import {Button} from '../ui/button';
 import shortenText from '@/lib/shorten-text';
-
+import Image from 'next/image'
+import pattern1 from '../../../public/pattern1.png'
+import pattern2 from '../../../public/pattern2.png'
+import pattern3 from '../../../public/pattern3.png'
+import pattern4 from '../../../public/pattern4.png'
+import pattern5 from '../../../public/pattern5.png'
+import pattern6 from '../../../public/pattern6.png'
+import pattern7 from '../../../public/pattern7.png'
+import pattern8 from '../../../public/pattern7.png'
 
 interface ProjectCardProps {
   project: Project,
@@ -14,6 +22,7 @@ interface ProjectCardProps {
 
 export default async function ProjectCard({project, sections}: ProjectCardProps) {
   const activeSection = sections.find(section => section.active) || sections[0]
+  const patterns = [pattern1, pattern2, pattern3, pattern4, pattern5, pattern6, pattern7, pattern8]
 
   let rowsknitted = 0
   for (let section of sections) {
@@ -22,19 +31,17 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
 
   return (
     <div className='w-full bg-white rounded-lg'>
-
-      {/* <div className={`absolute top-0 left-0 h-20 bg-neutral-200 rounded-t-lg`}>
-        <BackgroundBlob className={`fill-${project.color} top-0 left-0 h-10 absolute m-6 pb-6`} stroke={false} blobIndex={project.blobId} />
-      </div> */}
-
       <Link href={`/sections/${activeSection.id}`}>
-
-        <div className='flex flex-col bg-neutral-200 rounded-t-lg h-56 pt-2 pl-4 pr-2 relative'>
-
-          <div className={`top-0 right-0 bg-neutral-200 rounded-t-lg h-full absolute p-10`}>
-            <BackgroundBlob className={`fill-${project.color} h-full`} stroke={true} blobIndex={project.blobId} />
-          </div>
-
+        <div className={`flex flex-col bg-${project.color} rounded-t-lg h-56 pt-2 pl-4 pr-2 relative`}>
+          <Image
+            src={patterns[project.patternId - 1]}
+            alt='background pattern'
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+            }}
+          />
           <div className='flex flex-row justify-between items-center relativ z-20'>
             <p className='text-gray-900 font-semibold'>{rowsknitted} {rowsknitted > 1 ? 'rows' : 'row'} knitted</p>
             <FavoriteProject userId={project.userId} projectId={project.id} isFavorite={project.favorite} />

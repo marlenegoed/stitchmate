@@ -11,11 +11,6 @@ export const projectStatusEnum = pgEnum('status', ['wip', 'finished', 'paused', 
 export const projects = pgTable('projects', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
-  gaugeStitches: integer('gauge_stitches'),
-  gaugeRows: integer('gauge_rows'),
-  gaugeInch: projectGaugeEnum('gauge_inch'),
-  yarn: text('yarn').array(),
-  needles: text('needles').array(),
   description: text('description'),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
@@ -23,9 +18,13 @@ export const projects = pgTable('projects', {
   completed: timestamp('completed', {mode: 'date', precision: 3}),
   favorite: boolean('favorite').notNull().default(false),
   blobId: integer('blob_id').notNull(),
+  patternId: integer('pattern_id').notNull().default(1),
   color: projectColorEnum('color').notNull().default('tangerine'),
   status: projectStatusEnum('status').notNull().default('wip'),
-  userId: text('user_id').notNull()
+  userId: text('user_id').notNull(),
+  pattern: text('pattern'),
+  patternUrl: text('pattern'),
+  size: text('size'),
 });
 
 
@@ -99,8 +98,20 @@ export const yarn = pgTable("yarn", {
   name: text("name").notNull(),
   color: text("color"),
   lot: integer("lot"),
-  meters: integer("meters"),
+  yardage: integer("yardage"),
   grams: integer("grams"),
   skeins: real("skeins"),
   material: text("material").array(),
+});
+
+export const gauge = pgTable("gauge", {
+  id: serial("id").primaryKey().notNull(),
+  projectId: integer("project_id").notNull(),
+  stitches: integer('stitches'),
+  rows: integer('rows'),
+  inch: projectGaugeEnum('inch'),
+  needle: text('needle'),
+  pattern: text('pattern'),
+  blocked: boolean('blocked'),
+  inrounds: boolean('in_rounds'),
 });

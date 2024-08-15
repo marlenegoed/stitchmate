@@ -1,14 +1,14 @@
 import {useFormContext} from 'react-hook-form';
-import {FormField, FormItem, FormControl, FormMessage} from '../ui/form';
-import {type FormValues} from './project-form';
-import {RadioGroup, RadioGroupItem} from '../ui/radio-group-colors';
+import {FormField, FormItem, FormControl, FormMessage} from '../../ui/form';
+import {type FormValues} from '../project-form';
+import {RadioGroup, RadioGroupItem} from '../../ui/radio-group-colors';
 
 export default function ProjectFormColorRadio({defaultValues}: {defaultValues: FormValues}) {
   const form = useFormContext();
 
   return (
     <>
-      <p className='font-semibold mt-2 mb-4'>Color</p>
+      <p className='font-semibold mt-2'>Color</p>
       <FormField
         control={form.control}
         name="color"

@@ -83,12 +83,12 @@ export default function ProjectFormNeedleSelect() {
                 </FormItem>
               )}
             />
-            <Button type="button" variant="ghost" size="icon" className='col-span-1 self-center justify-self-end justify-end mt-2 text-neutral-500 hover:bg-white hover:text-slate-700' onClick={() => remove(index)}><HiOutlineX /></Button>
+            <Button type="button" variant="ghost" size="icon" className='col-span-1 self-center justify-self-start justify-end mt-2 text-neutral-500 hover:bg-white hover:text-slate-700' onClick={() => remove(index)}><HiOutlineX /></Button>
           </div>
         )
 
       })}
-      <Button type="button" size="sm" variant='outline' className='flex gap-2 rounded' onClick={() => append({size: ""})}><HiOutlinePlus className='text-sienna-400' /> add</Button>
+      <Button type="button" size="sm" variant='outline' className='flex gap-2 rounded w-14 text-sienna-400 border-sienna-400 mt-2' onClick={() => append({size: ""})}><HiOutlinePlus />add</Button>
     </>
   )
 }

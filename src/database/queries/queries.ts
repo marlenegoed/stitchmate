@@ -2,7 +2,7 @@
 
 import {eq, and, gte, sql, asc, gt, ilike, desc, not, count, or} from 'drizzle-orm'
 import {db} from '../db'
-import {projects, sections, reminders, userSettings, needles} from '../schema'
+import {projects, sections, reminders, userSettings, needles, yarn, gauge} from '../schema'
 import {notFound, redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 import generateBlobId from '@/lib/generate-blob-id';
@@ -42,13 +42,15 @@ export async function quickStartProject(userId: string, title: string, blobId: n
   redirect(`/sections/${sectionId}`)
 }
 
-export async function updateProject(userId: string, id: number, project: NewProject) {
+export async function updateProject(userId: string, id: number, project: NewProject, url?: string) {
   const result = await db.update(projects).set({...project}).where(and(eq(projects.id, id), eq(projects.userId, userId))).returning()
   if (result.length < 1) {return }
 
-  const section = await findActiveSection(userId, id)
-  if (!section.length) {notFound()}
-  redirect(`/sections/${section[0].sections.id}`)
+  // const section = await findActiveSection(userId, id)
+  // if (!section.length) {notFound()}
+  // redirect(`/sections/${section[0].sections.id}`)
+  if (!url) redirect('/projects')
+  redirect(url)
 }
 
 export async function toggleFavorite(userId: string, projectId: number) {
@@ -350,10 +352,22 @@ export async function toggleGuide(userId: string) {
   return await db.update(userSettings).set({guide: false}).where(eq(userSettings.userId, userId))
 }
 
-// needles
+// needles yarn & gauge
 
 export async function findProjectNeedles(projectId: number) {
   return await db.query.needles.findMany({
     where: eq(needles.projectId, projectId)
+  })
+}
+
+export async function findProjectYarns(projectId: number) {
+  return await db.query.yarn.findMany({
+    where: eq(yarn.projectId, projectId)
+  })
+}
+
+export async function findProjectGauges(projectId: number) {
+  return await db.query.gauge.findMany({
+    where: eq(gauge.projectId, projectId)
   })
 }

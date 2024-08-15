@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "pattern_id" integer DEFAULT 1 NOT NULL;
