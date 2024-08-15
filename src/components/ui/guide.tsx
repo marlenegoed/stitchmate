@@ -48,7 +48,7 @@ export default function Guide() {
   return (
     <DrawerDialog open={isOpen} setOpen={setIsOpen} breakpoint={BREAKPOINT}>
       <DrawerDialogTrigger className='relative' breakpoint={BREAKPOINT}>
-        <Button size="icon" className='h-8 w-8 rounded-full bg-sienna-100 text-sienna-400'><HiOutlineBookOpen size={20} /></Button>
+        <Button size="icon" className='h-8 w-8 rounded-full bg-sienna-100 text-sienna-400 hover:bg-sienna-100 hover:opacity-80'><HiOutlineBookOpen size={20} /></Button>
       </DrawerDialogTrigger>
       <DrawerDialogContent className="sm:max-w-[520px] p-0 bg-neutral-50" breakpoint={BREAKPOINT}>
         <DrawerDialogClose className='absolute right-6 top-6 z-50' breakpoint={BREAKPOINT}><HiX />
