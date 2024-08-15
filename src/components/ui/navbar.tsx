@@ -19,7 +19,7 @@ import {
 } from '@clerk/nextjs'
 import logo from '../../../public/stitchmate_logo.svg'
 import {Button} from './button';
-import {HiOutlineSquares2X2} from 'react-icons/hi2';
+import {HiSquares2X2} from 'react-icons/hi2';
 import Tag from './tag';
 import {HiArrowRightOnRectangle} from "react-icons/hi2";
 import ZustandHydration from '../store/zustand-hydration';
@@ -29,14 +29,14 @@ import {toggleSound} from '@/database/queries/queries';
 
 
 
-
-
 export default function Nav() {
+
+  const {isSignedIn} = useAuth()
 
   return (
     <nav className='flex justify-between items-center py-4 px-6 w-full mx-auto'>
-      <ProjectPageButton />
-      <Logo />
+      <ProjectPageButton isSignedIn={isSignedIn} />
+      <Logo isSignedIn={isSignedIn} />
       <SignedIn>
         <UserMenu />
       </SignedIn>
@@ -47,8 +47,7 @@ export default function Nav() {
   );
 }
 
-function Logo() {
-  const {isSignedIn} = useAuth()
+function Logo({isSignedIn}: {isSignedIn: boolean | undefined}) {
 
   const url = isSignedIn ? '/projects' : '/'
   return (
@@ -61,14 +60,13 @@ function Logo() {
 }
 
 
-function ProjectPageButton() {
-  const {isSignedIn} = useAuth()
+function ProjectPageButton({isSignedIn}: {isSignedIn: boolean | undefined}) {
 
   return (
     <>
       {isSignedIn ?
         <Link href='/projects'>
-          <HiOutlineSquares2X2 className='text-gray-800 hover:text-neutral-600' size={24} />
+          <HiSquares2X2 className='text-gray-800 hover:text-neutral-600' size={24} />
         </Link>
         :
         <Link className="hover:opacity-80" href="/">
