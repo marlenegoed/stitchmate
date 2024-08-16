@@ -9,7 +9,9 @@ import {
   DrawerDialogClose,
   DrawerDialogTitle
 } from '../ui/drawer-dialog';
-import {HiOutlineBookOpen} from "react-icons/hi2";
+import {HiOutlineListBullet} from "react-icons/hi2";
+import {TbListDetails} from "react-icons/tb";
+
 import {Project} from '@/database/queries/queries';
 import moment from 'moment';
 import {HiCalendarDays} from "react-icons/hi2";
@@ -28,11 +30,11 @@ export default function ProjectDetails({project}: {project: Project}) {
 
       <DrawerDialogTrigger>
         <Button
+          className='rounded-full'
           type='button'
           size='icon'
-          variant='ghost'
         >
-          <HiOutlineBookOpen size={22} />
+          <TbListDetails size={22} />
         </Button>
       </DrawerDialogTrigger>
       <DrawerDialogContent className="bg-neutral-100">

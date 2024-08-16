@@ -44,13 +44,11 @@ export function CountDownButton({count, handleChange, sound = false, reminders}:
     <Button
       type='button'
       size='icon'
-      variant='ghost'
-      className='border-gray-800 hover:transition-colors'
+      // variant='ghost'
+      className='rounded-full pb-1'
       onClick={handleClick}
       disabled={count === 1}
-    >
-      <HiArrowUturnLeft size={20} />
-    </Button>
+    >—</Button>
     // </Tooltip>
   )
 }

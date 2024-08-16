@@ -15,8 +15,10 @@ import {HiOutlineSquare2Stack, HiOutlinePlusCircle} from 'react-icons/hi2';
 import {Variants, motion} from 'framer-motion';
 import {CgMenuGridO} from 'react-icons/cg';
 import {cn} from '@/lib/utils';
-import {HiOutlineBookOpen} from "react-icons/hi2";
+import {HiOutlineListBullet} from "react-icons/hi2";
 import ProjectDetails from '../projects/project-details';
+import {SlOptionsVertical} from "react-icons/sl";
+
 
 
 const itemVariants: Variants = {
@@ -34,7 +36,7 @@ interface CounterActionProps {
   numOfSections: number,
   reminders: Reminder[],
   className?: string,
-  project: Project, 
+  project: Project,
 }
 
 export default function CounterActionBar({section, userSettings, numOfSections, reminders, className, project}: CounterActionProps) {
@@ -58,13 +60,14 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
     <motion.nav
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      className={cn("flex flex-col gap-4", className)}
+      className={cn("flex flex-col-reverse gap-4", className)}
     >
       <motion.button
         whileTap={{scale: 0.97}}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="h-10 w-10 bg-gray-900 flex justify-center items-center rounded-full text-white"><CgMenuGridO /></div>
+
+        <div className="h-12 w-12 bg-sienna-100 flex justify-center items-center rounded-full text-sienna-400 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"><SlOptionsVertical size={20} /></div>
       </motion.button>
       <motion.ul
         variants={{
@@ -88,14 +91,14 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
           }
         }}
         style={{pointerEvents: isOpen ? "auto" : "none"}}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-6"
       >
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <CountDown userId={userSettings.userId} sectionId={section.id} sound={storeSound} reminders={reminders} />
         </motion.li>
-        <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
+        {/* <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <ResetDialog handleReset={handleReset} />
-        </motion.li>
+        </motion.li> */}
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
           <CloneSection userId={userSettings.userId} section={section} />
         </motion.li>
@@ -103,10 +106,10 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
           <AddSection userId={userSettings.userId} projectId={section.projectId} position={section.position} />
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
-          <SectionDialog userId={userSettings.userId} section={section} numOfSections={numOfSections} />
+          <SectionDialog userId={userSettings.userId} section={section} />
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
-          <ProjectDetails project={project}/>
+          <ProjectDetails project={project} />
         </motion.li>
       </motion.ul>
     </motion.nav>
@@ -138,13 +141,14 @@ export function AddSection({userId, projectId, position}: AddSectionProps) {
 
 const AddSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>((props, ref) => (
   <Button
+    className='rounded-full'
     type='button'
     size='icon'
-    variant='ghost'
+    // variant='ghost'
     ref={ref}
     {...props}
   >
-    <HiOutlinePlusCircle size={24} />
+    <span className='h-4 w-4 border border-white rounded flex items-center justify-center'>+</span>
   </Button>
 ))
 AddSectionButton.displayName = "AddSectionButton"
@@ -181,9 +185,10 @@ export function CloneSection({userId, section}: {userId: string, section: Sectio
 
 const CloneSectionButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>((props, ref) => (
   <Button
+    className='rounded-full'
     type='button'
     size='icon'
-    variant='ghost'
+    // variant='ghost'
     ref={ref}
     {...props}
   >

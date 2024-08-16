@@ -8,7 +8,7 @@ export default function PageLayout({children}: Readonly<{
     <>
       <Nav />
       <CounterStoreProvider>
-        <main className='min-h-[calc(100dvh_-_4rem)] h-fit flex flex-col mx-auto items-center w-full bg-neutral-100'>
+        <main className='h-fit flex flex-col mx-auto items-center w-full bg-neutral-100'>
           {children}
         </main>
       </CounterStoreProvider>
