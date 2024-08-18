@@ -1,39 +1,45 @@
 'use client';
 
-import ReminderAlertDialog from './reminder-alert-dialog';
+import ReminderDialog from './reminder-dialog';
 import {NewReminder, createReminder, type Reminder} from '@/database/queries/queries';
 import ReminderForm, {FormValues} from './reminder-form';
 import {useCounterStore} from '@/providers/counter-store-provider';
 import {ScrollArea, ScrollBar} from '../ui/scroll-area';
 import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
+import AddReminderCard from './add-reminder-card';
+import AddReminder from './add-reminder';
+import ReminderItem from './reminder-item';
 
 interface ReminderListProps {
-  userId: string,
   reminders: Reminder[],
-  sectionId: number,
+  count: number,
   className?: string
+  handleSubmit: (data: FormValues, reminder: Reminder) => Promise<void> | ((data: FormValues, reminder: Reminder) => void),
+  handleSnooze: (reminder: Reminder) => void,
 }
-export default function ReminderList({userId, reminders, sectionId, className}: ReminderListProps) {
-  const {toast} = useToast()
-  const {storeCount} = useCounterStore((state) => state)
+export default function ReminderList({reminders, count, className, handleSubmit, handleSnooze}: ReminderListProps) {
 
-  async function onSubmit(values: FormValues) {
-    const newReminder: NewReminder = {...values, sectionId}
-    await createReminder(userId, newReminder)
-    toast({title: "Created reminder"})
-  }
 
   return (
     <section className={cn('flex flex-row items-end gap-4', className)}>
       <ScrollArea className="w-fit max-w-full flex">
         <div className='flex flex-row-reverse justify-end w-max h-full gap-4'>
-          {reminders.length === 0 ? <ReminderForm sectionId={0} count={storeCount} onSubmit={onSubmit} isDefaultReminderItem={true} /> :
-            reminders.map(reminder => <ReminderAlertDialog key={reminder.id} userId={userId} reminder={reminder} />)}
+          {reminders.length === 0 ? <AddReminderCard /> :
+            reminders.map(reminder => <ReminderDialog
+              key={reminder.id}
+              reminder={reminder}
+              handleSubmit={handleSubmit}
+              storeCount={count}
+              handleSnooze={handleSnooze}
+              // trigger="item"
+              triggerBtn={<ReminderItem reminder={reminder} />}
+            />
+            )}
         </div>
         <ScrollBar orientation="horizontal" className='invisible' />
       </ScrollArea>
-      <ReminderForm sectionId={sectionId} count={storeCount} onSubmit={onSubmit} />
+      {/* <ReminderForm sectionId={sectionId} count={storeCount} onSubmit={onSubmit} /> */}
     </section>
   );
 }

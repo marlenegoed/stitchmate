@@ -38,8 +38,9 @@ const DrawerContent = React.forwardRef<
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
+      // rmvd max height and rounded corners top 
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 left-0 right-0 max-h-[96%] mt-24 flex flex-col rounded-t-lg border border-slate-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-950",
+        "fixed inset-x-0 bottom-0 z-50 left-0 right-0 mt-24 flex flex-col border border-slate-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-950",
         className
       )}
       {...props}>

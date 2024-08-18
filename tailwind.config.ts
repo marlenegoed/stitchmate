@@ -11,6 +11,7 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   safelist: [
+    'fill-lightgrey',
     'fill-eggshell',
     'fill-champagne',
     'fill-olivine',
@@ -37,6 +38,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        lightgrey: '#f5f5f5',
         eggshell: '#EDEAE0',
         champagne: '#F4DDCD',
         olivine: '#AEC397',

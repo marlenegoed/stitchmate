@@ -3,8 +3,6 @@
 import {useState, useEffect} from "react";
 import {Progress} from '@/components/ui/progress';
 import {useCounterStore} from '@/providers/counter-store-provider';
-import clsx from 'clsx';
-import {cn} from '@/lib/utils';
 
 
 interface SectionProgressProps {
@@ -13,11 +11,9 @@ interface SectionProgressProps {
 }
 
 export default function SectionProgress({numOfRows, color}: SectionProgressProps) {
+
   const count = useCounterStore(state => state.storeCount)
-
   const [progress, setProgress] = useState(numOfRows);
-
-  const isNumOfRows = numOfRows > 0
 
   useEffect(() => {
     if (numOfRows > 0) {

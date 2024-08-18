@@ -10,6 +10,7 @@ export type DemoState = {
   id: number,
   numOfRows: number,
   color: string,
+  title: string,
 }
 
 export type DemoActions = {
@@ -18,8 +19,8 @@ export type DemoActions = {
   setReminder: (reminder: NewReminder) => void,
   updateReminder: (updatedReminder: Reminder) => void
   deleteReminder: (id: number) => void,
+  setTitle: (title: string) => void,
   initialize: (state: DemoState) => void,
-
 }
 
 export type DemoStore = DemoState & DemoActions
@@ -33,6 +34,7 @@ export const defaultInitState: DemoState = {
   id: 0,
   numOfRows: 20,
   color: colors[Math.floor(Math.random() * colors.length)],
+  title: ''
 }
 
 export const createDemoStore = (
@@ -97,6 +99,14 @@ export const createDemoStore = (
             return {
               ...state,
               reminders: updatedReminders,
+            }
+          }),
+
+          setTitle: (title) => set((state) => {
+
+            return {
+              ...state,
+              title: title,
             }
           }),
 

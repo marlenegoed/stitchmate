@@ -20,23 +20,13 @@ import AddReminder from './add-reminder';
 import {RadioGroup, RadioGroupItem} from '../ui/radio-group';
 import DeleteDialog from '../sections/delete-dialog';
 import {HiAdjustmentsVertical, HiOutlinePlus} from 'react-icons/hi2';
-import {ReminderDefaultItem} from './reminder-item';
 import clsx from 'clsx';
-import {
-  DrawerDialog,
-  DrawerDialogContent,
-  DrawerDialogHeader,
-  DrawerDialogTrigger,
-  DrawerDialogFooter,
-  DrawerDialogClose
-} from '../ui/drawer-dialog';
+
 
 import makeOrdinal from '@/lib/make-ordinal';
 import {type Reminder} from '@/database/queries/queries';
 import {HiOutlinePencil} from "react-icons/hi2";
 import shortenText from '@/lib/shorten-text';
-
-
 
 const formSchema = z.object({
   title: z.string().min(1).max(50),
@@ -52,19 +42,16 @@ const formSchema = z.object({
 
 export type FormValues = z.infer<typeof formSchema>
 
+// export type SubmitHandler = ((data: FormValues, reminder: Reminder,) => Promise<void>) | (( values: FormValues, reminder: Reminder) => void)
+
 interface ReminderFormProps {
-  reminder?: Reminder
+  reminder: Reminder,
   count: number,
-  sectionId: number,
-  isIcon?: boolean,
-  isDefaultReminderItem?: boolean,
-  isEmptyNote?: boolean,
-  onSubmit: (values: FormValues) => Promise<void>,
+  onSubmit: ((data: FormValues, reminder: Reminder) => Promise<void>) | ((data: FormValues, reminder: Reminder) => void),
   handleDelete?: () => void,
 }
 
-export default function ReminderForm({reminder, count, sectionId, isIcon, isDefaultReminderItem, onSubmit, handleDelete, isEmptyNote}: ReminderFormProps) {
-  const [open, setOpen] = useState(false)
+export default function ReminderForm({reminder, count, onSubmit, handleDelete}: ReminderFormProps) {
 
   if (reminder && reminder.note === null) {
     reminder.note = ''
@@ -87,55 +74,20 @@ export default function ReminderForm({reminder, count, sectionId, isIcon, isDefa
     },
   })
 
-  async function handleSubmit(values: FormValues) {
-    await onSubmit(values)
-    setOpen(false)
-    form.reset()
-  }
 
-  let trigger
-  if (isIcon) {
-    trigger = <HiAdjustmentsVertical size={22} className='text-gray-800 transition-colors cursor-pointer hover:text-gray-700' />
-  } else if (isDefaultReminderItem) {
-    trigger = <ReminderDefaultItem />
-  } else if (isEmptyNote) {
-    trigger = <AddNote />
-  } else {
-    trigger = <AddReminder sectionId={sectionId} />
-  }
 
   return (
-
-    <DrawerDialog open={open} setOpen={setOpen}>
-      <DrawerDialogTrigger>
-        <button>
-          {trigger}
-        </button>
-      </DrawerDialogTrigger>
-
-      <DrawerDialogContent className="bg-neutral-100">
-        <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4">
-
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-              <DrawerDialogHeader className='-mt-4 items-center justify-start'>
-                <ReminderTitleField />
-              </DrawerDialogHeader>
-              <ReminderFormInputs count={count} />
-              <DrawerDialogFooter className='flex flex-row justify-between gap-4 w-full'>
-                <DrawerDialogClose asChild>
-                  <Button type="button" variant='outline'>Cancel</Button>
-                </DrawerDialogClose>
-                <Button type="submit" disabled={form.formState.isSubmitting}>Save</Button>
-              </DrawerDialogFooter>
-            </form>
-          </Form>
-          {reminder && <div className='w-full flex mt-6 border-t'><DeleteDialog reminder={reminder} handleDelete={handleDelete} className='justify-start' /></div>}
-        </div>
-      </DrawerDialogContent>
-    </DrawerDialog>
+    <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(() => onSubmit(form.getValues(), reminder))} className="space-y-4">
+          <ReminderTitleField />
+          <ReminderFormInputs count={count} />
+          <Button type='submit'>Submit</Button>
+        </form>
+      </Form>
+      {reminder && <div className='w-full flex mt-6 border-t'><DeleteDialog reminder={reminder} handleDelete={handleDelete} className='justify-start' /></div>}
+    </div>
   );
-
 }
 
 

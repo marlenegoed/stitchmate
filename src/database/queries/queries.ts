@@ -300,6 +300,14 @@ export async function cloneSection(userId: string, section: Section) {
 
 // reminder 
 
+
+export async function toogleSnooze(userId: string, sectionId: number, reminderId: number) {
+  const isUser = findSectionById(userId, sectionId)
+  if (!isUser) notFound()
+
+  return await db.update(reminders).set({notification: not(reminders.notification)}).where(eq(reminders.id, reminderId))
+}
+
 export async function updateReminder(userId: string, reminder: Reminder) {
 
   const isUser = findSectionById(userId, reminder.sectionId)
