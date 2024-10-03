@@ -27,6 +27,12 @@ import {
   DrawerDialogTitle,
   DrawerDialogTrigger
 } from '../ui/drawer-dialog';
+import {Label} from '../ui/label';
+import {HiCheck} from "react-icons/hi2";
+import Image from 'next/image'
+import knit12 from "@/../../public/knit12.png"
+import {HiChevronLeft} from "react-icons/hi2";
+
 
 
 const formSchema = z.object({
@@ -69,7 +75,7 @@ export default function SectionDialog({userId, section}: {userId: string, sectio
 
   return (
     <>
-      <DrawerDialog open={open} setOpen={setOpen}>
+      <DrawerDialog open={open} setOpen={setOpen} direction='top'>
         {/* <Tooltip title="Section settings"> */}
         <DrawerDialogTrigger>
           <Button type='button' size='icon' className='rounded-full'>
@@ -77,25 +83,29 @@ export default function SectionDialog({userId, section}: {userId: string, sectio
           </Button>
         </DrawerDialogTrigger>
         {/* </Tooltip> */}
-        <DrawerDialogContent className="bg-neutral-100">
-          <div className="max-w-md w-full mx-auto flex flex-col overflow-auto p-4">
-
-            <DrawerDialogHeader className='-mt-4 flex flex-col gap-4 items-center'>
-              <DrawerDialogTitle className='font-semibold text-xl'>Section Progress</DrawerDialogTitle>
-              <p className='text-sm text-slate-800 -mt-2 col-span-2'>Track your progress by adding a final row count:</p>
+        <DrawerDialogContent dialogClass='bg-white h-fit p-6 pt-4 min-w-[480px]' drawerClass='bg-white h-dvh'>
+          <div className="max-w-md w-full h-full flex flex-col overflow-auto p-4 space-y-6 lg:space-y-0 mb-10 lg:mb-0">
+            <DrawerDialogHeader className='text-center flex flex-col items-center'>
+              <DrawerDialogTitle
+                className='font-semibold text-xl mx-0 lg:mb-2'
+              >
+                Section Progress
+              </DrawerDialogTitle>
             </DrawerDialogHeader>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className='grid grid-cols-2 gap-6'>
-
+              <form onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6 lg:space-y-0 flex flex-col items-center mx-10 h-full">
+                <div className='flex flex-col items-center space-y-10 lg:space-y-6 mt-4'>
                   <FormField
                     control={form.control}
                     name="count"
                     render={({field}) => (
-                      <FormItem>
-                        <FormLabel>Current Count</FormLabel>
+                      <FormItem className='flex w-full items-center bg-neutral-100 space-y-0 px-2 rounded-lg w-40'>
+                        <Label className='mb-0 whitespace-nowrap' variant='sectionlabel'>Current Row</Label>
                         <FormControl>
-                          <Input placeholder={section.count.toString()} type="number" {...field}
+                          <Input
+                            className='p-0' size='sm' variant='background'
+                            placeholder={section.count.toString()} type="number" {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -103,25 +113,40 @@ export default function SectionDialog({userId, section}: {userId: string, sectio
                     )}
                   />
 
+                  <div className='flex justify-center w-full my-4 opacity-90'>
+                    <Image src={knit12} alt='' width={100} />
+                  </div>
+
+
+
+                  <p className='text-slate-800 text-center'>You can track your progress and add the intended number of rows for this section:</p>
                   <FormField
                     control={form.control}
                     name="rows"
                     render={({field}) => (
-                      <FormItem>
-                        <FormLabel>Final Row</FormLabel>
+                      <FormItem className='flex w-full items-center bg-neutral-100 space-y-0 px-2 rounded-lg w-40'>
+                        <Label className='mb-0 whitespace-nowrap' variant='sectionlabel'>Final Row</Label>
                         <FormControl>
-                          <Input placeholder={!section.numOfRows ? '--' : section.numOfRows.toString()} type="number" {...field} />
+                          <Input
+                            className='p-0' size='sm' variant='background'
+                            placeholder={!section.numOfRows ? '--' : section.numOfRows.toString()} type="number" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
-                <DrawerDialogFooter className='grid grid-cols-2 gap-4 border-t pt-6'>
-                  <DrawerDialogClose asChild>
-                    <Button type="button" className='col-span-1 px-12 w-full' variant='outline'>Cancel</Button>
-                  </DrawerDialogClose>
-                  <Button type="submit" className='col-span-1 px-12 w-full'>Save changes</Button>
+
+                <DrawerDialogFooter className='flex w-full items-center grow justify-center h-full'>
+                  <Button
+                    className='h-fit flex border-sienna-300 text-sienna-300 items-center gap-2 flex-col mt-4'
+                    type='submit'
+                    variant='ghost'
+                  > <div className='flex justify-center items-center border border-sienna-300 h-10 w-10 rounded-full'>
+                      <HiCheck size={24} />
+                    </div>
+                    save
+                  </Button>
                 </DrawerDialogFooter>
               </form>
             </Form>

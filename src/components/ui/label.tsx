@@ -14,6 +14,7 @@ const labelVariants = cva(
         default: "text-gray-900",
         inline:
           "font-semibold text-gray-800",
+        sectionlabel: 'text-sm text-gray-800 mb-2',
       },
     },
     defaultVariants: {

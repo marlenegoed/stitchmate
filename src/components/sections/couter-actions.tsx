@@ -1,6 +1,6 @@
 'use client'
 
-import {Project, Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound} from '@/database/queries/queries';
+import {Project, Reminder, Section, UserSettings, cloneSection, createNewSection, setActiveSection, toggleSound, ProjectDetailsType} from '@/database/queries/queries';
 import {Button} from '../ui/button';
 import {updateCount} from '@/database/queries/queries';
 import {useCounterStore} from '@/providers/counter-store-provider';
@@ -20,7 +20,6 @@ import ProjectDetails from '../projects/project-details';
 import {SlOptionsVertical} from "react-icons/sl";
 
 
-
 const itemVariants: Variants = {
   open: {
     opacity: 1,
@@ -36,10 +35,11 @@ interface CounterActionProps {
   numOfSections: number,
   reminders: Reminder[],
   className?: string,
+  projectDetails: ProjectDetailsType,
   project: Project,
 }
 
-export default function CounterActionBar({section, userSettings, numOfSections, reminders, className, project}: CounterActionProps) {
+export default function CounterActionBar({section, userSettings, numOfSections, reminders, className, projectDetails, project}: CounterActionProps) {
   const {storeSound, toggleStoreSound} = useUserSettingsStore(state => state)
   const resetCounter = useCounterStore(state => state.reset)
   const [isOpen, setIsOpen] = useState(false)
@@ -56,17 +56,15 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
 
   return (
 
-
     <motion.nav
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      className={cn("flex flex-col-reverse gap-4", className)}
+      className={cn("flex flex-col-reverse justify-center items-center gap-4", className)}
     >
       <motion.button
         whileTap={{scale: 0.97}}
         onClick={() => setIsOpen(!isOpen)}
       >
-
         <div className="h-12 w-12 bg-sienna-100 flex justify-center items-center rounded-full text-sienna-400 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"><SlOptionsVertical size={20} /></div>
       </motion.button>
       <motion.ul
@@ -109,7 +107,7 @@ export default function CounterActionBar({section, userSettings, numOfSections, 
           <SectionDialog userId={userSettings.userId} section={section} />
         </motion.li>
         <motion.li variants={itemVariants} className='bg-neutral-100/50 rounded-full'>
-          <ProjectDetails project={project} />
+          <ProjectDetails project={project} projectDetails={projectDetails} />
         </motion.li>
       </motion.ul>
     </motion.nav>

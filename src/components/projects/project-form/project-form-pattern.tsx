@@ -9,7 +9,6 @@ export default function ProjectFormPattern() {
 
   const form = useFormContext();
 
-
   return (
     <>
       <FormField
@@ -20,7 +19,7 @@ export default function ProjectFormPattern() {
             <FormLabel>pattern name</FormLabel>
             <div className="flex items-center">
               <FormControl>
-                <Input defaultValue={field.value} placeholder='add name' />
+                <Input placeholder='add name' {...field} />
               </FormControl>
             </div>
             <FormMessage />
@@ -35,7 +34,11 @@ export default function ProjectFormPattern() {
             <FormLabel>size</FormLabel>
             <div className="flex items-center">
               <FormControl>
-                <Input defaultValue={field.value} placeholder='add size or bust' />
+                <Input
+                  // defaultValue={field.value}
+                  placeholder='add size or bust'
+                  {...field}
+                />
               </FormControl>
             </div>
             <FormMessage />
@@ -51,7 +54,10 @@ export default function ProjectFormPattern() {
             <FormLabel className='flex items-center gap-2'><HiMiniLink />url</FormLabel>
             <div className="flex items-center">
               <FormControl>
-                <Input defaultValue={field.value} placeholder='add link (e.g. ravelry)' />
+                <Input
+                  // defaultValue={field.value}
+                  placeholder='add link (e.g. ravelry)'
+                  {...field} />
               </FormControl>
             </div>
             <FormMessage />

@@ -9,7 +9,7 @@ const Drawer = ({
   shouldScaleBackground = true,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
+  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} direction='top'{...props} />
 )
 Drawer.displayName = "Drawer"
 
@@ -40,12 +40,12 @@ const DrawerContent = React.forwardRef<
       ref={ref}
       // rmvd max height and rounded corners top 
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 left-0 right-0 mt-24 flex flex-col border border-slate-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-950",
+        "fixed inset-x-0 bottom-0 z-50 left-0 right-0 mt-24 flex flex-col-reverse border border-slate-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-950 h-full",
         className
       )}
       {...props}>
       <div
-        className="max-w-md w-[100px] mx-auto flex flex-col p-1 mx-auto h-2 rounded-full bg-neutral-200 dark:bg-slate-800" />
+        className="max-w-md w-[100px] mt-auto h-1.5 rounded-full bg-neutral-300 dark:bg-slate-800" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -57,7 +57,7 @@ const DrawerHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("grid gap-1.5 pl-1 text-left py-6", className)}
+    className={cn("text-left", className)}
     {...props} />
 )
 DrawerHeader.displayName = "DrawerHeader"

@@ -22,13 +22,13 @@ export default async function Page({params}: {params: {id: number}}) {
 
   const defaultValues = {
     title: shortenText(project.title, 26),
-    description: project.description || undefined,
+    description: project.description || 'undefined',
     gauge: gauge.map(gauge => ({
       stitches: gauge.stitches || undefined,
       rows: gauge.rows || undefined,
       inch: gauge.inch || "",
       needle: gauge.needle || "",
-      pattern: gauge.pattern || "",
+      stitchPattern: gauge.stitchPattern || "",
       blocked: gauge.blocked || false,
       inRounds: gauge.inrounds || false,
     })),
@@ -40,17 +40,18 @@ export default async function Page({params}: {params: {id: number}}) {
       yardage: yarn.yardage || undefined,
       grams: yarn.grams || undefined,
       skeins: yarn.skeins || undefined,
-      ...material,
+      material: yarn.material || undefined,
     })),
     color: project.color || 'tangerine',
     patternId: project.patternId.toString() || '1',
     createdAt: project.createdAt || new Date(),
     finishBy: project.finishBy || undefined,
-    completed: project.completed || undefined,
+    startDate: project.startDate || new Date(),
+    completed: project.completed || new Date(),
     status: project.status || 'wip',
-    pattern: project.pattern || undefined,
-    patternUrl: project.patternUrl || undefined,
-    size: project.size || undefined,
+    pattern: project.pattern || '',
+    patternUrl: project.patternUrl || '',
+    size: project.size || '',
   }
 
 

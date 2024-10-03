@@ -113,6 +113,48 @@
       "when": 1723038782247,
       "tag": "0018_colorful_nomad",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1724414035514,
+      "tag": "0019_tranquil_lila_cheney",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1724414113416,
+      "tag": "0020_absent_midnight",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "5",
+      "when": 1724683952841,
+      "tag": "0021_yielding_scarlet_witch",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "5",
+      "when": 1724764853358,
+      "tag": "0022_blushing_millenium_guard",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "5",
+      "when": 1724765442972,
+      "tag": "0023_worried_onslaught",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "5",
+      "when": 1724826363431,
+      "tag": "0024_thankful_johnny_blaze",
+      "breakpoints": true
     }
   ]
 }

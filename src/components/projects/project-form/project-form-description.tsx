@@ -19,7 +19,7 @@ export default function ProjectFormDescription({className}: {className?: string}
         render={({field}) => (
           <FormItem>
             <div className=''>
-              <FormLabel className='font-semibold text-md'>Description (optional)</FormLabel>
+              <FormLabel className='font-semibold text-md'>Description</FormLabel>
             </div>
             <FormControl>
               <Textarea

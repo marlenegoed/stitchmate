@@ -1,0 +1,1 @@
+ALTER TABLE "gauge" ALTER COLUMN "project_id" SET NOT NULL;

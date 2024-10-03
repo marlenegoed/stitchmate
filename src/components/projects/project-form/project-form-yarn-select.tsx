@@ -19,7 +19,7 @@ export default function ProjectFormYarn() {
     <>
       {fields.map((field, index) => {
         return (
-          <div className='flex flex-row-reverse justify-end'>
+          <div className='flex flex-row-reverse justify-end' key={index}>
             <Button type="button" variant="ghost" size="icon" className='col-span-1 justify-self-start mt-2 text-neutral-500 hover:bg-white hover:text-slate-700' onClick={() => remove(index)}><HiOutlineX /></Button>
 
             <div className='flex flex-col'>
@@ -111,7 +111,7 @@ export default function ProjectFormYarn() {
 
                 <FormField
                   key={field.id}
-                  name={`yarn.${index}.perSkein`}
+                  name={`yarn.${index}.grams`}
                   control={form.control}
                   render={({field}) => (
                     <FormItem>
@@ -129,7 +129,7 @@ export default function ProjectFormYarn() {
 
                 <FormField
                   key={field.id}
-                  name={`yarn.${index}.perSkein`}
+                  name={`yarn.${index}.skeins`}
                   control={form.control}
                   render={({field}) => (
                     <FormItem>

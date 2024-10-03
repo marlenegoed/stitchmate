@@ -33,16 +33,17 @@ interface DrawerDialogProps {
 
 interface RootDrawerDialogProps extends DrawerDialogProps {
   open: boolean,
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  direction?: 'top' | 'bottom' | 'left' | 'right',
 }
 
-export const DrawerDialog = ({children, open, setOpen, breakpoint}: RootDrawerDialogProps) => {
+export const DrawerDialog = ({children, open, setOpen, breakpoint, direction}: RootDrawerDialogProps) => {
 
   const isDesktop = useMediaQuery(breakpoint ?? BREAKPOINT)
   if (isDesktop) {
     return <Dialog open={open} onOpenChange={setOpen}>{children}</Dialog>
   }
-  return <Drawer open={open} onOpenChange={setOpen}>{children}</Drawer >
+  return <Drawer open={open} onOpenChange={setOpen} direction={direction}>{children}</Drawer >
 }
 
 export const DrawerDialogTrigger = ({children, className, breakpoint}: DrawerDialogProps) => {
@@ -78,7 +79,7 @@ export const DrawerDialogContent = ({children, drawerClass, dialogClass, breakpo
 export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDialogProps) => {
   const isDesktop = useMediaQuery(breakpoint ?? BREAKPOINT)
   if (isDesktop) {
-    return <DialogHeader className={cn('mb-2', className)}>{children}</DialogHeader>
+    return <DialogHeader className={cn(className)}>{children}</DialogHeader>
   }
   return <DrawerHeader className={cn('flex justify-between w-full', className)}>{children}</DrawerHeader>
 }
@@ -109,5 +110,15 @@ export const DrawerDialogClose = ({children, asChild, breakpoint, className}: Dr
   }
   return <DrawerClose className={className} asChild={asChild}>{children}</DrawerClose>
 }
+
+
+DrawerDialog.Title = DrawerDialogTitle
+DrawerDialog.Trigger = DrawerDialogTrigger
+DrawerDialog.Content = DrawerDialogContent
+DrawerDialog.Header = DrawerDialogHeader
+DrawerDialog.Footer = DrawerDialogFooter
+DrawerDialog.Close = DrawerDialogClose
+
+export default DrawerDialog
 
 

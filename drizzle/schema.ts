@@ -1,7 +1,7 @@
-import { pgTable, pgEnum, serial, integer, text, real, timestamp, boolean } from "drizzle-orm/pg-core"
-  import { sql } from "drizzle-orm"
+import {pgTable, pgEnum, serial, integer, text, real, timestamp, boolean} from "drizzle-orm/pg-core"
+import {sql} from "drizzle-orm"
 
-export const remindersType = pgEnum("reminders_type", ['range', 'repeating'])
+export const remindersType = pgEnum("reminders_type", ['range', 'repeating', 'single'])
 export const gaugeInch = pgEnum("gauge_inch", ['4"', '2"', '1"'])
 export const color = pgEnum("color", ['tangerine', 'jordy', 'flax', 'orchid', 'olivine'])
 export const status = pgEnum("status", ['frogged', 'paused', 'finished', 'wip'])
@@ -30,15 +30,15 @@ export const projects = pgTable("projects", {
 	id: serial("id").primaryKey().notNull(),
 	title: text("title").notNull(),
 	description: text("description"),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
 	favorite: boolean("favorite").default(false).notNull(),
 	blobId: integer("blob_id").notNull(),
 	color: color("color").default('tangerine').notNull(),
 	userId: text("user_id").notNull(),
-	finishBy: timestamp("finish_by", { precision: 3, mode: 'string' }),
+	finishBy: timestamp("finish_by", {precision: 3, mode: 'string'}),
 	status: status("status").default('wip').notNull(),
-	completed: timestamp("completed", { precision: 3, mode: 'string' }),
+	completed: timestamp("completed", {precision: 3, mode: 'string'}),
 	patternId: integer("pattern_id").default(1).notNull(),
 	pattern: text("pattern"),
 	size: text("size"),
@@ -62,8 +62,9 @@ export const reminders = pgTable("reminders", {
 	start: integer("start"),
 	from: integer("from"),
 	until: integer("until"),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
+	row: integer("row"),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
 });
 
 export const sections = pgTable("sections", {
@@ -73,8 +74,8 @@ export const sections = pgTable("sections", {
 	position: integer("position").notNull(),
 	count: integer("count").default(1).notNull(),
 	numOfRows: integer("num_of_rows").default(0),
-	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }),
-	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow(),
+	updatedAt: timestamp("updated_at", {precision: 3, mode: 'string'}),
+	createdAt: timestamp("created_at", {precision: 3, mode: 'string'}).defaultNow(),
 	active: boolean("active").default(false).notNull(),
 	blobId: integer("blob_id").notNull(),
 });

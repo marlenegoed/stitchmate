@@ -1,0 +1,1 @@
+ALTER TABLE "yarn" ALTER COLUMN "material" SET DATA TYPE text;

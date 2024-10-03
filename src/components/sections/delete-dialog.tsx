@@ -17,8 +17,9 @@ import {useToast} from '@/lib/use-toast';
 import {cn} from '@/lib/utils';
 import {useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/navigation';
-
+import Image from 'next/image'
 import {HiOutlineTrash} from "react-icons/hi2";
+import knit11 from "@/../../public/knit11.png"
 
 interface AlertDialogProps {
   section?: Section,
@@ -72,16 +73,21 @@ export default function DeleteDialog({section, projectId, reminder, className, h
           <HiOutlineTrash size={20} />
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="space-y-4">
+      <AlertDialogContent className="max-w-[calc(100%_-_2rem)] sm:w-[440px]">
         <AlertDialogHeader>
-          <AlertDialogTitle className='mb-2'>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription className='text-base'>
-            Deleting a {title()} cannot be undone. All your progress and settings will be permanently removed.
-          </AlertDialogDescription>
+          <AlertDialogTitle className='text-center'>Are you absolutely sure?</AlertDialogTitle>
         </AlertDialogHeader>
+
+        <AlertDialogDescription className='text-base text-center sm:px-10'>
+          Deleting a {title()} cannot be undone. All your progress and settings will be permanently removed.
+        </AlertDialogDescription>
+        <section className='flex justify-center w-full opacity-40 my-4'>
+          <Image src={knit11} alt='' width={160} />
+        </section>
+
         <AlertDialogFooter className='flex flex-row w-full justify-between sm:justify-between'>
-          <AlertDialogCancel className='px-10'>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='px-10' onClick={handleSubmit}>Delete</AlertDialogAction>
+          <AlertDialogCancel className='px-10 m-0'>cancel</AlertDialogCancel>
+          <AlertDialogAction className='px-10 bg-sienna-300' onClick={handleSubmit}>delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

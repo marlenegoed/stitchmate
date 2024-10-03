@@ -3,21 +3,26 @@ import {cn} from "@/lib/utils";
 import {cva, type VariantProps} from "class-variance-authority";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof inputVariants> {}
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
+  VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  "flex h-12 w-full px-2 text-base file:border-0 focus:outline-none  file:bg-transparent file:text-base file:font-mediumx placeholder:text-neutral-400 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full px-2 text-base file:border-0 focus:outline-none file:bg-transparent file:text-base file:font-mediumx placeholder:text-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 text-gray-800",
   {
     variants: {
       variant: {
-        default: "rounded-lg font-semibold bg-transparent border focus:border-neutral-500 border-neutral-300 text-base text-gray-800 placeholder:text-neutral-400",
-        inline:
-          "bg-inherit border-none focus:outline-none",
-        form: "font-semibold bg-transparent rounded-lg text-base px-5 h-12 text-gray-800",
+        default: "rounded-lg font-semibold bg-transparent border border-neutral-300 focus:border-neutral-500",
+        noborder: "bg-transparent border-none focus:border-neutral-500",
+        background: "bg-neutral-100 m-0 p-0 text-right font-medium",
       },
+      size: {
+        default: 'h-12',
+        sm: 'h-10 min-w-1',
+      }
     },
     defaultVariants: {
       variant: "default",
+      size: 'default'
     },
   }
 );
@@ -26,11 +31,11 @@ const inputVariants = cva(
 
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({className, variant, type, ...props}, ref) => {
+  ({className, variant, size, type, ...props}, ref) => {
     return (
       <input
+        className={cn(inputVariants({variant, size, className}))}
         type={type}
-        className={cn(inputVariants({variant}), className)}
         ref={ref}
         {...props}
       />

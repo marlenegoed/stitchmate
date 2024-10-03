@@ -10,7 +10,7 @@ interface ReminderRepeatProps {
 
 export default function ReminderRepeat({reminder, className}: ReminderRepeatProps) {
 
-  const styles = 'text-md font-semibold text-sienna-400/70 max-[640px]:text-sm '
+  const styles = 'text-base font-semibold text-sienna-400/70'
 
   if (reminder.type === 'range') {
 

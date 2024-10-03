@@ -7,6 +7,9 @@ import {notFound, redirect} from 'next/navigation';
 import {revalidatePath} from 'next/cache';
 import generateBlobId from '@/lib/generate-blob-id';
 
+
+export type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
+
 export type NewProject = typeof projects.$inferInsert;
 export type Project = typeof projects.$inferSelect;
 export type Reminder = typeof reminders.$inferSelect;
@@ -14,6 +17,7 @@ export type NewReminder = typeof reminders.$inferInsert
 export type Section = typeof sections.$inferSelect;
 export type NewSection = typeof sections.$inferInsert
 export type UserSettings = typeof userSettings.$inferSelect
+export type ProjectDetailsType = PromiseType<ReturnType<typeof getAllProjectDetails>>;
 
 // projects 
 
@@ -363,19 +367,28 @@ export async function toggleGuide(userId: string) {
 // needles yarn & gauge
 
 export async function findProjectNeedles(projectId: number) {
-  return await db.query.needles.findMany({
+  return db.query.needles.findMany({
     where: eq(needles.projectId, projectId)
   })
 }
 
 export async function findProjectYarns(projectId: number) {
-  return await db.query.yarn.findMany({
+  return db.query.yarn.findMany({
     where: eq(yarn.projectId, projectId)
   })
 }
 
 export async function findProjectGauges(projectId: number) {
-  return await db.query.gauge.findMany({
+  return db.query.gauge.findMany({
     where: eq(gauge.projectId, projectId)
   })
+}
+
+export async function getAllProjectDetails(projectId: number) {
+  const [yarns, needles, gauges] = await Promise.all([
+    findProjectYarns(projectId),
+    findProjectNeedles(projectId),
+    findProjectGauges(projectId)
+  ])
+  return {yarns, needles, gauges}
 }

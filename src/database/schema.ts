@@ -4,7 +4,7 @@ import {pgTable, serial, text, timestamp, integer, boolean, pgEnum, varchar, rea
 
 export const projectColorEnum = pgEnum('color', ['olivine', 'orchid', 'flax', 'jordy', 'tangerine'])
 export const projectGaugeEnum = pgEnum('gauge_inch', ['1"', '2"', '4"']);
-export const projectStatusEnum = pgEnum('status', ['wip', 'finished', 'paused', 'frogged']);
+export const projectStatusEnum = pgEnum('status', ['wip', 'finished', 'paused', 'frogged', 'planned']);
 
 
 // Todo: add blob id 
@@ -15,6 +15,7 @@ export const projects = pgTable('projects', {
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   finishBy: timestamp('finish_by', {mode: 'date', precision: 3}),
+  startDate: timestamp('start_date', {mode: 'date', precision: 3}),
   completed: timestamp('completed', {mode: 'date', precision: 3}),
   favorite: boolean('favorite').notNull().default(false),
   blobId: integer('blob_id').notNull(),
@@ -23,7 +24,7 @@ export const projects = pgTable('projects', {
   status: projectStatusEnum('status').notNull().default('wip'),
   userId: text('user_id').notNull(),
   pattern: text('pattern'),
-  patternUrl: text('pattern'),
+  patternUrl: text('pattern_url'),
   size: text('size'),
 });
 
@@ -53,7 +54,7 @@ export const sectionRelations = relations(sections, ({one, many}) => ({
   reminders: many(reminders)
 }));
 
-export const reminderTypeEnum = pgEnum('reminders_type', ['repeating', 'range']);
+export const reminderTypeEnum = pgEnum('reminders_type', ['repeating', 'range', 'single']);
 
 export const reminders = pgTable('reminders', {
   id: serial('id').primaryKey(),
@@ -67,6 +68,7 @@ export const reminders = pgTable('reminders', {
   start: integer('start'),
   from: integer('from'),
   until: integer('until'),
+  row: integer('row'),
   updatedAt: timestamp('updated_at', {mode: 'date', precision: 3}).$onUpdate(() => new Date()),
   createdAt: timestamp('created_at', {mode: 'date', precision: 3}).default(sql`CURRENT_TIMESTAMP`),
 })
@@ -101,7 +103,7 @@ export const yarn = pgTable("yarn", {
   yardage: integer("yardage"),
   grams: integer("grams"),
   skeins: real("skeins"),
-  material: text("material").array(),
+  material: text("material"),
 });
 
 export const gauge = pgTable("gauge", {
@@ -111,7 +113,7 @@ export const gauge = pgTable("gauge", {
   rows: integer('rows'),
   inch: projectGaugeEnum('inch'),
   needle: text('needle'),
-  pattern: text('pattern'),
+  stitchPattern: text('stitch_pattern'),
   blocked: boolean('blocked'),
   inrounds: boolean('in_rounds'),
 });

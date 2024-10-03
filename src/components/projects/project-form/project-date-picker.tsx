@@ -118,7 +118,7 @@ export function DatePickerFinishedBy({finishBy}: {finishBy?: Date}) {
 export function DatePickerCompleted({completed, createdAt}: {completed?: Date, createdAt: Date}) {
   const form = useFormContext()
   const endDate = form.watch("completed")
-  const completedIn = endDate ? ' completed within ' + formatDistance(endDate, createdAt) : ''
+  const daysLeft = endDate ? formatDistanceToNow(endDate) + ' left' : ''
 
   return (
     <FormField
@@ -159,7 +159,60 @@ export function DatePickerCompleted({completed, createdAt}: {completed?: Date, c
               />
             </PopoverContent>
           </Popover>
-          <span>{completedIn}</span>
+          <span>{daysLeft}</span>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+
+export function DatePickerPlanned({startDate}: {startDate?: Date}) {
+  const form = useFormContext()
+  const planned = form.watch("completed")
+  const daysLeft = planned ? formatDistanceToNow(startDate ?? planned) + ' from now' : ''
+
+  return (
+    <FormField
+      control={form.control}
+      name="completed"
+      render={({field}) => (
+        <FormItem>
+          <div>
+            <FormLabel className='font-semibold text-md'>Start On</FormLabel>
+          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Button
+                  variant={"datepicker"}
+                  className={cn(
+                    !field.value && "text-muted-foreground"
+                  )}
+                >
+                  {field.value ? (
+                    format(field.value, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                  <HiCalendarDays className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                disabled={(date) =>
+                  date < new Date()
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <span>{daysLeft}</span>
           <FormMessage />
         </FormItem>
       )}

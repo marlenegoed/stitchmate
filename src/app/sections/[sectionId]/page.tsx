@@ -1,6 +1,6 @@
 'use server'
 
-import {findAllSections, findSectionById, findSectionReminders, getUserSettings, setActiveSection} from '@/database/queries/queries';
+import {findAllSections, findSectionById, findSectionReminders, getAllProjectDetails, getUserSettings, setActiveSection} from '@/database/queries/queries';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
@@ -34,6 +34,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
   const reminders = await findSectionReminders(userId, section.id)
   await setActiveSection(userId, params.sectionId)
   const allSections = await findAllSections(userId, section.projectId)
+  const projectDetails = await getAllProjectDetails(project.id)
 
 
   return (
@@ -65,7 +66,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
         <SectionReminders userId={userId} reminders={reminders} className="px-3 w-full flex flex-row items-end" />
 
-        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} project={project} className="bottom-2 right-6 absolute z-40" />
+        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} project={project} projectDetails={projectDetails} className=" absolute bottom-2 right-6 z-40" />
 
       </div>
 

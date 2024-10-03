@@ -19,6 +19,7 @@ import {FaPray} from 'react-icons/fa';
 import ProjectFormStatus from './project-form/project-form-status';
 import PatternRadio from './project-form/pattern-radio';
 import ProjectFormPattern from './project-form/project-form-pattern';
+import SectionContainer from '../ui/section-container';
 
 const formSchema = z.object({
   title: z.string({
@@ -34,7 +35,7 @@ const formSchema = z.object({
     rows: z.coerce.number().optional(),
     inch: z.string().optional(),
     needle: z.string().optional(),
-    pattern: z.string().optional(),
+    stitchPattern: z.string().optional(),
     blocked: z.boolean(),
     inRounds: z.boolean(),
   })).optional(),
@@ -45,14 +46,13 @@ const formSchema = z.object({
     yardage: z.coerce.number().optional(),
     grams: z.coerce.number().optional(),
     skeins: z.coerce.number().optional(),
-    material: z.array(z.object({
-      item: z.string().optional()
-    })).optional(),
+    material: z.string().optional(),
   })).optional(),
   description: z.string().optional(),
   createdAt: z.date(),
   finishBy: z.date().optional(),
-  status: z.enum(['wip', 'finished', 'paused', 'frogged']).optional(),
+  startDate: z.date().optional(),
+  status: z.enum(['wip', 'finished', 'paused', 'frogged', 'planned']).optional(),
   patternId: z.string(),
   pattern: z.string().optional(),
   patternUrl: z.string().optional(),
@@ -83,37 +83,40 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
       patternId: parseInt(values.patternId),
     }
     await updateProject(userId, projectId, validProject)
+    console.log(validProject)
   }
+
+  console.log(form.getValues('pattern'))
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full grid grid-cols-12 gap-4" method="post">
-        <FormCard className='col-span-12'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-4" method="post">
+        <SectionContainer className='flex flex-col'>
           <FormCardHeading>Project Info</FormCardHeading>
           <ProjectFormTitleField />
           <ProjectFormDescription />
-        </FormCard>
-        <FormCard className='col-span-12'>
+        </SectionContainer>
+        <SectionContainer className='flex flex-col'>
           <FormCardHeading>Appearance</FormCardHeading>
           <ProjectFormColorRadio defaultValues={defaultValues} />
           <PatternRadio defaultValues={defaultValues} />
-        </FormCard>
-        <FormCard className='col-span-12'>
+        </SectionContainer>
+        <SectionContainer className='flex flex-col'>
           <FormCardHeading>Status</FormCardHeading>
-          <ProjectFormStatus createdAt={defaultValues.createdAt} finishBy={defaultValues.finishBy} status={defaultValues.status} />
-        </FormCard>
-        <FormCard className='col-span-12'>
+          <ProjectFormStatus createdAt={defaultValues.createdAt} finishBy={defaultValues.finishBy} startDate={defaultValues.startDate} status={defaultValues.status} />
+        </SectionContainer>
+        <SectionContainer className='flex flex-col'>
           <FormCardHeading>Pattern</FormCardHeading>
           <ProjectFormPattern />
-        </FormCard>
-        <FormCard className='col-span-12 gap-0'>
+        </SectionContainer>
+        <SectionContainer className='flex flex-col'>
           <FormCardHeading className='mb-6'>Needles</FormCardHeading>
           <ProjectFormNeedleSelect />
-        </FormCard>
-        <FormCard className='col-span-12'>
-          <FormCardHeading >Yarn</FormCardHeading>
+        </SectionContainer>
+        <SectionContainer className='flex flex-col'>
+          <FormCardHeading>Yarn</FormCardHeading>
           <ProjectFormYarn />
-        </FormCard>
+        </SectionContainer>
 
         <ProjectFormGauge className='col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 order-4 bg-white rounded-lg py-6 pb-8 px-8' />
 

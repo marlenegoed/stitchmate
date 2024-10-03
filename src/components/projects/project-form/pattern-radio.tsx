@@ -16,7 +16,7 @@ export default function PatternRadio({defaultValues}: {defaultValues: FormValues
         render={({field}) => (
           <FormItem className="space-y-3 pl-1">
             <FormControl>
-              <PatternRadioGroup
+              <PatternRadioGroup 
                 onValueChange={field.onChange}
                 defaultValue={patternId}
                 className="flex flex-row flex-wrap gap-6"
