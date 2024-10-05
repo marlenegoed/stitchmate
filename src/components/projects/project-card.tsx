@@ -14,6 +14,8 @@ import pattern5 from '../../../public/pattern5.png'
 import pattern6 from '../../../public/pattern6.png'
 import pattern7 from '../../../public/pattern7.png'
 import pattern8 from '../../../public/pattern7.png'
+import {Label} from '../ui/label';
+import Tag from '../ui/tag';
 
 interface ProjectCardProps {
   project: Project,
@@ -30,7 +32,13 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
   }
 
   return (
-    <div className='w-full bg-white rounded-lg'>
+    <div className='w-full bg-white rounded-lg relative'>
+
+      <div className='pl-4 pr-2 pt-2 flex flex-row justify-between items-center z-20 absolute w-full'>
+            <Tag className='text-base bg-white font-semibold text-sienna-300'>{project.status}</Tag>
+            <FavoriteProject userId={project.userId} projectId={project.id} isFavorite={project.favorite} />
+      </div>
+
       <Link href={`/sections/${activeSection.id}`}>
         <div className={`flex flex-col bg-${project.color} rounded-t-lg h-56 pt-2 pl-4 pr-2 relative`}>
           <Image
@@ -42,17 +50,15 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
               objectFit: 'cover',
             }}
           />
-          <div className='flex flex-row justify-between items-center relativ z-20'>
-            <p className='text-gray-900 font-semibold'>{rowsknitted} {rowsknitted > 1 ? 'rows' : 'row'} knitted</p>
-            <FavoriteProject userId={project.userId} projectId={project.id} isFavorite={project.favorite} />
-          </div>
         </div>
-
       </Link>
 
-      <div className='flex flex-row justify-between items-start h-20 pt-3 pl-4 pr-2'>
-        <h4 className='text-xl font-semibold'>{shortenText(project.title, 34)}</h4>
-        <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
+      <div className='flex flex-row justify-between items-start h-20 pt-3 pl-4 pr-1'>
+        <div className='flex flex-col'> 
+        <h4 className='text-xl font-medium text-gray-900'>{shortenText(project.title, 34)}</h4>
+        <p className='text-gray-900 font-medium'>{rowsknitted} {rowsknitted > 1 ? 'rows' : 'row'} knitted</p>
+        </div>
+        <Link className='flex justify-end -mt-1' href={`/projects/${project.id}/edit`}>
           <Button size='icon' variant='ghost'>
             <HiEllipsisVertical className='fill-slate-700' size={24} />
           </Button>

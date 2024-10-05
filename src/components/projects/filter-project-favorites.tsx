@@ -12,7 +12,7 @@ export default function FilterProjectFavorites({className}: {className?: string}
   const router = useRouter()
 
   const checked = searchParams.get("favorite") === '1'
-  const heart = checked ? <HiMiniHeart className='fill-slate-700' size={20} /> : <HiOutlineHeart size={20} className='text-slate-700' />
+  const heart = checked ? <HiMiniHeart className='fill-slate-700' size={22} /> : <HiOutlineHeart size={22} className='text-slate-700' />
   function handleFilter() {
     const params = new URLSearchParams(searchParams)
     if (!checked) {

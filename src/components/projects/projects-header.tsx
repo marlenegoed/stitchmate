@@ -7,6 +7,7 @@ import {Button} from '@/components/ui/button';
 import autoAnimate from '@formkit/auto-animate';
 import {Title} from '@radix-ui/react-toast';
 import {useEffect, useRef, useState} from 'react';
+import { HiOutlineFunnel } from "react-icons/hi2";
 
 export function ProjectsHeader({userId}: {userId: string}) {
   const [title, handleSearch] = useTitleSearch()
@@ -22,9 +23,7 @@ export function ProjectsHeader({userId}: {userId: string}) {
     <>
       <div className='flex flex-row w-full justify-between mt-2 mb-3'>
         <Title className='text-2xl font-semibold'>My Projects</Title>
-        <div>
-          <ProjectDialog userId={userId} />
-          <FilterProjectFavorites />
+        <div className='flex flex-row'>
           <Button
             variant='ghost'
             size='icon'
@@ -33,8 +32,11 @@ export function ProjectsHeader({userId}: {userId: string}) {
               setTimeout(() => projectSearchRef.current?.focus(), 0)
             }}
           >
-            <ProjectSearchIcon variant="outline" size={20} />
+          <ProjectSearchIcon variant="outline" size={20} />
           </Button>
+          <FilterProjectStatus />
+          <FilterProjectFavorites />
+          {/* <ProjectDialog userId={userId} /> */}
         </div>
       </div>
 
@@ -45,5 +47,17 @@ export function ProjectsHeader({userId}: {userId: string}) {
       </div>
 
     </>
+  )
+}
+
+
+function FilterProjectStatus() {
+
+  return (
+    <div className='flex flex-row gap-2'>
+      <Button variant='ghost' size='icon'>
+        <HiOutlineFunnel size={20} />
+      </Button>
+    </div>
   )
 }

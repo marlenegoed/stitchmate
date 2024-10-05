@@ -12,7 +12,7 @@ interface FavoriteProjectProps {
 }
 
 export default function FavoriteProject({userId, projectId, isFavorite}: FavoriteProjectProps) {
-  const heart = isFavorite ? <HiMiniHeart size={20} className='fill-slate-800' /> : <HiOutlineHeart className='text-slate-800' size={20} />
+  const heart = isFavorite ? <HiMiniHeart size={22} className='fill-slate-800' /> : <HiOutlineHeart className='text-slate-800' size={22} />
 
   async function handleClick() {
     await toggleFavorite(userId, projectId)

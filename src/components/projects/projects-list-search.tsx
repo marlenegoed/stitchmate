@@ -1,7 +1,7 @@
 'use client'
 
 import {HiMiniMagnifyingGlass, HiOutlineMagnifyingGlass} from "react-icons/hi2";
-import {Input} from '../ui/input';
+import {Input, InputProps} from '../ui/input';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {DebouncedState, useDebouncedCallback} from 'use-debounce'
 import {cn} from '@/lib/utils';
@@ -19,16 +19,16 @@ export default function ProjectListSearch({className}: {className?: string}) {
   )
 }
 
-const ProjectSearchInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>((props, ref) => {
+const ProjectSearchInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <Input
       ref={ref}
       placeholder='Search by title'
-      name="project-title"
-      id="project-title"
-      variant='inline'
+      name='project-title'
+      id='project-title'
+      variant='noborder'
       {...props}
-      className={cn('placeholder:text-gray-800 text-base rounded-lg h-10 pl-0', props.className)}
+      className={cn('placeholder:text-gray-800 text-lg font-medium h-10 pl-0', props.className)}
     />
   )
 })
