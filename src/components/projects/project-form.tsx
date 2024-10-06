@@ -20,6 +20,9 @@ import ProjectFormStatus from './project-form/project-form-status';
 import PatternRadio from './project-form/pattern-radio';
 import ProjectFormPattern from './project-form/project-form-pattern';
 import SectionContainer from '../ui/section-container';
+import Ball from '../ui/svg/ball';
+import Basket from '../ui/svg/basket';
+
 
 const formSchema = z.object({
   title: z.string({
@@ -91,24 +94,39 @@ export default function ProjectForm({userId, projectId, defaultValues, blobId}: 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-4" method="post">
-        <SectionContainer className='flex flex-col'>
-          <FormCardHeading>Project Info</FormCardHeading>
+
+        <SectionContainer 
+        icon={<Basket className='w-12 h-12'/>} 
+        title='Overview' 
+        >
           <ProjectFormTitleField />
-          <ProjectFormDescription />
+          <ProjectFormPattern />
+
+
         </SectionContainer>
-        <SectionContainer className='flex flex-col'>
-          <FormCardHeading>Appearance</FormCardHeading>
+
+        <SectionContainer 
+          icon={<Basket className='fill-goldenrod-700 w-6 h-6'/>} 
+          title='Pattern' 
+         >
+          <div></div>
+        </SectionContainer>
+
+
+        <SectionContainer 
+             icon={<Ball className='fill-viridian-700 w-6 h-6'/>} 
+             title='Appearance' 
+             className='flex flex-col'
+             >
           <ProjectFormColorRadio defaultValues={defaultValues} />
           <PatternRadio defaultValues={defaultValues} />
         </SectionContainer>
+
         <SectionContainer className='flex flex-col'>
           <FormCardHeading>Status</FormCardHeading>
           <ProjectFormStatus createdAt={defaultValues.createdAt} finishBy={defaultValues.finishBy} startDate={defaultValues.startDate} status={defaultValues.status} />
         </SectionContainer>
-        <SectionContainer className='flex flex-col'>
-          <FormCardHeading>Pattern</FormCardHeading>
-          <ProjectFormPattern />
-        </SectionContainer>
+ 
         <SectionContainer className='flex flex-col'>
           <FormCardHeading className='mb-6'>Needles</FormCardHeading>
           <ProjectFormNeedleSelect />

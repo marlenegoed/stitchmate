@@ -7,7 +7,7 @@ export default function ProjectFormColorRadio({defaultValues}: {defaultValues: F
   const form = useFormContext();
 
   return (
-    <>
+    <div className='flex flex-row items-center gap-4'> 
       <p className='font-semibold mt-2'>Color</p>
       <FormField
         control={form.control}
@@ -57,6 +57,6 @@ export default function ProjectFormColorRadio({defaultValues}: {defaultValues: F
           </FormItem>
         )}
       />
-    </>
+      </div>
   )
 }

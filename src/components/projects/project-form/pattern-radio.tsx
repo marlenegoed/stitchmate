@@ -8,7 +8,7 @@ export default function PatternRadio({defaultValues}: {defaultValues: FormValues
   const patternId = defaultValues.patternId ? defaultValues.patternId.toString() : '1'
 
   return (
-    <>
+    <div className='flex flex-row items-center gap-4'>
       <p className='font-semibold mt-2'>Pattern</p>
       <FormField
         control={form.control}
@@ -76,6 +76,6 @@ export default function PatternRadio({defaultValues}: {defaultValues: FormValues
           </FormItem>
         )}
       />
-    </>
+    </div>
   )
 }

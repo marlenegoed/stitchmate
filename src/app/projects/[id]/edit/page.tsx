@@ -46,7 +46,7 @@ export default async function Page({params}: {params: {id: number}}) {
     patternId: project.patternId.toString() || '1',
     createdAt: project.createdAt || new Date(),
     finishBy: project.finishBy || undefined,
-    startDate: project.startDate || new Date(),
+    startDate: project.startDate ?? new Date(),
     completed: project.completed || new Date(),
     status: project.status || 'wip',
     pattern: project.pattern || '',
