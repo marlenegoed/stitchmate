@@ -35,7 +35,7 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
     <div className='w-full bg-white rounded-lg relative'>
 
       <div className='pl-4 pr-2 pt-2 flex flex-row justify-between items-center z-20 absolute w-full'>
-            <Tag className='text-base bg-white font-semibold text-sienna-300'>{project.status}</Tag>
+            <Tag className='rounded-md text-base bg-white font-semibold text-sienna-300'>{project.status}</Tag>
             <FavoriteProject userId={project.userId} projectId={project.id} isFavorite={project.favorite} />
       </div>
 
@@ -48,21 +48,24 @@ export default async function ProjectCard({project, sections}: ProjectCardProps)
             sizes="100vw"
             style={{
               objectFit: 'cover',
+              opacity: 0.8
             }}
           />
         </div>
       </Link>
 
       <div className='flex flex-row justify-between items-start h-20 pt-3 pl-4 pr-1'>
-        <div className='flex flex-col'> 
-        <h4 className='text-xl font-medium text-gray-900'>{shortenText(project.title, 34)}</h4>
+        <div className='flex flex-col flex-1 overflow-hidden'> 
+        <h4 className='text-xl font-medium text-gray-900 truncate ...'>{project.title}</h4>
         <p className='text-gray-900 font-medium'>{rowsknitted} {rowsknitted > 1 ? 'rows' : 'row'} knitted</p>
         </div>
-        <Link className='flex justify-end -mt-1' href={`/projects/${project.id}/edit`}>
+        <div> 
+        <Link className='flex justify-end' href={`/projects/${project.id}/edit`}>
           <Button size='icon' variant='ghost'>
-            <HiEllipsisVertical className='fill-slate-700' size={24} />
+            <HiEllipsisVertical className='fill-slate-700' size={36} />
           </Button>
         </Link>
+        </div>
       </div>
 
 
