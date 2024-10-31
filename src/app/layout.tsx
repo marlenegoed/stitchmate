@@ -3,6 +3,12 @@ import {openSans} from '@/components/ui/fonts';
 import {Toaster} from '@/components/ui/toaster';
 import {UserSettingsStoreProvider} from '@/providers/user-settings-store-provider';
 import {ClerkProvider} from '@clerk/nextjs'
+import {Viewport} from 'next';
+
+export const viewport: Viewport = {
+  interactiveWidget: 'resizes-visual',
+  viewportFit: 'cover',
+} 
 
 export default function RootLayout({children}: Readonly<{
   children: React.ReactNode;

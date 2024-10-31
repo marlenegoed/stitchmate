@@ -40,12 +40,12 @@ const DrawerContent = React.forwardRef<
       ref={ref}
       // rmvd max height and rounded corners top 
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 left-0 right-0 mt-24 flex flex-col-reverse border border-slate-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-950 h-full",
+        "fixed z-50 inset-0 flex flex-col-reverse justify-between bg-neutral-100 dark:border-slate-800 dark:bg-slate-950 h-dvh",
         className
       )}
       {...props}>
       <div
-        className="max-w-md w-[100px] mt-auto h-1.5 rounded-full bg-neutral-300 dark:bg-slate-800" />
+        className="max-w-md w-[100px] h-1.5 rounded-full bg-neutral-300 dark:bg-slate-800 mt-2" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>

@@ -1,6 +1,13 @@
 'use server'
 
-import {findAllSections, findSectionById, findSectionReminders, getAllProjectDetails, getUserSettings, setActiveSection} from '@/database/queries/queries';
+import {
+  findAllSections, 
+  findSectionById, 
+  findSectionReminders, 
+  getAllProjectDetails, 
+  getUserSettings, 
+  setActiveSection
+} from '@/database/queries/queries';
 import HydrateCounterStore from '../../../components/store/hydrate-counter-store';
 import ZustandHydration from '../../../components/store/zustand-hydration';
 import HydrateUserSettingsStore from '@/components/store/hydrate-user-settings-store';
@@ -52,7 +59,7 @@ export default async function Page({params}: {params: {sectionId: number}}) {
 
         <div className="flex flex-row flex-wrap justify-center gap-2 min-h-12 items-start">
           <ZustandHydration>
-            <SectionReminders userId={userId} reminders={reminders} isTag={true} />
+            <SectionReminders userId={userId} reminders={reminders} isTag={true} sectionId={section.id}/>
           </ZustandHydration>
         </div>
 
@@ -64,9 +71,9 @@ export default async function Page({params}: {params: {sectionId: number}}) {
           <NextSectionButton userId={userId} section={section} numOfSections={allSections.length} className='' />
         </div>
 
-        <SectionReminders userId={userId} reminders={reminders} className="px-3 w-full flex flex-row items-end" />
+        <SectionReminders userId={userId} sectionId={section.id} reminders={reminders} className="px-3 w-full flex flex-row items-end" />
 
-        <CounterActionBar section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} project={project} projectDetails={projectDetails} className=" absolute bottom-2 right-6 z-40" />
+        <CounterSettings section={section} userSettings={userSettings} numOfSections={allSections.length} reminders={reminders} project={project} projectDetails={projectDetails} className=" absolute bottom-2 right-6 z-40" />
 
       </div>
 

@@ -81,7 +81,7 @@ export const DrawerDialogHeader = ({children, className, breakpoint}: DrawerDial
   if (isDesktop) {
     return <DialogHeader className={cn(className)}>{children}</DialogHeader>
   }
-  return <DrawerHeader className={cn('flex justify-between w-full', className)}>{children}</DrawerHeader>
+  return <DrawerHeader className={cn('flex w-full', className)}>{children}</DrawerHeader>
 }
 
 export const DrawerDialogTitle = ({children, className, breakpoint}: DrawerDialogProps) => {
