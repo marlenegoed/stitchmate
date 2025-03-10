@@ -2,8 +2,6 @@
 
 # Stitchmate
 
-[> live version: stitchmate.xyz](https://stitchmate.xyz)
-
 Stitchmate is a knitting companion app that simplifies row counting and project organisation with speacial features like customizable 'reminder' rows.
 
 Counting rows in knitting is like keeping track of the steps in a recipe. Just as each step in cooking contributes to the final dish, each row in knitting builds up the fabric of your garment. By counting rows, you ensure that the pattern looks consistent and the garment turns out the right size and shape.
